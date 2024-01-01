@@ -32,11 +32,12 @@ public class BlockchainServerMain {
             // Esperar conexiones continuamente
             while (true) {
                 try (Socket socketCliente = serverSocket.accept();
-                        ObjectInputStream objectInputStream = new ObjectInputStream(socketCliente.getInputStream())) {
+                        ObjectInputStream objectInputStream = new ObjectInputStream(socketCliente.getInputStream()); ObjectOutputStream objectOutputStream = new ObjectOutputStream(socketCliente.getOutputStream());) {
                     // Configurar el flujo de entrada para recibir un objeto TransaccionVacacion del
                     // cliente (objectInputStream)
 
                     // Recibir el mensaje del cliente
+                    System.out.println("aaa");
                     MensajeClienteServidor mensajeDelCliente = (MensajeClienteServidor) objectInputStream.readObject();
 
                     // Procesar el mensaje
@@ -47,7 +48,6 @@ public class BlockchainServerMain {
                     System.out.println("Tipo operacion recibida: " + tipoOperacionRecibida);
                     System.out.println("Transaccion vacacion recibida: " + transaccionVacacionRecibido.toString());
 
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socketCliente.getOutputStream());
                     RespuestaServidorCliente respuestaAlCliente;
 
                     switch (tipoOperacionRecibida) {
@@ -115,6 +115,8 @@ public class BlockchainServerMain {
 
     private static void guardarTransaccionVacacion(TransaccionVacacion newTransaccionVacacion) {
         // Lógica para guardar el historial en un archivo
+
+        System.out.println("HOLA");
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO_LIBRO_VACACIONES))) {
             libroVacaciones.addBlock(newTransaccionVacacion);
             oos.writeObject(libroVacaciones);

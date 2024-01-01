@@ -1,7 +1,5 @@
 package tfg.backend.services;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 import tfg.backend.models.MotivoBajaModel;
 import tfg.backend.repositories.MotivoBajaRepository;
-
-
 
 @Service
 public class MotivoBajaService {
@@ -83,4 +79,3 @@ public class MotivoBajaService {
 
     }
 }
-

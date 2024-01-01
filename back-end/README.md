@@ -34,3 +34,5 @@ Para ejecutar los comandas de Maven de Lifecycle debo hacerlo por consola
 Ejecutar el back-end:
 
     - ./mvnw spring-boot:run
+
+    Importante para una clase genérica: https://www.youtube.com/watch?v=g8IqT45n9x4

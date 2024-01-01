@@ -1,7 +1,5 @@
 package tfg.backend.services;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 import tfg.backend.models.TipoSolicitudModel;
 import tfg.backend.repositories.TipoSolicitudRepository;
-
-
 
 @Service
 public class TipoSolicitudService {
@@ -86,4 +82,3 @@ public class TipoSolicitudService {
 
     }
 }
-

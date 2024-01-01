@@ -1,7 +1,5 @@
 package tfg.backend.services;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 import tfg.backend.models.TipoPersonaModel;
 import tfg.backend.repositories.TipoPersonaRepository;
-
-
 
 @Service
 public class TipoPersonaService {
@@ -82,4 +78,3 @@ public class TipoPersonaService {
 
     }
 }
-

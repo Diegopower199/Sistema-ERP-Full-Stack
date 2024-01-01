@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import tfg.backend.models.TipoUsuarioModel;
 import tfg.backend.repositories.TipoUsuarioRepository;
 
-
-
 @Service
 public class TipoUsuarioService {
 
@@ -82,4 +80,3 @@ public class TipoUsuarioService {
 
     }
 }
-

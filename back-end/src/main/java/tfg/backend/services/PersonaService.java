@@ -1,6 +1,5 @@
 package tfg.backend.services;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +13,6 @@ import tfg.backend.models.PersonaModel;
 import tfg.backend.models.TipoPersonaModel;
 import tfg.backend.repositories.PersonaRepository;
 import tfg.backend.repositories.TipoPersonaRepository;
-
-
 
 @Service
 public class PersonaService {
@@ -197,4 +194,3 @@ public class PersonaService {
         return matcher.matches();
     }
 }
-

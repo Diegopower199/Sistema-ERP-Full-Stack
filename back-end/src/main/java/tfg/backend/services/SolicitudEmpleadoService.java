@@ -1,6 +1,5 @@
 package tfg.backend.services;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +15,6 @@ import tfg.backend.repositories.PersonaRepository;
 import tfg.backend.repositories.SolicitudEmpleadoRepository;
 import tfg.backend.repositories.TipoEstadoRepository;
 import tfg.backend.repositories.TipoSolicitudRepository;
-
-
 
 @Service
 public class SolicitudEmpleadoService {
@@ -195,4 +192,3 @@ public class SolicitudEmpleadoService {
         }
 
 }
-

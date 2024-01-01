@@ -9,10 +9,10 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import tfg.backend.clasesComunBackendAndBlockchain.MensajeClienteServidor;
-import tfg.backend.clasesComunBackendAndBlockchain.RespuestaServidorCliente;
-import tfg.backend.clasesComunBackendAndBlockchain.TransaccionVacacion;
-import tfg.backend.models.VacacionEmpleadoModel;
+import commonclasses.Block;
+import commonclasses.MensajeClienteServidor;
+import commonclasses.RespuestaServidorCliente;
+import commonclasses.TransaccionVacacion;
 
 // Propósito: Contiene la lógica de negocio relacionada con las operaciones de vacaciones autorizadas.
 
@@ -20,8 +20,32 @@ import tfg.backend.models.VacacionEmpleadoModel;
 public class VacacionAutorizadaService {
 
     public List<Map<String, Object>> getAllVacacionesEmpleados() {
-        List<VacacionEmpleadoModel> listaVacacionEmpleado = new ArrayList<>();
+        List<Block> libroVacaciones = new ArrayList<>();
         List<Map<String, Object>> resultado = new ArrayList<>();
+
+        try (Socket socket = new Socket("localhost", 12345);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())) {
+
+            MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("GET ALL", null);
+
+            objectOutputStream.writeObject(mensajeAlServidor);
+
+            // Recibir la respuesta del servidor
+            RespuestaServidorCliente respuestaDelServidor = null;
+            respuestaDelServidor = (RespuestaServidorCliente) objectInputStream.readObject();
+            
+            libroVacaciones = respuestaDelServidor.getLibroVacaciones();
+            for (Block vacacion : libroVacaciones) {
+                Map<String, Object> libroVacacionMap = vacacion.toMap();
+                
+                resultado.add(libroVacacionMap);
+            }
+            System.out.println(respuestaDelServidor);
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         return resultado;
     }
@@ -31,26 +55,17 @@ public class VacacionAutorizadaService {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())) {
 
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + transaccionVacacion);
+            MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("ADD", transaccionVacacion);
 
-            MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("siuuuu", transaccionVacacion);
-
-            System.out.println("NO HAY ERROR" + transaccionVacacion);
             objectOutputStream.writeObject(mensajeAlServidor);
 
             // Recibir la respuesta del servidor
-
-            // Recibir la respuesta del servidor
             RespuestaServidorCliente respuestaDelServidor = null;
-            try {
-                respuestaDelServidor = (RespuestaServidorCliente) objectInputStream.readObject();
-            } catch (ClassNotFoundException e) {
-                System.out.println("ERROR");
-                // e.printStackTrace();
-            }
+            respuestaDelServidor = (RespuestaServidorCliente) objectInputStream.readObject();
+
             System.out.println(respuestaDelServidor);
 
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return transaccionVacacion;

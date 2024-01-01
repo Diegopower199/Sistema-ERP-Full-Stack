@@ -47,6 +47,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Dependencia para las clases compartidas entre backend y blockchain -->
+		<dependency>
+			<groupId>commonclasses</groupId>
+			<artifactId>common-backend-and-blockchain-classes</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		  </dependency>
 	</dependencies>
 
 	<build>

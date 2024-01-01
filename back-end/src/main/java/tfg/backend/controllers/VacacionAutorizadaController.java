@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.clasesComunBackendAndBlockchain.TransaccionVacacion;
+import commonclasses.TransaccionVacacion;
 import tfg.backend.constants.GlobalConstants;
 
 import tfg.backend.services.VacacionAutorizadaService;
@@ -46,18 +46,17 @@ public class VacacionAutorizadaController {
     @PostMapping("/api/save")
     public ResponseEntity<Map<String, Object>> save(@RequestBody TransaccionVacacion vacacionEmpleadoRequest) {
         try {
-            System.out.println("ANTES DEL SAVE");
+            
 
             TransaccionVacacion newVacacionAutorizada = vacacionAutorizadaService
                     .saveVacacionAutorizada(vacacionEmpleadoRequest);
 
-            System.out.println("DESPUES DEL SAVE");
 
             if (newVacacionAutorizada == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
             else {
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(newVacacionAutorizada.toMap());
             }
 
 

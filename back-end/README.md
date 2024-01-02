@@ -25,8 +25,6 @@ Almacen:
 DEBO TENER EN TODOS LOS CONTROLLER LO SIGUIENTE PARA QUE EL FRONBT PUEDA PEDIR PETICIONES -> @CrossOrigin(origins = "http://localhost:3000")
 Aqui esta la explicacion: https://chat.openai.com/share/ab29a897-e480-4df6-814a-992b673f9004
 
-Problemas:
-    - El delete no funciona en muchas de las clases
 
 
 Para ejecutar los comandas de Maven de Lifecycle debo hacerlo por consola

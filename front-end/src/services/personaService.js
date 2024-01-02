@@ -57,7 +57,7 @@ export const getPersonaById = async (id) => {
   } catch (error) {
     // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
-      messageError: error.response.data.message,
+      messageError: error.response.data.message, // Error message
       status: error.response.status,
     };
   }

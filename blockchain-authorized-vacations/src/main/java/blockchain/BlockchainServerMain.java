@@ -43,12 +43,11 @@ public class BlockchainServerMain {
                     // cliente (objectInputStream)
 
                     // Recibir el mensaje del cliente
-                    System.out.println("aaa");
                     MensajeClienteServidor mensajeDelCliente = (MensajeClienteServidor) objectInputStream.readObject();
 
                     // Procesar el mensaje
                     String tipoOperacionRecibida = mensajeDelCliente.getTipoOperacion();
-                    TransaccionVacacion transaccionVacacionRecibido = mensajeDelCliente.getTransaccionVacacion();
+                    TransaccionVacacion transaccionVacacionRecibido = mensajeDelCliente.getTransaccionVacacionAutorizada();
 
                     // Usa los objetos según sea necesario
                     // System.out.println("Tipo operacion recibida: " + tipoOperacionRecibida);
@@ -58,11 +57,9 @@ public class BlockchainServerMain {
 
                     switch (tipoOperacionRecibida) {
                         case "GET ALL":
-                            mostrarInformacionLibroTransaccionVacacion();
-
                             // Enviar una respuesta al cliente
                             respuestaAlCliente = new RespuestaServidorCliente(
-                                    libroVacaciones.getLibroVacaciones(), 200);
+                                    libroVacaciones.getLibroTransaccionesVacacionesAutorizadas(), 200);
                             objectOutputStream.writeObject(respuestaAlCliente);
 
                             break;
@@ -84,8 +81,6 @@ public class BlockchainServerMain {
 
                             break;
                     }
-
-                    // mostrarInformacionBloque();
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -105,7 +100,7 @@ public class BlockchainServerMain {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO_LIBRO_VACACIONES))) {
             Object objetoLeido = ois.readObject();
             Blockchain blockchainDesdeArchivo = (Blockchain) objetoLeido;
-            listaBloquesDeVacacionesAlmacenados = blockchainDesdeArchivo.getLibroVacaciones();
+            listaBloquesDeVacacionesAlmacenados = blockchainDesdeArchivo.getLibroTransaccionesVacacionesAutorizadas();
             System.out.println("Vacaciones cargados correctamente");
         } catch (FileNotFoundException e) {
             // El archivo no existe, imprimir mensaje y continuar
@@ -134,7 +129,7 @@ public class BlockchainServerMain {
     // Método para mostrar todos los bloques de transacciones de vacaciones
     // almacenados en la lista en memoria
     private static void mostrarInformacionLibroTransaccionVacacion() {
-        List<Block> blockChain = libroVacaciones.getLibroVacaciones();
+        List<Block> blockChain = libroVacaciones.getLibroTransaccionesVacacionesAutorizadas();
         // Verificar si la lista de usuarios está vacía
         if (blockChain.isEmpty()) {
             System.out.println("No hay transacciones de vacaciones registrados");

@@ -9,13 +9,13 @@ import java.util.List;
 public class RespuestaServidorCliente implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private List<Block> libroVacaciones;
+    private List<Block> libroTransaccionesVacacionesAutorizadas;
     private String mensaje;
     private int codigo;
 
     // Constructor para el caso "GET ALL"
-    public RespuestaServidorCliente(List<Block> libroVacaciones, int codigo) {
-        this.libroVacaciones = libroVacaciones;
+    public RespuestaServidorCliente(List<Block> libroTransaccionesVacacionesAutorizadas, int codigo) {
+        this.libroTransaccionesVacacionesAutorizadas = libroTransaccionesVacacionesAutorizadas;
         this.codigo = codigo;
     }
 
@@ -24,8 +24,8 @@ public class RespuestaServidorCliente implements Serializable {
         this.codigo = codigo;
     }
 
-    public List<Block> getLibroVacaciones() {
-        return libroVacaciones;
+    public List<Block> getLibroTransaccionesVacacionesAutorizadas() {
+        return libroTransaccionesVacacionesAutorizadas;
     }
 
     public String getMensaje() {
@@ -40,7 +40,7 @@ public class RespuestaServidorCliente implements Serializable {
     public String toString() {
         return "RespuestaServidorCliente{" +
                 ", mensaje='" + mensaje + '\'' +
-                ", libroVacaciones=" + libroVacaciones +
+                ", libroTransaccionesVacacionesAutorizadas=" + libroTransaccionesVacacionesAutorizadas +
                 ", codigo=" + codigo +
                 '}';
     }

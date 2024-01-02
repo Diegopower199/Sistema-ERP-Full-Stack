@@ -18,23 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
 import commonclasses.TransaccionVacacion;
 import tfg.backend.constants.GlobalConstants;
 
-import tfg.backend.services.VacacionAutorizadaService;
+import tfg.backend.services.BlockchainVacacionAutorizadaService;
 
 // Propósito: Controla la interacción con el cliente y maneja las solicitudes HTTP relacionadas con las vacaciones autorizadas.
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
 @RestController
-@RequestMapping("/vacacionesAutorizadas")
-public class VacacionAutorizadaController {
+@RequestMapping("/blockchainVacacionesAutorizadas")
+public class BlockchainVacacionAutorizadaController {
 
     @Autowired
-    VacacionAutorizadaService vacacionAutorizadaService;
+    BlockchainVacacionAutorizadaService vacacionAutorizadaService;
 
     // localhost:8080/vacacionesEmpleados/api/getAll
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
-        List<Map<String, Object>> allVacacionesEmpleados = vacacionAutorizadaService.getAllVacacionesEmpleados();
+        List<Map<String, Object>> allVacacionesEmpleados = vacacionAutorizadaService.getAllTransaccionesVacacionesAutorizadas();
         if (allVacacionesEmpleados.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -49,7 +49,7 @@ public class VacacionAutorizadaController {
             
 
             TransaccionVacacion newVacacionAutorizada = vacacionAutorizadaService
-                    .saveVacacionAutorizada(vacacionEmpleadoRequest);
+                    .saveTransaccionVacacionAutorizada(vacacionEmpleadoRequest);
 
 
             if (newVacacionAutorizada == null) {

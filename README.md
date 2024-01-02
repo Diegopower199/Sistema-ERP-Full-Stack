@@ -67,6 +67,8 @@ npx create-next-app
 
 Cosa que me tengo que mirar para ejecutar los maven y que uno comparta las clases en blockchain y back-end: https://chat.openai.com/share/cd80a350-03b9-4ebb-aab5-0d0f005c3f59
 
+https://chat.openai.com/share/cd80a350-03b9-4ebb-aab5-0d0f005c3f59
+
 Y PARA COSAS DE MAVEN: https://youtu.be/zlHXH6maOR0?si=JsXn-JjNZs4YhwDl
 
 Pasos de creacion proyectos maven:
@@ -74,3 +76,6 @@ Pasos de creacion proyectos maven:
     El pom.xml debo poner plugin para poder ejecutarlo. Cuando tenga todo los ficheros correctos debo ejecutar el siguiente comando: "mvn clean install" y despues ejecutar "mvn exec:java".
 
 Para ejecutar Spring Boot debo hacer poner esto por la terminal: "./mvnw spring-boot:run"
+
+
+https://medium.com/@thearaseng/building-a-full-stack-product-app-with-react-spring-boot-and-docker-compose-64a47f4a1080

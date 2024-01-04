@@ -1,10 +1,7 @@
 package commonclasses;
 
-
-
 import java.io.Serializable;
 import java.util.List;
-
 
 public class RespuestaServidorCliente implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -45,4 +42,3 @@ public class RespuestaServidorCliente implements Serializable {
                 '}';
     }
 }
-

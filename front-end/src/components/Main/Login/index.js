@@ -68,7 +68,9 @@ export default function Login() {
             id_persona: Number(infoUsuario.data.persona.id_persona),
           },
           tipo_usuario: {
-            id_tipo_usuario: Number(infoUsuario.data.tipo_usuario.id_tipo_usuario),
+            id_tipo_usuario: Number(
+              infoUsuario.data.tipo_usuario.id_tipo_usuario
+            ),
           },
         });
       }
@@ -114,7 +116,8 @@ export default function Login() {
           </p>
         </div>
       </div>
-      EN LOGIN DEBO QUITAR LO DE VALUE Y PONER EL COMENTADO EN USUARIO Y CONTRASEÑA
+      EN LOGIN DEBO QUITAR LO DE VALUE Y PONER EL COMENTADO EN USUARIO Y
+      CONTRASEÑA
     </>
   );
 }

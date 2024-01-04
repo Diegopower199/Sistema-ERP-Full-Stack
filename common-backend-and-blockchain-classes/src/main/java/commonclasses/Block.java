@@ -1,13 +1,10 @@
 package commonclasses;
 
-
-
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class Block implements Serializable {
 

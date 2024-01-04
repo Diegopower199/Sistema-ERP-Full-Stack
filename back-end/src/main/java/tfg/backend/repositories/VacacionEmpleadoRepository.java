@@ -1,7 +1,5 @@
 package tfg.backend.repositories;
 
-
-
 import java.time.LocalDate;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,8 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import tfg.backend.models.PersonaModel;
 import tfg.backend.models.VacacionEmpleadoModel;
-
-
 
 @Repository
 public interface VacacionEmpleadoRepository extends JpaRepository<VacacionEmpleadoModel, Integer> {
@@ -26,4 +22,3 @@ public interface VacacionEmpleadoRepository extends JpaRepository<VacacionEmplea
             @Param("fecha_fin") LocalDate fecha_fin);
 
 }
-

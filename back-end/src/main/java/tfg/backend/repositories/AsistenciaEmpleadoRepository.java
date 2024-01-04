@@ -1,7 +1,5 @@
 package tfg.backend.repositories;
 
-
-
 import java.time.LocalDate;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import tfg.backend.models.AsistenciaEmpleadoModel;
 import tfg.backend.models.PersonaModel;
-
 
 @Repository
 public interface AsistenciaEmpleadoRepository extends JpaRepository<AsistenciaEmpleadoModel, Integer> {

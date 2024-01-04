@@ -34,7 +34,8 @@ public class BlockchainVacacionAutorizadaController {
     // localhost:8080/vacacionesEmpleados/api/getAll
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
-        List<Map<String, Object>> allVacacionesEmpleados = vacacionAutorizadaService.getAllTransaccionesVacacionesAutorizadas();
+        List<Map<String, Object>> allVacacionesEmpleados = vacacionAutorizadaService
+                .getAllTransaccionesVacacionesAutorizadas();
         if (allVacacionesEmpleados.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -46,19 +47,15 @@ public class BlockchainVacacionAutorizadaController {
     @PostMapping("/api/save")
     public ResponseEntity<Map<String, Object>> save(@RequestBody TransaccionVacacion vacacionEmpleadoRequest) {
         try {
-            
 
             TransaccionVacacion newVacacionAutorizada = vacacionAutorizadaService
                     .saveTransaccionVacacionAutorizada(vacacionEmpleadoRequest);
 
-
             if (newVacacionAutorizada == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
-            else {
+            } else {
                 return ResponseEntity.ok(newVacacionAutorizada.toMap());
             }
-
 
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();

@@ -78,4 +78,37 @@ Pasos de creacion proyectos maven:
 Para ejecutar Spring Boot debo hacer poner esto por la terminal: "./mvnw spring-boot:run"
 
 
+Si cambio algo en "pom.xml" de los proyectos de Maven, debo recargar el proyecto de la siguiente manera
+
+1. Debemos ir a Java Projects de VS Code, y dar click derecho al proyecto
+
+2. Ir a la opción Maven y hacer click en Reload Project
+
+3. Ejecutar desde el raiz del proyecto el siguiente comando "mvn clean install"
+
+4. Ejecuta el comando para arrancar el proyecto "mvn exec:java"
+
+
+
+
+INFORMACION QUE ES IMPORTANTE, POR SI SUBO ALGO MUY PESADO Y LOS FICHEROS SON MUY LARGOS
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+El comando "git config --global core.longpaths true" configura Git para que acepte rutas de archivos más largas.
+
+    El comando "git lfs install" sirve para manejar archivos grandes de manera eficiente en repositorios de Git.
+
+Los siguientes comandos se hacen en cada proyecto para que Git LFS indique qué tipos de archivos específicos deben ser gestionados de manera especial debido a su tamaño.
+
+    - git lfs track "*.class"
+
+    - git lfs track "_.java"
+
+    - git lfs track "_.xml"
+
+El archivo ".gitattributes" es un archivo de configuración en Git que se utiliza para asignar atributos a los archivos y, entre otras cosas, especificar cómo Git debe tratar ciertos archivos
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 https://medium.com/@thearaseng/building-a-full-stack-product-app-with-react-spring-boot-and-docker-compose-64a47f4a1080

@@ -1,7 +1,5 @@
 package tfg.backend.models;
 
-
-
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -48,4 +46,3 @@ public class UsuarioModel implements Serializable {
     }
 
 }
-

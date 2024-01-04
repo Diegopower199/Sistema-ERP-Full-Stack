@@ -1,8 +1,5 @@
 package commonclasses;
 
-
-
-
 import java.io.Serializable;
 
 public class MensajeClienteServidor implements Serializable {

@@ -15,8 +15,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -33,7 +33,7 @@
       <artifactId>common-backend-and-blockchain-classes</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
-    
+
   </dependencies>
 
   <build>
@@ -95,7 +95,8 @@
             </execution>
           </executions>
           <configuration>
-            <mainClass>blockchain.BlockchainServerMain</mainClass> <!-- Ajusta la ruta de la clase principal -->
+            <mainClass>blockchain.BlockchainServerMain</mainClass> <!-- Ajusta la ruta de la clase
+            principal -->
           </configuration>
         </plugin>
       </plugins>

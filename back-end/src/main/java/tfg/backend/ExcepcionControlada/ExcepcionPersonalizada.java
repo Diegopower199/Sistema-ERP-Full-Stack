@@ -17,17 +17,17 @@ public class ExcepcionPersonalizada extends Exception {
 }
 
 /*
-public class Ejemplo {
-
-    public static void main(String[] args) {
-        try {
-            // Simulando una situación que arroja la excepción
-            throw new MiExcepcion("Este es un mensaje personalizado", 500);
-        } catch (MiExcepcion e) {
-            // Captura de la excepción y manejo
-            System.out.println("Excepción capturada: " + e.getMessage());
-            System.out.println("Código de error: " + e.getCodigo());
-        }
-    }
-}
-*/
+ * public class Ejemplo {
+ * 
+ * public static void main(String[] args) {
+ * try {
+ * // Simulando una situación que arroja la excepción
+ * throw new MiExcepcion("Este es un mensaje personalizado", 500);
+ * } catch (MiExcepcion e) {
+ * // Captura de la excepción y manejo
+ * System.out.println("Excepción capturada: " + e.getMessage());
+ * System.out.println("Código de error: " + e.getCodigo());
+ * }
+ * }
+ * }
+ */

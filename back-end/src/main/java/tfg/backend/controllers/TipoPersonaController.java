@@ -1,8 +1,5 @@
 package tfg.backend.controllers;
 
-
-
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.TipoPersonaModel;
 import tfg.backend.services.TipoPersonaService;
-
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })

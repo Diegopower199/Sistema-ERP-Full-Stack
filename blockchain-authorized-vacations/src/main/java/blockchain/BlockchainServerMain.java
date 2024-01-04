@@ -1,6 +1,5 @@
 package blockchain;
 
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -38,7 +37,9 @@ public class BlockchainServerMain {
             // Esperar conexiones continuamente
             while (true) {
                 try (Socket socketCliente = serverSocket.accept();
-                        ObjectInputStream objectInputStream = new ObjectInputStream(socketCliente.getInputStream()); ObjectOutputStream objectOutputStream = new ObjectOutputStream(socketCliente.getOutputStream());) {
+                        ObjectInputStream objectInputStream = new ObjectInputStream(socketCliente.getInputStream());
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+                                socketCliente.getOutputStream());) {
                     // Configurar el flujo de entrada para recibir un objeto TransaccionVacacion del
                     // cliente (objectInputStream)
 
@@ -47,11 +48,13 @@ public class BlockchainServerMain {
 
                     // Procesar el mensaje
                     String tipoOperacionRecibida = mensajeDelCliente.getTipoOperacion();
-                    TransaccionVacacion transaccionVacacionRecibido = mensajeDelCliente.getTransaccionVacacionAutorizada();
+                    TransaccionVacacion transaccionVacacionRecibido = mensajeDelCliente
+                            .getTransaccionVacacionAutorizada();
 
                     // Usa los objetos según sea necesario
                     // System.out.println("Tipo operacion recibida: " + tipoOperacionRecibida);
-                    // System.out.println("Transaccion vacacion recibida: " + transaccionVacacionRecibido.toString());
+                    // System.out.println("Transaccion vacacion recibida: " +
+                    // transaccionVacacionRecibido.toString());
 
                     RespuestaServidorCliente respuestaAlCliente;
 

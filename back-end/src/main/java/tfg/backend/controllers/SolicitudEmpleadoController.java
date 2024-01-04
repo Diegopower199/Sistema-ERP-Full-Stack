@@ -28,7 +28,7 @@ import tfg.backend.services.SolicitudEmpleadoService;
 @RequestMapping("/solicitudesEmpleados")
 
 public class SolicitudEmpleadoController {
-    
+
     @Autowired
     SolicitudEmpleadoService solicitudEmpleadoService;
 

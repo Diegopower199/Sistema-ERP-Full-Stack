@@ -77,22 +77,40 @@ export default function FullFeaturedCrudGrid() {
     try {
       const resultado = await getAllUsuarios();
       console.log("Resultado: ", resultado[0]);
-      const a = resultado.map( (persona) => {
+      const a = resultado.map((persona) => {
         return {
           id: persona.id_usuario,
           nombre_usuario: persona.nombre_usuario,
-        }
+        };
       });
-      setRows(a)
-      const initialRows = [
+      setRows(a);
+      const initialRowsaa = [
         {
-          id: 1,
-          name: "q",
-          age: 25,
-          joinDate: new Date(2023, 11, 29),
-          role: "ROL 1",
+          id: 22,
+          nombre_usuario: "a",
+        },
+        {
+          id: 23,
+          nombre_usuario: "a",
+        },
+        {
+          id: 24,
+          nombre_usuario: "a",
+        },
+        {
+          id: 25,
+          nombre_usuario: "a",
+        },
+        {
+          id: 26,
+          nombre_usuario: "a",
+        },
+        {
+          id: 27,
+          nombre_usuario: "a",
         },
       ];
+      setRows((prevRows) => [...prevRows, ...initialRowsaa]);
     } catch (error) {
       console.error("El error es: ", error);
     }
@@ -119,10 +137,19 @@ export default function FullFeaturedCrudGrid() {
     // setRows(rows.filter((row) => row.id !== id));
   };
 
+  const handleClick = () => {
+    console.log("Añadir nuevo registro");
+  };
+
   const columns = [
     { field: "id", headerName: "ID", width: 100, editable: false },
-    { field: "nombre_usuario", headerName: "Nombre usuario", width: 180, editable: false },
-    
+    {
+      field: "nombre_usuario",
+      headerName: "Nombre usuario",
+      width: 180,
+      editable: false,
+    },
+
     {
       field: "actions",
       type: "actions",
@@ -237,20 +264,25 @@ export default function FullFeaturedCrudGrid() {
         },
       }}
     >
+      
+        <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+          Add record
+        </Button>
+      
       <DataGrid
         rows={rows}
         columns={columns}
         loading={false}
-        checkboxSelection
-        disableRowSelectionOnClick
+        checkboxSelection={false}
+        disableRowSelectionOnClick={false}
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
+        pageSizeOptions={[5, 10, 25, 50, 100]}
         onRowSelectionModelChange={(newRowSelectionModel) => {
           setRowSelectionModel(newRowSelectionModel);
         }}
         rowSelectionModel={rowSelectionModel}
         slots={{
-          toolbar: AddNewRegistrer,
           toolbar: CustomToolbar,
         }}
       />

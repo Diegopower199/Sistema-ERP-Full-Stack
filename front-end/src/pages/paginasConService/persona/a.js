@@ -15,6 +15,7 @@ import {
   gridVisibleColumnFieldsSelector,
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
+import { useState } from "react";
 
 const initialRows = [
   {
@@ -52,6 +53,13 @@ const initialRows = [
     joinDate: new Date(2023, 11, 29),
     role: "ROL 1",
   },
+  {
+    id: 6,
+    name: "e",
+    age: 23,
+    joinDate: new Date(2023, 11, 29),
+    role: "ROL 1",
+  },
 ];
 
 function AddNewRegistrer() {
@@ -71,10 +79,13 @@ function AddNewRegistrer() {
 export default function FullFeaturedCrudGrid() {
   const [rows, setRows] = React.useState(initialRows);
 
-  const [paginationModel, setPaginationModel] = React.useState({
+  const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
     page: 0,
   });
+
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Valor por defecto
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [rowSelectionModel, setRowSelectionModel] = React.useState([]);
 
@@ -234,8 +245,10 @@ export default function FullFeaturedCrudGrid() {
         loading={false}
         checkboxSelection
         disableRowSelectionOnClick
-        paginationModel={paginationModel}
-        onPaginationModelChange={setPaginationModel}
+        pageSizeOptions={[5, 10, 25, 50, 100]}
+        pageSize={rowsPerPage}
+        /*paginationModel={paginationModel}
+        onPaginationModelChange={setPaginationModel}*/
         onRowSelectionModelChange={(newRowSelectionModel) => {
           setRowSelectionModel(newRowSelectionModel);
         }}

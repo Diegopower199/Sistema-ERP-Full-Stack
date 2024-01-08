@@ -4,7 +4,6 @@ import Link from "next/link";
 import styles from "@/components/Main/Login/styles.module.css";
 import {
   authenticateUser,
-  getUsuarioById,
   getUsuarioByNombreUsuario,
 } from "@/services/usuarioService";
 import { useAuth } from "@/context/UserContext";

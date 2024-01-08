@@ -31,3 +31,6 @@ public class ExcepcionPersonalizada extends Exception {
  * }
  * }
  */
+
+
+// https://chat.openai.com/share/c19d4249-83a4-4111-ae68-b6c44502dbb3

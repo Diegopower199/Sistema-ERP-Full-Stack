@@ -55,6 +55,16 @@ Despues ejecutar:
     - npm run dev
 
 
+Tambien si tenemos algun mensaje de advertencia como este "You are loading @emotion/react when it is already loaded" debemos hacer lo siguiente:
+
+1. Actualizar las dependencias (no es necesario): "npm update"
+
+2. Limpia la caché de npm: "npm cache clean --force"
+
+3. Eliminar el directorio node_modules y el archivo package-lock.json: Remove-Item -Path "node_modules" -Recurse -Force y  Remove-Item -Path "package-lock.json" -Recurse -Force
+
+4. Reinstalar todas las dependencias: "npm install"
+
 COSAS UTILES: https://trekinbami.medium.com/using-environment-variables-in-react-6b0a99d83cf5
 
 useContext: https://www.youtube.com/watch?v=2-6K-TMA-nw
@@ -72,3 +82,8 @@ Bibliotecas instaladas:
     - npm install @mui/icons-material
     - npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
     - npm install @mui/x-data-grid
+    - npm install moment --save
+
+
+
+Componentes: https://mui.com/components/

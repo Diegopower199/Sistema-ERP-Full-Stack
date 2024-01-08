@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useAuth } from "@/context/UserContext";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
@@ -17,7 +19,22 @@ import {
 import MenuItem from "@mui/material/MenuItem";
 import { getAllPersonas } from "@/services/personaService";
 
+const PAGE_SIZE_OPTIONS = [5, 10, 25, 50, 100];
+
 export default function Personas() {
+  const {
+    authUser,
+    setAuthUser,
+    isLoggedIn,
+    setIsLoggedIn,
+    tipoUser,
+    setTipoUser,
+    permisosUser,
+    setPermisosUser,
+  } = useAuth();
+
+  const router = useRouter();
+
   const [rows, setRows] = useState([]);
 
   async function fetchGetAllPersonas() {
@@ -44,8 +61,14 @@ export default function Personas() {
   }
 
   useEffect(() => {
-    fetchGetAllPersonas();
-  }, []); // Se ejecuta solo al montar el componente
+    console.log("Pagina de personas: ");
+    console.log("authUser: ", authUser);
+    if (!authUser) {
+      router.push("/login");
+    } else {
+      fetchGetAllPersonas();
+    }
+  }, [authUser]);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -229,7 +252,7 @@ export default function Personas() {
         disableRowSelectionOnClick={false}
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
-        pageSizeOptions={[5, 10, 25, 50, 100]}
+        pageSizeOptions={PAGE_SIZE_OPTIONS}
         onRowSelectionModelChange={(newRowSelectionModel) => {
           setRowSelectionModel(newRowSelectionModel);
         }}

@@ -1,9 +1,10 @@
 import { getAllTiposEstados } from "@/services/tipoEstadoService";
 import { getAllTiposSolicitudes } from "@/services/tipoSolicitudService";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 
 function FormularioSolicitud() {
-  // Obtener la fecha actual
+  // Obtener la fecha actual  ESTO LO DEBO HACER CON MOMENT, QUE ESTA HECHO
   const today = new Date();
   const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1)
     .toString()
@@ -86,6 +87,17 @@ function FormularioSolicitud() {
     // Realizar acciones adicionales con los datos del formulario
   };
 
+  const handleFecha = (event) => {
+    event.preventDefault();
+    const fechaYearMesDia = moment().format("YYYY-MM-DD");
+    const horaActual = moment().format("HH:mm:ss");
+
+    const objetoParaEnviar = { fechaYearMesDia: fechaYearMesDia, horaActual: horaActual};
+
+    console.log(objetoParaEnviar);
+    // Realizar acciones adicionales con los datos del formulario
+  };
+
   return (
     <>
       <label>
@@ -129,7 +141,8 @@ function FormularioSolicitud() {
       </label>
       <br />
       <br />
-      <button onClick={handleSubmit}>Enviar</button>
+      <button onClick={handleSubmit}>Enviar</button> <br></br>
+      <button onClick={handleFecha}>FECHA CON AÑO MES Y DIA, HORA MINUTO SEGUNDO</button>
     </>
   );
 }

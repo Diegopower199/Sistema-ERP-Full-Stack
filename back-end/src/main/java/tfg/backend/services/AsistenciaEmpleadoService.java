@@ -38,7 +38,8 @@ public class AsistenciaEmpleadoService {
                 return resultado;
         }
 
-        public AsistenciaEmpleadoModel saveAsistenciaEmpleado(AsistenciaEmpleadoModel nuevoAsistenciaEmpleado) {
+        public AsistenciaEmpleadoModel startOfWorkdayAsistenciaEmpleado(
+                        AsistenciaEmpleadoModel nuevoAsistenciaEmpleado) {
 
                 int id_persona = nuevoAsistenciaEmpleado.getPersona().getId_persona();
 
@@ -57,6 +58,25 @@ public class AsistenciaEmpleadoService {
 
                 AsistenciaEmpleadoModel asistenciaEmpleadoGuardado = asistenciaEmpleadoRepository
                                 .save(nuevoAsistenciaEmpleado);
+
+                return asistenciaEmpleadoGuardado;
+        }
+
+        // TODO TENGO QUE PENSAR COMO HACER EL FIN DE LA JORNADA LABORAL, COMO IDENTIFICAR QUE ES EL DIA. Cuando haga el front se sabrá la logica
+        public AsistenciaEmpleadoModel endOfWorkdayAsistenciaEmpleado(
+                        AsistenciaEmpleadoModel nuevoAsistenciaEmpleado, int idAsistenciaEmpleado) {
+
+                AsistenciaEmpleadoModel asistenciaEmpleadoExistente = asistenciaEmpleadoRepository
+                                .findById(idAsistenciaEmpleado)
+                                .orElseThrow(() -> new RuntimeException(
+                                                "Asistencia empleado con id " + idAsistenciaEmpleado
+                                                                + " no encontrado"));
+
+                asistenciaEmpleadoExistente.setHora_salida(nuevoAsistenciaEmpleado.getHora_salida());
+                asistenciaEmpleadoExistente.setTotal_horas_trabajadas(8); // ESTO TENEMOS QUE CALCULARLO
+
+                AsistenciaEmpleadoModel asistenciaEmpleadoGuardado = asistenciaEmpleadoRepository
+                                .save(asistenciaEmpleadoExistente);
 
                 return asistenciaEmpleadoGuardado;
         }

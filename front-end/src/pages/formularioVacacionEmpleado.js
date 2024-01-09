@@ -1,4 +1,4 @@
-import { getAllTiposEstados } from "@/services/tipoEstadoService";
+import { getAllTiposEstados } from "@/services/TipoEstadoService";
 import React, { useEffect, useState } from "react";
 
 function FormularioVacacionEmpleado() {

@@ -17,7 +17,7 @@ import {
   gridVisibleColumnFieldsSelector,
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
-import { getAllPersonas } from "@/services/personaService";
+import { getAllPersonas } from "@/services/PersonaService";
 
 const PAGE_SIZE_OPTIONS = [5, 10, 25, 50, 100];
 
@@ -27,8 +27,6 @@ export default function Personas() {
     setAuthUser,
     isLoggedIn,
     setIsLoggedIn,
-    tipoUser,
-    setTipoUser,
     permisosUser,
     setPermisosUser,
   } = useAuth();

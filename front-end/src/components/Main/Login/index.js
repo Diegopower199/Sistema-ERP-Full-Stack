@@ -5,7 +5,7 @@ import styles from "@/components/Main/Login/styles.module.css";
 import {
   authenticateUser,
   getUsuarioByNombreUsuario,
-} from "@/services/usuarioService";
+} from "@/services/UsuarioService";
 import { useAuth } from "@/context/UserContext";
 
 export default function Login() {

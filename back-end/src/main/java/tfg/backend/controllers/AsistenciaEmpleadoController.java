@@ -42,17 +42,37 @@ public class AsistenciaEmpleadoController {
         }
     }
 
-    // localhost:8080/asistenciasEmpleados/api/save
-    @PostMapping("/api/save")
-    public ResponseEntity<Map<String, Object>> save(@RequestBody AsistenciaEmpleadoModel asistenciaEmpleadoRequest) {
+    // localhost:8080/asistenciasEmpleados/api/startOfWorkday
+    @PostMapping("/api/startOfWorkday")
+    public ResponseEntity<Map<String, Object>> startOfWorkday(@RequestBody AsistenciaEmpleadoModel asistenciaEmpleadoRequest) {
         try {
             AsistenciaEmpleadoModel newAsistenciaEmpleado = asistenciaEmpleadoService
-                    .saveAsistenciaEmpleado(asistenciaEmpleadoRequest);
+                    .startOfWorkdayAsistenciaEmpleado(asistenciaEmpleadoRequest);
             if (newAsistenciaEmpleado == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
                 return ResponseEntity.ok(asistenciaEmpleadoService
                         .getAsistenciaEmpleadoById(newAsistenciaEmpleado.getId_asistencia_empleado()));
+            }
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            // No sé si en el status poner bad_request o 409
+        }
+    }
+
+    // localhost:8080/asistenciasEmpleados/api/endOfWorkday/{id}
+    @PostMapping("/api/endOfWorkday/{id}") 
+    public ResponseEntity<Map<String, Object>> endOfWorkday(@RequestBody AsistenciaEmpleadoModel asistenciaEmpleadoRequest, @PathVariable("id") int id) { // mirarme esta funcion y completarla, hacerla en el service
+        try {
+            AsistenciaEmpleadoModel updateAsistenciaEmpleado = asistenciaEmpleadoService
+                    .endOfWorkdayAsistenciaEmpleado(asistenciaEmpleadoRequest, id);
+            if (updateAsistenciaEmpleado == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } else {
+                return ResponseEntity.ok(asistenciaEmpleadoService
+                        .getAsistenciaEmpleadoById(updateAsistenciaEmpleado.getId_asistencia_empleado()));
             }
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();

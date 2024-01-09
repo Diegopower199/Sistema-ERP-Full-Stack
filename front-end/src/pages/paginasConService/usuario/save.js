@@ -1,4 +1,4 @@
-import { authenticateUser, saveUsuario } from "@/services/usuarioService";
+import { authenticateUser, saveUsuario } from "@/services/UsuarioService";
 import React, { useEffect, useState } from "react";
 
 function MiFormulario() {

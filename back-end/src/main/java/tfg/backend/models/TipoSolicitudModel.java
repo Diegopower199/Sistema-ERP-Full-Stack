@@ -30,9 +30,7 @@ public class TipoSolicitudModel implements Serializable {
     private String tipo_solicitud;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "tipo_solicitud", cascade = CascadeType.REMOVE) // En el mappedBy debo poner la variable que
-                                                                          // he
-                                                                          // puesto en usuario, en lo del private
+    @OneToMany(mappedBy = "tipo_solicitud", cascade = CascadeType.REMOVE)
     private List<SolicitudEmpleadoModel> solicitudesEmpleados;
 
     public Map<String, Object> toMap() {

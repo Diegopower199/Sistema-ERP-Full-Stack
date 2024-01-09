@@ -1,5 +1,5 @@
-import { getAllTiposEstados } from "@/services/tipoEstadoService";
-import { getAllTiposSolicitudes } from "@/services/tipoSolicitudService";
+import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import { getAllTiposSolicitudes } from "@/services/TipoSolicitudService";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 

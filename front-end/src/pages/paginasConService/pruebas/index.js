@@ -1,9 +1,5 @@
-import { getAllAsistenciaEmpleados } from "@/services/asistenciaEmpleadoService";
-import { getAllAyudasEmpleados } from "@/services/ayudaEmpleadoService";
-import { getAllBajasLaboralesEmpleados } from "@/services/bajaLaboralEmpleadoService";
-import { getAllPersonas } from "@/services/personaService";
-import { getAllSolicitudesEmpleados } from "@/services/solicitudEmpleadoService";
-import { getAllVacacionesEmpleados } from "@/services/vacacionEmpleadoService";
+
+import { getAllVacacionesEmpleados } from "@/services/VacacionEmpleadoService";
 import React, { useEffect, useState } from "react";
 
 function MiFormulario() {

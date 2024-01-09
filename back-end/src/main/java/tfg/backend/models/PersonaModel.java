@@ -53,15 +53,15 @@ public class PersonaModel implements Serializable {
     @Column(name = "correo_electronico", unique = true, nullable = false)
     private String correo_electronico;
 
-    // sirve para tener un campo con la clave foránea
+    // Sirve para tener un campo con la clave foránea
     @ManyToOne
     @JoinColumn(name = "id_tipo_persona", nullable = false)
     private TipoPersonaModel tipo_persona;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "persona", cascade = CascadeType.REMOVE)
     private UsuarioModel usuario;
 
-    // tenemos la información de todas las vacaciones con su ID
     @JsonIgnore
     @OneToMany(mappedBy = "persona", cascade = CascadeType.REMOVE)
     private List<VacacionEmpleadoModel> vacacionesEmpleados;

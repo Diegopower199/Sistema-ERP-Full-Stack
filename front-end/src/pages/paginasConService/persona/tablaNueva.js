@@ -15,8 +15,8 @@ import {
   gridVisibleColumnFieldsSelector,
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
-import { getAllPersonas } from "@/services/personaService";
-import { getAllUsuarios } from "@/services/usuarioService";
+import { getAllPersonas } from "@/services/PersonaService";
+import { getAllUsuarios } from "@/services/UsuarioService";
 
 const initialRows = [
   {

@@ -51,16 +51,15 @@ Funciones que utilizamos en el proyecto Maven:
 
 Generar el front-end:
 
-Instalar en la terminal génerica:
-npx create-next-app
+Instalar en la terminal génerica: npx create-next-app
 
 √ What is your project named? ... front-end
-√ Would you like to use TypeScript? ... No / Yes
-√ Would you like to use ESLint? ... No / Yes
-√ Would you like to use Tailwind CSS? ... No / Yes
-√ Would you like to use `src/` directory? ... No / Yes
-√ Would you like to use App Router? (recommended) ... No / Yes
-√ Would you like to customize the default import alias (@/*)? ... No / Yes
+√ Would you like to use TypeScript? ... <u>**No**</u> / Yes
+√ Would you like to use ESLint? ... No / <u>**Yes**</u>
+√ Would you like to use Tailwind CSS? ... <u>**No**</u> / Yes
+√ Would you like to use `src/` directory? ... No / <u>**Yes**</u>
+√ Would you like to use App Router? (recommended) ... <u>**No**</u> / Yes
+√ Would you like to customize the default import alias (@/*)? ... No / <u>**Yes**</u>
 √ What import alias would you like configured? ... @/*
 
 
@@ -92,6 +91,7 @@ Si cambio algo en "pom.xml" de los proyectos de Maven, debo recargar el proyecto
 
 
 INFORMACION QUE ES IMPORTANTE, POR SI SUBO ALGO MUY PESADO Y LOS FICHEROS SON MUY LARGOS
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 El comando "git config --global core.longpaths true" configura Git para que acepte rutas de archivos más largas.
 

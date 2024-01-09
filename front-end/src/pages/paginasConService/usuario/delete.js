@@ -1,4 +1,4 @@
-import { deleteUsuario, getAllUsuarios } from "@/services/usuarioService";
+import { deleteUsuario, getAllUsuarios } from "@/services/UsuarioService";
 import React, { useEffect, useState } from "react";
 
 function MiFormulario() {

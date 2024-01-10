@@ -29,12 +29,12 @@ import tfg.backend.services.BlockchainVacacionAutorizadaService;
 public class BlockchainVacacionAutorizadaController {
 
     @Autowired
-    BlockchainVacacionAutorizadaService vacacionAutorizadaService;
+    BlockchainVacacionAutorizadaService blockchainVacacionAutorizadaService;
 
-    // localhost:8080/vacacionesEmpleados/api/getAll
+    // localhost:8080/blockchainVacacionesAutorizadas/api/getAll
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
-        List<Map<String, Object>> allVacacionesEmpleados = vacacionAutorizadaService
+        List<Map<String, Object>> allVacacionesEmpleados = blockchainVacacionAutorizadaService
                 .getAllTransaccionesVacacionesAutorizadas();
         if (allVacacionesEmpleados.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -43,12 +43,12 @@ public class BlockchainVacacionAutorizadaController {
         }
     }
 
-    // localhost:8080/vacacionesAutorizadas/api/save
+    // localhost:8080/blockchainVacacionesAutorizadas/api/save
     @PostMapping("/api/save")
     public ResponseEntity<Map<String, Object>> save(@RequestBody TransaccionVacacion vacacionEmpleadoRequest) {
         try {
 
-            TransaccionVacacion newVacacionAutorizada = vacacionAutorizadaService
+            TransaccionVacacion newVacacionAutorizada = blockchainVacacionAutorizadaService
                     .saveTransaccionVacacionAutorizada(vacacionEmpleadoRequest);
 
             if (newVacacionAutorizada == null) {

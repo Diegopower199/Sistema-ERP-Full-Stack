@@ -35,10 +35,10 @@ public class ClienteModel implements Serializable {
     @Column(name = "razon_social", nullable = false)
     private String razon_social;
 
-    @Column(name = "numero_telefono", unique = true, nullable = false)
+    @Column(name = "numero_telefono", nullable = false)
     private String numero_telefono;
 
-    @Column(name = "correo_electronico", unique = true, nullable = false)
+    @Column(name = "correo_electronico", nullable = false)
     private String correo_electronico;
 
     @Column(name = "direccion", nullable = false)

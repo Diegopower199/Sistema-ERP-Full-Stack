@@ -29,16 +29,16 @@ import tfg.backend.services.BajaLaboralEmpleadoService;
 public class BajaLaboralEmpleadoController {
 
     @Autowired
-    BajaLaboralEmpleadoService bajaLaboralService;
+    BajaLaboralEmpleadoService bajaLaboralEmpleadoService;
 
     // localhost:8080/bajasLaboralesEmpleados/api/getAll
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
-        List<Map<String, Object>> allBajasLaborales = bajaLaboralService.getAllBajasLaboralesEmpleados();
-        if (allBajasLaborales.isEmpty()) {
+        List<Map<String, Object>> allBajasLaboralesEmpleados = bajaLaboralEmpleadoService.getAllBajasLaboralesEmpleados();
+        if (allBajasLaboralesEmpleados.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.ok(allBajasLaborales);
+            return ResponseEntity.ok(allBajasLaboralesEmpleados);
         }
     }
 
@@ -46,12 +46,12 @@ public class BajaLaboralEmpleadoController {
     @PostMapping("/api/save")
     public ResponseEntity<Map<String, Object>> save(@RequestBody BajaLaboralEmpleadoModel bajaLaboralEmpleadoRequest) {
         try {
-            BajaLaboralEmpleadoModel newBajaLaboralEmpleado = bajaLaboralService
+            BajaLaboralEmpleadoModel newBajaLaboralEmpleado = bajaLaboralEmpleadoService
                     .saveBajaLaboralEmpleado(bajaLaboralEmpleadoRequest);
             if (newBajaLaboralEmpleado == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
-                return ResponseEntity.ok(bajaLaboralService
+                return ResponseEntity.ok(bajaLaboralEmpleadoService
                         .getBajaLaboralEmpleadoById(newBajaLaboralEmpleado.getId_baja_laboral_empleado()));
             }
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class BajaLaboralEmpleadoController {
     @GetMapping("/api/getById/{id}")
     public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") int id) {
         try {
-            Map<String, Object> selectedBajaLaboralEmpleado = bajaLaboralService.getBajaLaboralEmpleadoById(id);
+            Map<String, Object> selectedBajaLaboralEmpleado = bajaLaboralEmpleadoService.getBajaLaboralEmpleadoById(id);
             return ResponseEntity.ok(selectedBajaLaboralEmpleado);
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
@@ -81,12 +81,12 @@ public class BajaLaboralEmpleadoController {
     public ResponseEntity<Map<String, Object>> update(@RequestBody BajaLaboralEmpleadoModel bajaLaboralEmpleadoRequest,
             @PathVariable("id") int id) {
         try {
-            BajaLaboralEmpleadoModel updateBajaLaboralEmpleado = bajaLaboralService
+            BajaLaboralEmpleadoModel updateBajaLaboralEmpleado = bajaLaboralEmpleadoService
                     .updateBajaLaboralEmpleado(bajaLaboralEmpleadoRequest, id);
             if (updateBajaLaboralEmpleado == null) {
                 return ResponseEntity.badRequest().build();
             } else {
-                return ResponseEntity.ok(bajaLaboralService
+                return ResponseEntity.ok(bajaLaboralEmpleadoService
                         .getBajaLaboralEmpleadoById(updateBajaLaboralEmpleado.getId_baja_laboral_empleado()));
             }
         } catch (Exception e) {
@@ -101,7 +101,7 @@ public class BajaLaboralEmpleadoController {
     @DeleteMapping("/api/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") int id) {
         try {
-            bajaLaboralService.deleteBajaLaboralEmpleado(id);
+            bajaLaboralEmpleadoService.deleteBajaLaboralEmpleado(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -44,7 +44,8 @@ public class AsistenciaEmpleadoController {
 
     // localhost:8080/asistenciasEmpleados/api/startOfWorkday
     @PostMapping("/api/startOfWorkday")
-    public ResponseEntity<Map<String, Object>> startOfWorkday(@RequestBody AsistenciaEmpleadoModel asistenciaEmpleadoRequest) {
+    public ResponseEntity<Map<String, Object>> startOfWorkday(
+            @RequestBody AsistenciaEmpleadoModel asistenciaEmpleadoRequest) {
         try {
             AsistenciaEmpleadoModel newAsistenciaEmpleado = asistenciaEmpleadoService
                     .startOfWorkdayAsistenciaEmpleado(asistenciaEmpleadoRequest);
@@ -63,8 +64,10 @@ public class AsistenciaEmpleadoController {
     }
 
     // localhost:8080/asistenciasEmpleados/api/endOfWorkday/{id}
-    @PostMapping("/api/endOfWorkday/{id}") 
-    public ResponseEntity<Map<String, Object>> endOfWorkday(@RequestBody AsistenciaEmpleadoModel asistenciaEmpleadoRequest, @PathVariable("id") int id) { // mirarme esta funcion y completarla, hacerla en el service
+    @PostMapping("/api/endOfWorkday/{id}")
+    public ResponseEntity<Map<String, Object>> endOfWorkday(
+            @RequestBody AsistenciaEmpleadoModel asistenciaEmpleadoRequest, @PathVariable("id") int id) {
+        // mirarme esta funcion y completarla, hacerla en el service
         try {
             AsistenciaEmpleadoModel updateAsistenciaEmpleado = asistenciaEmpleadoService
                     .endOfWorkdayAsistenciaEmpleado(asistenciaEmpleadoRequest, id);

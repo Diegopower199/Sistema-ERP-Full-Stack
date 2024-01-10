@@ -19,39 +19,39 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import tfg.backend.constants.GlobalConstants;
-import tfg.backend.models.AyudaEmpleadoModel;
-import tfg.backend.services.AyudaEmpleadoService;
+import tfg.backend.models.PedidoClienteModel;
+import tfg.backend.services.PedidoClienteService;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
 @RestController
-@RequestMapping("/ayudasEmpleados")
-public class AyudaEmpleadoController {
+@RequestMapping("/pedidosClientes")
+public class PedidoClienteController {
 
     @Autowired
-    AyudaEmpleadoService ayudaEmpleadoService;
+    PedidoClienteService pedidoClienteService;
 
-    // localhost:8080/ayudasEmpleados/api/getAll
+    // localhost:8080/pedidosClientes/api/getAll
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
-        List<Map<String, Object>> allAyudasEmpleados = ayudaEmpleadoService.getAllAyudasEmpleados();
-        if (allAyudasEmpleados.isEmpty()) {
+        List<Map<String, Object>> allPedidosClientes = pedidoClienteService.getAllPedidosClientes();
+        if (allPedidosClientes.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.ok(allAyudasEmpleados);
+            return ResponseEntity.ok(allPedidosClientes);
         }
     }
 
-    // localhost:8080/ayudasEmpleados/api/save
+    // localhost:8080/pedidosClientes/api/save
     @PostMapping("/api/save")
-    public ResponseEntity<Map<String, Object>> save(@RequestBody AyudaEmpleadoModel ayudaEmpleadoRequest) {
+    public ResponseEntity<Map<String, Object>> save(@RequestBody PedidoClienteModel pedidoClienteRequest) {
         try {
-            AyudaEmpleadoModel newAyudaEmpleado = ayudaEmpleadoService.saveAyudaEmpleado(ayudaEmpleadoRequest);
-            if (newAyudaEmpleado == null) {
+            PedidoClienteModel newPedidoCliente = pedidoClienteService.savePedidoCliente(pedidoClienteRequest);
+            if (newPedidoCliente == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
                 return ResponseEntity
-                        .ok(ayudaEmpleadoService.getAyudaEmpleadoById(newAyudaEmpleado.getId_ayuda_empleado()));
+                        .ok(pedidoClienteService.getPedidoClienteById(newPedidoCliente.getId_pedido_cliente()));
             }
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
@@ -61,12 +61,12 @@ public class AyudaEmpleadoController {
         }
     }
 
-    // localhost:8080/ayudasEmpleados/api/getById/{id}
+    // localhost:8080/pedidosClientes/api/getById/{id}
     @GetMapping("/api/getById/{id}")
     public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") int id) {
         try {
-            Map<String, Object> selectedAyudaEmpleado = ayudaEmpleadoService.getAyudaEmpleadoById(id);
-            return ResponseEntity.ok(selectedAyudaEmpleado);
+            Map<String, Object> selectedPedidoCliente = pedidoClienteService.getPedidoClienteById(id);
+            return ResponseEntity.ok(selectedPedidoCliente);
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -75,17 +75,17 @@ public class AyudaEmpleadoController {
 
     }
 
-    // localhost:8080/ayudasEmpleados/api/update/{id}
+    // localhost:8080/pedidosClientes/api/update/{id}
     @PutMapping("/api/update/{id}")
-    public ResponseEntity<Map<String, Object>> update(@RequestBody AyudaEmpleadoModel ayudaEmpleadoRequest,
+    public ResponseEntity<Map<String, Object>> update(@RequestBody PedidoClienteModel pedidoClienteRequest,
             @PathVariable("id") int id) {
         try {
-            AyudaEmpleadoModel updateAyudaEmpleado = ayudaEmpleadoService.updateAyudaEmpleado(ayudaEmpleadoRequest, id);
-            if (updateAyudaEmpleado == null) {
+            PedidoClienteModel updatePedidoCliente = pedidoClienteService.updatePedidoCliente(pedidoClienteRequest, id);
+            if (updatePedidoCliente == null) {
                 return ResponseEntity.badRequest().build();
             } else {
                 return ResponseEntity
-                        .ok(ayudaEmpleadoService.getAyudaEmpleadoById(updateAyudaEmpleado.getId_ayuda_empleado()));
+                        .ok(pedidoClienteService.getPedidoClienteById(updatePedidoCliente.getId_pedido_cliente()));
             }
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
@@ -95,11 +95,11 @@ public class AyudaEmpleadoController {
         }
     }
 
-    // localhost:8080/ayudasEmpleados/api/delete/{id}
+    // localhost:8080/pedidosClientes/api/delete/{id}
     @DeleteMapping("/api/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") int id) {
         try {
-            ayudaEmpleadoService.deleteAyudaEmpleado(id);
+            pedidoClienteService.deletePedidoCliente(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

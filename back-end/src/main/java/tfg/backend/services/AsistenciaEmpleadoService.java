@@ -62,7 +62,8 @@ public class AsistenciaEmpleadoService {
                 return asistenciaEmpleadoGuardado;
         }
 
-        // TODO TENGO QUE PENSAR COMO HACER EL FIN DE LA JORNADA LABORAL, COMO IDENTIFICAR QUE ES EL DIA. Cuando haga el front se sabrá la logica
+        // TODO TENGO QUE PENSAR COMO HACER EL FIN DE LA JORNADA LABORAL, COMO
+        // IDENTIFICAR QUE ES EL DIA. Cuando haga el front se sabrá la logica
         public AsistenciaEmpleadoModel endOfWorkdayAsistenciaEmpleado(
                         AsistenciaEmpleadoModel nuevoAsistenciaEmpleado, int idAsistenciaEmpleado) {
 

@@ -70,7 +70,6 @@ public class MotivoBajaController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-
         }
     }
 

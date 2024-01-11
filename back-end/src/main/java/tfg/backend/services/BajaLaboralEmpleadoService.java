@@ -37,6 +37,7 @@ public class BajaLaboralEmpleadoService {
 
                 for (BajaLaboralEmpleadoModel bajaLaboralEmpleado : listaBajasLaboralesEmpleados) {
                         Map<String, Object> bajaLaboralEmpleadoMap = bajaLaboralEmpleado.toMap();
+
                         bajaLaboralEmpleadoMap.put("persona",
                                         bajaLaboralEmpleado.getPersona() != null
                                                         ? bajaLaboralEmpleado.getPersona().toMap()
@@ -101,6 +102,7 @@ public class BajaLaboralEmpleadoService {
                                                                 + " no encontrado"));
 
                 Map<String, Object> solicitudMap = bajaLaboralEmpleadoEncontrado.toMap();
+                
                 solicitudMap.put("persona",
                                 bajaLaboralEmpleadoEncontrado.getPersona() != null
                                                 ? bajaLaboralEmpleadoEncontrado.getPersona().toMap()
@@ -140,7 +142,6 @@ public class BajaLaboralEmpleadoService {
 
                 bajaLaboralEmpleadoExistente.getPersona().getBajasLaboralesEmpleados()
                                 .remove(bajaLaboralEmpleadoExistente);
-
                 bajaLaboralEmpleadoExistente.setPersona(personaEncontrado);
                 personaEncontrado.getBajasLaboralesEmpleados().add(bajaLaboralEmpleadoExistente);
 
@@ -152,9 +153,8 @@ public class BajaLaboralEmpleadoService {
 
                 bajaLaboralEmpleadoExistente.getMotivo_baja().getBajasLaboralesEmpleados()
                                 .remove(bajaLaboralEmpleadoExistente);
-
-                cambiosBajaLaboralEmpleado.setMotivo_baja(motivoBajaEncontrado);
-                motivoBajaEncontrado.getBajasLaboralesEmpleados().add(cambiosBajaLaboralEmpleado);
+                bajaLaboralEmpleadoExistente.setMotivo_baja(motivoBajaEncontrado);
+                motivoBajaEncontrado.getBajasLaboralesEmpleados().add(bajaLaboralEmpleadoExistente);
 
                 int id_tipo_estado = cambiosBajaLaboralEmpleado.getTipo_estado().getId_tipo_estado();
 
@@ -164,9 +164,8 @@ public class BajaLaboralEmpleadoService {
 
                 bajaLaboralEmpleadoExistente.getTipo_estado().getBajasLaboralesEmpleados()
                                 .remove(bajaLaboralEmpleadoExistente);
-
                 bajaLaboralEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
-                tipoEstadoEncontrado.getBajasLaboralesEmpleados().add(cambiosBajaLaboralEmpleado);
+                tipoEstadoEncontrado.getBajasLaboralesEmpleados().add(bajaLaboralEmpleadoExistente);
 
                 BajaLaboralEmpleadoModel bajaLaboralEmpleadoActualizado = bajaLaboralEmpleadoRepository
                                 .save(bajaLaboralEmpleadoExistente);

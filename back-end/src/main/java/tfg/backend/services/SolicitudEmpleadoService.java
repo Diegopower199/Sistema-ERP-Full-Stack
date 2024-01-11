@@ -36,6 +36,7 @@ public class SolicitudEmpleadoService {
 
                 for (SolicitudEmpleadoModel solicitudEmpleado : listaSolicitudesEmpleados) {
                         Map<String, Object> solicitudEmpleadoMap = solicitudEmpleado.toMap();
+
                         solicitudEmpleadoMap.put("persona",
                                         solicitudEmpleado.getPersona() != null ? solicitudEmpleado.getPersona().toMap()
                                                         : null);
@@ -104,6 +105,7 @@ public class SolicitudEmpleadoService {
                                                 "Solicitud empleado con id " + idSolicitudEmpleado + " no encontrado"));
 
                 Map<String, Object> solicitudMap = solicitudEncontrado.toMap();
+                
                 solicitudMap.put("persona",
                                 solicitudEncontrado.getPersona() != null ? solicitudEncontrado.getPersona().toMap()
                                                 : null);
@@ -137,7 +139,6 @@ public class SolicitudEmpleadoService {
                                                 "Persona con id " + id_persona + " no encontrado"));
 
                 solicitudEmpleadoExistente.getPersona().getSolicitudesEmpleados().remove(solicitudEmpleadoExistente);
-
                 solicitudEmpleadoExistente.setPersona(personaEncontrado);
                 personaEncontrado.getSolicitudesEmpleados().add(solicitudEmpleadoExistente);
 
@@ -160,9 +161,8 @@ public class SolicitudEmpleadoService {
 
                 solicitudEmpleadoExistente.getTipo_solicitud().getSolicitudesEmpleados()
                                 .remove(solicitudEmpleadoExistente);
-
                 solicitudEmpleadoExistente.setTipo_solicitud(tipoSolicitudEncontrado);
-                tipoSolicitudEncontrado.getSolicitudesEmpleados().add(cambiosSolicitudEmpleado);
+                tipoSolicitudEncontrado.getSolicitudesEmpleados().add(solicitudEmpleadoExistente);
 
                 int id_tipo_estado = cambiosSolicitudEmpleado.getTipo_estado().getId_tipo_estado();
 
@@ -172,9 +172,8 @@ public class SolicitudEmpleadoService {
 
                 solicitudEmpleadoExistente.getTipo_estado().getSolicitudesEmpleados()
                                 .remove(solicitudEmpleadoExistente);
-
                 solicitudEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
-                tipoEstadoEncontrado.getSolicitudesEmpleados().add(cambiosSolicitudEmpleado);
+                tipoEstadoEncontrado.getSolicitudesEmpleados().add(solicitudEmpleadoExistente);
 
                 SolicitudEmpleadoModel solicitudActualizado = solicitudEmpleadoRepository
                                 .save(solicitudEmpleadoExistente);

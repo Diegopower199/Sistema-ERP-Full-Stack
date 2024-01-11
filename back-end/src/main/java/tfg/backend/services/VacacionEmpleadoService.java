@@ -34,6 +34,7 @@ public class VacacionEmpleadoService {
 
         for (VacacionEmpleadoModel vacacionEmpleado : listaVacacionEmpleado) {
             Map<String, Object> vacacionEmpleadoMap = vacacionEmpleado.toMap();
+
             vacacionEmpleadoMap.put("persona",
                     vacacionEmpleado.getPersona() != null ? vacacionEmpleado.getPersona().toMap() : null);
 
@@ -129,6 +130,7 @@ public class VacacionEmpleadoService {
                         "Vacacion empleado con id " + idVacacionEmpleado + " no encontrado"));
 
         Map<String, Object> vacacionEmpleadoMap = VacacionEmpleadoEncontrado.toMap();
+        
         vacacionEmpleadoMap.put("persona",
                 VacacionEmpleadoEncontrado.getPersona() != null ? VacacionEmpleadoEncontrado.getPersona().toMap()
                         : null);
@@ -194,7 +196,6 @@ public class VacacionEmpleadoService {
                 .orElseThrow(() -> new RuntimeException("Persona con id " + id_persona + " no encontrado"));
 
         vacacionEmpleadoExistente.getPersona().getVacacionesEmpleados().remove(vacacionEmpleadoExistente);
-
         vacacionEmpleadoExistente.setPersona(personaEncontrado);
         personaEncontrado.getVacacionesEmpleados().add(vacacionEmpleadoExistente);
 
@@ -204,7 +205,6 @@ public class VacacionEmpleadoService {
                 .orElseThrow(() -> new RuntimeException("Tipo estado con id " + id_tipo_estado + " no encontrado"));
 
         vacacionEmpleadoExistente.getTipo_estado().getVacacionesEmpleados().remove(vacacionEmpleadoExistente);
-
         vacacionEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
         tipoEstadoEncontrado.getVacacionesEmpleados().add(vacacionEmpleadoExistente);
 

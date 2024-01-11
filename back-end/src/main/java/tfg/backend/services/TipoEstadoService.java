@@ -22,6 +22,7 @@ public class TipoEstadoService {
 
         for (TipoEstadoModel tipoEstado : listaTiposEstados) {
             Map<String, Object> tipoEstadoMap = tipoEstado.toMap();
+
             resultado.add(tipoEstadoMap);
         }
 

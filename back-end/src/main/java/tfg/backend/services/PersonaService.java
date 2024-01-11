@@ -33,8 +33,10 @@ public class PersonaService {
 
         for (PersonaModel persona : listaPersonas) {
             Map<String, Object> personaMap = persona.toMap();
+
             personaMap.put("tipo_persona",
                     persona.getTipo_persona() != null ? persona.getTipo_persona().toMap() : null);
+
             resultado.add(personaMap);
         }
 
@@ -103,6 +105,7 @@ public class PersonaService {
                 .orElseThrow(() -> new RuntimeException("Persona con id " + idPersona + " no encontrado"));
 
         Map<String, Object> personaMap = personaEncontrado.toMap();
+        
         personaMap.put("tipo_persona",
                 personaEncontrado.getTipo_persona() != null ? personaEncontrado.getTipo_persona().toMap() : null);
 
@@ -155,7 +158,6 @@ public class PersonaService {
                 .orElseThrow(() -> new RuntimeException("Tipo persona con id " + id_tipo_persona + " no encontrado"));
 
         personaExistente.getTipo_persona().getPersonas().remove(personaExistente);
-
         personaExistente.setTipo_persona(tipoPersonaEncontrado);
         tipoPersonaEncontrado.getPersonas().add(personaExistente);
 

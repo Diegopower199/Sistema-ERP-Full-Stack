@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tfg.backend.models.NominaEmpleadoModel;
+import tfg.backend.models.PersonaModel;
 import tfg.backend.repositories.NominaEmpleadoRepository;
 import tfg.backend.repositories.PersonaRepository;
 
@@ -24,12 +25,35 @@ public class NominaEmpleadoService {
         List<NominaEmpleadoModel> listaNominasEmpleados = nominaEmpleadoRepository.findAll();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
+        for (NominaEmpleadoModel nominaEmpleado : listaNominasEmpleados) {
+            Map<String, Object> nominaEmpleadoMap = nominaEmpleado.toMap();
+
+            nominaEmpleadoMap.put("persona",
+                    nominaEmpleado.getPersona() != null
+                            ? nominaEmpleado.getPersona().toMap()
+                            : null);
+
+            resultado.add(nominaEmpleadoMap);
+        }
+
         return resultado;
     }
 
     public NominaEmpleadoModel saveNominaEmpleado(NominaEmpleadoModel nuevoNominaEmpleado) {
 
-        return nuevoNominaEmpleado;
+        int id_persona = nuevoNominaEmpleado.getPersona().getId_persona();
+
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
+
+        nuevoNominaEmpleado.setPersona(personaEncontrado);
+        personaEncontrado.getNominasEmpleados().add(nuevoNominaEmpleado);
+
+        NominaEmpleadoModel nominaEmpleadoGuardado = nominaEmpleadoRepository
+                .save(nuevoNominaEmpleado);
+
+        return nominaEmpleadoGuardado;
     }
 
     public Map<String, Object> getNominaEmpleadoById(int idNominaEmpleado) {
@@ -39,12 +63,33 @@ public class NominaEmpleadoService {
 
         Map<String, Object> nominaEmpleadoMap = nominaEmpleadoEncontrado.toMap();
 
+        nominaEmpleadoMap.put("persona",
+                nominaEmpleadoEncontrado.getPersona() != null
+                        ? nominaEmpleadoEncontrado.getPersona().toMap()
+                        : null);
+
         return nominaEmpleadoMap;
     }
 
     public NominaEmpleadoModel updateNominaEmpleado(NominaEmpleadoModel cambiosNominaEmpleado, int idNominaEmpleado) {
 
-        return cambiosNominaEmpleado;
+        NominaEmpleadoModel nominaEmpleadoExistente = nominaEmpleadoRepository.findById(idNominaEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Nomina empleado con id " + idNominaEmpleado + " no encontrado"));
+
+        int id_persona = cambiosNominaEmpleado.getPersona().getId_persona();
+
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
+
+        nominaEmpleadoExistente.getPersona().getNominasEmpleados().remove(nominaEmpleadoExistente);
+        nominaEmpleadoExistente.setPersona(personaEncontrado);
+        personaEncontrado.getNominasEmpleados().add(nominaEmpleadoExistente);
+
+        NominaEmpleadoModel nominaEmpleadoActualizado = nominaEmpleadoRepository.save(nominaEmpleadoExistente);
+
+        return nominaEmpleadoActualizado;
     }
 
     public void deleteNominaEmpleado(int idNominaEmpleado) {

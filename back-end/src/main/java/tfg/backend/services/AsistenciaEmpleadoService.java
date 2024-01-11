@@ -27,6 +27,7 @@ public class AsistenciaEmpleadoService {
 
                 for (AsistenciaEmpleadoModel asistenciaEmpleado : listaAsistenciasEmpleados) {
                         Map<String, Object> asistenciaEmpleadoMap = asistenciaEmpleado.toMap();
+
                         asistenciaEmpleadoMap.put("persona",
                                         asistenciaEmpleado.getPersona() != null
                                                         ? asistenciaEmpleado.getPersona().toMap()
@@ -90,6 +91,7 @@ public class AsistenciaEmpleadoService {
                                                                 + " no encontrado"));
 
                 Map<String, Object> asistenciaEmpleadoMap = asistenciaEmpleadoEncontrado.toMap();
+                
                 asistenciaEmpleadoMap.put("persona",
                                 asistenciaEmpleadoEncontrado.getPersona() != null
                                                 ? asistenciaEmpleadoEncontrado.getPersona().toMap()
@@ -120,7 +122,6 @@ public class AsistenciaEmpleadoService {
                                                 "Persona con id " + id_persona + " no encontrado"));
 
                 asistenciaEmpleadoExistente.getPersona().getAsistenciasEmpleados().remove(asistenciaEmpleadoExistente);
-
                 asistenciaEmpleadoExistente.setPersona(personaEncontrado);
                 personaEncontrado.getAsistenciasEmpleados().add(asistenciaEmpleadoExistente);
 

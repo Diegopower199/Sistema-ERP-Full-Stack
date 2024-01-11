@@ -37,6 +37,7 @@ public class UsuarioService {
 
             usuarioMap.put("tipo_usuario",
                     usuario.getTipo_usuario() != null ? usuario.getTipo_usuario().toMap() : null);
+                    
             resultado.add(usuarioMap);
         }
 
@@ -106,6 +107,7 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Usuario con id " + idUsuario + " no encontrado"));
 
         Map<String, Object> usuarioMap = usuarioEncontrado.toMap();
+        
         usuarioMap.put("persona",
                 usuarioEncontrado.getPersona() != null ? usuarioEncontrado.getPersona().toMap() : null);
         usuarioMap.put("tipo_usuario",
@@ -117,8 +119,6 @@ public class UsuarioService {
     public UsuarioModel updateUsuario(UsuarioModel cambiosUsuario, int idUsuario) {
         UsuarioModel usuarioExistente = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario con id " + idUsuario + " no encontrado"));
-
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + cambiosUsuario);
 
         // Comprobar campo persona
         if (cambiosUsuario.getNombre_usuario() == null) {
@@ -163,7 +163,7 @@ public class UsuarioService {
             if (usuarioRepository.existsByPersona(personaEncontrado)) {
                 throw new RuntimeException("Ya existe un usuario con esa persona");
             }
-            cambiosUsuario.setPersona(personaEncontrado);
+            usuarioExistente.setPersona(personaEncontrado);
         }
 
         int id_tipo_usuario = cambiosUsuario.getTipo_usuario().getId_tipo_usuario();

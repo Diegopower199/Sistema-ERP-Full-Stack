@@ -37,6 +37,7 @@ public class AyudaEmpleadoService {
 
                 for (AyudaEmpleadoModel ayudaEmpleado : listaAyudasEmpleados) {
                         Map<String, Object> ayudaEmpleadoMap = ayudaEmpleado.toMap();
+
                         ayudaEmpleadoMap.put("persona",
                                         ayudaEmpleado.getPersona() != null ? ayudaEmpleado.getPersona().toMap() : null);
 
@@ -94,6 +95,7 @@ public class AyudaEmpleadoService {
                                                 "Ayuda empleado con id " + idAyudaEmpleado + " no encontrado"));
 
                 Map<String, Object> ayudaEmpleadoMap = ayudaEmpleadoEncontrado.toMap();
+
                 ayudaEmpleadoMap.put("persona",
                                 ayudaEmpleadoEncontrado.getPersona() != null
                                                 ? ayudaEmpleadoEncontrado.getPersona().toMap()
@@ -129,7 +131,6 @@ public class AyudaEmpleadoService {
                                                 "Persona con id " + id_persona + " no encontrado"));
 
                 ayudaEmpleadoExistente.getPersona().getAyudasEmpleados().remove(ayudaEmpleadoExistente);
-
                 ayudaEmpleadoExistente.setPersona(personaEncontrado);
                 personaEncontrado.getAyudasEmpleados().add(ayudaEmpleadoExistente);
 
@@ -140,9 +141,8 @@ public class AyudaEmpleadoService {
                                                 "Tipo ayuda con id " + id_tipo_ayuda + " no encontrado"));
 
                 ayudaEmpleadoExistente.getTipo_ayuda().getAyudasEmpleados().remove(ayudaEmpleadoExistente);
-
                 ayudaEmpleadoExistente.setTipo_ayuda(tipoAyudaEncontrado);
-                tipoAyudaEncontrado.getAyudasEmpleados().add(cambiosAyudaEmpleado);
+                tipoAyudaEncontrado.getAyudasEmpleados().add(ayudaEmpleadoExistente);
 
                 int id_tipo_estado = cambiosAyudaEmpleado.getTipo_estado().getId_tipo_estado();
 
@@ -151,13 +151,12 @@ public class AyudaEmpleadoService {
                                                 "Tipo estado con id " + id_tipo_estado + " no encontrado"));
 
                 ayudaEmpleadoExistente.getTipo_estado().getAyudasEmpleados().remove(ayudaEmpleadoExistente);
-
                 ayudaEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
-                tipoEstadoEncontrado.getAyudasEmpleados().add(cambiosAyudaEmpleado);
+                tipoEstadoEncontrado.getAyudasEmpleados().add(ayudaEmpleadoExistente);
 
-                AyudaEmpleadoModel audaEmpleadoActualizado = ayudaEmpleadoRepository.save(ayudaEmpleadoExistente);
+                AyudaEmpleadoModel ayudaEmpleadoActualizado = ayudaEmpleadoRepository.save(ayudaEmpleadoExistente);
 
-                return audaEmpleadoActualizado;
+                return ayudaEmpleadoActualizado;
 
         }
 

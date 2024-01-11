@@ -21,6 +21,7 @@ public class TipoPersonaService {
 
         for (TipoPersonaModel tipoPersona : listaTiposPersonas) {
             Map<String, Object> tipoPersonaMap = tipoPersona.toMap();
+            
             resultado.add(tipoPersonaMap);
         }
 

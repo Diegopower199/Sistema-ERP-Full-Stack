@@ -22,6 +22,7 @@ public class TipoAyudaService {
 
         for (TipoAyudaModel tipoAyuda : listaTiposAyudas) {
             Map<String, Object> tipoAyudaMap = tipoAyuda.toMap();
+            
             resultado.add(tipoAyudaMap);
         }
 

@@ -9,5 +9,9 @@
     "java.project.referencedLibraries": [
         "JavaSE-17"
     ],
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "[java]": {
+        "editor.tabSize": 4,
+        "editor.detectIndentation": false
+    },
 }

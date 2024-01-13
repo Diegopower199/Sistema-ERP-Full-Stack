@@ -17,7 +17,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DetalleFacturaClienteModel implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_detalle_factura_cliente", nullable = false)

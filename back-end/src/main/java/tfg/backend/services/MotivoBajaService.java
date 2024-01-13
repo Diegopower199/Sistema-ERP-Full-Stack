@@ -22,7 +22,7 @@ public class MotivoBajaService {
 
         for (MotivoBajaModel motivoBaja : listaMotivosBajas) {
             Map<String, Object> motivoBajaMap = motivoBaja.toMap();
-            
+
             resultado.add(motivoBajaMap);
         }
 

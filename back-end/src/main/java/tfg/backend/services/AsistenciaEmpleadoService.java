@@ -1,5 +1,6 @@
 package tfg.backend.services;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,129 +16,162 @@ import tfg.backend.repositories.PersonaRepository;
 @Service
 public class AsistenciaEmpleadoService {
 
-        @Autowired
-        private AsistenciaEmpleadoRepository asistenciaEmpleadoRepository;
+    @Autowired
+    private AsistenciaEmpleadoRepository asistenciaEmpleadoRepository;
 
-        @Autowired
-        private PersonaRepository personaRepository;
+    @Autowired
+    private PersonaRepository personaRepository;
 
-        public List<Map<String, Object>> getAllAsistenciasEmpleados() {
-                List<AsistenciaEmpleadoModel> listaAsistenciasEmpleados = asistenciaEmpleadoRepository.findAll();
-                List<Map<String, Object>> resultado = new ArrayList<>();
+    public List<Map<String, Object>> getAllAsistenciasEmpleados() {
+        List<AsistenciaEmpleadoModel> listaAsistenciasEmpleados = asistenciaEmpleadoRepository.findAll();
+        List<Map<String, Object>> resultado = new ArrayList<>();
 
-                for (AsistenciaEmpleadoModel asistenciaEmpleado : listaAsistenciasEmpleados) {
-                        Map<String, Object> asistenciaEmpleadoMap = asistenciaEmpleado.toMap();
+        for (AsistenciaEmpleadoModel asistenciaEmpleado : listaAsistenciasEmpleados) {
+            Map<String, Object> asistenciaEmpleadoMap = asistenciaEmpleado.toMap();
 
-                        asistenciaEmpleadoMap.put("persona",
-                                        asistenciaEmpleado.getPersona() != null
-                                                        ? asistenciaEmpleado.getPersona().toMap()
-                                                        : null);
+            asistenciaEmpleadoMap.put("persona",
+                    asistenciaEmpleado.getPersona() != null
+                            ? asistenciaEmpleado.getPersona().toMap()
+                            : null);
 
-                        resultado.add(asistenciaEmpleadoMap);
-                }
-
-                return resultado;
+            resultado.add(asistenciaEmpleadoMap);
         }
 
-        public AsistenciaEmpleadoModel startOfWorkdayAsistenciaEmpleado(
-                        AsistenciaEmpleadoModel nuevoAsistenciaEmpleado) {
+        return resultado;
+    }
 
-                int id_persona = nuevoAsistenciaEmpleado.getPersona().getId_persona();
+    public AsistenciaEmpleadoModel startOfWorkdayAsistenciaEmpleado(
+            AsistenciaEmpleadoModel nuevoAsistenciaEmpleado) {
 
-                PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Persona con id " + id_persona + " no encontrado"));
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
 
-                nuevoAsistenciaEmpleado.setPersona(personaEncontrado);
-                personaEncontrado.getAsistenciasEmpleados().add(nuevoAsistenciaEmpleado);
+        int id_persona = nuevoAsistenciaEmpleado.getPersona().getId_persona();
 
-                if (asistenciaEmpleadoRepository.existsByPersonaAndFecha_AsistenciaEmpleado(personaEncontrado,
-                                nuevoAsistenciaEmpleado.getFecha())) {
-                        throw new RuntimeException("La persona con id " + id_persona
-                                        + " ya tiene una asistencia en esta fecha");
-                }
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
 
-                AsistenciaEmpleadoModel asistenciaEmpleadoGuardado = asistenciaEmpleadoRepository
-                                .save(nuevoAsistenciaEmpleado);
+        nuevoAsistenciaEmpleado.setPersona(personaEncontrado);
+        personaEncontrado.getAsistenciasEmpleados().add(nuevoAsistenciaEmpleado);
 
-                return asistenciaEmpleadoGuardado;
+        if (asistenciaEmpleadoRepository.existsByPersonaAndFecha_AsistenciaEmpleado(personaEncontrado,
+                nuevoAsistenciaEmpleado.getFecha())) {
+            throw new RuntimeException(
+                    "La persona con id " + id_persona + " ya tiene una asistencia en esta fecha");
         }
 
-        // TODO TENGO QUE PENSAR COMO HACER EL FIN DE LA JORNADA LABORAL, COMO
-        // IDENTIFICAR QUE ES EL DIA. Cuando haga el front se sabrá la logica
-        public AsistenciaEmpleadoModel endOfWorkdayAsistenciaEmpleado(
-                        AsistenciaEmpleadoModel nuevoAsistenciaEmpleado, int idAsistenciaEmpleado) {
+        AsistenciaEmpleadoModel asistenciaEmpleadoGuardado = asistenciaEmpleadoRepository
+                .save(nuevoAsistenciaEmpleado);
 
-                AsistenciaEmpleadoModel asistenciaEmpleadoExistente = asistenciaEmpleadoRepository
-                                .findById(idAsistenciaEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Asistencia empleado con id " + idAsistenciaEmpleado
-                                                                + " no encontrado"));
+        return asistenciaEmpleadoGuardado;
+    }
 
-                asistenciaEmpleadoExistente.setHora_salida(nuevoAsistenciaEmpleado.getHora_salida());
-                asistenciaEmpleadoExistente.setTotal_horas_trabajadas(8); // ESTO TENEMOS QUE CALCULARLO
+    // TODO TENGO QUE PENSAR COMO HACER EL FIN DE LA JORNADA LABORAL, COMO
+    // IDENTIFICAR QUE ES EL DIA. Cuando haga el front se sabrá la logica
+    public AsistenciaEmpleadoModel endOfWorkdayAsistenciaEmpleado(
+            AsistenciaEmpleadoModel nuevoAsistenciaEmpleado, int idAsistenciaEmpleado) {
 
-                AsistenciaEmpleadoModel asistenciaEmpleadoGuardado = asistenciaEmpleadoRepository
-                                .save(asistenciaEmpleadoExistente);
+        AsistenciaEmpleadoModel asistenciaEmpleadoExistente = asistenciaEmpleadoRepository
+                .findById(idAsistenciaEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Asistencia empleado con id " + idAsistenciaEmpleado
+                                + " no encontrado"));
 
-                return asistenciaEmpleadoGuardado;
-        }
+        asistenciaEmpleadoExistente.setHora_salida(nuevoAsistenciaEmpleado.getHora_salida());
+        asistenciaEmpleadoExistente.setTotal_horas_trabajadas(LocalTime.of(10, 0, 10)); // ESTO TENEMOS QUE CALCULARLO
 
-        public Map<String, Object> getAsistenciaEmpleadoById(int idAsistenciaEmpleado) {
-                AsistenciaEmpleadoModel asistenciaEmpleadoEncontrado = asistenciaEmpleadoRepository
-                                .findById(idAsistenciaEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Asistencia empleado con id " + idAsistenciaEmpleado
-                                                                + " no encontrado"));
+        /*
+         * LAS HORAS SE CALCULAN ASÍ, DEBEMOS PONERLO CON ESTO, PERO TIENE QUE SER ASÍ
+         * import java.time.LocalTime;
+         * import java.time.temporal.ChronoUnit;
+         * 
+         * public class Main {
+         * public static void main(String[] args) {
+         * // Crear instancias de LocalTime para las 8:00 y las 14:00
+         * LocalTime horaInicio = LocalTime.of(8, 15,45);
+         * LocalTime horaFin = LocalTime.of(10, 0, 10);
+         * 
+         * // Calcular la diferencia en minutos
+         * long minutosDeDiferencia = horaInicio.until(horaFin, ChronoUnit.MINUTES);
+         * long segundosDeDiferencia = horaInicio.until(horaFin, ChronoUnit.SECONDS);
+         * 
+         * 
+         * // Construir un nuevo LocalTime basado en los minutos de diferencia
+         * LocalTime diferenciaComoLocalTime = LocalTime.of((int) minutosDeDiferencia /
+         * 60, (int) minutosDeDiferencia % 60, (int) segundosDeDiferencia % 60);
+         * 
+         * // Mostrar la diferencia como LocalTime
+         * System.out.println("Diferencia como LocalTime: " + diferenciaComoLocalTime);
+         * }
+         * }
+         */
 
-                Map<String, Object> asistenciaEmpleadoMap = asistenciaEmpleadoEncontrado.toMap();
-                
-                asistenciaEmpleadoMap.put("persona",
-                                asistenciaEmpleadoEncontrado.getPersona() != null
-                                                ? asistenciaEmpleadoEncontrado.getPersona().toMap()
-                                                : null);
+        AsistenciaEmpleadoModel asistenciaEmpleadoGuardado = asistenciaEmpleadoRepository
+                .save(asistenciaEmpleadoExistente);
 
-                return asistenciaEmpleadoMap;
-        }
+        return asistenciaEmpleadoGuardado;
+    }
 
-        public AsistenciaEmpleadoModel updateAsistenciaEmpleado(AsistenciaEmpleadoModel cambiosAsistenciaEmpleado,
-                        int idAsistenciaEmpleado) {
+    public Map<String, Object> getAsistenciaEmpleadoById(int idAsistenciaEmpleado) {
+        AsistenciaEmpleadoModel asistenciaEmpleadoEncontrado = asistenciaEmpleadoRepository
+                .findById(idAsistenciaEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Asistencia empleado con id " + idAsistenciaEmpleado
+                                + " no encontrado"));
 
-                AsistenciaEmpleadoModel asistenciaEmpleadoExistente = asistenciaEmpleadoRepository
-                                .findById(idAsistenciaEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Asistencia empleado con id " + idAsistenciaEmpleado
-                                                                + " no encontrado"));
+        Map<String, Object> asistenciaEmpleadoMap = asistenciaEmpleadoEncontrado.toMap();
 
-                asistenciaEmpleadoExistente.setFecha(cambiosAsistenciaEmpleado.getFecha());
-                asistenciaEmpleadoExistente.setHora_entrada(cambiosAsistenciaEmpleado.getHora_entrada());
-                asistenciaEmpleadoExistente.setHora_salida(cambiosAsistenciaEmpleado.getHora_salida());
-                asistenciaEmpleadoExistente
-                                .setTotal_horas_trabajadas(cambiosAsistenciaEmpleado.getTotal_horas_trabajadas());
+        asistenciaEmpleadoMap.put("persona",
+                asistenciaEmpleadoEncontrado.getPersona() != null
+                        ? asistenciaEmpleadoEncontrado.getPersona().toMap()
+                        : null);
 
-                int id_persona = cambiosAsistenciaEmpleado.getPersona().getId_persona();
+        return asistenciaEmpleadoMap;
+    }
 
-                PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Persona con id " + id_persona + " no encontrado"));
+    public AsistenciaEmpleadoModel updateAsistenciaEmpleado(AsistenciaEmpleadoModel cambiosAsistenciaEmpleado,
+            int idAsistenciaEmpleado) {
 
-                asistenciaEmpleadoExistente.getPersona().getAsistenciasEmpleados().remove(asistenciaEmpleadoExistente);
-                asistenciaEmpleadoExistente.setPersona(personaEncontrado);
-                personaEncontrado.getAsistenciasEmpleados().add(asistenciaEmpleadoExistente);
+        AsistenciaEmpleadoModel asistenciaEmpleadoExistente = asistenciaEmpleadoRepository
+                .findById(idAsistenciaEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Asistencia empleado con id " + idAsistenciaEmpleado
+                                + " no encontrado"));
 
-                AsistenciaEmpleadoModel asistenciaEmpleadoActualizado = asistenciaEmpleadoRepository
-                                .save(asistenciaEmpleadoExistente);
+        asistenciaEmpleadoExistente.setFecha(cambiosAsistenciaEmpleado.getFecha());
+        asistenciaEmpleadoExistente.setHora_entrada(cambiosAsistenciaEmpleado.getHora_entrada());
+        asistenciaEmpleadoExistente.setHora_salida(cambiosAsistenciaEmpleado.getHora_salida());
+        asistenciaEmpleadoExistente
+                .setTotal_horas_trabajadas(cambiosAsistenciaEmpleado.getTotal_horas_trabajadas());
 
-                return asistenciaEmpleadoActualizado;
+        int id_persona = cambiosAsistenciaEmpleado.getPersona().getId_persona();
 
-        }
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
 
-        public void deleteAsistenciaEmpleado(int idAsistenciaEmpleado) {
-                asistenciaEmpleadoRepository.findById(idAsistenciaEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Asistencia empleado con id " + idAsistenciaEmpleado
-                                                                + " no encontrado"));
+        asistenciaEmpleadoExistente.getPersona().getAsistenciasEmpleados().remove(asistenciaEmpleadoExistente);
+        asistenciaEmpleadoExistente.setPersona(personaEncontrado);
+        personaEncontrado.getAsistenciasEmpleados().add(asistenciaEmpleadoExistente);
 
-                asistenciaEmpleadoRepository.deleteById(idAsistenciaEmpleado);
-        }
+        AsistenciaEmpleadoModel asistenciaEmpleadoActualizado = asistenciaEmpleadoRepository
+                .save(asistenciaEmpleadoExistente);
+
+        return asistenciaEmpleadoActualizado;
+
+    }
+
+    public void deleteAsistenciaEmpleado(int idAsistenciaEmpleado) {
+        asistenciaEmpleadoRepository.findById(idAsistenciaEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Asistencia empleado con id " + idAsistenciaEmpleado
+                                + " no encontrado"));
+
+        asistenciaEmpleadoRepository.deleteById(idAsistenciaEmpleado);
+    }
 }

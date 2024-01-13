@@ -22,7 +22,7 @@ public class TipoUsuarioService {
 
         for (TipoUsuarioModel tipoUsuario : listaTiposUsuarios) {
             Map<String, Object> tipoUsuarioMap = tipoUsuario.toMap();
-            
+
             resultado.add(tipoUsuarioMap);
         }
 

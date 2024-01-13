@@ -56,6 +56,13 @@ public class PersonaService {
 
         // Verificar si el nombre de usuario ya existe en la base de datos
 
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
+
         if (personaRepository.existsByNumero_empleado(numero_empleado)) {
             throw new RuntimeException("El numero empleado ya existe para una persona");
         }
@@ -105,7 +112,7 @@ public class PersonaService {
                 .orElseThrow(() -> new RuntimeException("Persona con id " + idPersona + " no encontrado"));
 
         Map<String, Object> personaMap = personaEncontrado.toMap();
-        
+
         personaMap.put("tipo_persona",
                 personaEncontrado.getTipo_persona() != null ? personaEncontrado.getTipo_persona().toMap() : null);
 

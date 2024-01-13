@@ -15,99 +15,106 @@ import tfg.backend.repositories.PedidoClienteRepository;
 @Service
 public class PedidoClienteService {
 
-        @Autowired
-        private PedidoClienteRepository pedidoClienteRepository;
+    @Autowired
+    private PedidoClienteRepository pedidoClienteRepository;
 
-        @Autowired
-        private ClienteRepository clienteRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
 
-        public List<Map<String, Object>> getAllPedidosClientes() {
-                List<PedidoClienteModel> listaPedidosClientes = pedidoClienteRepository.findAll();
-                List<Map<String, Object>> resultado = new ArrayList<>();
+    public List<Map<String, Object>> getAllPedidosClientes() {
+        List<PedidoClienteModel> listaPedidosClientes = pedidoClienteRepository.findAll();
+        List<Map<String, Object>> resultado = new ArrayList<>();
 
-                for (PedidoClienteModel pedidoCliente : listaPedidosClientes) {
-                        Map<String, Object> pedidoClienteMap = pedidoCliente.toMap();
+        for (PedidoClienteModel pedidoCliente : listaPedidosClientes) {
+            Map<String, Object> pedidoClienteMap = pedidoCliente.toMap();
 
-                        pedidoClienteMap.put("cliente",
-                                        pedidoCliente.getCliente() != null
-                                                        ? pedidoCliente.getCliente().toMap()
-                                                        : null);
+            pedidoClienteMap.put("cliente",
+                    pedidoCliente.getCliente() != null
+                            ? pedidoCliente.getCliente().toMap()
+                            : null);
 
-                        resultado.add(pedidoClienteMap);
-                }
-
-                return resultado;
+            resultado.add(pedidoClienteMap);
         }
 
-        public PedidoClienteModel savePedidoCliente(PedidoClienteModel nuevoPedidoCliente) {
+        return resultado;
+    }
 
-                int id_cliente = nuevoPedidoCliente.getCliente().getId_cliente();
+    public PedidoClienteModel savePedidoCliente(PedidoClienteModel nuevoPedidoCliente) {
 
-                ClienteModel clienteEncontrado = clienteRepository.findById(id_cliente)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Cliente con id " + id_cliente + " no encontrado"));
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
 
-                nuevoPedidoCliente.setCliente(clienteEncontrado);
-                clienteEncontrado.getPedidosClientes().add(nuevoPedidoCliente);
+        int id_cliente = nuevoPedidoCliente.getCliente().getId_cliente();
 
-                PedidoClienteModel pedidoClienteGuardado = pedidoClienteRepository
-                                .save(nuevoPedidoCliente);
+        ClienteModel clienteEncontrado = clienteRepository.findById(id_cliente)
+                .orElseThrow(() -> new RuntimeException(
+                        "Cliente con id " + id_cliente + " no encontrado"));
 
-                return pedidoClienteGuardado;
-        }
+        nuevoPedidoCliente.setCliente(clienteEncontrado);
+        clienteEncontrado.getPedidosClientes().add(nuevoPedidoCliente);
 
-        public Map<String, Object> getPedidoClienteById(int idPedidoCliente) {
-                PedidoClienteModel pedidoClienteEncontrado = pedidoClienteRepository.findById(idPedidoCliente)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Pedido cliente con id " + idPedidoCliente + " no encontrado"));
+        PedidoClienteModel pedidoClienteGuardado = pedidoClienteRepository
+                .save(nuevoPedidoCliente);
 
-                Map<String, Object> pedidoClienteMap = pedidoClienteEncontrado.toMap();
+        return pedidoClienteGuardado;
+    }
 
-                pedidoClienteMap.put("cliente",
-                                pedidoClienteEncontrado.getCliente() != null
-                                                ? pedidoClienteEncontrado.getCliente().toMap()
-                                                : null);
+    public Map<String, Object> getPedidoClienteById(int idPedidoCliente) {
+        PedidoClienteModel pedidoClienteEncontrado = pedidoClienteRepository.findById(idPedidoCliente)
+                .orElseThrow(() -> new RuntimeException(
+                        "Pedido cliente con id " + idPedidoCliente + " no encontrado"));
 
-                return pedidoClienteMap;
-        }
+        Map<String, Object> pedidoClienteMap = pedidoClienteEncontrado.toMap();
 
-        public PedidoClienteModel updatePedidoCliente(PedidoClienteModel cambiosPedidoCliente, int idPedidoCliente) {
+        pedidoClienteMap.put("cliente",
+                pedidoClienteEncontrado.getCliente() != null
+                        ? pedidoClienteEncontrado.getCliente().toMap()
+                        : null);
 
-                PedidoClienteModel pedidoClienteExistente = pedidoClienteRepository.findById(idPedidoCliente)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Pedido cliente con id " + idPedidoCliente + " no encontrado"));
+        return pedidoClienteMap;
+    }
 
-                // Comprobacion de campos correctos -> Ejemplo:
-                /*
-                 * if (cambiosUsuario.getNombre_usuario() == null) {
-                 * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-                 * }
-                 */
+    public PedidoClienteModel updatePedidoCliente(PedidoClienteModel cambiosPedidoCliente, int idPedidoCliente) {
 
-                // HACER AQUI LOS SETTER -> Ejemplo:
-                // asistenciaEmpleadoExistente.setFecha(cambiosAsistenciaEmpleado.getFecha());
+        PedidoClienteModel pedidoClienteExistente = pedidoClienteRepository.findById(idPedidoCliente)
+                .orElseThrow(() -> new RuntimeException(
+                        "Pedido cliente con id " + idPedidoCliente + " no encontrado"));
 
-                int id_cliente = cambiosPedidoCliente.getCliente().getId_cliente();
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
 
-                ClienteModel clienteEncontrado = clienteRepository.findById(id_cliente)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Cliente con id " + id_cliente + " no encontrado"));
+        // HACER AQUI LOS SETTER -> Ejemplo:
+        // asistenciaEmpleadoExistente.setFecha(cambiosAsistenciaEmpleado.getFecha());
 
-                pedidoClienteExistente.getCliente().getPedidosClientes().remove(pedidoClienteExistente);
-                pedidoClienteExistente.setCliente(clienteEncontrado);
-                clienteEncontrado.getPedidosClientes().add(pedidoClienteExistente);
+        int id_cliente = cambiosPedidoCliente.getCliente().getId_cliente();
 
-                PedidoClienteModel pedidoClienteActualizado = pedidoClienteRepository.save(pedidoClienteExistente);
+        ClienteModel clienteEncontrado = clienteRepository.findById(id_cliente)
+                .orElseThrow(() -> new RuntimeException(
+                        "Cliente con id " + id_cliente + " no encontrado"));
 
-                return pedidoClienteActualizado;
-        }
+        pedidoClienteExistente.getCliente().getPedidosClientes().remove(pedidoClienteExistente);
+        pedidoClienteExistente.setCliente(clienteEncontrado);
+        clienteEncontrado.getPedidosClientes().add(pedidoClienteExistente);
 
-        public void deletePedidoCliente(int idPedidoCliente) {
-                pedidoClienteRepository.findById(idPedidoCliente)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Pedido cliente con id " + idPedidoCliente + " no encontrado"));
+        PedidoClienteModel pedidoClienteActualizado = pedidoClienteRepository.save(pedidoClienteExistente);
 
-                pedidoClienteRepository.deleteById(idPedidoCliente);
+        return pedidoClienteActualizado;
+    }
 
-        }
+    public void deletePedidoCliente(int idPedidoCliente) {
+        pedidoClienteRepository.findById(idPedidoCliente)
+                .orElseThrow(() -> new RuntimeException(
+                        "Pedido cliente con id " + idPedidoCliente + " no encontrado"));
+
+        pedidoClienteRepository.deleteById(idPedidoCliente);
+
+    }
 }

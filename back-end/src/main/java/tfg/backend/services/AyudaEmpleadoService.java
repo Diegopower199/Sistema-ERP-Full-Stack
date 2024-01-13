@@ -19,152 +19,166 @@ import tfg.backend.repositories.TipoEstadoRepository;
 @Service
 public class AyudaEmpleadoService {
 
-        @Autowired
-        private AyudaEmpleadoRepository ayudaEmpleadoRepository;
+    @Autowired
+    private AyudaEmpleadoRepository ayudaEmpleadoRepository;
 
-        @Autowired
-        private TipoAyudaRepository tipoAyudaRepository;
+    @Autowired
+    private TipoAyudaRepository tipoAyudaRepository;
 
-        @Autowired
-        private TipoEstadoRepository tipoEstadoRepository;
+    @Autowired
+    private TipoEstadoRepository tipoEstadoRepository;
 
-        @Autowired
-        private PersonaRepository personaRepository;
+    @Autowired
+    private PersonaRepository personaRepository;
 
-        public List<Map<String, Object>> getAllAyudasEmpleados() {
-                List<AyudaEmpleadoModel> listaAyudasEmpleados = ayudaEmpleadoRepository.findAll();
-                List<Map<String, Object>> resultado = new ArrayList<>();
+    public List<Map<String, Object>> getAllAyudasEmpleados() {
+        List<AyudaEmpleadoModel> listaAyudasEmpleados = ayudaEmpleadoRepository.findAll();
+        List<Map<String, Object>> resultado = new ArrayList<>();
 
-                for (AyudaEmpleadoModel ayudaEmpleado : listaAyudasEmpleados) {
-                        Map<String, Object> ayudaEmpleadoMap = ayudaEmpleado.toMap();
+        for (AyudaEmpleadoModel ayudaEmpleado : listaAyudasEmpleados) {
+            Map<String, Object> ayudaEmpleadoMap = ayudaEmpleado.toMap();
 
-                        ayudaEmpleadoMap.put("persona",
-                                        ayudaEmpleado.getPersona() != null ? ayudaEmpleado.getPersona().toMap() : null);
+            ayudaEmpleadoMap.put("persona",
+                    ayudaEmpleado.getPersona() != null ? ayudaEmpleado.getPersona().toMap() : null);
 
-                        ayudaEmpleadoMap.put("tipo_ayuda",
-                                        ayudaEmpleado.getTipo_ayuda() != null ? ayudaEmpleado.getTipo_ayuda().toMap()
-                                                        : null);
+            ayudaEmpleadoMap.put("tipo_ayuda",
+                    ayudaEmpleado.getTipo_ayuda() != null ? ayudaEmpleado.getTipo_ayuda().toMap()
+                            : null);
 
-                        ayudaEmpleadoMap.put("tipo_estado",
-                                        ayudaEmpleado.getTipo_estado() != null ? ayudaEmpleado.getTipo_estado().toMap()
-                                                        : null);
+            ayudaEmpleadoMap.put("tipo_estado",
+                    ayudaEmpleado.getTipo_estado() != null ? ayudaEmpleado.getTipo_estado().toMap()
+                            : null);
 
-                        resultado.add(ayudaEmpleadoMap);
-                }
-
-                return resultado;
+            resultado.add(ayudaEmpleadoMap);
         }
 
-        public AyudaEmpleadoModel saveAyudaEmpleado(AyudaEmpleadoModel nuevoAyudaEmpleado) {
+        return resultado;
+    }
 
-                int id_persona = nuevoAyudaEmpleado.getPersona().getId_persona();
+    public AyudaEmpleadoModel saveAyudaEmpleado(AyudaEmpleadoModel nuevoAyudaEmpleado) {
 
-                PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Persona con id " + id_persona + " no encontrado"));
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
 
-                nuevoAyudaEmpleado.setPersona(personaEncontrado);
-                personaEncontrado.getAyudasEmpleados().add(nuevoAyudaEmpleado);
+        int id_persona = nuevoAyudaEmpleado.getPersona().getId_persona();
 
-                int id_tipo_ayuda = nuevoAyudaEmpleado.getTipo_ayuda().getId_tipo_ayuda();
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
 
-                TipoAyudaModel tipoAyudaEncontrado = tipoAyudaRepository.findById(id_tipo_ayuda)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Tipo ayuda con id " + id_tipo_ayuda + " no encontrado"));
+        nuevoAyudaEmpleado.setPersona(personaEncontrado);
+        personaEncontrado.getAyudasEmpleados().add(nuevoAyudaEmpleado);
 
-                nuevoAyudaEmpleado.setTipo_ayuda(tipoAyudaEncontrado);
-                tipoAyudaEncontrado.getAyudasEmpleados().add(nuevoAyudaEmpleado);
+        int id_tipo_ayuda = nuevoAyudaEmpleado.getTipo_ayuda().getId_tipo_ayuda();
 
-                int id_tipo_estado = nuevoAyudaEmpleado.getTipo_estado().getId_tipo_estado();
+        TipoAyudaModel tipoAyudaEncontrado = tipoAyudaRepository.findById(id_tipo_ayuda)
+                .orElseThrow(() -> new RuntimeException(
+                        "Tipo ayuda con id " + id_tipo_ayuda + " no encontrado"));
 
-                TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Tipo estado con id " + id_tipo_estado + " no encontrado"));
+        nuevoAyudaEmpleado.setTipo_ayuda(tipoAyudaEncontrado);
+        tipoAyudaEncontrado.getAyudasEmpleados().add(nuevoAyudaEmpleado);
 
-                nuevoAyudaEmpleado.setTipo_estado(tipoEstadoEncontrado);
-                tipoEstadoEncontrado.getAyudasEmpleados().add(nuevoAyudaEmpleado);
+        int id_tipo_estado = nuevoAyudaEmpleado.getTipo_estado().getId_tipo_estado();
 
-                AyudaEmpleadoModel ayudaEmpleadoGuardado = ayudaEmpleadoRepository.save(nuevoAyudaEmpleado);
+        TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Tipo estado con id " + id_tipo_estado + " no encontrado"));
 
-                return ayudaEmpleadoGuardado;
-        }
+        nuevoAyudaEmpleado.setTipo_estado(tipoEstadoEncontrado);
+        tipoEstadoEncontrado.getAyudasEmpleados().add(nuevoAyudaEmpleado);
 
-        public Map<String, Object> getAyudaEmpleadoById(int idAyudaEmpleado) {
-                AyudaEmpleadoModel ayudaEmpleadoEncontrado = ayudaEmpleadoRepository.findById(idAyudaEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Ayuda empleado con id " + idAyudaEmpleado + " no encontrado"));
+        AyudaEmpleadoModel ayudaEmpleadoGuardado = ayudaEmpleadoRepository.save(nuevoAyudaEmpleado);
 
-                Map<String, Object> ayudaEmpleadoMap = ayudaEmpleadoEncontrado.toMap();
+        return ayudaEmpleadoGuardado;
+    }
 
-                ayudaEmpleadoMap.put("persona",
-                                ayudaEmpleadoEncontrado.getPersona() != null
-                                                ? ayudaEmpleadoEncontrado.getPersona().toMap()
-                                                : null);
+    public Map<String, Object> getAyudaEmpleadoById(int idAyudaEmpleado) {
+        AyudaEmpleadoModel ayudaEmpleadoEncontrado = ayudaEmpleadoRepository.findById(idAyudaEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Ayuda empleado con id " + idAyudaEmpleado + " no encontrado"));
 
-                ayudaEmpleadoMap.put("tipo_solicitud",
-                                ayudaEmpleadoEncontrado.getTipo_ayuda() != null
-                                                ? ayudaEmpleadoEncontrado.getTipo_ayuda().toMap()
-                                                : null);
+        Map<String, Object> ayudaEmpleadoMap = ayudaEmpleadoEncontrado.toMap();
 
-                ayudaEmpleadoMap.put("tipo_estado",
-                                ayudaEmpleadoEncontrado.getTipo_estado() != null
-                                                ? ayudaEmpleadoEncontrado.getTipo_estado().toMap()
-                                                : null);
+        ayudaEmpleadoMap.put("persona",
+                ayudaEmpleadoEncontrado.getPersona() != null
+                        ? ayudaEmpleadoEncontrado.getPersona().toMap()
+                        : null);
 
-                return ayudaEmpleadoMap;
-        }
+        ayudaEmpleadoMap.put("tipo_solicitud",
+                ayudaEmpleadoEncontrado.getTipo_ayuda() != null
+                        ? ayudaEmpleadoEncontrado.getTipo_ayuda().toMap()
+                        : null);
 
-        public AyudaEmpleadoModel updateAyudaEmpleado(AyudaEmpleadoModel cambiosAyudaEmpleado, int idAyudaEmpleado) {
+        ayudaEmpleadoMap.put("tipo_estado",
+                ayudaEmpleadoEncontrado.getTipo_estado() != null
+                        ? ayudaEmpleadoEncontrado.getTipo_estado().toMap()
+                        : null);
 
-                AyudaEmpleadoModel ayudaEmpleadoExistente = ayudaEmpleadoRepository.findById(idAyudaEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Ayuda empleado con id " + idAyudaEmpleado + " no encontrado"));
+        return ayudaEmpleadoMap;
+    }
 
-                ayudaEmpleadoExistente.setFecha_inicio(cambiosAyudaEmpleado.getFecha_inicio());
-                ayudaEmpleadoExistente.setFecha_fin(cambiosAyudaEmpleado.getFecha_fin());
-                ayudaEmpleadoExistente.setValor_asociado(cambiosAyudaEmpleado.getValor_asociado());
+    public AyudaEmpleadoModel updateAyudaEmpleado(AyudaEmpleadoModel cambiosAyudaEmpleado, int idAyudaEmpleado) {
 
-                int id_persona = cambiosAyudaEmpleado.getPersona().getId_persona();
+        AyudaEmpleadoModel ayudaEmpleadoExistente = ayudaEmpleadoRepository.findById(idAyudaEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Ayuda empleado con id " + idAyudaEmpleado + " no encontrado"));
 
-                PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Persona con id " + id_persona + " no encontrado"));
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
 
-                ayudaEmpleadoExistente.getPersona().getAyudasEmpleados().remove(ayudaEmpleadoExistente);
-                ayudaEmpleadoExistente.setPersona(personaEncontrado);
-                personaEncontrado.getAyudasEmpleados().add(ayudaEmpleadoExistente);
+        ayudaEmpleadoExistente.setFecha_inicio(cambiosAyudaEmpleado.getFecha_inicio());
+        ayudaEmpleadoExistente.setFecha_fin(cambiosAyudaEmpleado.getFecha_fin());
+        ayudaEmpleadoExistente.setValor_asociado(cambiosAyudaEmpleado.getValor_asociado());
 
-                int id_tipo_ayuda = cambiosAyudaEmpleado.getTipo_ayuda().getId_tipo_ayuda();
+        int id_persona = cambiosAyudaEmpleado.getPersona().getId_persona();
 
-                TipoAyudaModel tipoAyudaEncontrado = tipoAyudaRepository.findById(id_tipo_ayuda)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Tipo ayuda con id " + id_tipo_ayuda + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
 
-                ayudaEmpleadoExistente.getTipo_ayuda().getAyudasEmpleados().remove(ayudaEmpleadoExistente);
-                ayudaEmpleadoExistente.setTipo_ayuda(tipoAyudaEncontrado);
-                tipoAyudaEncontrado.getAyudasEmpleados().add(ayudaEmpleadoExistente);
+        ayudaEmpleadoExistente.getPersona().getAyudasEmpleados().remove(ayudaEmpleadoExistente);
+        ayudaEmpleadoExistente.setPersona(personaEncontrado);
+        personaEncontrado.getAyudasEmpleados().add(ayudaEmpleadoExistente);
 
-                int id_tipo_estado = cambiosAyudaEmpleado.getTipo_estado().getId_tipo_estado();
+        int id_tipo_ayuda = cambiosAyudaEmpleado.getTipo_ayuda().getId_tipo_ayuda();
 
-                TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Tipo estado con id " + id_tipo_estado + " no encontrado"));
+        TipoAyudaModel tipoAyudaEncontrado = tipoAyudaRepository.findById(id_tipo_ayuda)
+                .orElseThrow(() -> new RuntimeException(
+                        "Tipo ayuda con id " + id_tipo_ayuda + " no encontrado"));
 
-                ayudaEmpleadoExistente.getTipo_estado().getAyudasEmpleados().remove(ayudaEmpleadoExistente);
-                ayudaEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
-                tipoEstadoEncontrado.getAyudasEmpleados().add(ayudaEmpleadoExistente);
+        ayudaEmpleadoExistente.getTipo_ayuda().getAyudasEmpleados().remove(ayudaEmpleadoExistente);
+        ayudaEmpleadoExistente.setTipo_ayuda(tipoAyudaEncontrado);
+        tipoAyudaEncontrado.getAyudasEmpleados().add(ayudaEmpleadoExistente);
 
-                AyudaEmpleadoModel ayudaEmpleadoActualizado = ayudaEmpleadoRepository.save(ayudaEmpleadoExistente);
+        int id_tipo_estado = cambiosAyudaEmpleado.getTipo_estado().getId_tipo_estado();
 
-                return ayudaEmpleadoActualizado;
+        TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Tipo estado con id " + id_tipo_estado + " no encontrado"));
 
-        }
+        ayudaEmpleadoExistente.getTipo_estado().getAyudasEmpleados().remove(ayudaEmpleadoExistente);
+        ayudaEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
+        tipoEstadoEncontrado.getAyudasEmpleados().add(ayudaEmpleadoExistente);
 
-        public void deleteAyudaEmpleado(int idAyudaEmpleado) {
-                ayudaEmpleadoRepository.findById(idAyudaEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Ayuda empleado con id " + idAyudaEmpleado + " no encontrado"));
+        AyudaEmpleadoModel ayudaEmpleadoActualizado = ayudaEmpleadoRepository.save(ayudaEmpleadoExistente);
 
-                ayudaEmpleadoRepository.deleteById(idAyudaEmpleado);
-        }
+        return ayudaEmpleadoActualizado;
+
+    }
+
+    public void deleteAyudaEmpleado(int idAyudaEmpleado) {
+        ayudaEmpleadoRepository.findById(idAyudaEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Ayuda empleado con id " + idAyudaEmpleado + " no encontrado"));
+
+        ayudaEmpleadoRepository.deleteById(idAyudaEmpleado);
+    }
 }

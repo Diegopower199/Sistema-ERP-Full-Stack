@@ -22,7 +22,7 @@ public class TipoSolicitudService {
 
         for (TipoSolicitudModel tipoSolicitud : listaTiposSolicitudes) {
             Map<String, Object> tipoSolicitudMap = tipoSolicitud.toMap();
-            
+
             resultado.add(tipoSolicitudMap);
         }
 

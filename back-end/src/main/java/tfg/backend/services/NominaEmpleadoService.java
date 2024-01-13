@@ -41,6 +41,13 @@ public class NominaEmpleadoService {
 
     public NominaEmpleadoModel saveNominaEmpleado(NominaEmpleadoModel nuevoNominaEmpleado) {
 
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
+
         int id_persona = nuevoNominaEmpleado.getPersona().getId_persona();
 
         PersonaModel personaEncontrado = personaRepository.findById(id_persona)
@@ -59,7 +66,8 @@ public class NominaEmpleadoService {
     public Map<String, Object> getNominaEmpleadoById(int idNominaEmpleado) {
         NominaEmpleadoModel nominaEmpleadoEncontrado = nominaEmpleadoRepository.findById(idNominaEmpleado)
                 .orElseThrow(
-                        () -> new RuntimeException("Nomina empleado con id " + idNominaEmpleado + " no encontrado"));
+                        () -> new RuntimeException("Nomina empleado con id " + idNominaEmpleado
+                                + " no encontrado"));
 
         Map<String, Object> nominaEmpleadoMap = nominaEmpleadoEncontrado.toMap();
 
@@ -71,7 +79,8 @@ public class NominaEmpleadoService {
         return nominaEmpleadoMap;
     }
 
-    public NominaEmpleadoModel updateNominaEmpleado(NominaEmpleadoModel cambiosNominaEmpleado, int idNominaEmpleado) {
+    public NominaEmpleadoModel updateNominaEmpleado(NominaEmpleadoModel cambiosNominaEmpleado,
+            int idNominaEmpleado) {
 
         NominaEmpleadoModel nominaEmpleadoExistente = nominaEmpleadoRepository.findById(idNominaEmpleado)
                 .orElseThrow(() -> new RuntimeException(
@@ -95,7 +104,8 @@ public class NominaEmpleadoService {
     public void deleteNominaEmpleado(int idNominaEmpleado) {
         nominaEmpleadoRepository.findById(idNominaEmpleado)
                 .orElseThrow(
-                        () -> new RuntimeException("Nomina empleado con id " + idNominaEmpleado + " no encontrado"));
+                        () -> new RuntimeException("Nomina empleado con id " + idNominaEmpleado
+                                + " no encontrado"));
 
         nominaEmpleadoRepository.deleteById(idNominaEmpleado);
     }

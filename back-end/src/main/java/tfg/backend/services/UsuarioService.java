@@ -37,7 +37,7 @@ public class UsuarioService {
 
             usuarioMap.put("tipo_usuario",
                     usuario.getTipo_usuario() != null ? usuario.getTipo_usuario().toMap() : null);
-                    
+
             resultado.add(usuarioMap);
         }
 
@@ -107,7 +107,7 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Usuario con id " + idUsuario + " no encontrado"));
 
         Map<String, Object> usuarioMap = usuarioEncontrado.toMap();
-        
+
         usuarioMap.put("persona",
                 usuarioEncontrado.getPersona() != null ? usuarioEncontrado.getPersona().toMap() : null);
         usuarioMap.put("tipo_usuario",

@@ -33,7 +33,7 @@ export const saveUsuario = async (args) => {
   } catch (error) {
     // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }
@@ -57,7 +57,7 @@ export const getUsuarioById = async (id) => {
   } catch (error) {
     // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }
@@ -91,7 +91,7 @@ export const updateUsuario = async (id, data) => {
       error.response.status
     );
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }
@@ -153,7 +153,7 @@ export const getUsuarioByNombreUsuario = async (nombre_usuario) => {
   } catch (error) {
     // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }

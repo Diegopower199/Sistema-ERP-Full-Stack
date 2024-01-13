@@ -39,7 +39,7 @@ export const savePersona = async (data) => {
   } catch (error) {
     // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }
@@ -57,7 +57,7 @@ export const getPersonaById = async (id) => {
   } catch (error) {
     // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
-      messageError: error.response.data.message, // Error message
+      errorMessage: error.response.data.message, // Error message
       status: error.response.status,
     };
   }
@@ -95,7 +95,7 @@ export const updatePersona = async (id, data) => {
       error.response.status
     );
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }

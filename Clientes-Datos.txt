@@ -1,0 +1,491 @@
+ejemplos en formato JSON:
+
+Clientes:
+
+Sin razon social:
+--------------------------------------------------------------------------
+[
+  {
+    "nif": "12345678A",
+    "nombre_apellidos": "Elena Rodriguez",
+    "razon_social": null,
+    "numero_telefono": "2222222",
+    "correo_electronico": "elena.rodriguez@gmail.com",
+    "direccion": "Calle Gran Vía 123",
+    "codigo_postal": "28013",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "87654321B",
+    "nombre_apellidos": "Carlos Sanchez",
+    "razon_social": null,
+    "numero_telefono": "34612345678",
+    "correo_electronico": "carlos.sanchez@hotmail.com",
+    "direccion": "Calle Alcalá 456",
+    "codigo_postal": "28009",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "23456789C",
+    "nombre_apellidos": "Laura Fernandez",
+    "razon_social": null,
+    "numero_telefono": "34623456789",
+    "correo_electronico": "laura.fernandez@yahoo.es",
+    "direccion": "Calle Princesa 789",
+    "codigo_postal": "28008",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "34567890D",
+    "nombre_apellidos": "David Lopez",
+    "razon_social": null,
+    "numero_telefono": "34634567890",
+    "correo_electronico": "david.lopez@outlook.es",
+    "direccion": "Calle Mayor 101",
+    "codigo_postal": "28013",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "45678901E",
+    "nombre_apellidos": "Ana Martinez",
+    "razon_social": null,
+    "numero_telefono": "34645678901",
+    "correo_electronico": "ana.martinez@gmail.com",
+    "direccion": "Calle Fuencarral 202",
+    "codigo_postal": "28004",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "56789012F",
+    "nombre_apellidos": "Javier Gomez",
+    "razon_social": null,
+    "numero_telefono": "34656789012",
+    "correo_electronico": "javier.gomez@hotmail.com",
+    "direccion": "Calle Serrano 303",
+    "codigo_postal": "28006",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "67890123G",
+    "nombre_apellidos": "Sofia Navarro",
+    "razon_social": null,
+    "numero_telefono": "34667890123",
+    "correo_electronico": "sofia.navarro@yahoo.es",
+    "direccion": "Calle Gran Vía 404",
+    "codigo_postal": "28013",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "78901234H",
+    "nombre_apellidos": "Miguel Fernandez",
+    "razon_social": null,
+    "numero_telefono": "34678901234",
+    "correo_electronico": "miguel.fernandez@outlook.es",
+    "direccion": "Calle Prado 505",
+    "codigo_postal": "28014",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "89012345I",
+    "nombre_apellidos": "Isabel Rodriguez",
+    "razon_social": null,
+    "numero_telefono": "34689012345",
+    "correo_electronico": "isabel.rodriguez@gmail.com",
+    "direccion": "Calle Atocha 606",
+    "codigo_postal": "28012",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "90123456J",
+    "nombre_apellidos": "Alejandro Lopez",
+    "razon_social": null,
+    "numero_telefono": "34690123456",
+    "correo_electronico": "alejandro.lopez@hotmail.com",
+    "direccion": "Calle Goya 707",
+    "codigo_postal": "28001",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  }
+ {
+    "nif": "34567890D",
+    "nombre_apellidos": "David Lopez",
+    "razon_social": null,
+    "numero_telefono": "34634567890",
+    "correo_electronico": "david.lopez@outlook.es",
+    "direccion": "Calle Gran Vía 101",
+    "codigo_postal": "50003",
+    "ciudad": "ZARAGOZA",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "nif": "45678901E",
+    "nombre_apellidos": "Ana Martinez",
+    "razon_social": null,
+    "numero_telefono": "34645678901",
+    "correo_electronico": "ana.martinez@gmail.com",
+    "direccion": "Calle Alameda 202",
+    "codigo_postal": "29004",
+    "ciudad": "MALAGA",
+    "provincia": "MALAGA"
+  },
+  {
+    "nif": "56789012F",
+    "nombre_apellidos": "Javier Gomez",
+    "razon_social": null,
+    "numero_telefono": "34656789012",
+    "correo_electronico": "javier.gomez@hotmail.com",
+    "direccion": "Avenida Diagonal 303",
+    "codigo_postal": "08001",
+    "ciudad": "BARCELONA",
+    "provincia": "BARCELONA"
+  },
+  {
+    "nif": "67890123G",
+    "nombre_apellidos": "Sofia Navarro",
+    "razon_social": null,
+    "numero_telefono": "34667890123",
+    "correo_electronico": "sofia.navarro@yahoo.es",
+    "direccion": "Calle del Mar 404",
+    "codigo_postal": "15001",
+    "ciudad": "A CORUÑA",
+    "provincia": "A CORUÑA"
+  },
+  {
+    "nif": "78901234H",
+    "nombre_apellidos": "Miguel Fernandez",
+    "razon_social": null,
+    "numero_telefono": "34678901234",
+    "correo_electronico": "miguel.fernandez@outlook.es",
+    "direccion": "Calle de la Plata 505",
+    "codigo_postal": "33001",
+    "ciudad": "OVIEDO",
+    "provincia": "ASTURIAS"
+  },
+  {
+    "nif": "89012345I",
+    "nombre_apellidos": "Isabel Rodriguez",
+    "razon_social": null,
+    "numero_telefono": "34689012345",
+    "correo_electronico": "isabel.rodriguez@gmail.com",
+    "direccion": "Calle Mayor 606",
+    "codigo_postal": "41002",
+    "ciudad": "SEVILLA",
+    "provincia": "SEVILLA"
+  },
+  {
+    "nif": "90123456J",
+    "nombre_apellidos": "Alejandro Lopez",
+    "razon_social": null,
+    "numero_telefono": "34690123456",
+    "correo_electronico": "alejandro.lopez@hotmail.com",
+    "direccion": "Avenida de la Paz 707",
+    "codigo_postal": "46001",
+    "ciudad": "VALENCIA",
+    "provincia": "VALENCIA"
+  }
+]
+
+----------------------------------------------------------------------
+
+
+Sin nombre_apellidos:
+---------------------------------------------------------------------
+
+TecnoByte Solutions S.L.
+
+Correo electrónico: soporte@tecno-byte.es
+InnovaSys Tech Group
+
+Correo electrónico: soporte@innova-sys.es
+MicroFutura Informatics
+
+Correo electrónico: soporte@microfutura-informatics.es
+DataVanguard Solutions
+
+Correo electrónico: soporte@datavanguard.es
+ByteLink Microsystems
+
+Correo electrónico: soporte@bytelink-microsystems.es
+InfraNet Innovations S.A.
+
+Correo electrónico: soporte@infranet-innovations.es
+CloudSphere Tech Services
+
+Correo electrónico: soporte@cloudsphere-tech.es
+EcoData Informática Integral
+
+Correo electrónico: soporte@ecodata-informatica.es
+SysHarbor Solutions España
+
+Correo electrónico: soporte@sysharbor-solutions.es
+GestiónMicro Informática Empresarial
+
+Correo electrónico: soporte@gestionmicro-empresarial.es
+
+[
+  {
+    "nif": "A1234567B",
+    "nombre_apellidos": null,
+    "razon_social": "TecnoByte Solutions S.L.",
+    "numero_telefono": "34676543210",
+    "correo_electronico": "soporte@tecno-byte.es",
+    "direccion": "Calle Gran Vía 123",
+    "codigo_postal": "28013",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "C9876543D",
+    "nombre_apellidos": null,
+    "razon_social": "InnovaSys Tech Group",
+    "numero_telefono": "34681234567",
+    "correo_electronico": "soporte@innova-sys.es",
+    "direccion": "Avenida de la Constitución 456",
+    "codigo_postal": "41004",
+    "ciudad": "SEVILLA",
+    "provincia": "SEVILLA"
+  },
+  {
+    "nif": "H2468024J",
+    "nombre_apellidos": null,
+    "razon_social": "MicroFutura Informatics",
+    "numero_telefono": "34687654321",
+    "correo_electronico": "soporte@microfutura-informatics.es",
+    "direccion": "Calle de la Paz 789",
+    "codigo_postal": "46002",
+    "ciudad": "VALENCIA",
+    "provincia": "VALENCIA"
+  },
+  {
+    "nif": "S1357924T",
+    "nombre_apellidos": null,
+    "razon_social": "DataVanguard Solutions",
+    "numero_telefono": "34698765432",
+    "correo_electronico": "soporte@datavanguard.es",
+    "direccion": "Calle Alfonso 101",
+    "codigo_postal": "50003",
+    "ciudad": "ZARAGOZA",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "nif": "U9876543V",
+    "nombre_apellidos": null,
+    "razon_social": "ByteLink Microsystems",
+    "numero_telefono": "34676543210",
+    "correo_electronico": "soporte@bytelink-microsystems.es",
+    "direccion": "Calle Larios 202",
+    "codigo_postal": "29016",
+    "ciudad": "MALAGA",
+    "provincia": "MALAGA"
+  },
+  {
+    "nif": "W8765432X",
+    "nombre_apellidos": null,
+    "razon_social": "InfraNet Innovations S.A.",
+    "numero_telefono": "34681234567",
+    "correo_electronico": "soporte@infranet-innovations.es",
+    "direccion": "Passeig de Gràcia 303",
+    "codigo_postal": "08008",
+    "ciudad": "BARCELONA",
+    "provincia": "BARCELONA"
+  },
+  {
+    "nif": "N2345678P",
+    "nombre_apellidos": null,
+    "razon_social": "CloudSphere Tech Services",
+    "numero_telefono": "34687654321",
+    "correo_electronico": "soporte@cloudsphere-tech.es",
+    "direccion": "Calle Real 404",
+    "codigo_postal": "15001",
+    "ciudad": "A CORUÑA",
+    "provincia": "A CORUÑA"
+  },
+  {
+    "nif": "M9876543N",
+    "nombre_apellidos": null,
+    "razon_social": "EcoData Informática Integral",
+    "numero_telefono": "34698765432",
+    "correo_electronico": "soporte@ecodata-informatica.es",
+    "direccion": "Calle Uria 505",
+    "codigo_postal": "33003",
+    "ciudad": "OVIEDO",
+    "provincia": "ASTURIAS"
+  },
+  {
+    "nif": "R3456789S",
+    "nombre_apellidos": null,
+    "razon_social": "SysHarbor Solutions España",
+    "numero_telefono": "34676543210",
+    "correo_electronico": "soporte@sysharbor-solutions.es",
+    "direccion": "Calle Serrano 606",
+    "codigo_postal": "28001",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "V9876543W",
+    "nombre_apellidos": null,
+    "razon_social": "GestiónMicro Informática Empresarial",
+    "numero_telefono": "34681234567",
+    "correo_electronico": "soporte@gestionmicro-empresarial.es",
+    "direccion": "Avenida de la Palmera 707",
+    "codigo_postal": "41011",
+    "ciudad": "SEVILLA",
+    "provincia": "SEVILLA"
+  }
+]
+
+
+
+MicroSys Solutions España
+
+Correo electrónico: soporte@microsys-solutions.es
+InfraSoft Innovations Iberia
+
+Correo electrónico: soporte@infrasoft-iberia.es
+ByteMaster ERP Servicios S.L.
+
+Correo electrónico: soporte@bytemaster-servicios.es
+MicroGestión Tech España
+
+Correo electrónico: soporte@microgestion-tech.es
+RedCode Solutions Ibérica
+
+Correo electrónico: soporte@redcode-solutions.es
+DataCrafting Systems España
+
+Correo electrónico: soporte@datacrafting.es
+CloudLogic Microservices S.A.
+
+Correo electrónico: soporte@cloudlogic-microservices.es
+TechHarbor ERP Soluciones Spain
+
+Correo electrónico: soporte@techharbor-soluciones.es
+NanoInnovate Informatics España
+
+Correo electrónico: soporte@nanoinnovate.es
+InfraWave Microsystems Ibérica
+
+Correo electrónico: soporte@infrawave-iberica.es
+
+[
+  {
+    "nif": "G9876543H",
+    "nombre_apellidos": null,
+    "razon_social": "MicroSys Solutions España",
+    "numero_telefono": "34676543211",
+    "correo_electronico": "soporte@microsys-solutions.es",
+    "direccion": "Calle Gran Via 456",
+    "codigo_postal": "28014",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "L2468024M",
+    "nombre_apellidos": null,
+    "razon_social": "InfraSoft Innovations Iberia",
+    "numero_telefono": "34681234568",
+    "correo_electronico": "soporte@infrasoft-iberia.es",
+    "direccion": "Avenida de la Constitucion 567",
+    "codigo_postal": "41005",
+    "ciudad": "SEVILLA",
+    "provincia": "SEVILLA"
+  },
+  {
+    "nif": "Q1357924R",
+    "nombre_apellidos": null,
+    "razon_social": "ByteMaster ERP Servicios S.L.",
+    "numero_telefono": "34687654322",
+    "correo_electronico": "soporte@bytemaster-servicios.es",
+    "direccion": "Calle de la Paz 678",
+    "codigo_postal": "46004",
+    "ciudad": "VALENCIA",
+    "provincia": "VALENCIA"
+  },
+  {
+    "nif": "X1357924Y",
+    "nombre_apellidos": null,
+    "razon_social": "MicroGestión Tech España",
+    "numero_telefono": "34698765433",
+    "correo_electronico": "soporte@microgestion-tech.es",
+    "direccion": "Calle Alfonso 789",
+    "codigo_postal": "50005",
+    "ciudad": "ZARAGOZA",
+    "provincia": "ZARAGOZA"
+  },
+  {
+    "nif": "I9876543J",
+    "nombre_apellidos": null,
+    "razon_social": "RedCode Solutions Ibérica",
+    "numero_telefono": "34676543212",
+    "correo_electronico": "soporte@redcode-solutions.es",
+    "direccion": "Calle Larios 890",
+    "codigo_postal": "29017",
+    "ciudad": "MALAGA",
+    "provincia": "MALAGA"
+  },
+  {
+    "nif": "B8765432C",
+    "nombre_apellidos": null,
+    "razon_social": "DataCrafting Systems España",
+    "numero_telefono": "34681234569",
+    "correo_electronico": "soporte@datacrafting.es",
+    "direccion": "Passeig de Gracia 123",
+    "codigo_postal": "08009",
+    "ciudad": "BARCELONA",
+    "provincia": "BARCELONA"
+  },
+  {
+    "nif": "F2345678G",
+    "nombre_apellidos": null,
+    "razon_social": "CloudLogic Microservices S.A.",
+    "numero_telefono": "34687654323",
+    "correo_electronico": "soporte@cloudlogic-microservices.es",
+    "direccion": "Calle Real 234",
+    "codigo_postal": "15003",
+    "ciudad": "A CORUÑA",
+    "provincia": "A CORUÑA"
+  },
+  {
+    "nif": "O9876543P",
+    "nombre_apellidos": null,
+    "razon_social": "TechHarbor ERP Soluciones Spain",
+    "numero_telefono": "34698765434",
+    "correo_electronico": "soporte@techharbor-soluciones.es",
+    "direccion": "Calle Uria 345",
+    "codigo_postal": "33004",
+    "ciudad": "OVIEDO",
+    "provincia": "ASTURIAS"
+  },
+  {
+    "nif": "Z3456789A",
+    "nombre_apellidos": null,
+    "razon_social": "NanoInnovate Informatics España",
+    "numero_telefono": "34676543213",
+    "correo_electronico": "soporte@nanoinnovate.es",
+    "direccion": "Calle Serrano 456",
+    "codigo_postal": "28002",
+    "ciudad": "MADRID",
+    "provincia": "MADRID"
+  },
+  {
+    "nif": "T9876543U",
+    "nombre_apellidos": null,
+    "razon_social": "InfraWave Microsystems Ibérica",
+    "numero_telefono": "34681234570",
+    "correo_electronico": "soporte@infrawave-iberica.es",
+    "direccion": "Avenida de la Palmera 567",
+    "codigo_postal": "41006",
+    "ciudad": "SEVILLA",
+    "provincia": "SEVILLA"
+  }
+]

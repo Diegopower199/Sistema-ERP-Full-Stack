@@ -7,5 +7,5 @@ import tfg.backend.models.PedidoClienteModel;
 
 @Repository
 public interface PedidoClienteRepository extends JpaRepository<PedidoClienteModel, Integer> {
-    
+
 }

@@ -103,25 +103,28 @@ public class VacacionEmpleadoService {
         nuevoVacacionEmpleado.setTipo_estado(tipoEstadoEncontrado);
         tipoEstadoEncontrado.getVacacionesEmpleados().add(nuevoVacacionEmpleado);
 
-        LocalDateTime fechaHoraActual = LocalDateTime.now();
-
-        // Formatear la fecha y hora según el formato deseado
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String fechaHoraFormateada = fechaHoraActual.format(formato);
-
-        // Imprimir la fecha y hora formateada
-        System.out.println("aaaaaaaaaaaaaaaaaaaa: " + fechaHoraFormateada);
+        /*
+         * LocalDateTime fechaHoraActual = LocalDateTime.now();
+         * 
+         * // Formatear la fecha y hora según el formato deseado
+         * DateTimeFormatter formato =
+         * DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+         * String fechaHoraFormateada = fechaHoraActual.format(formato);
+         * 
+         * // Imprimir la fecha y hora formateada
+         * System.out.println("aaaaaaaaaaaaaaaaaaaa: " + fechaHoraFormateada);
+         */
 
         if (vacacionEmpleadoRepository.existsByPersonaAndFecha_inicioAndFecha_fin(personaEncontrado,
                 nuevoVacacionEmpleado.getFecha_inicio(), nuevoVacacionEmpleado.getFecha_fin())) {
             throw new RuntimeException("Solapamiento de fechas");
         }
 
-        //VacacionEmpleadoModel vacacionEmpleadoGuardado = vacacionEmpleadoRepository.save(nuevoVacacionEmpleado);
+        VacacionEmpleadoModel vacacionEmpleadoGuardado = vacacionEmpleadoRepository.save(nuevoVacacionEmpleado);
 
-        //return vacacionEmpleadoGuardado;
+        return vacacionEmpleadoGuardado;
 
-        return nuevoVacacionEmpleado;
+        // return nuevoVacacionEmpleado;
     }
 
     public Map<String, Object> getVacacionEmpleadoById(int idVacacionEmpleado) {
@@ -130,7 +133,7 @@ public class VacacionEmpleadoService {
                         "Vacacion empleado con id " + idVacacionEmpleado + " no encontrado"));
 
         Map<String, Object> vacacionEmpleadoMap = VacacionEmpleadoEncontrado.toMap();
-        
+
         vacacionEmpleadoMap.put("persona",
                 VacacionEmpleadoEncontrado.getPersona() != null ? VacacionEmpleadoEncontrado.getPersona().toMap()
                         : null);

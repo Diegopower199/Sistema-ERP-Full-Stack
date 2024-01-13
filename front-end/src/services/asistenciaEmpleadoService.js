@@ -39,7 +39,7 @@ export const startOfWorkdayAsistenciaEmpleado = async (data) => { // Inicio de l
   } catch (error) {
     // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }
@@ -71,7 +71,7 @@ export const endOfWorkdayAsistenciaEmpleado = async (data) => { // Fin de la jor
   } catch (error) {
     // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }
@@ -89,7 +89,7 @@ export const getAsistenciaEmpleadoById = async (id) => {
   } catch (error) {
     // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }
@@ -127,7 +127,7 @@ export const updateAsistenciaEmpleado = async (id, data) => {
       error.response.status
     );
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }

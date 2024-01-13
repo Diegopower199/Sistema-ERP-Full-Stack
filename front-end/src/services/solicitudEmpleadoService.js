@@ -39,7 +39,7 @@ export const saveSolicitudEmpleado = async (data) => {
   } catch (error) {
     // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }
@@ -57,7 +57,7 @@ export const getSolicitudEmpleadoById = async (id) => {
   } catch (error) {
     // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }
@@ -95,7 +95,7 @@ export const updateSolicitudEmpleado = async (id, data) => {
       error.response.status
     );
     return {
-      messageError: error.response.data.message,
+      errorMessage: error.response.data.message,
       status: error.response.status,
     };
   }

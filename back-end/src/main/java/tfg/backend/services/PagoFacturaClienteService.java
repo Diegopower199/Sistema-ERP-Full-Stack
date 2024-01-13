@@ -15,108 +15,113 @@ import tfg.backend.repositories.PagoFacturaClienteRepository;
 @Service
 public class PagoFacturaClienteService {
 
-        @Autowired
-        private PagoFacturaClienteRepository pagoFacturaClienteRepository;
+    @Autowired
+    private PagoFacturaClienteRepository pagoFacturaClienteRepository;
 
-        @Autowired
-        private FacturaClienteRepository facturaClienteRepository;
+    @Autowired
+    private FacturaClienteRepository facturaClienteRepository;
 
-        public List<Map<String, Object>> getAllPagosFacturasClientes() {
-                List<PagoFacturaClienteModel> listaPagosFacturasClientes = pagoFacturaClienteRepository.findAll();
-                List<Map<String, Object>> resultado = new ArrayList<>();
+    public List<Map<String, Object>> getAllPagosFacturasClientes() {
+        List<PagoFacturaClienteModel> listaPagosFacturasClientes = pagoFacturaClienteRepository.findAll();
+        List<Map<String, Object>> resultado = new ArrayList<>();
 
-                for (PagoFacturaClienteModel pagoFacturaCliente : listaPagosFacturasClientes) {
-                        Map<String, Object> pagoFacturaClienteMap = pagoFacturaCliente.toMap();
+        for (PagoFacturaClienteModel pagoFacturaCliente : listaPagosFacturasClientes) {
+            Map<String, Object> pagoFacturaClienteMap = pagoFacturaCliente.toMap();
 
-                        pagoFacturaClienteMap.put("factura_cliente",
-                                        pagoFacturaCliente.getFactura_cliente() != null
-                                                        ? pagoFacturaCliente.getFactura_cliente().toMap()
-                                                        : null);
+            pagoFacturaClienteMap.put("factura_cliente",
+                    pagoFacturaCliente.getFactura_cliente() != null
+                            ? pagoFacturaCliente.getFactura_cliente().toMap()
+                            : null);
 
-                        resultado.add(pagoFacturaClienteMap);
-                }
-
-                return resultado;
+            resultado.add(pagoFacturaClienteMap);
         }
 
-        public PagoFacturaClienteModel savePagoFacturaCliente(PagoFacturaClienteModel nuevoPagoFacturaCliente) {
+        return resultado;
+    }
 
-                // Comprobacion de campos correctos
+    public PagoFacturaClienteModel savePagoFacturaCliente(PagoFacturaClienteModel nuevoPagoFacturaCliente) {
 
-                int id_factura_cliente = nuevoPagoFacturaCliente.getFactura_cliente().getId_factura_cliente();
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
 
-                FacturaClienteModel facturaClienteEncontrado = facturaClienteRepository.findById(id_factura_cliente)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Factura cliente con id " + id_factura_cliente + " no encontrado"));
+        int id_factura_cliente = nuevoPagoFacturaCliente.getFactura_cliente().getId_factura_cliente();
 
-                nuevoPagoFacturaCliente.setFactura_cliente(facturaClienteEncontrado);
-                facturaClienteEncontrado.getPagosFacturasClientes().add(nuevoPagoFacturaCliente);
+        FacturaClienteModel facturaClienteEncontrado = facturaClienteRepository.findById(id_factura_cliente)
+                .orElseThrow(() -> new RuntimeException(
+                        "Factura cliente con id " + id_factura_cliente + " no encontrado"));
 
-                PagoFacturaClienteModel pagoFacturaClienteGuardado = pagoFacturaClienteRepository
-                                .save(nuevoPagoFacturaCliente);
+        nuevoPagoFacturaCliente.setFactura_cliente(facturaClienteEncontrado);
+        facturaClienteEncontrado.getPagosFacturasClientes().add(nuevoPagoFacturaCliente);
 
-                return pagoFacturaClienteGuardado;
-        }
+        PagoFacturaClienteModel pagoFacturaClienteGuardado = pagoFacturaClienteRepository
+                .save(nuevoPagoFacturaCliente);
 
-        public Map<String, Object> getPagoFacturaClienteById(int idPagoFacturaCliente) {
-                PagoFacturaClienteModel pagoFacturaClienteEncontrado = pagoFacturaClienteRepository
-                                .findById(idPagoFacturaCliente)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Pago factura cliente con id " + idPagoFacturaCliente
-                                                                + " no encontrado"));
+        return pagoFacturaClienteGuardado;
+    }
 
-                Map<String, Object> pagoFacturaClienteMap = pagoFacturaClienteEncontrado.toMap();
+    public Map<String, Object> getPagoFacturaClienteById(int idPagoFacturaCliente) {
+        PagoFacturaClienteModel pagoFacturaClienteEncontrado = pagoFacturaClienteRepository
+                .findById(idPagoFacturaCliente)
+                .orElseThrow(() -> new RuntimeException(
+                        "Pago factura cliente con id " + idPagoFacturaCliente
+                                + " no encontrado"));
 
-                pagoFacturaClienteMap.put("factura_cliente",
-                                pagoFacturaClienteEncontrado.getFactura_cliente() != null
-                                                ? pagoFacturaClienteEncontrado.getFactura_cliente().toMap()
-                                                : null);
+        Map<String, Object> pagoFacturaClienteMap = pagoFacturaClienteEncontrado.toMap();
 
-                return pagoFacturaClienteMap;
-        }
+        pagoFacturaClienteMap.put("factura_cliente",
+                pagoFacturaClienteEncontrado.getFactura_cliente() != null
+                        ? pagoFacturaClienteEncontrado.getFactura_cliente().toMap()
+                        : null);
 
-        public PagoFacturaClienteModel updatePagoFacturaCliente(PagoFacturaClienteModel cambiosPagoFacturaCliente,
-                        int idPagoFacturaCliente) {
+        return pagoFacturaClienteMap;
+    }
 
-                PagoFacturaClienteModel pagoFacturaClienteExistente = pagoFacturaClienteRepository
-                                .findById(idPagoFacturaCliente).orElseThrow(() -> new RuntimeException(
-                                                "Pago factura cliente con id " + idPagoFacturaCliente
-                                                                + " no encontrado"));
+    public PagoFacturaClienteModel updatePagoFacturaCliente(PagoFacturaClienteModel cambiosPagoFacturaCliente,
+            int idPagoFacturaCliente) {
 
-                // Comprobacion de campos correctos -> Ejemplo:
-                /*
-                 * if (cambiosUsuario.getNombre_usuario() == null) {
-                 * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-                 * }
-                 */
+        PagoFacturaClienteModel pagoFacturaClienteExistente = pagoFacturaClienteRepository
+                .findById(idPagoFacturaCliente).orElseThrow(() -> new RuntimeException(
+                        "Pago factura cliente con id " + idPagoFacturaCliente
+                                + " no encontrado"));
 
-                // HACER AQUI LOS SETTER -> Ejemplo:
-                // asistenciaEmpleadoExistente.setFecha(cambiosAsistenciaEmpleado.getFecha());
+        // Comprobacion de campos correctos -> Ejemplo:
+        /*
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
 
-                int id_factura_cliente = cambiosPagoFacturaCliente.getFactura_cliente().getId_factura_cliente();
+        // HACER AQUI LOS SETTER -> Ejemplo:
+        // asistenciaEmpleadoExistente.setFecha(cambiosAsistenciaEmpleado.getFecha());
 
-                FacturaClienteModel facturaClienteEncontrado = facturaClienteRepository.findById(id_factura_cliente)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Factura cliente con id " + id_factura_cliente + " no encontrado"));
+        int id_factura_cliente = cambiosPagoFacturaCliente.getFactura_cliente().getId_factura_cliente();
 
-                pagoFacturaClienteExistente.getFactura_cliente().getPagosFacturasClientes()
-                                .remove(pagoFacturaClienteExistente);
-                pagoFacturaClienteExistente.setFactura_cliente(facturaClienteEncontrado);
-                facturaClienteEncontrado.getPagosFacturasClientes().add(pagoFacturaClienteExistente);
+        FacturaClienteModel facturaClienteEncontrado = facturaClienteRepository.findById(id_factura_cliente)
+                .orElseThrow(() -> new RuntimeException(
+                        "Factura cliente con id " + id_factura_cliente + " no encontrado"));
 
-                PagoFacturaClienteModel pagoFacturaClienteActualizado = pagoFacturaClienteRepository
-                                .save(pagoFacturaClienteExistente);
+        pagoFacturaClienteExistente.getFactura_cliente().getPagosFacturasClientes()
+                .remove(pagoFacturaClienteExistente);
+        pagoFacturaClienteExistente.setFactura_cliente(facturaClienteEncontrado);
+        facturaClienteEncontrado.getPagosFacturasClientes().add(pagoFacturaClienteExistente);
 
-                return pagoFacturaClienteActualizado;
-        }
+        PagoFacturaClienteModel pagoFacturaClienteActualizado = pagoFacturaClienteRepository
+                .save(pagoFacturaClienteExistente);
 
-        public void deletePagoFacturaCliente(int idPagoFacturaCliente) {
-                pagoFacturaClienteRepository.findById(idPagoFacturaCliente)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Pago factura cliente con id " + idPagoFacturaCliente
-                                                                + " no encontrado"));
+        return pagoFacturaClienteActualizado;
+    }
 
-                pagoFacturaClienteRepository.deleteById(idPagoFacturaCliente);
+    public void deletePagoFacturaCliente(int idPagoFacturaCliente) {
+        pagoFacturaClienteRepository.findById(idPagoFacturaCliente)
+                .orElseThrow(() -> new RuntimeException(
+                        "Pago factura cliente con id " + idPagoFacturaCliente
+                                + " no encontrado"));
 
-        }
+        pagoFacturaClienteRepository.deleteById(idPagoFacturaCliente);
+
+    }
 }

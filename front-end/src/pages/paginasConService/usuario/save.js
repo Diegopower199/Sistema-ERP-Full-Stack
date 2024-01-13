@@ -31,7 +31,7 @@ function MiFormulario() {
       console.log("Resultado en handleSubmit: ", resultado);
 
       if (resultado.status !== 200) {
-        const mensajeError = resultado.messageError;
+        const mensajeError = resultado.errorMessage;
         console.log("El error es: ", mensajeError);
         setErrorMessage(mensajeError);
         errorDevueltoBack = true;

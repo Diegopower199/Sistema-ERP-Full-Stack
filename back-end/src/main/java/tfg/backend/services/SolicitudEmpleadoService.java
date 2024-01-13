@@ -18,176 +18,190 @@ import tfg.backend.repositories.TipoSolicitudRepository;
 
 @Service
 public class SolicitudEmpleadoService {
-        @Autowired
-        private SolicitudEmpleadoRepository solicitudEmpleadoRepository;
+    @Autowired
+    private SolicitudEmpleadoRepository solicitudEmpleadoRepository;
 
-        @Autowired
-        private TipoSolicitudRepository tipoSolicitudRepository;
+    @Autowired
+    private TipoSolicitudRepository tipoSolicitudRepository;
 
-        @Autowired
-        private TipoEstadoRepository tipoEstadoRepository;
+    @Autowired
+    private TipoEstadoRepository tipoEstadoRepository;
 
-        @Autowired
-        private PersonaRepository personaRepository;
+    @Autowired
+    private PersonaRepository personaRepository;
 
-        public List<Map<String, Object>> getAllSolicitudesEmpleados() {
-                List<SolicitudEmpleadoModel> listaSolicitudesEmpleados = solicitudEmpleadoRepository.findAll();
-                List<Map<String, Object>> resultado = new ArrayList<>();
+    public List<Map<String, Object>> getAllSolicitudesEmpleados() {
+        List<SolicitudEmpleadoModel> listaSolicitudesEmpleados = solicitudEmpleadoRepository.findAll();
+        List<Map<String, Object>> resultado = new ArrayList<>();
 
-                for (SolicitudEmpleadoModel solicitudEmpleado : listaSolicitudesEmpleados) {
-                        Map<String, Object> solicitudEmpleadoMap = solicitudEmpleado.toMap();
+        for (SolicitudEmpleadoModel solicitudEmpleado : listaSolicitudesEmpleados) {
+            Map<String, Object> solicitudEmpleadoMap = solicitudEmpleado.toMap();
 
-                        solicitudEmpleadoMap.put("persona",
-                                        solicitudEmpleado.getPersona() != null ? solicitudEmpleado.getPersona().toMap()
-                                                        : null);
+            solicitudEmpleadoMap.put("persona",
+                    solicitudEmpleado.getPersona() != null ? solicitudEmpleado.getPersona().toMap()
+                            : null);
 
-                        solicitudEmpleadoMap.put("tipo_solicitud",
-                                        solicitudEmpleado.getTipo_solicitud() != null
-                                                        ? solicitudEmpleado.getTipo_solicitud().toMap()
-                                                        : null);
+            solicitudEmpleadoMap.put("tipo_solicitud",
+                    solicitudEmpleado.getTipo_solicitud() != null
+                            ? solicitudEmpleado.getTipo_solicitud().toMap()
+                            : null);
 
-                        solicitudEmpleadoMap.put("tipo_estado",
-                                        solicitudEmpleado.getTipo_estado() != null
-                                                        ? solicitudEmpleado.getTipo_estado().toMap()
-                                                        : null);
+            solicitudEmpleadoMap.put("tipo_estado",
+                    solicitudEmpleado.getTipo_estado() != null
+                            ? solicitudEmpleado.getTipo_estado().toMap()
+                            : null);
 
-                        resultado.add(solicitudEmpleadoMap);
-                }
-
-                return resultado;
+            resultado.add(solicitudEmpleadoMap);
         }
 
-        public SolicitudEmpleadoModel saveSolicitudEmpleado(SolicitudEmpleadoModel nuevoSolicitudEmpleado) {
+        return resultado;
+    }
 
-                int id_persona = nuevoSolicitudEmpleado.getPersona().getId_persona();
+    public SolicitudEmpleadoModel saveSolicitudEmpleado(SolicitudEmpleadoModel nuevoSolicitudEmpleado) {
 
-                PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Persona con id " + id_persona + " no encontrado"));
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
 
-                nuevoSolicitudEmpleado.setPersona(personaEncontrado);
-                personaEncontrado.getSolicitudesEmpleados().add(nuevoSolicitudEmpleado);
+        int id_persona = nuevoSolicitudEmpleado.getPersona().getId_persona();
 
-                int id_tipo_solicitud = nuevoSolicitudEmpleado.getTipo_solicitud().getId_tipo_solicitud();
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
 
-                TipoSolicitudModel tipoSolicitudEncontrado = tipoSolicitudRepository.findById(id_tipo_solicitud)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Tipo solicitud con id " + id_tipo_solicitud + " no encontrado"));
+        nuevoSolicitudEmpleado.setPersona(personaEncontrado);
+        personaEncontrado.getSolicitudesEmpleados().add(nuevoSolicitudEmpleado);
 
-                nuevoSolicitudEmpleado.setTipo_solicitud(tipoSolicitudEncontrado);
-                tipoSolicitudEncontrado.getSolicitudesEmpleados().add(nuevoSolicitudEmpleado);
+        int id_tipo_solicitud = nuevoSolicitudEmpleado.getTipo_solicitud().getId_tipo_solicitud();
 
-                int id_tipo_estado = nuevoSolicitudEmpleado.getTipo_estado().getId_tipo_estado();
+        TipoSolicitudModel tipoSolicitudEncontrado = tipoSolicitudRepository.findById(id_tipo_solicitud)
+                .orElseThrow(() -> new RuntimeException(
+                        "Tipo solicitud con id " + id_tipo_solicitud + " no encontrado"));
 
-                TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Tipo estado con id " + id_tipo_estado + " no encontrado"));
+        nuevoSolicitudEmpleado.setTipo_solicitud(tipoSolicitudEncontrado);
+        tipoSolicitudEncontrado.getSolicitudesEmpleados().add(nuevoSolicitudEmpleado);
 
-                nuevoSolicitudEmpleado.setTipo_estado(tipoEstadoEncontrado);
-                tipoEstadoEncontrado.getSolicitudesEmpleados().add(nuevoSolicitudEmpleado);
+        int id_tipo_estado = nuevoSolicitudEmpleado.getTipo_estado().getId_tipo_estado();
 
-                if (solicitudEmpleadoRepository.existsByPersonaAndFecha_solicitud(personaEncontrado,
-                                nuevoSolicitudEmpleado.getFecha_solicitud())) {
-                        throw new RuntimeException(
-                                        "La persona con id " + id_persona
-                                                        + " ya tiene una solicitud en esta fecha");
-                }
+        TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Tipo estado con id " + id_tipo_estado + " no encontrado"));
 
-                SolicitudEmpleadoModel solicitudEmpleadoGuardado = solicitudEmpleadoRepository
-                                .save(nuevoSolicitudEmpleado);
+        nuevoSolicitudEmpleado.setTipo_estado(tipoEstadoEncontrado);
+        tipoEstadoEncontrado.getSolicitudesEmpleados().add(nuevoSolicitudEmpleado);
 
-                return solicitudEmpleadoGuardado;
+        if (solicitudEmpleadoRepository.existsByPersonaAndFecha_solicitud(personaEncontrado,
+                nuevoSolicitudEmpleado.getFecha_solicitud())) {
+            throw new RuntimeException(
+                    "La persona con id " + id_persona
+                            + " ya tiene una solicitud en esta fecha");
         }
 
-        public Map<String, Object> getSolicitudEmpleadoById(int idSolicitudEmpleado) {
-                SolicitudEmpleadoModel solicitudEncontrado = solicitudEmpleadoRepository.findById(idSolicitudEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Solicitud empleado con id " + idSolicitudEmpleado + " no encontrado"));
+        SolicitudEmpleadoModel solicitudEmpleadoGuardado = solicitudEmpleadoRepository
+                .save(nuevoSolicitudEmpleado);
 
-                Map<String, Object> solicitudMap = solicitudEncontrado.toMap();
-                
-                solicitudMap.put("persona",
-                                solicitudEncontrado.getPersona() != null ? solicitudEncontrado.getPersona().toMap()
-                                                : null);
+        return solicitudEmpleadoGuardado;
+    }
 
-                solicitudMap.put("tipo_solicitud",
-                                solicitudEncontrado.getTipo_solicitud() != null
-                                                ? solicitudEncontrado.getTipo_solicitud().toMap()
-                                                : null);
+    public Map<String, Object> getSolicitudEmpleadoById(int idSolicitudEmpleado) {
+        SolicitudEmpleadoModel solicitudEncontrado = solicitudEmpleadoRepository.findById(idSolicitudEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Solicitud empleado con id " + idSolicitudEmpleado + " no encontrado"));
 
-                solicitudMap.put("tipo_estado",
-                                solicitudEncontrado.getTipo_estado() != null
-                                                ? solicitudEncontrado.getTipo_estado().toMap()
-                                                : null);
+        Map<String, Object> solicitudMap = solicitudEncontrado.toMap();
 
-                return solicitudMap;
+        solicitudMap.put("persona",
+                solicitudEncontrado.getPersona() != null ? solicitudEncontrado.getPersona().toMap()
+                        : null);
+
+        solicitudMap.put("tipo_solicitud",
+                solicitudEncontrado.getTipo_solicitud() != null
+                        ? solicitudEncontrado.getTipo_solicitud().toMap()
+                        : null);
+
+        solicitudMap.put("tipo_estado",
+                solicitudEncontrado.getTipo_estado() != null
+                        ? solicitudEncontrado.getTipo_estado().toMap()
+                        : null);
+
+        return solicitudMap;
+    }
+
+    public SolicitudEmpleadoModel updateSolicitudEmpleado(SolicitudEmpleadoModel cambiosSolicitudEmpleado,
+            int idSolicitud) {
+
+        SolicitudEmpleadoModel solicitudEmpleadoExistente = solicitudEmpleadoRepository.findById(idSolicitud)
+                .orElseThrow(() -> new RuntimeException(
+                        "Solicitud empleado con id " + idSolicitud + " no encontrado"));
+
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
+
+        solicitudEmpleadoExistente.setComentarios(cambiosSolicitudEmpleado.getComentarios());
+
+        int id_persona = cambiosSolicitudEmpleado.getPersona().getId_persona();
+
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
+
+        solicitudEmpleadoExistente.getPersona().getSolicitudesEmpleados().remove(solicitudEmpleadoExistente);
+        solicitudEmpleadoExistente.setPersona(personaEncontrado);
+        personaEncontrado.getSolicitudesEmpleados().add(solicitudEmpleadoExistente);
+
+        if (!solicitudEmpleadoExistente.getFecha_solicitud()
+                .equals(cambiosSolicitudEmpleado.getFecha_solicitud())) {
+            if (solicitudEmpleadoRepository.existsByPersonaAndFecha_solicitud(personaEncontrado,
+                    cambiosSolicitudEmpleado.getFecha_solicitud())) {
+                throw new RuntimeException(
+                        "La persona con id " + personaEncontrado.getId_persona()
+                                + " ya tiene una solicitud en esta fecha");
+            }
+            solicitudEmpleadoExistente.setFecha_solicitud(cambiosSolicitudEmpleado.getFecha_solicitud());
         }
 
-        public SolicitudEmpleadoModel updateSolicitudEmpleado(SolicitudEmpleadoModel cambiosSolicitudEmpleado,
-                        int idSolicitud) {
+        int id_tipo_solicitud = cambiosSolicitudEmpleado.getTipo_solicitud().getId_tipo_solicitud();
 
-                SolicitudEmpleadoModel solicitudEmpleadoExistente = solicitudEmpleadoRepository.findById(idSolicitud)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Solicitud empleado con id " + idSolicitud + " no encontrado"));
+        TipoSolicitudModel tipoSolicitudEncontrado = tipoSolicitudRepository.findById(id_tipo_solicitud)
+                .orElseThrow(() -> new RuntimeException(
+                        "Tipo solicitud con id " + id_tipo_solicitud + " no encontrado"));
 
-                solicitudEmpleadoExistente.setComentarios(cambiosSolicitudEmpleado.getComentarios());
+        solicitudEmpleadoExistente.getTipo_solicitud().getSolicitudesEmpleados()
+                .remove(solicitudEmpleadoExistente);
+        solicitudEmpleadoExistente.setTipo_solicitud(tipoSolicitudEncontrado);
+        tipoSolicitudEncontrado.getSolicitudesEmpleados().add(solicitudEmpleadoExistente);
 
-                int id_persona = cambiosSolicitudEmpleado.getPersona().getId_persona();
+        int id_tipo_estado = cambiosSolicitudEmpleado.getTipo_estado().getId_tipo_estado();
 
-                PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Persona con id " + id_persona + " no encontrado"));
+        TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Tipo estado con id " + id_tipo_estado + " no encontrado"));
 
-                solicitudEmpleadoExistente.getPersona().getSolicitudesEmpleados().remove(solicitudEmpleadoExistente);
-                solicitudEmpleadoExistente.setPersona(personaEncontrado);
-                personaEncontrado.getSolicitudesEmpleados().add(solicitudEmpleadoExistente);
+        solicitudEmpleadoExistente.getTipo_estado().getSolicitudesEmpleados()
+                .remove(solicitudEmpleadoExistente);
+        solicitudEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
+        tipoEstadoEncontrado.getSolicitudesEmpleados().add(solicitudEmpleadoExistente);
 
-                if (!solicitudEmpleadoExistente.getFecha_solicitud()
-                                .equals(cambiosSolicitudEmpleado.getFecha_solicitud())) {
-                        if (solicitudEmpleadoRepository.existsByPersonaAndFecha_solicitud(personaEncontrado,
-                                        cambiosSolicitudEmpleado.getFecha_solicitud())) {
-                                throw new RuntimeException(
-                                                "La persona con id " + personaEncontrado.getId_persona()
-                                                                + " ya tiene una solicitud en esta fecha");
-                        }
-                        solicitudEmpleadoExistente.setFecha_solicitud(cambiosSolicitudEmpleado.getFecha_solicitud());
-                }
+        SolicitudEmpleadoModel solicitudActualizado = solicitudEmpleadoRepository
+                .save(solicitudEmpleadoExistente);
 
-                int id_tipo_solicitud = cambiosSolicitudEmpleado.getTipo_solicitud().getId_tipo_solicitud();
+        return solicitudActualizado;
 
-                TipoSolicitudModel tipoSolicitudEncontrado = tipoSolicitudRepository.findById(id_tipo_solicitud)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Tipo solicitud con id " + id_tipo_solicitud + " no encontrado"));
+    }
 
-                solicitudEmpleadoExistente.getTipo_solicitud().getSolicitudesEmpleados()
-                                .remove(solicitudEmpleadoExistente);
-                solicitudEmpleadoExistente.setTipo_solicitud(tipoSolicitudEncontrado);
-                tipoSolicitudEncontrado.getSolicitudesEmpleados().add(solicitudEmpleadoExistente);
+    public void deleteSolicitudEmpleado(int idSolicitudEmpleado) {
+        solicitudEmpleadoRepository.findById(idSolicitudEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Solicitud empleado con id " + idSolicitudEmpleado + " no encontrado"));
 
-                int id_tipo_estado = cambiosSolicitudEmpleado.getTipo_estado().getId_tipo_estado();
-
-                TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Tipo estado con id " + id_tipo_estado + " no encontrado"));
-
-                solicitudEmpleadoExistente.getTipo_estado().getSolicitudesEmpleados()
-                                .remove(solicitudEmpleadoExistente);
-                solicitudEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
-                tipoEstadoEncontrado.getSolicitudesEmpleados().add(solicitudEmpleadoExistente);
-
-                SolicitudEmpleadoModel solicitudActualizado = solicitudEmpleadoRepository
-                                .save(solicitudEmpleadoExistente);
-
-                return solicitudActualizado;
-
-        }
-
-        public void deleteSolicitudEmpleado(int idSolicitudEmpleado) {
-                solicitudEmpleadoRepository.findById(idSolicitudEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Solicitud empleado con id " + idSolicitudEmpleado + " no encontrado"));
-
-                solicitudEmpleadoRepository.deleteById(idSolicitudEmpleado);
-        }
+        solicitudEmpleadoRepository.deleteById(idSolicitudEmpleado);
+    }
 
 }

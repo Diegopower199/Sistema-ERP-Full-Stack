@@ -112,3 +112,13 @@ El archivo ".gitattributes" es un archivo de configuración en Git que se utiliz
 
 
 https://medium.com/@thearaseng/building-a-full-stack-product-app-with-react-spring-boot-and-docker-compose-64a47f4a1080
+
+
+
+Datos ficticios creados (todos los tipos y el motivo de baja estan hechos)
+
+    - Personas
+    - Usuarios
+    - Asistencia Empleado
+    - Ayuda Empleado
+    - Baja Laboral Empleado

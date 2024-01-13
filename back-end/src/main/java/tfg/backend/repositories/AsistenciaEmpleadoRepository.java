@@ -12,7 +12,7 @@ import tfg.backend.models.PersonaModel;
 
 @Repository
 public interface AsistenciaEmpleadoRepository extends JpaRepository<AsistenciaEmpleadoModel, Integer> {
-    
+
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM AsistenciaEmpleadoModel c WHERE c.persona = :id_persona AND c.fecha = :fecha")
     boolean existsByPersonaAndFecha_AsistenciaEmpleado(
             @Param("id_persona") PersonaModel id_persona,

@@ -34,7 +34,8 @@ public class BajaLaboralEmpleadoController {
     // localhost:8080/bajasLaboralesEmpleados/api/getAll
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
-        List<Map<String, Object>> allBajasLaboralesEmpleados = bajaLaboralEmpleadoService.getAllBajasLaboralesEmpleados();
+        List<Map<String, Object>> allBajasLaboralesEmpleados = bajaLaboralEmpleadoService
+                .getAllBajasLaboralesEmpleados();
         if (allBajasLaboralesEmpleados.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {

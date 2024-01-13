@@ -19,167 +19,181 @@ import tfg.backend.repositories.TipoEstadoRepository;
 @Service
 public class BajaLaboralEmpleadoService {
 
-        @Autowired
-        private BajaLaboralEmpleadoRepository bajaLaboralEmpleadoRepository;
+    @Autowired
+    private BajaLaboralEmpleadoRepository bajaLaboralEmpleadoRepository;
 
-        @Autowired
-        private MotivoBajaRepository motivoBajaRepository;
+    @Autowired
+    private MotivoBajaRepository motivoBajaRepository;
 
-        @Autowired
-        private TipoEstadoRepository tipoEstadoRepository;
+    @Autowired
+    private TipoEstadoRepository tipoEstadoRepository;
 
-        @Autowired
-        private PersonaRepository personaRepository;
+    @Autowired
+    private PersonaRepository personaRepository;
 
-        public List<Map<String, Object>> getAllBajasLaboralesEmpleados() {
-                List<BajaLaboralEmpleadoModel> listaBajasLaboralesEmpleados = bajaLaboralEmpleadoRepository.findAll();
-                List<Map<String, Object>> resultado = new ArrayList<>();
+    public List<Map<String, Object>> getAllBajasLaboralesEmpleados() {
+        List<BajaLaboralEmpleadoModel> listaBajasLaboralesEmpleados = bajaLaboralEmpleadoRepository.findAll();
+        List<Map<String, Object>> resultado = new ArrayList<>();
 
-                for (BajaLaboralEmpleadoModel bajaLaboralEmpleado : listaBajasLaboralesEmpleados) {
-                        Map<String, Object> bajaLaboralEmpleadoMap = bajaLaboralEmpleado.toMap();
+        for (BajaLaboralEmpleadoModel bajaLaboralEmpleado : listaBajasLaboralesEmpleados) {
+            Map<String, Object> bajaLaboralEmpleadoMap = bajaLaboralEmpleado.toMap();
 
-                        bajaLaboralEmpleadoMap.put("persona",
-                                        bajaLaboralEmpleado.getPersona() != null
-                                                        ? bajaLaboralEmpleado.getPersona().toMap()
-                                                        : null);
+            bajaLaboralEmpleadoMap.put("persona",
+                    bajaLaboralEmpleado.getPersona() != null
+                            ? bajaLaboralEmpleado.getPersona().toMap()
+                            : null);
 
-                        bajaLaboralEmpleadoMap.put("motivo_baja",
-                                        bajaLaboralEmpleado.getMotivo_baja() != null
-                                                        ? bajaLaboralEmpleado.getMotivo_baja().toMap()
-                                                        : null);
+            bajaLaboralEmpleadoMap.put("motivo_baja",
+                    bajaLaboralEmpleado.getMotivo_baja() != null
+                            ? bajaLaboralEmpleado.getMotivo_baja().toMap()
+                            : null);
 
-                        bajaLaboralEmpleadoMap.put("tipo_estado",
-                                        bajaLaboralEmpleado.getTipo_estado() != null
-                                                        ? bajaLaboralEmpleado.getTipo_estado().toMap()
-                                                        : null);
+            bajaLaboralEmpleadoMap.put("tipo_estado",
+                    bajaLaboralEmpleado.getTipo_estado() != null
+                            ? bajaLaboralEmpleado.getTipo_estado().toMap()
+                            : null);
 
-                        resultado.add(bajaLaboralEmpleadoMap);
-                }
-
-                return resultado;
+            resultado.add(bajaLaboralEmpleadoMap);
         }
 
-        public BajaLaboralEmpleadoModel saveBajaLaboralEmpleado(BajaLaboralEmpleadoModel nuevoBajaLaboralEmpleado) {
+        return resultado;
+    }
 
-                int id_persona = nuevoBajaLaboralEmpleado.getPersona().getId_persona();
+    public BajaLaboralEmpleadoModel saveBajaLaboralEmpleado(BajaLaboralEmpleadoModel nuevoBajaLaboralEmpleado) {
 
-                PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Persona con id " + id_persona + " no encontrado"));
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
 
-                nuevoBajaLaboralEmpleado.setPersona(personaEncontrado);
-                personaEncontrado.getBajasLaboralesEmpleados().add(nuevoBajaLaboralEmpleado);
+        int id_persona = nuevoBajaLaboralEmpleado.getPersona().getId_persona();
 
-                int id_motivo_baja = nuevoBajaLaboralEmpleado.getMotivo_baja().getId_motivo_baja();
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
 
-                MotivoBajaModel motivoBajaEncontrado = motivoBajaRepository.findById(id_motivo_baja)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Motivo baja con id " + id_motivo_baja + " no encontrado"));
+        nuevoBajaLaboralEmpleado.setPersona(personaEncontrado);
+        personaEncontrado.getBajasLaboralesEmpleados().add(nuevoBajaLaboralEmpleado);
 
-                nuevoBajaLaboralEmpleado.setMotivo_baja(motivoBajaEncontrado);
-                motivoBajaEncontrado.getBajasLaboralesEmpleados().add(nuevoBajaLaboralEmpleado);
+        int id_motivo_baja = nuevoBajaLaboralEmpleado.getMotivo_baja().getId_motivo_baja();
 
-                int id_tipo_estado = nuevoBajaLaboralEmpleado.getTipo_estado().getId_tipo_estado();
+        MotivoBajaModel motivoBajaEncontrado = motivoBajaRepository.findById(id_motivo_baja)
+                .orElseThrow(() -> new RuntimeException(
+                        "Motivo baja con id " + id_motivo_baja + " no encontrado"));
 
-                TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Tipo estado con id " + id_tipo_estado + " no encontrado"));
+        nuevoBajaLaboralEmpleado.setMotivo_baja(motivoBajaEncontrado);
+        motivoBajaEncontrado.getBajasLaboralesEmpleados().add(nuevoBajaLaboralEmpleado);
 
-                nuevoBajaLaboralEmpleado.setTipo_estado(tipoEstadoEncontrado);
-                tipoEstadoEncontrado.getBajasLaboralesEmpleados().add(nuevoBajaLaboralEmpleado);
+        int id_tipo_estado = nuevoBajaLaboralEmpleado.getTipo_estado().getId_tipo_estado();
 
-                BajaLaboralEmpleadoModel bajaLaboralEmpleadoGuardado = bajaLaboralEmpleadoRepository
-                                .save(nuevoBajaLaboralEmpleado);
+        TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Tipo estado con id " + id_tipo_estado + " no encontrado"));
 
-                return bajaLaboralEmpleadoGuardado;
-        }
+        nuevoBajaLaboralEmpleado.setTipo_estado(tipoEstadoEncontrado);
+        tipoEstadoEncontrado.getBajasLaboralesEmpleados().add(nuevoBajaLaboralEmpleado);
 
-        public Map<String, Object> getBajaLaboralEmpleadoById(int idBajaLaboralEmpleado) {
-                BajaLaboralEmpleadoModel bajaLaboralEmpleadoEncontrado = bajaLaboralEmpleadoRepository
-                                .findById(idBajaLaboralEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Baja laboral empleado con id " + idBajaLaboralEmpleado
-                                                                + " no encontrado"));
+        BajaLaboralEmpleadoModel bajaLaboralEmpleadoGuardado = bajaLaboralEmpleadoRepository
+                .save(nuevoBajaLaboralEmpleado);
 
-                Map<String, Object> solicitudMap = bajaLaboralEmpleadoEncontrado.toMap();
-                
-                solicitudMap.put("persona",
-                                bajaLaboralEmpleadoEncontrado.getPersona() != null
-                                                ? bajaLaboralEmpleadoEncontrado.getPersona().toMap()
-                                                : null);
+        return bajaLaboralEmpleadoGuardado;
+    }
 
-                solicitudMap.put("motivo_baja",
-                                bajaLaboralEmpleadoEncontrado.getMotivo_baja() != null
-                                                ? bajaLaboralEmpleadoEncontrado.getMotivo_baja().toMap()
-                                                : null);
+    public Map<String, Object> getBajaLaboralEmpleadoById(int idBajaLaboralEmpleado) {
+        BajaLaboralEmpleadoModel bajaLaboralEmpleadoEncontrado = bajaLaboralEmpleadoRepository
+                .findById(idBajaLaboralEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Baja laboral empleado con id " + idBajaLaboralEmpleado
+                                + " no encontrado"));
 
-                solicitudMap.put("tipo_estado",
-                                bajaLaboralEmpleadoEncontrado.getTipo_estado() != null
-                                                ? bajaLaboralEmpleadoEncontrado.getTipo_estado().toMap()
-                                                : null);
+        Map<String, Object> solicitudMap = bajaLaboralEmpleadoEncontrado.toMap();
 
-                return solicitudMap;
-        }
+        solicitudMap.put("persona",
+                bajaLaboralEmpleadoEncontrado.getPersona() != null
+                        ? bajaLaboralEmpleadoEncontrado.getPersona().toMap()
+                        : null);
 
-        public BajaLaboralEmpleadoModel updateBajaLaboralEmpleado(BajaLaboralEmpleadoModel cambiosBajaLaboralEmpleado,
-                        int idBajaLaboralEmpleado) {
+        solicitudMap.put("motivo_baja",
+                bajaLaboralEmpleadoEncontrado.getMotivo_baja() != null
+                        ? bajaLaboralEmpleadoEncontrado.getMotivo_baja().toMap()
+                        : null);
 
-                BajaLaboralEmpleadoModel bajaLaboralEmpleadoExistente = bajaLaboralEmpleadoRepository
-                                .findById(idBajaLaboralEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Baja laboral empleado con id " + idBajaLaboralEmpleado
-                                                                + " no encontrado"));
+        solicitudMap.put("tipo_estado",
+                bajaLaboralEmpleadoEncontrado.getTipo_estado() != null
+                        ? bajaLaboralEmpleadoEncontrado.getTipo_estado().toMap()
+                        : null);
 
-                bajaLaboralEmpleadoExistente.setFecha_inicio(cambiosBajaLaboralEmpleado.getFecha_inicio());
-                bajaLaboralEmpleadoExistente.setFecha_fin(cambiosBajaLaboralEmpleado.getFecha_fin());
-                bajaLaboralEmpleadoExistente.setComentarios(cambiosBajaLaboralEmpleado.getComentarios());
+        return solicitudMap;
+    }
 
-                int id_persona = cambiosBajaLaboralEmpleado.getPersona().getId_persona();
+    public BajaLaboralEmpleadoModel updateBajaLaboralEmpleado(BajaLaboralEmpleadoModel cambiosBajaLaboralEmpleado,
+            int idBajaLaboralEmpleado) {
 
-                PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Persona con id " + id_persona + " no encontrado"));
+        BajaLaboralEmpleadoModel bajaLaboralEmpleadoExistente = bajaLaboralEmpleadoRepository
+                .findById(idBajaLaboralEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Baja laboral empleado con id " + idBajaLaboralEmpleado
+                                + " no encontrado"));
 
-                bajaLaboralEmpleadoExistente.getPersona().getBajasLaboralesEmpleados()
-                                .remove(bajaLaboralEmpleadoExistente);
-                bajaLaboralEmpleadoExistente.setPersona(personaEncontrado);
-                personaEncontrado.getBajasLaboralesEmpleados().add(bajaLaboralEmpleadoExistente);
+        /*
+         * Comprobacion de campos correctos -> Ejemplo:
+         * if (cambiosUsuario.getNombre_usuario() == null) {
+         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+         * }
+         */
 
-                int id_motivo_baja = cambiosBajaLaboralEmpleado.getMotivo_baja().getId_motivo_baja();
+        bajaLaboralEmpleadoExistente.setFecha_inicio(cambiosBajaLaboralEmpleado.getFecha_inicio());
+        bajaLaboralEmpleadoExistente.setFecha_fin(cambiosBajaLaboralEmpleado.getFecha_fin());
+        bajaLaboralEmpleadoExistente.setComentarios(cambiosBajaLaboralEmpleado.getComentarios());
 
-                MotivoBajaModel motivoBajaEncontrado = motivoBajaRepository.findById(id_motivo_baja)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Motivo baja con id " + id_motivo_baja + " no encontrado"));
+        int id_persona = cambiosBajaLaboralEmpleado.getPersona().getId_persona();
 
-                bajaLaboralEmpleadoExistente.getMotivo_baja().getBajasLaboralesEmpleados()
-                                .remove(bajaLaboralEmpleadoExistente);
-                bajaLaboralEmpleadoExistente.setMotivo_baja(motivoBajaEncontrado);
-                motivoBajaEncontrado.getBajasLaboralesEmpleados().add(bajaLaboralEmpleadoExistente);
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
 
-                int id_tipo_estado = cambiosBajaLaboralEmpleado.getTipo_estado().getId_tipo_estado();
+        bajaLaboralEmpleadoExistente.getPersona().getBajasLaboralesEmpleados()
+                .remove(bajaLaboralEmpleadoExistente);
+        bajaLaboralEmpleadoExistente.setPersona(personaEncontrado);
+        personaEncontrado.getBajasLaboralesEmpleados().add(bajaLaboralEmpleadoExistente);
 
-                TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Tipo estado con id " + id_tipo_estado + " no encontrado"));
+        int id_motivo_baja = cambiosBajaLaboralEmpleado.getMotivo_baja().getId_motivo_baja();
 
-                bajaLaboralEmpleadoExistente.getTipo_estado().getBajasLaboralesEmpleados()
-                                .remove(bajaLaboralEmpleadoExistente);
-                bajaLaboralEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
-                tipoEstadoEncontrado.getBajasLaboralesEmpleados().add(bajaLaboralEmpleadoExistente);
+        MotivoBajaModel motivoBajaEncontrado = motivoBajaRepository.findById(id_motivo_baja)
+                .orElseThrow(() -> new RuntimeException(
+                        "Motivo baja con id " + id_motivo_baja + " no encontrado"));
 
-                BajaLaboralEmpleadoModel bajaLaboralEmpleadoActualizado = bajaLaboralEmpleadoRepository
-                                .save(bajaLaboralEmpleadoExistente);
+        bajaLaboralEmpleadoExistente.getMotivo_baja().getBajasLaboralesEmpleados()
+                .remove(bajaLaboralEmpleadoExistente);
+        bajaLaboralEmpleadoExistente.setMotivo_baja(motivoBajaEncontrado);
+        motivoBajaEncontrado.getBajasLaboralesEmpleados().add(bajaLaboralEmpleadoExistente);
 
-                return bajaLaboralEmpleadoActualizado;
+        int id_tipo_estado = cambiosBajaLaboralEmpleado.getTipo_estado().getId_tipo_estado();
 
-        }
+        TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Tipo estado con id " + id_tipo_estado + " no encontrado"));
 
-        public void deleteBajaLaboralEmpleado(int idBajaLaboralEmpleado) {
-                bajaLaboralEmpleadoRepository.findById(idBajaLaboralEmpleado)
-                                .orElseThrow(() -> new RuntimeException(
-                                                "Baja laboral con id " + idBajaLaboralEmpleado + " no encontrado"));
+        bajaLaboralEmpleadoExistente.getTipo_estado().getBajasLaboralesEmpleados()
+                .remove(bajaLaboralEmpleadoExistente);
+        bajaLaboralEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
+        tipoEstadoEncontrado.getBajasLaboralesEmpleados().add(bajaLaboralEmpleadoExistente);
 
-                bajaLaboralEmpleadoRepository.deleteById(idBajaLaboralEmpleado);
-        }
+        BajaLaboralEmpleadoModel bajaLaboralEmpleadoActualizado = bajaLaboralEmpleadoRepository
+                .save(bajaLaboralEmpleadoExistente);
+
+        return bajaLaboralEmpleadoActualizado;
+
+    }
+
+    public void deleteBajaLaboralEmpleado(int idBajaLaboralEmpleado) {
+        bajaLaboralEmpleadoRepository.findById(idBajaLaboralEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Baja laboral con id " + idBajaLaboralEmpleado + " no encontrado"));
+
+        bajaLaboralEmpleadoRepository.deleteById(idBajaLaboralEmpleado);
+    }
 
 }

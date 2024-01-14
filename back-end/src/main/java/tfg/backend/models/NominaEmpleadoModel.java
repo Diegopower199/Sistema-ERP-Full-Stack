@@ -60,7 +60,7 @@ public class NominaEmpleadoModel implements Serializable {
     private String cuenta_bancaria;
 
     @ManyToOne
-    @JoinColumn(name = "id_persona", nullable = false)
+    @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_nominas_empleados_personas"))
     private PersonaModel persona;
 
     public Map<String, Object> toMap() {

@@ -34,7 +34,7 @@ public class PagoFacturaClienteModel implements Serializable {
     private String metodo_pago;
 
     @ManyToOne
-    @JoinColumn(name = "id_factura_cliente", nullable = false)
+    @JoinColumn(name = "id_factura_cliente", nullable = false, foreignKey = @ForeignKey(name = "FK_pagos_facturas_clientes_facturas_clientes"))
     private FacturaClienteModel factura_cliente;
 
     public Map<String, Object> toMap() {

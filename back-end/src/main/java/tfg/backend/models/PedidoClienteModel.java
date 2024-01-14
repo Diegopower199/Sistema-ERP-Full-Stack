@@ -19,36 +19,36 @@ import lombok.*;
 @NoArgsConstructor
 public class PedidoClienteModel implements Serializable {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "id_pedido_cliente", nullable = false)
-   private int id_pedido_cliente;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pedido_cliente", nullable = false)
+    private int id_pedido_cliente;
 
-   @Column(name = "fecha_solicitud_pedido", nullable = false)
-   private LocalDate fecha_solicitud_pedido;
+    @Column(name = "fecha_solicitud_pedido", nullable = false)
+    private LocalDate fecha_solicitud_pedido;
 
-   @Column(name = "fecha_entrega_prevista", nullable = false)
-   private LocalDate fecha_entrega_prevista;
+    @Column(name = "fecha_entrega_prevista", nullable = false)
+    private LocalDate fecha_entrega_prevista;
 
-   @Column(name = "fecha_entrega_real", nullable = false)
-   private LocalDate fecha_entrega_real;
+    @Column(name = "fecha_entrega_real", nullable = false)
+    private LocalDate fecha_entrega_real;
 
-   @Column(name = "tipo_estado_pedido", nullable = false)
-   private String tipo_estado_pedido;
+    @Column(name = "tipo_estado_pedido", nullable = false)
+    private String tipo_estado_pedido;
 
-   @ManyToOne
-   @JoinColumn(name = "id_cliente", nullable = false)
-   private ClienteModel cliente;
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", nullable = false, foreignKey = @ForeignKey(name = "FK_pedidos_clientes_clientes"))
+    private ClienteModel cliente;
 
-   public Map<String, Object> toMap() {
-      Map<String, Object> map = new LinkedHashMap<>();
-      map.put("id_pedido_cliente", id_pedido_cliente);
-      map.put("fecha_solicitud_pedido", fecha_solicitud_pedido);
-      map.put("fecha_entrega_prevista", fecha_entrega_prevista);
-      map.put("fecha_entrega_real", fecha_entrega_real);
-      map.put("tipo_estado_pedido", tipo_estado_pedido);
-      return map;
-   }
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("id_pedido_cliente", id_pedido_cliente);
+        map.put("fecha_solicitud_pedido", fecha_solicitud_pedido);
+        map.put("fecha_entrega_prevista", fecha_entrega_prevista);
+        map.put("fecha_entrega_real", fecha_entrega_real);
+        map.put("tipo_estado_pedido", tipo_estado_pedido);
+        return map;
+    }
 }
 
 /*

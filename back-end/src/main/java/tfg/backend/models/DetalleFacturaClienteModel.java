@@ -48,7 +48,7 @@ public class DetalleFacturaClienteModel implements Serializable {
     private float total;
 
     @ManyToOne
-    @JoinColumn(name = "id_factura_cliente", nullable = false)
+    @JoinColumn(name = "id_factura_cliente", nullable = false, foreignKey = @ForeignKey(name = "FK_detalles_facturas_clientes_facturas_clientes"))
     private FacturaClienteModel factura_cliente;
 
     public Map<String, Object> toMap() {

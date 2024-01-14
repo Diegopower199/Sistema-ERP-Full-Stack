@@ -48,6 +48,7 @@ Eliminar:
 
     - Remove-Item -Path ".next" -Recurse -Force
     - Remove-Item -Path "node_modules" -Recurse -Force
+    - Remove-Item -Path "package-lock.json" -Recurse -Force
 
 Despues ejecutar:
 

@@ -37,7 +37,7 @@ public class FacturaClienteModel implements Serializable {
     private String tipo_estado_factura;
 
     @ManyToOne
-    @JoinColumn(name = "id_cliente", nullable = false)
+    @JoinColumn(name = "id_cliente", nullable = false, foreignKey = @ForeignKey(name = "FK_facturas_clientes_clientes"))
     private ClienteModel cliente;
 
     @JsonIgnore

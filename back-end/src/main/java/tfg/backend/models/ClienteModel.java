@@ -29,10 +29,10 @@ public class ClienteModel implements Serializable {
     @Column(name = "nif", nullable = false)
     private String nif;
 
-    @Column(name = "nombre_apellidos", nullable = false)
+    @Column(name = "nombre_apellidos", nullable = true)
     private String nombre_apellidos;
 
-    @Column(name = "razon_social", nullable = false)
+    @Column(name = "razon_social", nullable = true)
     private String razon_social;
 
     @Column(name = "numero_telefono", nullable = false)

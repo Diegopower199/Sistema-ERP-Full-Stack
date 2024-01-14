@@ -31,15 +31,15 @@ public class SolicitudEmpleadoModel implements Serializable {
     private String comentarios;
 
     @ManyToOne
-    @JoinColumn(name = "id_persona", nullable = false)
+    @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_solicitudes_empleados_personas"))
     private PersonaModel persona;
 
     @ManyToOne
-    @JoinColumn(name = "id_tipo_solicitud", nullable = false)
+    @JoinColumn(name = "id_tipo_solicitud", nullable = false, foreignKey = @ForeignKey(name = "FK_solicitudes_empleados_tipos_solicitudes"))
     private TipoSolicitudModel tipo_solicitud;
 
     @ManyToOne
-    @JoinColumn(name = "id_tipo_estado", nullable = false)
+    @JoinColumn(name = "id_tipo_estado", nullable = false, foreignKey = @ForeignKey(name = "FK_solicitudes_empleados_tipos_estados"))
     private TipoEstadoModel tipo_estado;
 
     public Map<String, Object> toMap() {

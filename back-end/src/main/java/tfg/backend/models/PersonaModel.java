@@ -10,7 +10,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Table(name = "personas")
+@Table(name = "personas", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_numero_empleado", columnNames = "numero_empleado"),
+        @UniqueConstraint(name = "UK_dni", columnNames = "dni"),
+        @UniqueConstraint(name = "UK_numero_telefono", columnNames = "numero_telefono"),
+        @UniqueConstraint(name = "UK_correo_electronico", columnNames = "correo_electronico"), })
 @Entity
 @ToString
 @Data
@@ -55,7 +59,7 @@ public class PersonaModel implements Serializable {
 
     // Sirve para tener un campo con la clave foránea
     @ManyToOne
-    @JoinColumn(name = "id_tipo_persona", nullable = false)
+    @JoinColumn(name = "id_tipo_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_personas_tipos_personas"))
     private TipoPersonaModel tipo_persona;
 
     @JsonIgnore

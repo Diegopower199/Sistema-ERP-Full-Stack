@@ -10,7 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Table(name = "tipos_personas")
+@Table(name = "tipos_personas", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_tipo_persona", columnNames = "tipo_persona"), })
 @Entity
 @ToString
 @Data

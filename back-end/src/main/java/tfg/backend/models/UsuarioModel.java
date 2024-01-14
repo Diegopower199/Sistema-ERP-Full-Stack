@@ -7,7 +7,9 @@ import java.util.Map;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Table(name = "usuarios")
+@Table(name = "usuarios", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_nombre_usuario", columnNames = "nombre_usuario"),
+        @UniqueConstraint(name = "UK_id_persona", columnNames = "id_persona") })
 @Entity
 @ToString
 @Data
@@ -30,11 +32,11 @@ public class UsuarioModel implements Serializable {
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "id_persona", unique = true, nullable = false)
+    @JoinColumn(name = "id_persona", unique = true, nullable = false, foreignKey = @ForeignKey(name = "FK_usuarios_personas"))
     private PersonaModel persona;
 
     @ManyToOne
-    @JoinColumn(name = "id_tipo_usuario", nullable = false)
+    @JoinColumn(name = "id_tipo_usuario", nullable = false, foreignKey = @ForeignKey(name = "FK_usuarios_tipos_usuarios"))
     private TipoUsuarioModel tipo_usuario;
 
     public Map<String, Object> toMap() {

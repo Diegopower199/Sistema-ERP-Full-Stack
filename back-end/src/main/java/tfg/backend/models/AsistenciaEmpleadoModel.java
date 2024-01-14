@@ -41,7 +41,7 @@ public class AsistenciaEmpleadoModel implements Serializable {
     private String comentarios;
 
     @ManyToOne
-    @JoinColumn(name = "id_persona", nullable = false)
+    @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_asistencias_empleados_personas"))
     private PersonaModel persona;
 
     public Map<String, Object> toMap() {

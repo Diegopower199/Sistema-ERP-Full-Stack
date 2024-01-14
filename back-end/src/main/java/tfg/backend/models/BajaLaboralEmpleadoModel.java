@@ -34,15 +34,15 @@ public class BajaLaboralEmpleadoModel implements Serializable {
     private String comentarios;
 
     @ManyToOne
-    @JoinColumn(name = "id_persona", nullable = false)
+    @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_bajas_laborales_empleados_personas"))
     private PersonaModel persona;
 
     @ManyToOne
-    @JoinColumn(name = "id_motivo_baja", nullable = false)
+    @JoinColumn(name = "id_motivo_baja", nullable = false, foreignKey = @ForeignKey(name = "FK_bajas_laborales_empleados_motivos_bajas"))
     private MotivoBajaModel motivo_baja;
 
     @ManyToOne
-    @JoinColumn(name = "id_tipo_estado", nullable = false)
+    @JoinColumn(name = "id_tipo_estado", nullable = false, foreignKey = @ForeignKey(name = "FK_bajas_laborales_empleados_tipos_estados"))
     private TipoEstadoModel tipo_estado;
 
     public Map<String, Object> toMap() {

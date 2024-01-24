@@ -49,6 +49,7 @@ public class PedidoClienteModel implements Serializable {
         map.put("tipo_estado_pedido", tipo_estado_pedido);
         return map;
     }
+
 }
 
 /*

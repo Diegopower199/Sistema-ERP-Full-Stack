@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class RespuestaServidorCliente implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private List<Block> libroTransaccionesVacacionesAutorizadas;
@@ -41,4 +42,5 @@ public class RespuestaServidorCliente implements Serializable {
                 ", codigo=" + codigo +
                 '}';
     }
+
 }

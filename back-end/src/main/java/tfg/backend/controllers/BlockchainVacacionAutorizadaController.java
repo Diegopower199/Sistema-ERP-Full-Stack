@@ -36,6 +36,7 @@ public class BlockchainVacacionAutorizadaController {
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allVacacionesEmpleados = blockchainVacacionAutorizadaService
                 .getAllTransaccionesVacacionesAutorizadas();
+
         if (allVacacionesEmpleados.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -47,7 +48,6 @@ public class BlockchainVacacionAutorizadaController {
     @PostMapping("/api/save")
     public ResponseEntity<Map<String, Object>> save(@RequestBody TransaccionVacacion vacacionEmpleadoRequest) {
         try {
-
             TransaccionVacacion newVacacionAutorizada = blockchainVacacionAutorizadaService
                     .saveTransaccionVacacionAutorizada(vacacionEmpleadoRequest);
 
@@ -56,12 +56,11 @@ public class BlockchainVacacionAutorizadaController {
             } else {
                 return ResponseEntity.ok(newVacacionAutorizada.toMap());
             }
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
+
 }

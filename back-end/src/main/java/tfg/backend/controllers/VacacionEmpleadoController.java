@@ -35,6 +35,7 @@ public class VacacionEmpleadoController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allVacacionesEmpleados = vacacionEmpleadoService.getAllVacacionesEmpleados();
+
         if (allVacacionesEmpleados.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -48,6 +49,7 @@ public class VacacionEmpleadoController {
         try {
             VacacionEmpleadoModel newVacacionEmpleado = vacacionEmpleadoService
                     .saveVacacionEmpleado(vacacionEmpleadoRequest);
+
             if (newVacacionEmpleado == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
@@ -58,7 +60,6 @@ public class VacacionEmpleadoController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -73,7 +74,6 @@ public class VacacionEmpleadoController {
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
     }
 
     // localhost:8080/vacacionesEmpleados/api/update/{id}
@@ -83,6 +83,7 @@ public class VacacionEmpleadoController {
         try {
             VacacionEmpleadoModel updateVacacionEmpleado = vacacionEmpleadoService
                     .updateVacacionEmpleado(vacacionEmpleadoRequest, id);
+
             if (updateVacacionEmpleado == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -93,7 +94,6 @@ public class VacacionEmpleadoController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -107,4 +107,5 @@ public class VacacionEmpleadoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

@@ -40,4 +40,5 @@ public class TipoSolicitudModel implements Serializable {
         map.put("tipo_solicitud", tipo_solicitud);
         return map;
     }
+
 }

@@ -35,6 +35,7 @@ public class NominaEmpleadoController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allNominasEmpleados = nominaEmpleadoService.getAllNominasEmpleados();
+
         if (allNominasEmpleados.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -47,6 +48,7 @@ public class NominaEmpleadoController {
     public ResponseEntity<Map<String, Object>> save(@RequestBody NominaEmpleadoModel nominaEmpleadoRequest) {
         try {
             NominaEmpleadoModel newNominaEmpleado = nominaEmpleadoService.saveNominaEmpleado(nominaEmpleadoRequest);
+
             if (newNominaEmpleado == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
@@ -57,7 +59,6 @@ public class NominaEmpleadoController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -72,7 +73,6 @@ public class NominaEmpleadoController {
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
     }
 
     // localhost:8080/nominasEmpleados/api/update/{id}
@@ -82,6 +82,7 @@ public class NominaEmpleadoController {
         try {
             NominaEmpleadoModel updateNominaEmpleado = nominaEmpleadoService.updateNominaEmpleado(nominaEmpleadoRequest,
                     id);
+
             if (updateNominaEmpleado == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -92,7 +93,6 @@ public class NominaEmpleadoController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -106,4 +106,5 @@ public class NominaEmpleadoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

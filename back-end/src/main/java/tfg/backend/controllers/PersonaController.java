@@ -27,6 +27,7 @@ import tfg.backend.services.PersonaService;
 @RestController
 @RequestMapping("/personas")
 public class PersonaController {
+
     @Autowired
     PersonaService personaService;
 
@@ -34,6 +35,7 @@ public class PersonaController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allPersonas = personaService.getAllPersonas();
+
         if (allPersonas.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -46,6 +48,7 @@ public class PersonaController {
     public ResponseEntity<Map<String, Object>> save(@RequestBody PersonaModel personaRequest) {
         try {
             PersonaModel newPersona = personaService.savePersona(personaRequest);
+
             if (newPersona == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
@@ -55,7 +58,6 @@ public class PersonaController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -70,7 +72,6 @@ public class PersonaController {
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
     }
 
     // localhost:8080/personas/api/update/{id}
@@ -79,6 +80,7 @@ public class PersonaController {
             @PathVariable("id") int id) {
         try {
             PersonaModel updatePersona = personaService.updatePersona(personaRequest, id);
+
             if (updatePersona == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -88,7 +90,6 @@ public class PersonaController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -102,4 +103,5 @@ public class PersonaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

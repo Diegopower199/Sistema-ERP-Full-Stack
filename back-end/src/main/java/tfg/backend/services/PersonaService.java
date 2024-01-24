@@ -28,7 +28,7 @@ public class PersonaService {
     private static final String TELEFONO_CON_PREFIJO_REGEX = "^34[6-9]\\d{8}$";
 
     public List<Map<String, Object>> getAllPersonas() {
-        List<PersonaModel> listaPersonas = personaRepository.findAll();
+        List<PersonaModel> listaPersonas = personaRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (PersonaModel persona : listaPersonas) {

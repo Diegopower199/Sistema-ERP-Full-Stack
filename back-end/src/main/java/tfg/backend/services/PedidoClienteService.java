@@ -22,7 +22,7 @@ public class PedidoClienteService {
     private ClienteRepository clienteRepository;
 
     public List<Map<String, Object>> getAllPedidosClientes() {
-        List<PedidoClienteModel> listaPedidosClientes = pedidoClienteRepository.findAll();
+        List<PedidoClienteModel> listaPedidosClientes = pedidoClienteRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (PedidoClienteModel pedidoCliente : listaPedidosClientes) {

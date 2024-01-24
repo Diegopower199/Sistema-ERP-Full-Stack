@@ -27,6 +27,7 @@ import tfg.backend.services.TipoAyudaService;
 @RestController
 @RequestMapping("/tiposAyudas")
 public class TipoAyudaController {
+
     @Autowired
     TipoAyudaService tipoAyudaService;
 
@@ -34,6 +35,7 @@ public class TipoAyudaController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allTiposAyudas = tipoAyudaService.getAllTiposAyudas();
+
         if (allTiposAyudas.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -46,6 +48,7 @@ public class TipoAyudaController {
     public ResponseEntity<Map<String, Object>> save(@RequestBody TipoAyudaModel tipoAyudaRequest) {
         try {
             TipoAyudaModel newTipoAyuda = tipoAyudaService.saveTipoAyuda(tipoAyudaRequest);
+
             if (newTipoAyuda == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -55,7 +58,6 @@ public class TipoAyudaController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -69,9 +71,7 @@ public class TipoAyudaController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-
         }
-
     }
 
     // localhost:8080/tiposAyudas/api/update/{id}
@@ -80,6 +80,7 @@ public class TipoAyudaController {
             @PathVariable("id") int id) {
         try {
             TipoAyudaModel updateTipoAyuda = tipoAyudaService.updateTipoAyuda(tipoAyudaRequest, id);
+
             if (updateTipoAyuda == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -89,7 +90,6 @@ public class TipoAyudaController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -103,4 +103,5 @@ public class TipoAyudaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

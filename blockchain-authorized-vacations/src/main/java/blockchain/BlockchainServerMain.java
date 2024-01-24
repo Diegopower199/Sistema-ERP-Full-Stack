@@ -131,22 +131,17 @@ public class BlockchainServerMain {
 
     // Método para mostrar todos los bloques de transacciones de vacaciones
     // almacenados en la lista en memoria
-    private static void mostrarInformacionLibroTransaccionVacacion() {
-        List<Block> blockChain = libroVacaciones.getLibroTransaccionesVacacionesAutorizadas();
-        // Verificar si la lista de usuarios está vacía
-        if (blockChain.isEmpty()) {
-            System.out.println("No hay transacciones de vacaciones registrados");
-        } else {
-            System.out.println("Hay transacciones de vacaciones registrados");
-            /*
-             * for (Block block : blockChain) {
-             * // Llama al método para imprimir todos los datos del bloque
-             * System.out.println("\n");
-             * block.printBlockData();
-             * System.out.println("\n");
-             * }
-             */
-        }
-    }
+    /*
+     * private static void mostrarInformacionLibroTransaccionVacacion() {
+     * List<Block> blockChain =
+     * libroVacaciones.getLibroTransaccionesVacacionesAutorizadas();
+     * // Verificar si la lista de usuarios está vacía
+     * if (blockChain.isEmpty()) {
+     * System.out.println("No hay transacciones de vacaciones registrados");
+     * } else {
+     * System.out.println("Hay transacciones de vacaciones registrados");
+     * }
+     * }
+     */
 
 }

@@ -18,6 +18,7 @@ import tfg.backend.repositories.TipoSolicitudRepository;
 
 @Service
 public class SolicitudEmpleadoService {
+
     @Autowired
     private SolicitudEmpleadoRepository solicitudEmpleadoRepository;
 
@@ -31,7 +32,7 @@ public class SolicitudEmpleadoService {
     private PersonaRepository personaRepository;
 
     public List<Map<String, Object>> getAllSolicitudesEmpleados() {
-        List<SolicitudEmpleadoModel> listaSolicitudesEmpleados = solicitudEmpleadoRepository.findAll();
+        List<SolicitudEmpleadoModel> listaSolicitudesEmpleados = solicitudEmpleadoRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (SolicitudEmpleadoModel solicitudEmpleado : listaSolicitudesEmpleados) {

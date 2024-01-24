@@ -54,6 +54,7 @@ public class AsistenciaEmpleadoModel implements Serializable {
         map.put("comentarios", comentarios);
         return map;
     }
+
 }
 
 /*

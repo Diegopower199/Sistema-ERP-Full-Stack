@@ -35,6 +35,7 @@ public class AsistenciaEmpleadoController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allAsistenciasEmpleados = asistenciaEmpleadoService.getAllAsistenciasEmpleados();
+
         if (allAsistenciasEmpleados.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -49,6 +50,7 @@ public class AsistenciaEmpleadoController {
         try {
             AsistenciaEmpleadoModel newAsistenciaEmpleado = asistenciaEmpleadoService
                     .startOfWorkdayAsistenciaEmpleado(asistenciaEmpleadoRequest);
+
             if (newAsistenciaEmpleado == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
@@ -59,7 +61,6 @@ public class AsistenciaEmpleadoController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -71,6 +72,7 @@ public class AsistenciaEmpleadoController {
         try {
             AsistenciaEmpleadoModel updateAsistenciaEmpleado = asistenciaEmpleadoService
                     .endOfWorkdayAsistenciaEmpleado(asistenciaEmpleadoRequest, id);
+
             if (updateAsistenciaEmpleado == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
@@ -81,7 +83,6 @@ public class AsistenciaEmpleadoController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -96,7 +97,6 @@ public class AsistenciaEmpleadoController {
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
     }
 
     // localhost:8080/asistenciasEmpleados/api/update/{id}
@@ -106,6 +106,7 @@ public class AsistenciaEmpleadoController {
         try {
             AsistenciaEmpleadoModel updateAsistenciaEmpleado = asistenciaEmpleadoService
                     .updateAsistenciaEmpleado(asistenciaEmpleadoRequest, id);
+
             if (updateAsistenciaEmpleado == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -116,7 +117,6 @@ public class AsistenciaEmpleadoController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -130,4 +130,5 @@ public class AsistenciaEmpleadoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

@@ -22,7 +22,7 @@ public class FacturaClienteService {
     private ClienteRepository clienteRepository;
 
     public List<Map<String, Object>> getAllFacturasClientes() {
-        List<FacturaClienteModel> listaFacturasClientes = facturaClienteRepository.findAll();
+        List<FacturaClienteModel> listaFacturasClientes = facturaClienteRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (FacturaClienteModel facturaCliente : listaFacturasClientes) {

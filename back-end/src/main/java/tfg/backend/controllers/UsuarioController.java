@@ -31,12 +31,11 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
-    // CAMBIAR TODO SI HAY UN GET A POST POR SEGURIDAD
-
     // localhost:8080/usuarios/api/getAll
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allUsuarios = usuarioService.getAllUsuarios();
+
         if (allUsuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -49,6 +48,7 @@ public class UsuarioController {
     public ResponseEntity<Map<String, Object>> save(@RequestBody UsuarioModel usuarioRequest) {
         try {
             UsuarioModel newUsuario = usuarioService.saveUsuario(usuarioRequest);
+
             if (newUsuario == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
@@ -58,7 +58,6 @@ public class UsuarioController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -72,13 +71,6 @@ public class UsuarioController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-
-            /*
-             * Map<String, Object> response = new HashMap<>(); CREARNOS ESTADO DE CODIGOS
-             * response.put("message", "El usuario no existe");
-             * return ResponseEntity.status(888).body(response);
-             */
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -88,6 +80,7 @@ public class UsuarioController {
             @PathVariable("id") int id) {
         try {
             UsuarioModel updateUsuario = usuarioService.updateUsuario(usuarioRequest, id);
+
             if (updateUsuario == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -97,7 +90,6 @@ public class UsuarioController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -136,6 +128,7 @@ public class UsuarioController {
             String passwordNueva = passwordUpdateRequest.get("password_nueva");
             // Lógica para cambiar la contraseña aquí utilizando los valores proporcionados
             boolean changePasswordResponse = usuarioService.changePassword(nombreUsuario, passwordNueva);
+
             if (changePasswordResponse) {
                 Map<String, Object> response = new HashMap<>();
                 response.put("resultado", true);

@@ -41,4 +41,5 @@ public class MotivoBajaModel implements Serializable {
         map.put("motivo_baja", motivo_baja);
         return map;
     }
+
 }

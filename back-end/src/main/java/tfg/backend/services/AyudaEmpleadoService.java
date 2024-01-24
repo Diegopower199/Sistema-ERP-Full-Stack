@@ -32,7 +32,7 @@ public class AyudaEmpleadoService {
     private PersonaRepository personaRepository;
 
     public List<Map<String, Object>> getAllAyudasEmpleados() {
-        List<AyudaEmpleadoModel> listaAyudasEmpleados = ayudaEmpleadoRepository.findAll();
+        List<AyudaEmpleadoModel> listaAyudasEmpleados = ayudaEmpleadoRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (AyudaEmpleadoModel ayudaEmpleado : listaAyudasEmpleados) {

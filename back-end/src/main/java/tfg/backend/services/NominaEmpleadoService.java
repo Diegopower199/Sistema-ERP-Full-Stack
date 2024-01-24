@@ -22,7 +22,7 @@ public class NominaEmpleadoService {
     private PersonaRepository personaRepository;
 
     public List<Map<String, Object>> getAllNominasEmpleados() {
-        List<NominaEmpleadoModel> listaNominasEmpleados = nominaEmpleadoRepository.findAll();
+        List<NominaEmpleadoModel> listaNominasEmpleados = nominaEmpleadoRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (NominaEmpleadoModel nominaEmpleado : listaNominasEmpleados) {

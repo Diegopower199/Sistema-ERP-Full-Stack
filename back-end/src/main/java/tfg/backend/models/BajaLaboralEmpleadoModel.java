@@ -53,6 +53,7 @@ public class BajaLaboralEmpleadoModel implements Serializable {
         map.put("comentarios", comentarios);
         return map;
     }
+
 }
 
 /*

@@ -36,6 +36,7 @@ public class BajaLaboralEmpleadoController {
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allBajasLaboralesEmpleados = bajaLaboralEmpleadoService
                 .getAllBajasLaboralesEmpleados();
+
         if (allBajasLaboralesEmpleados.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -49,6 +50,7 @@ public class BajaLaboralEmpleadoController {
         try {
             BajaLaboralEmpleadoModel newBajaLaboralEmpleado = bajaLaboralEmpleadoService
                     .saveBajaLaboralEmpleado(bajaLaboralEmpleadoRequest);
+
             if (newBajaLaboralEmpleado == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
@@ -59,7 +61,6 @@ public class BajaLaboralEmpleadoController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -74,7 +75,6 @@ public class BajaLaboralEmpleadoController {
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
     }
 
     // localhost:8080/bajasLaboralesEmpleados/api/update/{id}
@@ -84,6 +84,7 @@ public class BajaLaboralEmpleadoController {
         try {
             BajaLaboralEmpleadoModel updateBajaLaboralEmpleado = bajaLaboralEmpleadoService
                     .updateBajaLaboralEmpleado(bajaLaboralEmpleadoRequest, id);
+
             if (updateBajaLaboralEmpleado == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -94,7 +95,6 @@ public class BajaLaboralEmpleadoController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -108,4 +108,5 @@ public class BajaLaboralEmpleadoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

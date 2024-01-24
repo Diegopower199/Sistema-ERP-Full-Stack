@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TransaccionVacacion implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private int id_vacacion_empleado;

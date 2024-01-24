@@ -84,6 +84,8 @@ Bibliotecas instaladas:
     - npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
     - npm install @mui/x-data-grid
     - npm install moment --save
+    - npm install antd --save
+
 
 
 

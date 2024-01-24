@@ -40,4 +40,5 @@ public class TipoAyudaModel implements Serializable {
         map.put("tipo_ayuda", tipo_ayuda);
         return map;
     }
+
 }

@@ -80,6 +80,7 @@ public class NominaEmpleadoModel implements Serializable {
         map.put("cuenta_bancaria", cuenta_bancaria);
         return map;
     }
+
 }
 
 /*

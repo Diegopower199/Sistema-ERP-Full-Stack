@@ -27,7 +27,7 @@ public class UsuarioService {
     private PersonaRepository personaRepository;
 
     public List<Map<String, Object>> getAllUsuarios() {
-        List<UsuarioModel> listaUsuarios = usuarioRepository.findAll();
+        List<UsuarioModel> listaUsuarios = usuarioRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (UsuarioModel usuario : listaUsuarios) {

@@ -29,7 +29,7 @@ public class VacacionEmpleadoService {
     private TipoEstadoRepository tipoEstadoRepository;
 
     public List<Map<String, Object>> getAllVacacionesEmpleados() {
-        List<VacacionEmpleadoModel> listaVacacionEmpleado = vacacionEmpleadoRepository.findAll();
+        List<VacacionEmpleadoModel> listaVacacionEmpleado = vacacionEmpleadoRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (VacacionEmpleadoModel vacacionEmpleado : listaVacacionEmpleado) {

@@ -32,7 +32,8 @@ public class BajaLaboralEmpleadoService {
     private PersonaRepository personaRepository;
 
     public List<Map<String, Object>> getAllBajasLaboralesEmpleados() {
-        List<BajaLaboralEmpleadoModel> listaBajasLaboralesEmpleados = bajaLaboralEmpleadoRepository.findAll();
+        List<BajaLaboralEmpleadoModel> listaBajasLaboralesEmpleados = bajaLaboralEmpleadoRepository
+                .findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (BajaLaboralEmpleadoModel bajaLaboralEmpleado : listaBajasLaboralesEmpleados) {

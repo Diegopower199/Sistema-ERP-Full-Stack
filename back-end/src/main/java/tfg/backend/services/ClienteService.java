@@ -13,37 +13,39 @@ import tfg.backend.repositories.ClienteRepository;
 @Service
 public class ClienteService {
 
-    /* ESTO LO HAGO PORQUE EL NIF SI HAY PERSONAS FISICAS ES DE UN MODO Y SI ES PERSONAS JURIDICAS DE OTRO MIRARME ESTO
+    /*
+     * ESTO LO HAGO PORQUE EL NIF SI HAY PERSONAS FISICAS ES DE UN MODO Y SI ES
+     * PERSONAS JURIDICAS DE OTRO MIRARME ESTO
      * public class ValidarNIF {
-
-    public static void main(String[] args) {
-        String regexNIFPersonasFisicas = "^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$";
-        String regexNIFPersonasJuridicas = "^[A-HJNP-SUVW]{1}[0-9]{7}[0-9A-J]$";
-
-        String ejemploNIFPersonasFisicas = "12345678A";
-        String ejemploNIFPersonasJuridicas = "A1234567B";
-
-        if (ejemploNIFPersonasFisicas.matches(regexNIFPersonasFisicas)) {
-            System.out.println("El NIF de personas físicas es válido.");
-        } else {
-            System.out.println("El NIF de personas físicas no es válido.");
-        }
-
-        if (ejemploNIFPersonasJuridicas.matches(regexNIFPersonasJuridicas)) {
-            System.out.println("El NIF de personas jurídicas es válido.");
-        } else {
-            System.out.println("El NIF de personas jurídicas no es válido.");
-        }
-    }
-}
-
+     * 
+     * public static void main(String[] args) {
+     * String regexNIFPersonasFisicas = "^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$";
+     * String regexNIFPersonasJuridicas = "^[A-HJNP-SUVW]{1}[0-9]{7}[0-9A-J]$";
+     * 
+     * String ejemploNIFPersonasFisicas = "12345678A";
+     * String ejemploNIFPersonasJuridicas = "A1234567B";
+     * 
+     * if (ejemploNIFPersonasFisicas.matches(regexNIFPersonasFisicas)) {
+     * System.out.println("El NIF de personas físicas es válido.");
+     * } else {
+     * System.out.println("El NIF de personas físicas no es válido.");
+     * }
+     * 
+     * if (ejemploNIFPersonasJuridicas.matches(regexNIFPersonasJuridicas)) {
+     * System.out.println("El NIF de personas jurídicas es válido.");
+     * } else {
+     * System.out.println("El NIF de personas jurídicas no es válido.");
+     * }
+     * }
+     * }
+     * 
      */
 
     @Autowired
     private ClienteRepository clienteRepository;
 
     public List<Map<String, Object>> getAllClientes() {
-        List<ClienteModel> listaClientes = clienteRepository.findAll();
+        List<ClienteModel> listaClientes = clienteRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (ClienteModel cliente : listaClientes) {
@@ -57,7 +59,8 @@ public class ClienteService {
 
     public ClienteModel saveCliente(ClienteModel nuevoCliente) {
 
-        // Aqui el nombre_apellidos o razon_social, eebe ser uno de los dos nulos, depende del nif que arriba tenemos la diferencia
+        // Aqui el nombre_apellidos o razon_social, eebe ser uno de los dos nulos,
+        // depende del nif que arriba tenemos la diferencia
 
         /*
          * Comprobacion de campos correctos -> Ejemplo:

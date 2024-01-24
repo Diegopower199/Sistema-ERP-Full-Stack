@@ -64,6 +64,7 @@ public class DetalleFacturaClienteModel implements Serializable {
         map.put("total", total);
         return map;
     }
+
 }
 
 /*

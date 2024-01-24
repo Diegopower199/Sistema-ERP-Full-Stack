@@ -14,6 +14,7 @@ public class ExcepcionPersonalizada extends Exception {
     public int getCodigo() {
         return codigo;
     }
+    
 }
 
 /*

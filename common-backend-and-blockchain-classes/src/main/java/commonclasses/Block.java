@@ -125,4 +125,5 @@ public class Block implements Serializable {
         System.out.println("| Hash: " + hash);
         System.out.println("+----------------------------------------------------------------------------------+");
     }
+
 }

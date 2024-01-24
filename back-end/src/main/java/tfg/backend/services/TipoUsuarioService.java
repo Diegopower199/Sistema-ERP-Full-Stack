@@ -17,7 +17,7 @@ public class TipoUsuarioService {
     TipoUsuarioRepository tipoUsuarioRepository;
 
     public List<Map<String, Object>> getAllTiposUsuarios() {
-        List<TipoUsuarioModel> listaTiposUsuarios = tipoUsuarioRepository.findAll();
+        List<TipoUsuarioModel> listaTiposUsuarios = tipoUsuarioRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (TipoUsuarioModel tipoUsuario : listaTiposUsuarios) {

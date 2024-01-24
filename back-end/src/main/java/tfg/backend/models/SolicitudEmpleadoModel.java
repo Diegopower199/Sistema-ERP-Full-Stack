@@ -49,6 +49,7 @@ public class SolicitudEmpleadoModel implements Serializable {
         map.put("comentarios", comentarios);
         return map;
     }
+
 }
 
 /*

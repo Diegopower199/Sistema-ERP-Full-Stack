@@ -35,6 +35,7 @@ public class FacturaClienteController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allFacturasClientes = facturaClienteService.getAllFacturasClientes();
+
         if (allFacturasClientes.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -47,6 +48,7 @@ public class FacturaClienteController {
     public ResponseEntity<Map<String, Object>> save(@RequestBody FacturaClienteModel facturaClienteRequest) {
         try {
             FacturaClienteModel newFacturaCliente = facturaClienteService.saveFacturaCliente(facturaClienteRequest);
+
             if (newFacturaCliente == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
@@ -57,7 +59,6 @@ public class FacturaClienteController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -72,7 +73,6 @@ public class FacturaClienteController {
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
     }
 
     // localhost:8080/facturasClientes/api/update/{id}
@@ -82,6 +82,7 @@ public class FacturaClienteController {
         try {
             FacturaClienteModel updateFacturaCliente = facturaClienteService.updateFacturaCliente(facturaClienteRequest,
                     id);
+
             if (updateFacturaCliente == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -92,7 +93,6 @@ public class FacturaClienteController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -106,4 +106,5 @@ public class FacturaClienteController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

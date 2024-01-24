@@ -17,7 +17,7 @@ public class TipoEstadoService {
     TipoEstadoRepository tipoEstadoRepository;
 
     public List<Map<String, Object>> getAllTiposEstados() {
-        List<TipoEstadoModel> listaTiposEstados = tipoEstadoRepository.findAll();
+        List<TipoEstadoModel> listaTiposEstados = tipoEstadoRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (TipoEstadoModel tipoEstado : listaTiposEstados) {

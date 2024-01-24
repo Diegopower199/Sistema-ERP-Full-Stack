@@ -56,6 +56,7 @@ public class FacturaClienteModel implements Serializable {
         map.put("tipo_estado_factura", tipo_estado_factura);
         return map;
     }
+
 }
 
 /*

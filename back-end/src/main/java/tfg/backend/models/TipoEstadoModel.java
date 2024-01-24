@@ -52,4 +52,5 @@ public class TipoEstadoModel implements Serializable {
         map.put("tipo_estado", tipo_estado);
         return map;
     }
+
 }

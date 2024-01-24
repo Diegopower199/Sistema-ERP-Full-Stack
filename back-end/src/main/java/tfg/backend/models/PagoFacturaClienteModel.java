@@ -45,6 +45,7 @@ public class PagoFacturaClienteModel implements Serializable {
         map.put("metodo_pago", metodo_pago);
         return map;
     }
+
 }
 
 /*

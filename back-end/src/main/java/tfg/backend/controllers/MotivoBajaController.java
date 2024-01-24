@@ -35,6 +35,7 @@ public class MotivoBajaController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allMotivosBajas = motivoBajaService.getAllMotivosBajas();
+
         if (allMotivosBajas.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -47,6 +48,7 @@ public class MotivoBajaController {
     public ResponseEntity<Map<String, Object>> save(@RequestBody MotivoBajaModel motivoBajaRequest) {
         try {
             MotivoBajaModel newMotivoBaja = motivoBajaService.saveMotivoBaja(motivoBajaRequest);
+
             if (newMotivoBaja == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -56,7 +58,6 @@ public class MotivoBajaController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -79,6 +80,7 @@ public class MotivoBajaController {
             @PathVariable("id") int id) {
         try {
             MotivoBajaModel updateMotivoBaja = motivoBajaService.updateMotivoBaja(motivoBajaRequest, id);
+
             if (updateMotivoBaja == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -88,7 +90,6 @@ public class MotivoBajaController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -102,4 +103,5 @@ public class MotivoBajaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

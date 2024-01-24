@@ -17,7 +17,7 @@ public class TipoSolicitudService {
     TipoSolicitudRepository tipoSolicitudRepository;
 
     public List<Map<String, Object>> getAllTiposSolicitudes() {
-        List<TipoSolicitudModel> listaTiposSolicitudes = tipoSolicitudRepository.findAll();
+        List<TipoSolicitudModel> listaTiposSolicitudes = tipoSolicitudRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (TipoSolicitudModel tipoSolicitud : listaTiposSolicitudes) {

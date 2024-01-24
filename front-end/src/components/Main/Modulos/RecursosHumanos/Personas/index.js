@@ -18,6 +18,8 @@ import {
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
 import { getAllPersonas } from "@/services/PersonaService";
+import FormPersonas from "./FormPersonas";
+import { Modal } from "antd";
 
 const PAGE_SIZE_OPTIONS = [5, 10, 25, 50, 100];
 
@@ -33,40 +35,15 @@ export default function Personas() {
 
   const router = useRouter();
 
-  const [rows, setRows] = useState([]);
+  const [showFormCreate, setShowFormCreate] = useState(false);
+  const [showFormModify, setShowFormModify] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
-  async function fetchGetAllPersonas() {
-    try {
-      const resultado = await getAllPersonas();
-      console.log("Resultado: ", resultado[0]);
-      const personasMap = resultado.map((persona) => {
-        return {
-          id: persona.id_persona,
-          nombre: persona.nombre,
-          apellidos: persona.apellidos,
-          genero: persona.genero,
-          fecha_nacimiento: persona.fecha_nacimiento,
-          dni: persona.dni,
-          direccion: persona.direccion,
-          numero_telefono: persona.numero_telefono,
-          correo_electronico: persona.correo_electronico,
-        };
-      });
-      setRows(personasMap);
-    } catch (error) {
-      console.error("El error es: ", error);
-    }
-  }
+  const [idPersonaSelected, setIdPersonaSelected] = useState(0);
+  const [namePersonaSelected, setNamePersonaSelected] = useState("");
 
-  useEffect(() => {
-    console.log("Pagina de personas: ");
-    console.log("authUser: ", authUser);
-    if (!authUser) {
-      router.push("/login");
-    } else {
-      fetchGetAllPersonas();
-    }
-  }, [authUser]);
+  const [personaFormUpdated, setPersonaFormUpdated] = useState(false);
+  const [rowSelected, setRowSelected] = useState(null);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -74,23 +51,10 @@ export default function Personas() {
   });
 
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
-
-  const handleEditClick = (id) => () => {
-    console.log("Boton para editar");
-    //setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
-
-  const handleDeleteClick = (id) => () => {
-    console.log("Boton para borrar");
-    // setRows(rows.filter((row) => row.id !== id));
-  };
-
-  const handleAddClick = () => {
-    console.log("Añadir nuevo registro");
-  };
-
+  const [rows, setRows] = useState([]);
   const columns = [
     { field: "id", headerName: "ID", width: 100, editable: false },
+    { field: "numero_empleado", headerName: "Numero empleado", width: 180, editable: false },
     { field: "nombre", headerName: "Nombre", width: 180, editable: false },
     {
       field: "apellidos",
@@ -149,6 +113,109 @@ export default function Personas() {
       },
     },
   ];
+
+  const fetchGetAllPersonas = async () => {
+    try {
+      const resultado = await getAllPersonas();
+      console.log("Resultado: ", resultado[0]);
+      const personasMap = resultado.map((persona) => {
+        return {
+          id: persona.id_persona,
+          numero_empleado: persona.numero_empleado,
+          nombre: persona.nombre,
+          apellidos: persona.apellidos,
+          genero: persona.genero,
+          fecha_nacimiento: persona.fecha_nacimiento,
+          dni: persona.dni,
+          direccion: persona.direccion,
+          numero_telefono: persona.numero_telefono,
+          correo_electronico: persona.correo_electronico,
+        };
+      });
+      setRows(personasMap);
+    } catch (error) {
+      console.error("El error es: ", error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("Pagina de personas: ");
+    console.log("authUser: ", authUser);
+    if (!authUser) {
+      router.push("/login");
+    } else {
+      fetchGetAllPersonas();
+    }
+  }, [authUser]);
+
+
+  function personaFormUpdatedTrigger() {
+    setPersonaFormUpdated(!personaFormUpdated);
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (personaFormUpdated == true) {
+        await fetchGetAllPersonas();
+        setPersonaFormUpdated(false);
+      }
+    };
+    fetchData();
+  }, [personaFormUpdated]);
+
+  function togglePersonaForm() {
+    if (showFormCreate) {
+      setShowFormCreate(false);
+    }
+    if (showFormModify) {
+      setShowFormModify(false);
+    }
+  }
+
+  function toggleEditForm() {
+    setShowFormModify(!showFormModify);
+  }
+
+  // Handles 'delete' modal ok button
+  function handleModalOk() {
+    console.log("No funciona nada, pero estamos en el OK");
+    resetStates();
+  }
+
+  function handleModalClose() {
+    resetStates();
+  }
+
+  const handleEditClick = (id) => () => {
+    console.log("Boton para editar");
+    const fila = rows.find((row) => row.id === id);
+    setRowSelected(fila);
+    toggleEditForm();
+    //setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+
+  const handleDeleteClick = (id) => () => {
+    console.log("ID:", id);
+    const fila = rows.find((row) => row.id === id);
+    console.log("Boton para borrar: ");
+    setIdPersonaSelected(id);
+    setNamePersonaSelected("AUN ME FALTA");
+    setShowDelete(true);
+    // setRows(rows.filter((row) => row.id !== id));
+  };
+
+  // toggleForm, formFields
+  const handleAddClick = () => {
+    console.log("Añadir nueva persona");
+    setShowFormCreate(true);
+  };
+
+  function resetStates() {
+    setShowFormModify(false);
+    setShowDelete(false);
+    setIdPersonaSelected(0);
+    setNamePersonaSelected("");
+  }
 
   const getJson = (apiRef) => {
     // Select rows and columns
@@ -225,40 +292,91 @@ export default function Personas() {
     );
   }
 
-  return (
-    <Box
-      sx={{
-        height: 500,
-        width: "100%",
-        "& .actions": {
-          color: "text.secondary",
-        },
-        "& .textPrimary": {
-          color: "text.primary",
-        },
-      }}
-    >
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleAddClick}>
-        Add record
-      </Button>
+  const renderTablePersona = () => {
+    // Hacer aqui el deleteModal
 
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        loading={false}
-        checkboxSelection={false}
-        disableRowSelectionOnClick={false}
-        paginationModel={paginationModel}
-        onPaginationModelChange={setPaginationModel}
-        pageSizeOptions={PAGE_SIZE_OPTIONS}
-        onRowSelectionModelChange={(newRowSelectionModel) => {
-          setRowSelectionModel(newRowSelectionModel);
+    function deleteModal() {
+      return (
+        <Modal
+          title={`Eliminar a la siguiente persona ${"activeName"}`}
+          open={showDelete}
+          okText="Aceptar"
+          onOk={handleModalOk}
+          cancelText="Cancelar"
+          onCancel={handleModalClose}
+          centered
+        >
+          <p>AAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
+        </Modal>
+      );
+    }
+
+    return (
+      <Box
+        sx={{
+          height: 500,
+          width: "100%",
+          "& .actions": {
+            color: "text.secondary",
+          },
+          "& .textPrimary": {
+            color: "text.primary",
+          },
         }}
-        rowSelectionModel={rowSelectionModel}
-        slots={{
-          toolbar: CustomToolbar,
-        }}
-      />
-    </Box>
-  );
+      >
+        <Button
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={handleAddClick}
+        >
+          Add record
+        </Button>
+
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          loading={false}
+          checkboxSelection={false}
+          disableRowSelectionOnClick={false}
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+          pageSizeOptions={PAGE_SIZE_OPTIONS}
+          onRowSelectionModelChange={(newRowSelectionModel) => {
+            setRowSelectionModel(newRowSelectionModel);
+          }}
+          rowSelectionModel={rowSelectionModel}
+          slots={{
+            toolbar: CustomToolbar,
+          }}
+        />
+        {showDelete && deleteModal()}
+      </Box>
+    );
+  };
+
+  if (showFormCreate) {
+    return (
+      <>
+        <FormPersonas
+          toggleForm={togglePersonaForm}
+          personaDataForm={""}
+          formUpdateTrigger={personaFormUpdatedTrigger}
+          operationType={"create"}
+        ></FormPersonas>
+      </>
+    );
+  } else if (showFormModify) {
+    return (
+      <>
+        <FormPersonas
+          toggleForm={toggleEditForm}
+          personaDataForm={rowSelected}
+          formUpdateTrigger={personaFormUpdatedTrigger}
+          operationType={"update"}
+        ></FormPersonas>
+      </>
+    );
+  } else {
+    return renderTablePersona();
+  }
 }

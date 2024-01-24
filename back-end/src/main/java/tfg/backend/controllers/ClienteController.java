@@ -35,6 +35,7 @@ public class ClienteController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allClientes = clienteService.getAllClientes();
+
         if (allClientes.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -47,6 +48,7 @@ public class ClienteController {
     public ResponseEntity<Map<String, Object>> save(@RequestBody ClienteModel clienteRequest) {
         try {
             ClienteModel newCliente = clienteService.saveCliente(clienteRequest);
+
             if (newCliente == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
@@ -57,7 +59,6 @@ public class ClienteController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -72,7 +73,6 @@ public class ClienteController {
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
     }
 
     // localhost:8080/clientes/api/update/{id}
@@ -81,6 +81,7 @@ public class ClienteController {
             @PathVariable("id") int id) {
         try {
             ClienteModel updateCliente = clienteService.updateCliente(clienteRequest, id);
+
             if (updateCliente == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -91,7 +92,6 @@ public class ClienteController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -105,4 +105,5 @@ public class ClienteController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

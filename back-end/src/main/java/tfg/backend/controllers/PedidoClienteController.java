@@ -35,6 +35,7 @@ public class PedidoClienteController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allPedidosClientes = pedidoClienteService.getAllPedidosClientes();
+
         if (allPedidosClientes.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -47,6 +48,7 @@ public class PedidoClienteController {
     public ResponseEntity<Map<String, Object>> save(@RequestBody PedidoClienteModel pedidoClienteRequest) {
         try {
             PedidoClienteModel newPedidoCliente = pedidoClienteService.savePedidoCliente(pedidoClienteRequest);
+
             if (newPedidoCliente == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
@@ -57,7 +59,6 @@ public class PedidoClienteController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -72,7 +73,6 @@ public class PedidoClienteController {
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
     }
 
     // localhost:8080/pedidosClientes/api/update/{id}
@@ -81,6 +81,7 @@ public class PedidoClienteController {
             @PathVariable("id") int id) {
         try {
             PedidoClienteModel updatePedidoCliente = pedidoClienteService.updatePedidoCliente(pedidoClienteRequest, id);
+
             if (updatePedidoCliente == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -91,7 +92,6 @@ public class PedidoClienteController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -105,4 +105,5 @@ public class PedidoClienteController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

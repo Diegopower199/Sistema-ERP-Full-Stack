@@ -17,7 +17,7 @@ public class TipoAyudaService {
     TipoAyudaRepository tipoAyudaRepository;
 
     public List<Map<String, Object>> getAllTiposAyudas() {
-        List<TipoAyudaModel> listaTiposAyudas = tipoAyudaRepository.findAll();
+        List<TipoAyudaModel> listaTiposAyudas = tipoAyudaRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (TipoAyudaModel tipoAyuda : listaTiposAyudas) {

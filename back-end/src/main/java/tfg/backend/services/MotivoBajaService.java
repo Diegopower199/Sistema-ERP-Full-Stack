@@ -17,7 +17,7 @@ public class MotivoBajaService {
     MotivoBajaRepository motivoBajaRepository;
 
     public List<Map<String, Object>> getAllMotivosBajas() {
-        List<MotivoBajaModel> listaMotivosBajas = motivoBajaRepository.findAll();
+        List<MotivoBajaModel> listaMotivosBajas = motivoBajaRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (MotivoBajaModel motivoBaja : listaMotivosBajas) {

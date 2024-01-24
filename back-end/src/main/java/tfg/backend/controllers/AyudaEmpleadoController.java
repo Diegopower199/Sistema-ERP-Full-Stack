@@ -35,6 +35,7 @@ public class AyudaEmpleadoController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allAyudasEmpleados = ayudaEmpleadoService.getAllAyudasEmpleados();
+
         if (allAyudasEmpleados.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -47,6 +48,7 @@ public class AyudaEmpleadoController {
     public ResponseEntity<Map<String, Object>> save(@RequestBody AyudaEmpleadoModel ayudaEmpleadoRequest) {
         try {
             AyudaEmpleadoModel newAyudaEmpleado = ayudaEmpleadoService.saveAyudaEmpleado(ayudaEmpleadoRequest);
+
             if (newAyudaEmpleado == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } else {
@@ -57,7 +59,6 @@ public class AyudaEmpleadoController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -72,7 +73,6 @@ public class AyudaEmpleadoController {
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
     }
 
     // localhost:8080/ayudasEmpleados/api/update/{id}
@@ -81,6 +81,7 @@ public class AyudaEmpleadoController {
             @PathVariable("id") int id) {
         try {
             AyudaEmpleadoModel updateAyudaEmpleado = ayudaEmpleadoService.updateAyudaEmpleado(ayudaEmpleadoRequest, id);
+
             if (updateAyudaEmpleado == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -91,7 +92,6 @@ public class AyudaEmpleadoController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -105,4 +105,5 @@ public class AyudaEmpleadoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

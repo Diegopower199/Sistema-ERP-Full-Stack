@@ -1,6 +1,7 @@
 /*INSERT INTO `trabajotfgerp`.`solicitudes` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('a', '2023-01-01', '2', '1', '1');*/
 -- SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM solicitudes c WHERE c.id_persona = 1 AND c.fecha_solicitud = "2023-12-1";
 -- SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM VacacionEmpleadoModel c WHERE c.persona = :id_persona AND c.fecha_inicio <= :fecha_finalizacion AND c.fecha_finalizacion >= :fecha_inicio")
+-- Configuración de Usuario y Esquema en MySQL
 /*DROP USER IF EXISTS 'diegogonzalez'@'localhost';
 
 CREATE USER 'diegogonzalez'@'localhost' IDENTIFIED WITH mysql_native_password BY 'bbdd1122';
@@ -17,6 +18,209 @@ flush privileges;
 
 
 USE trabajotfgerp;*/
+/* -- Creación de Tablas en la Base de Datos AUN NO ESTAN TODOS
+
+-- Asistencias Empleados
+CREATE TABLE `asistencias_empleados` (
+`id_asistencia_empleado` int NOT NULL AUTO_INCREMENT,
+`comentarios` varchar(255) DEFAULT NULL,
+`fecha` date NOT NULL,
+`hora_entrada` time(6) NOT NULL,
+`hora_salida` time(6) DEFAULT NULL,
+`total_horas_trabajadas` time(6) NOT NULL,
+`id_persona` int NOT NULL,
+PRIMARY KEY (`id_asistencia_empleado`),
+KEY `FK_asistencias_empleados_personas` (`id_persona`),
+CONSTRAINT `FK_asistencias_empleados_personas` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id_persona`)
+);
+
+
+-- Ayudas Empleados
+CREATE TABLE `ayudas_empleados` (
+`id_ayuda_empleado` int NOT NULL AUTO_INCREMENT,
+`comentarios` varchar(255) DEFAULT NULL,
+`fecha_fin` date NOT NULL,
+`fecha_inicio` date NOT NULL,
+`valor_asociado` float NOT NULL,
+`id_persona` int NOT NULL,
+`id_tipo_ayuda` int NOT NULL,
+`id_tipo_estado` int NOT NULL,
+PRIMARY KEY (`id_ayuda_empleado`),
+KEY `FK_ayudas_empleados_personas` (`id_persona`),
+KEY `FK_ayudas_empleados_tipos_ayudas` (`id_tipo_ayuda`),
+KEY `FK_ayudas_empleados_tipos_estados` (`id_tipo_estado`),
+CONSTRAINT `FK_ayudas_empleados_personas` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id_persona`),
+CONSTRAINT `FK_ayudas_empleados_tipos_ayudas` FOREIGN KEY (`id_tipo_ayuda`) REFERENCES `tipos_ayudas` (`id_tipo_ayuda`),
+CONSTRAINT `FK_ayudas_empleados_tipos_estados` FOREIGN KEY (`id_tipo_estado`) REFERENCES `tipos_estados` (`id_tipo_estado`)
+);
+
+
+-- Bajas Laborales Empleados
+CREATE TABLE `bajas_laborales_empleados` (
+`id_baja_laboral_empleado` int NOT NULL AUTO_INCREMENT,
+`comentarios` varchar(255) DEFAULT NULL,
+`fecha_fin` date NOT NULL,
+`fecha_inicio` date NOT NULL,
+`id_motivo_baja` int NOT NULL,
+`id_persona` int NOT NULL,
+`id_tipo_estado` int NOT NULL,
+PRIMARY KEY (`id_baja_laboral_empleado`),
+KEY `FK_bajas_laborales_empleados_motivos_bajas` (`id_motivo_baja`),
+KEY `FK_bajas_laborales_empleados_personas` (`id_persona`),
+KEY `FK_bajas_laborales_empleados_tipos_estados` (`id_tipo_estado`),
+CONSTRAINT `FK_bajas_laborales_empleados_motivos_bajas` FOREIGN KEY (`id_motivo_baja`) REFERENCES `motivos_bajas` (`id_motivo_baja`),
+CONSTRAINT `FK_bajas_laborales_empleados_personas` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id_persona`),
+CONSTRAINT `FK_bajas_laborales_empleados_tipos_estados` FOREIGN KEY (`id_tipo_estado`) REFERENCES `tipos_estados` (`id_tipo_estado`)
+);
+
+
+-- Clientes
+
+
+-- Detalles Facturas Clientes
+
+
+-- Facturas Clientes
+
+
+-- Motivos_Bajas
+CREATE TABLE `motivos_bajas` (
+`id_motivo_baja` int NOT NULL AUTO_INCREMENT,
+`motivo_baja` varchar(255) NOT NULL,
+PRIMARY KEY (`id_motivo_baja`),
+UNIQUE KEY `UK_motivo_baja` (`motivo_baja`)
+);
+
+
+-- Nominas Empleados
+
+
+-- Pagos Facturas_Clientes
+
+
+-- Pedidos Clientes
+
+
+-- Personas
+CREATE TABLE `personas` (
+`id_persona` int NOT NULL AUTO_INCREMENT,
+`apellidos` varchar(255) NOT NULL,
+`correo_electronico` varchar(255) NOT NULL,
+`direccion` varchar(255) NOT NULL,
+`dni` varchar(255) NOT NULL,
+`fecha_nacimiento` varchar(255) NOT NULL,
+`genero` varchar(255) NOT NULL,
+`nombre` varchar(255) NOT NULL,
+`numero_empleado` int NOT NULL,
+`numero_telefono` varchar(255) NOT NULL,
+`id_tipo_persona` int NOT NULL,
+PRIMARY KEY (`id_persona`),
+UNIQUE KEY `UK_numero_empleado` (`numero_empleado`),
+UNIQUE KEY `UK_dni` (`dni`),
+UNIQUE KEY `UK_numero_telefono` (`numero_telefono`),
+UNIQUE KEY `UK_correo_electronico` (`correo_electronico`),
+KEY `FK_personas_tipos_personas` (`id_tipo_persona`),
+CONSTRAINT `FK_personas_tipos_personas` FOREIGN KEY (`id_tipo_persona`) REFERENCES `tipos_personas` (`id_tipo_persona`)
+);
+
+
+-- Solicitudes Empleados
+CREATE TABLE `solicitudes_empleados` (
+`id_solicitud_empleado` int NOT NULL AUTO_INCREMENT,
+`comentarios` varchar(255) DEFAULT NULL,
+`fecha_solicitud` date NOT NULL,
+`id_persona` int NOT NULL,
+`id_tipo_estado` int NOT NULL,
+`id_tipo_solicitud` int NOT NULL,
+PRIMARY KEY (`id_solicitud_empleado`),
+KEY `FK_solicitudes_empleados_personas` (`id_persona`),
+KEY `FK_solicitudes_empleados_tipos_estados` (`id_tipo_estado`),
+KEY `FK_solicitudes_empleados_tipos_solicitudes` (`id_tipo_solicitud`),
+CONSTRAINT `FK_solicitudes_empleados_personas` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id_persona`),
+CONSTRAINT `FK_solicitudes_empleados_tipos_estados` FOREIGN KEY (`id_tipo_estado`) REFERENCES `tipos_estados` (`id_tipo_estado`),
+CONSTRAINT `FK_solicitudes_empleados_tipos_solicitudes` FOREIGN KEY (`id_tipo_solicitud`) REFERENCES `tipos_solicitudes` (`id_tipo_solicitud`)
+);
+
+
+-- Tipos Ayudas
+CREATE TABLE `tipos_ayudas` (
+`id_tipo_ayuda` int NOT NULL AUTO_INCREMENT,
+`tipo_ayuda` varchar(255) NOT NULL,
+PRIMARY KEY (`id_tipo_ayuda`),
+UNIQUE KEY `UK_tipo_ayuda` (`tipo_ayuda`)
+);
+
+
+-- Tipos Estados
+CREATE TABLE `tipos_estados` (
+`id_tipo_estado` int NOT NULL AUTO_INCREMENT,
+`tipo_estado` varchar(255) NOT NULL,
+PRIMARY KEY (`id_tipo_estado`),
+UNIQUE KEY `UK_tipo_estado` (`tipo_estado`)
+);
+
+
+-- Tipos Personas
+CREATE TABLE `tipos_personas` (
+`id_tipo_persona` int NOT NULL AUTO_INCREMENT,
+`tipo_persona` varchar(255) NOT NULL,
+PRIMARY KEY (`id_tipo_persona`),
+UNIQUE KEY `UK_tipo_persona` (`tipo_persona`)
+);
+
+
+-- Tipos Solicitudes
+CREATE TABLE `tipos_solicitudes` (
+`id_tipo_solicitud` int NOT NULL AUTO_INCREMENT,
+`tipo_solicitud` varchar(255) NOT NULL,
+PRIMARY KEY (`id_tipo_solicitud`),
+UNIQUE KEY `UK_tipo_solicitud` (`tipo_solicitud`)
+);
+
+
+-- Tipos Usuarios
+CREATE TABLE `tipos_usuarios` (
+`id_tipo_usuario` int NOT NULL AUTO_INCREMENT,
+`tipo_usuario` varchar(255) NOT NULL,
+PRIMARY KEY (`id_tipo_usuario`),
+UNIQUE KEY `UK_tipo_usuario` (`tipo_usuario`)
+);
+
+
+-- Usuarios
+CREATE TABLE `usuarios` (
+`id_usuario` int NOT NULL AUTO_INCREMENT,
+`nombre_usuario` varchar(255) NOT NULL,
+`password` varchar(255) NOT NULL,
+`id_persona` int NOT NULL,
+`id_tipo_usuario` int NOT NULL,
+PRIMARY KEY (`id_usuario`),
+UNIQUE KEY `UK_nombre_usuario` (`nombre_usuario`),
+UNIQUE KEY `UK_id_persona` (`id_persona`),
+KEY `FK_usuarios_tipos_usuarios` (`id_tipo_usuario`),
+CONSTRAINT `FK_usuarios_personas` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id_persona`),
+CONSTRAINT `FK_usuarios_tipos_usuarios` FOREIGN KEY (`id_tipo_usuario`) REFERENCES `tipos_usuarios` (`id_tipo_usuario`)
+);
+
+
+-- Vacaciones Empleados
+CREATE TABLE `vacaciones_empleados` (
+`id_vacacion_empleado` int NOT NULL AUTO_INCREMENT,
+`comentarios` varchar(255) DEFAULT NULL,
+`dias_disfrutados` int NOT NULL,
+`dias_restantes` int NOT NULL,
+`dias_solicitados` int NOT NULL,
+`fecha_fin` date NOT NULL,
+`fecha_inicio` date NOT NULL,
+`id_persona` int NOT NULL,
+`id_tipo_estado` int NOT NULL,
+PRIMARY KEY (`id_vacacion_empleado`),
+KEY `FK_vacaciones_empleados_personas` (`id_persona`),
+KEY `FK_vacaciones_empleados_tipos_estados` (`id_tipo_estado`),
+CONSTRAINT `FK_vacaciones_empleados_personas` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id_persona`),
+CONSTRAINT `FK_vacaciones_empleados_tipos_estados` FOREIGN KEY (`id_tipo_estado`) REFERENCES `tipos_estados` (`id_tipo_estado`)
+);
+ */
 -- ========================================
 -- Tipos estados
 -- ========================================

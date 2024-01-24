@@ -3,6 +3,7 @@ package commonclasses;
 import java.io.Serializable;
 
 public class MensajeClienteServidor implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private String tipoOperacion;
@@ -28,4 +29,5 @@ public class MensajeClienteServidor implements Serializable {
                 ", transaccionVacacionAutorizada=" + transaccionVacacionAutorizada +
                 '}';
     }
+
 }

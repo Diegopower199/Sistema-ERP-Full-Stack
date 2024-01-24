@@ -35,6 +35,7 @@ public class TipoSolicitudController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allTiposSolicitudes = tipoSolicitudService.getAllTiposSolicitudes();
+
         if (allTiposSolicitudes.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -47,6 +48,7 @@ public class TipoSolicitudController {
     public ResponseEntity<Map<String, Object>> save(@RequestBody TipoSolicitudModel tipoSolicitudRequest) {
         try {
             TipoSolicitudModel newTipoSolicitud = tipoSolicitudService.saveTipoSolicitud(tipoSolicitudRequest);
+
             if (newTipoSolicitud == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -57,7 +59,6 @@ public class TipoSolicitudController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -71,9 +72,7 @@ public class TipoSolicitudController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-
         }
-
     }
 
     // localhost:8080/tiposSolicitudes/api/update/{id}
@@ -82,6 +81,7 @@ public class TipoSolicitudController {
             @PathVariable("id") int id) {
         try {
             TipoSolicitudModel updateTipoSolicitud = tipoSolicitudService.updateTipoSolicitud(tipoSolicitudRequest, id);
+
             if (updateTipoSolicitud == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -92,7 +92,6 @@ public class TipoSolicitudController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -106,4 +105,5 @@ public class TipoSolicitudController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

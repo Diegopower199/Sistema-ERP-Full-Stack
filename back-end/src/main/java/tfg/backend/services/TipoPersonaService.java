@@ -12,11 +12,12 @@ import tfg.backend.repositories.TipoPersonaRepository;
 
 @Service
 public class TipoPersonaService {
+
     @Autowired
     TipoPersonaRepository tipoPersonaRepository;
 
     public List<Map<String, Object>> getAllTiposPersonas() {
-        List<TipoPersonaModel> listaTiposPersonas = tipoPersonaRepository.findAll();
+        List<TipoPersonaModel> listaTiposPersonas = tipoPersonaRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         for (TipoPersonaModel tipoPersona : listaTiposPersonas) {

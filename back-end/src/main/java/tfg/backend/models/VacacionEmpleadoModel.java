@@ -19,9 +19,6 @@ import lombok.*;
 @NoArgsConstructor
 public class VacacionEmpleadoModel implements Serializable {
 
-    // Aqui esta la tabla hecha:
-    // https://chat.openai.com/share/7a57f8fe-6a3f-4ba4-bb29-2455bd25cbc3
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_vacacion_empleado", nullable = false)
@@ -64,6 +61,7 @@ public class VacacionEmpleadoModel implements Serializable {
         map.put("comentarios", comentarios);
         return map;
     }
+
 }
 
 /*

@@ -27,11 +27,14 @@ export const savePersona = async (data) => {
     formData["direccion"] = data.direccion;
     formData["numero_telefono"] = data.numero_telefono;
     formData["correo_electronico"] = data.correo_electronico;
-    formData["tipo_persona"] = { id_tipo_persona: parseInt(data.id_tipo_persona) };
+    formData["tipo_persona"] = {
+      id_tipo_persona: parseInt(data.id_tipo_persona),
+    };
     console.log("Form hecho: ", formData);
     const response = await axios.post(url + "save", formData);
 
-    // console.log("Response data: ", response.data, "\nResponse status: ", response.status);
+    //console.log("Response data: ", response.data);
+    //console.log("\nResponse status: ", response.status);
     return {
       data: response.data,
       status: response.status,
@@ -49,7 +52,8 @@ export const getPersonaById = async (id) => {
   const url = API_URL.replace("#", "personas");
   try {
     const response = await axios.get(url + "getById/" + id);
-    console.log("Response data: ", response.data, "response status: ", response.status);
+    //console.log("Response data: ", response.data);
+    //console.log("\nResponse status: ", response.status);
     return {
       data: response.data,
       status: response.status,
@@ -76,24 +80,19 @@ export const updatePersona = async (id, data) => {
     formData["direccion"] = data.direccion;
     formData["numero_telefono"] = data.numero_telefono;
     formData["correo_electronico"] = data.correo_electronico;
-    formData["tipo_persona"] = { id_tipo_persona: parseInt(data.id_tipo_persona) };
+    formData["tipo_persona"] = {
+      id_tipo_persona: parseInt(data.id_tipo_persona),
+    };
     console.log("Form hecho: ", formData, "\nID: ", id);
 
     const response = await axios.put(url + "update/" + id, formData);
-    console.log(
-      "Response data: ",
-      response.data,
-      "\nResponse status: ",
-      response.status
-    );
+    //console.log("Response data: ", response.data);
+    //console.log("\nResponse status: ", response.status);
     return response;
   } catch (error) {
-    console.log(
-      "Error response data: ",
-      error.response.data.message,
-      "\nError response status: ",
-      error.response.status
-    );
+    console.log("Error response data: ", error.response.data.message);
+    console.log("\nError response status: ", error.response.status);
+
     return {
       errorMessage: error.response.data.message,
       status: error.response.status,
@@ -108,12 +107,8 @@ export const deletePersona = async (id) => {
     console.log("Response delete: ", response);
     return "ELIMINADO";
   } catch (error) {
-    console.log(
-      "Error response data: ",
-      error.response.data,
-      "\nError response status: ",
-      error.response.status
-    );
+    console.log("Error response data: ", error.response.data);
+    console.log("\nError response status: ", error.response.status);
     // Poner abajo el error y el status como en update
     return "ERROR AL ELIMINAR";
   }

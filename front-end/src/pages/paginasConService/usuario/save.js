@@ -9,7 +9,6 @@ function MiFormulario() {
     id_tipo_usuario: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;

@@ -104,4 +104,5 @@ public class PersonaModel implements Serializable {
         map.put("correo_electronico", correo_electronico);
         return map;
     }
+
 }

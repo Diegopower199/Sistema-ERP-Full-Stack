@@ -35,6 +35,7 @@ public class TipoPersonaController {
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
         List<Map<String, Object>> allTiposPersonas = tipoPersonaService.getAllTiposPersonas();
+
         if (allTiposPersonas.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -47,6 +48,7 @@ public class TipoPersonaController {
     public ResponseEntity<Map<String, Object>> save(@RequestBody TipoPersonaModel tipoPersonaRequest) {
         try {
             TipoPersonaModel newTipoPersona = tipoPersonaService.saveTipoPersona(tipoPersonaRequest);
+
             if (newTipoPersona == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -56,7 +58,6 @@ public class TipoPersonaController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -70,9 +71,7 @@ public class TipoPersonaController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-
         }
-
     }
 
     // localhost:8080/tiposPersonas/api/update/{id}
@@ -81,6 +80,7 @@ public class TipoPersonaController {
             @PathVariable("id") int id) {
         try {
             TipoPersonaModel updateTipoPersona = tipoPersonaService.updateTipoPersona(tipoPersonaRequest, id);
+
             if (updateTipoPersona == null) {
                 return ResponseEntity.badRequest().build();
             } else {
@@ -90,7 +90,6 @@ public class TipoPersonaController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            // No sé si en el status poner bad_request o 409
         }
     }
 
@@ -104,4 +103,5 @@ public class TipoPersonaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

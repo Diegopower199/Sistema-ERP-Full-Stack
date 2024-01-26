@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.DetalleFacturaClienteModel;
 import tfg.backend.services.DetalleFacturaClienteService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -52,13 +52,10 @@ public class DetalleFacturaClienteController {
             DetalleFacturaClienteModel newDetalleFacturaCliente = detalleFacturaClienteService
                     .saveDetalleFacturaCliente(detalleFacturaClienteRequest);
 
-            if (newDetalleFacturaCliente == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } else {
-                return ResponseEntity
-                        .ok(detalleFacturaClienteService.getDetalleFacturaClienteById(
-                                newDetalleFacturaCliente.getId_detalle_factura_cliente()));
-            }
+            return ResponseEntity
+                    .ok(detalleFacturaClienteService.getDetalleFacturaClienteById(
+                            newDetalleFacturaCliente.getId_detalle_factura_cliente()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -89,13 +86,10 @@ public class DetalleFacturaClienteController {
             DetalleFacturaClienteModel updateDetalleFacturaCliente = detalleFacturaClienteService
                     .updateDetalleFacturaCliente(detalleFacturaClienteRequest, id);
 
-            if (updateDetalleFacturaCliente == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity
-                        .ok(detalleFacturaClienteService.getDetalleFacturaClienteById(
-                                updateDetalleFacturaCliente.getId_detalle_factura_cliente()));
-            }
+            return ResponseEntity
+                    .ok(detalleFacturaClienteService.getDetalleFacturaClienteById(
+                            updateDetalleFacturaCliente.getId_detalle_factura_cliente()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -110,7 +104,7 @@ public class DetalleFacturaClienteController {
             detalleFacturaClienteService.deleteDetalleFacturaCliente(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

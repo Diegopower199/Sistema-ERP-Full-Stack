@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.AsistenciaEmpleadoModel;
 import tfg.backend.services.AsistenciaEmpleadoService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -51,12 +51,9 @@ public class AsistenciaEmpleadoController {
             AsistenciaEmpleadoModel newAsistenciaEmpleado = asistenciaEmpleadoService
                     .startOfWorkdayAsistenciaEmpleado(asistenciaEmpleadoRequest);
 
-            if (newAsistenciaEmpleado == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } else {
-                return ResponseEntity.ok(asistenciaEmpleadoService
-                        .getAsistenciaEmpleadoById(newAsistenciaEmpleado.getId_asistencia_empleado()));
-            }
+            return ResponseEntity.ok(asistenciaEmpleadoService
+                    .getAsistenciaEmpleadoById(newAsistenciaEmpleado.getId_asistencia_empleado()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -73,12 +70,9 @@ public class AsistenciaEmpleadoController {
             AsistenciaEmpleadoModel updateAsistenciaEmpleado = asistenciaEmpleadoService
                     .endOfWorkdayAsistenciaEmpleado(asistenciaEmpleadoRequest, id);
 
-            if (updateAsistenciaEmpleado == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } else {
-                return ResponseEntity.ok(asistenciaEmpleadoService
-                        .getAsistenciaEmpleadoById(updateAsistenciaEmpleado.getId_asistencia_empleado()));
-            }
+            return ResponseEntity.ok(asistenciaEmpleadoService
+                    .getAsistenciaEmpleadoById(updateAsistenciaEmpleado.getId_asistencia_empleado()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -107,12 +101,9 @@ public class AsistenciaEmpleadoController {
             AsistenciaEmpleadoModel updateAsistenciaEmpleado = asistenciaEmpleadoService
                     .updateAsistenciaEmpleado(asistenciaEmpleadoRequest, id);
 
-            if (updateAsistenciaEmpleado == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity.ok(asistenciaEmpleadoService
-                        .getAsistenciaEmpleadoById(updateAsistenciaEmpleado.getId_asistencia_empleado()));
-            }
+            return ResponseEntity.ok(asistenciaEmpleadoService
+                    .getAsistenciaEmpleadoById(updateAsistenciaEmpleado.getId_asistencia_empleado()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -127,7 +118,7 @@ public class AsistenciaEmpleadoController {
             asistenciaEmpleadoService.deleteAsistenciaEmpleado(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

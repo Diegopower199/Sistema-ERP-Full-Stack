@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.BajaLaboralEmpleadoModel;
 import tfg.backend.services.BajaLaboralEmpleadoService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -51,12 +51,9 @@ public class BajaLaboralEmpleadoController {
             BajaLaboralEmpleadoModel newBajaLaboralEmpleado = bajaLaboralEmpleadoService
                     .saveBajaLaboralEmpleado(bajaLaboralEmpleadoRequest);
 
-            if (newBajaLaboralEmpleado == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } else {
-                return ResponseEntity.ok(bajaLaboralEmpleadoService
-                        .getBajaLaboralEmpleadoById(newBajaLaboralEmpleado.getId_baja_laboral_empleado()));
-            }
+            return ResponseEntity.ok(bajaLaboralEmpleadoService
+                    .getBajaLaboralEmpleadoById(newBajaLaboralEmpleado.getId_baja_laboral_empleado()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -85,12 +82,9 @@ public class BajaLaboralEmpleadoController {
             BajaLaboralEmpleadoModel updateBajaLaboralEmpleado = bajaLaboralEmpleadoService
                     .updateBajaLaboralEmpleado(bajaLaboralEmpleadoRequest, id);
 
-            if (updateBajaLaboralEmpleado == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity.ok(bajaLaboralEmpleadoService
-                        .getBajaLaboralEmpleadoById(updateBajaLaboralEmpleado.getId_baja_laboral_empleado()));
-            }
+            return ResponseEntity.ok(bajaLaboralEmpleadoService
+                    .getBajaLaboralEmpleadoById(updateBajaLaboralEmpleado.getId_baja_laboral_empleado()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -105,7 +99,7 @@ public class BajaLaboralEmpleadoController {
             bajaLaboralEmpleadoService.deleteBajaLaboralEmpleado(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

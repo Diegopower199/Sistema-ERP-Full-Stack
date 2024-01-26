@@ -351,95 +351,95 @@ VALUES
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Master', 'admin@example.com', 'Calle Administrativa 1', '12345678A', '01-01-1980', 'Masculino', 'Admin', '1', '34678901234', '1');
+    ('Master', 'admin@example.com', 'Calle Administrativa 1', '12345678A', '1986-01-01', 'Masculino', 'Admin', '1', '34678901234', '1');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Gonzalez', 'diego.gonzalez@gmail.com', 'Calle Principal 123', '12345678H', '12-12-1990', 'Masculino', 'Diego', '2', '34671234567', '1');
+    ('Gonzalez', 'diego.gonzalez@gmail.com', 'Calle Principal 123', '12345678H', '1990-12-12', 'Masculino', 'Diego', '2', '34671234567', '1');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Martinez', 'laura.martinez@yahoo.com', 'Avenida Central 456', '98765432R', '05-05-1985', 'Femenino', 'Laura', '3', '3467890123', '1');
+    ('Martinez', 'laura.martinez@yahoo.com', 'Avenida Central 456', '98765432R', '1985-05-05', 'Femenino', 'Laura', '3', '3467890123', '1');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Rodriguez', 'carlos.rodriguez@hotmail.com', 'Calle Secundaria 789', '13579246S', '20-08-1995', 'Masculino', 'Carlos', '4', '34671234568', '1');
+    ('Rodriguez', 'carlos.rodriguez@hotmail.com', 'Calle Secundaria 789', '13579246S', '1995-08-20', 'Masculino', 'Carlos', '4', '34671234568', '1');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Fernandez', 'ana.fernandez@gmail.com', 'Calle Residencial 101', '24681357K', '15-03-2000', 'Femenino', 'Ana', '5', '34672345679', '1');
+    ('Fernandez', 'ana.fernandez@gmail.com', 'Calle Residencial 101', '24681357K', '2000-03-15', 'Femenino', 'Ana', '5', '34672345679', '1');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Lopez', 'pablo.lopez@yahoo.com', 'Avenida Principal 567', '65432109H', '10-11-1987', 'Masculino', 'Pablo', '6', '34673456780', '1');
+    ('Lopez', 'pablo.lopez@yahoo.com', 'Avenida Principal 567', '65432109H', '1987-11-10', 'Masculino', 'Pablo', '6', '34673456780', '1');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Sanchez', 'marina.sanchez@hotmail.com', 'Calle Central 123', '10987654R', '25-09-1992', 'Femenino', 'Marina', '7', '34674567891', '1');
+    ('Sanchez', 'marina.sanchez@hotmail.com', 'Calle Central 123', '10987654R', '1992-09-25', 'Femenino', 'Marina', '7', '34674567891', '1');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Gomez', 'javier.gomez@gmail.com', 'Avenida Secundaria 456', '32109876S', '18-07-1983', 'Masculino', 'Javier', '8', '34675678902', '1');
+    ('Gomez', 'javier.gomez@gmail.com', 'Avenida Secundaria 456', '32109876S', '1983-07-18', 'Masculino', 'Javier', '8', '34675678902', '1');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Perez', 'sara.perez@yahoo.com', 'Calle Residencial 789', '76543210K', '03-04-1998', 'Femenino', 'Sara', '9', '34676789013', '1');
+    ('Perez', 'sara.perez@yahoo.com', 'Calle Residencial 789', '76543210K', '1998-04-03', 'Femenino', 'Sara', '9', '34676789013', '1');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Hernandez', 'adrian.hernandez@gmail.com', 'Avenida Principal 101', '54321098H', '29-12-1980', 'Masculino', 'Adrian', '10', '34677890124', '1');
+    ('Hernandez', 'adrian.hernandez@gmail.com', 'Avenida Principal 101', '54321098H', '1980-12-29', 'Masculino', 'Adrian', '10', '34677890124', '1');
 
 -- Tipo persona 2 (No empleado)
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Vega', 'noemi.vega@yahoo.com', 'Calle Secundaria 202', '87654321J', '08-06-1994', 'Femenino', 'Noemí', '11', '34678901236', '2');
+    ('Vega', 'noemi.vega@yahoo.com', 'Calle Secundaria 202', '87654321J', '1994-06-08', 'Femenino', 'Noemí', '11', '34678901236', '2');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Ruiz', 'miguel.ruiz@hotmail.com', 'Avenida Central 303', '13579864Q', '14-02-1989', 'Masculino', 'Miguel', '12', '34671234569', '2');
+    ('Ruiz', 'miguel.ruiz@hotmail.com', 'Avenida Central 303', '13579864Q', '1989-02-14', 'Masculino', 'Miguel', '12', '34671234569', '2');
 
 -- Tipo persona 3 (Becario)
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Cortes', 'elena.cortes@gmail.com', 'Calle Residencial 404', '24681357P', '21-10-1997', 'Femenino', 'Elena', '13', '34672345670', '3');
+    ('Cortes', 'elena.cortes@gmail.com', 'Calle Residencial 404', '24681357P', '1997-10-21', 'Femenino', 'Elena', '13', '34672345670', '3');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Fuentes', 'alejandro.fuentes@yahoo.com', 'Avenida Principal 505', '65432109X', '16-05-1991', 'Masculino', 'Alejandro', '14', '34673456781', '3');
+    ('Fuentes', 'alejandro.fuentes@yahoo.com', 'Avenida Principal 505', '65432109X', '1991-05-16', 'Masculino', 'Alejandro', '14', '34673456781', '3');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Molina', 'isabel.molina@hotmail.com', 'Calle Secundaria 606', '10987654Y', '05-03-1986', 'Femenino', 'Isabel', '15', '34674567892', '3');
+    ('Molina', 'isabel.molina@hotmail.com', 'Calle Secundaria 606', '10987654Y', '1986-03-05', 'Femenino', 'Isabel', '15', '34674567892', '3');
 
 -- Tipo persona 4 (Ex empleado)
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Ramos', 'jorge.ramos@gmail.com', 'Avenida Central 707', '32109876M', '12-09-1993', 'Masculino', 'Jorge', '16', '34675678903', '4');
+    ('Ramos', 'jorge.ramos@gmail.com', 'Avenida Central 707', '32109876M', '1993-09-12', 'Masculino', 'Jorge', '16', '34675678903', '4');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Lara', 'carmen.lara@yahoo.com', 'Calle Residencial 808', '76543210N', '18-07-1981', 'Femenino', 'Carmen', '17', '34676789014', '4');
+    ('Lara', 'carmen.lara@yahoo.com', 'Calle Residencial 808', '76543210N', '1981-07-18', 'Femenino', 'Carmen', '17', '34676789014', '4');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Santos', 'raul.santos@gmail.com', 'Avenida Principal 909', '54321098L', '03-04-1996', 'Masculino', 'Raul', '18', '34677890125', '4');
+    ('Santos', 'raul.santos@gmail.com', 'Avenida Principal 909', '54321098L', '1996-04-03', 'Masculino', 'Raul', '18', '34677890125', '4');
 
 -- ========================================
 --  Usuarios

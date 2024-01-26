@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.FacturaClienteModel;
 import tfg.backend.services.FacturaClienteService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -49,12 +49,9 @@ public class FacturaClienteController {
         try {
             FacturaClienteModel newFacturaCliente = facturaClienteService.saveFacturaCliente(facturaClienteRequest);
 
-            if (newFacturaCliente == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } else {
-                return ResponseEntity
-                        .ok(facturaClienteService.getFacturaClienteById(newFacturaCliente.getId_factura_cliente()));
-            }
+            return ResponseEntity
+                    .ok(facturaClienteService.getFacturaClienteById(newFacturaCliente.getId_factura_cliente()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -83,12 +80,9 @@ public class FacturaClienteController {
             FacturaClienteModel updateFacturaCliente = facturaClienteService.updateFacturaCliente(facturaClienteRequest,
                     id);
 
-            if (updateFacturaCliente == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity
-                        .ok(facturaClienteService.getFacturaClienteById(updateFacturaCliente.getId_factura_cliente()));
-            }
+            return ResponseEntity
+                    .ok(facturaClienteService.getFacturaClienteById(updateFacturaCliente.getId_factura_cliente()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -103,7 +97,7 @@ public class FacturaClienteController {
             facturaClienteService.deleteFacturaCliente(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

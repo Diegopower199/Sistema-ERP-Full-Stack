@@ -15,7 +15,7 @@ export const getAllAsistenciaEmpleados = async () => {
 
 export const startOfWorkdayAsistenciaEmpleado = async (data) => { // Inicio de la jornada laboral
   const url = API_URL.replace("#", "asistenciasEmpleados");
-  console.log("FORM: ", data);
+  console.log("FORM PERSONA: ", data);
   try {
     let formData = {};
     formData["numero_empleado"] = parseInt(data.numero_empleado);
@@ -27,17 +27,16 @@ export const startOfWorkdayAsistenciaEmpleado = async (data) => { // Inicio de l
     formData["direccion"] = data.direccion;
     formData["numero_telefono"] = data.numero_telefono;
     formData["correo_electronico"] = data.correo_electronico;
-    formData["tipo_persona"] = { id_tipo_persona: parseInt(data.id_tipo_persona) };
-    console.log("Form hecho: ", formData);
+    formData["tipo_persona"] = {
+      id_tipo_persona: parseInt(data.id_tipo_persona),
+    };
     const response = await axios.post(url + "startOfWorkday", formData);
 
-    // console.log("Response data: ", response.data, "\nResponse status: ", response.status);
     return {
       data: response.data,
       status: response.status,
     };
   } catch (error) {
-    // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
       errorMessage: error.response.data.message,
       status: error.response.status,
@@ -47,7 +46,7 @@ export const startOfWorkdayAsistenciaEmpleado = async (data) => { // Inicio de l
 
 export const endOfWorkdayAsistenciaEmpleado = async (data) => { // Fin de la jornada laboral (NO ESTE BIEN, NO SÉ IDENTIFICARLO)
   const url = API_URL.replace("#", "asistenciasEmpleados");
-  console.log("FORM: ", data);
+  console.log("FORM PERSONA: ", data);
   try {
     let formData = {};
     formData["numero_empleado"] = parseInt(data.numero_empleado);
@@ -59,17 +58,16 @@ export const endOfWorkdayAsistenciaEmpleado = async (data) => { // Fin de la jor
     formData["direccion"] = data.direccion;
     formData["numero_telefono"] = data.numero_telefono;
     formData["correo_electronico"] = data.correo_electronico;
-    formData["tipo_persona"] = { id_tipo_persona: parseInt(data.id_tipo_persona) };
-    console.log("Form hecho: ", formData);
-    const response = await axios.post(url + "endOfWorkday", formData); // Como sabemos el id, eso puede que haya que cambiarlo
+    formData["tipo_persona"] = {
+      id_tipo_persona: parseInt(data.id_tipo_persona),
+    };
+    const response = await axios.post(url + "endOfWorkday", formData);
 
-    // console.log("Response data: ", response.data, "\nResponse status: ", response.status);
     return {
       data: response.data,
       status: response.status,
     };
   } catch (error) {
-    // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
       errorMessage: error.response.data.message,
       status: error.response.status,
@@ -81,13 +79,11 @@ export const getAsistenciaEmpleadoById = async (id) => {
   const url = API_URL.replace("#", "asistenciasEmpleados");
   try {
     const response = await axios.get(url + "getById/" + id);
-    console.log("Response data: ", response.data, "response status: ", response.status);
     return {
       data: response.data,
       status: response.status,
     };
   } catch (error) {
-    // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
       errorMessage: error.response.data.message,
       status: error.response.status,
@@ -97,6 +93,7 @@ export const getAsistenciaEmpleadoById = async (id) => {
 
 export const updateAsistenciaEmpleado = async (id, data) => {
   const url = API_URL.replace("#", "asistenciasEmpleados");
+  console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
     let formData = {};
     formData["numero_empleado"] = parseInt(data.numero_empleado);
@@ -108,24 +105,17 @@ export const updateAsistenciaEmpleado = async (id, data) => {
     formData["direccion"] = data.direccion;
     formData["numero_telefono"] = data.numero_telefono;
     formData["correo_electronico"] = data.correo_electronico;
-    formData["tipo_persona"] = { id_tipo_persona: parseInt(data.id_tipo_persona) };
+    formData["tipo_persona"] = {
+      id_tipo_persona: parseInt(data.id_tipo_persona),
+    };
     console.log("Form hecho: ", formData, "\nID: ", id);
 
     const response = await axios.put(url + "update/" + id, formData);
-    console.log(
-      "Response data: ",
-      response.data,
-      "\nResponse status: ",
-      response.status
-    );
-    return response;
+    return {
+      data: response.data,
+      status: response.status,
+    };
   } catch (error) {
-    console.log(
-      "Error response data: ",
-      error.response.data.message,
-      "\nError response status: ",
-      error.response.status
-    );
     return {
       errorMessage: error.response.data.message,
       status: error.response.status,
@@ -137,16 +127,14 @@ export const deleteAsistenciaEmpleado = async (id) => {
   const url = API_URL.replace("#", "asistenciasEmpleados");
   try {
     const response = await axios.delete(url + "delete/" + id);
-    console.log("Response delete: ", response);
-    return "ELIMINADO";
+    return {
+      data: response.data,
+      status: response.status,
+    };
   } catch (error) {
-    console.log(
-      "Error response data: ",
-      error.response.data,
-      "\nError response status: ",
-      error.response.status
-    );
-    // Poner abajo el error y el status como en update
-    return "ERROR AL ELIMINAR";
+    return {
+      errorMessage: error.response.data.message,
+      status: error.response.status,
+    };
   }
 };

@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.TipoAyudaModel;
 import tfg.backend.services.TipoAyudaService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -49,11 +49,8 @@ public class TipoAyudaController {
         try {
             TipoAyudaModel newTipoAyuda = tipoAyudaService.saveTipoAyuda(tipoAyudaRequest);
 
-            if (newTipoAyuda == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity.ok(tipoAyudaService.getTipoAyudaById(newTipoAyuda.getId_tipo_ayuda()));
-            }
+            return ResponseEntity.ok(tipoAyudaService.getTipoAyudaById(newTipoAyuda.getId_tipo_ayuda()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -81,11 +78,8 @@ public class TipoAyudaController {
         try {
             TipoAyudaModel updateTipoAyuda = tipoAyudaService.updateTipoAyuda(tipoAyudaRequest, id);
 
-            if (updateTipoAyuda == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity.ok(tipoAyudaService.getTipoAyudaById(updateTipoAyuda.getId_tipo_ayuda()));
-            }
+            return ResponseEntity.ok(tipoAyudaService.getTipoAyudaById(updateTipoAyuda.getId_tipo_ayuda()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -100,7 +94,7 @@ public class TipoAyudaController {
             tipoAyudaService.deleteTipoAyuda(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package tfg.backend.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,5 +27,8 @@ public interface PersonaRepository extends JpaRepository<PersonaModel, Integer> 
 
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM PersonaModel c WHERE c.correo_electronico = :correo_electronico")
     boolean existsBycorreo_electronico(@Param("correo_electronico") String correo_electronico);
+
+    @Query("SELECT c FROM PersonaModel c WHERE c.dni = :dni")
+    Optional<PersonaModel> findByDni(@Param("dni") String dni);
 
 }

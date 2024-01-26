@@ -18,7 +18,7 @@ import tfg.backend.repositories.TipoEstadoRepository;
 
 @Service
 public class AyudaEmpleadoService {
-
+    
     @Autowired
     private AyudaEmpleadoRepository ayudaEmpleadoRepository;
 

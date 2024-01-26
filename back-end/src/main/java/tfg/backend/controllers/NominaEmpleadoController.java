@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.NominaEmpleadoModel;
 import tfg.backend.services.NominaEmpleadoService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -49,12 +49,9 @@ public class NominaEmpleadoController {
         try {
             NominaEmpleadoModel newNominaEmpleado = nominaEmpleadoService.saveNominaEmpleado(nominaEmpleadoRequest);
 
-            if (newNominaEmpleado == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } else {
-                return ResponseEntity
-                        .ok(nominaEmpleadoService.getNominaEmpleadoById(newNominaEmpleado.getId_nomina_empleado()));
-            }
+            return ResponseEntity
+                    .ok(nominaEmpleadoService.getNominaEmpleadoById(newNominaEmpleado.getId_nomina_empleado()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -83,12 +80,9 @@ public class NominaEmpleadoController {
             NominaEmpleadoModel updateNominaEmpleado = nominaEmpleadoService.updateNominaEmpleado(nominaEmpleadoRequest,
                     id);
 
-            if (updateNominaEmpleado == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity
-                        .ok(nominaEmpleadoService.getNominaEmpleadoById(updateNominaEmpleado.getId_nomina_empleado()));
-            }
+            return ResponseEntity
+                    .ok(nominaEmpleadoService.getNominaEmpleadoById(updateNominaEmpleado.getId_nomina_empleado()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -103,7 +97,7 @@ public class NominaEmpleadoController {
             nominaEmpleadoService.deleteNominaEmpleado(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

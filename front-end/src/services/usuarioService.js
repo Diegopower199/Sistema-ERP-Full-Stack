@@ -3,7 +3,6 @@ import { API_URL } from "@/context/constants";
 
 export const getAllUsuarios = async () => {
   const url = API_URL.replace("#", "usuarios");
-
   try {
     const response = await axios.get(url + "getAll");
     return response.data;
@@ -13,25 +12,25 @@ export const getAllUsuarios = async () => {
   }
 };
 
-export const saveUsuario = async (args) => {
+export const saveUsuario = async (data) => {
   const url = API_URL.replace("#", "usuarios");
-  console.log("FORM: ", args);
+  console.log("FORM PERSONA: ", data);
   try {
-    let form = {};
-    form["nombre_usuario"] = args.nombre_usuario;
-    form["password"] = args.password;
-    form["persona"] = { id_persona: parseInt(args.id_persona) };
-    form["tipo_usuario"] = { id_tipo_usuario: parseInt(args.id_tipo_usuario) };
-    console.log("Form hecho: ", form);
-    const response = await axios.post(url + "save", form);
+    let formData = {};
+    formData["nombre_usuario"] = data.nombre_usuario;
+    formData["password"] = data.password;
+    formData["persona"] = { id_persona: parseInt(data.id_persona) };
+    formData["tipo_usuario"] = {
+      id_tipo_usuario: parseInt(data.id_tipo_usuario),
+    };
+    console.log("Form hecho: ", formData);
+    const response = await axios.post(url + "save", formData);
 
-    // console.log("Response data: ", response.data, "\nResponse status: ", response.status);
     return {
       data: response.data,
       status: response.status,
     };
   } catch (error) {
-    // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
       errorMessage: error.response.data.message,
       status: error.response.status,
@@ -44,18 +43,11 @@ export const getUsuarioById = async (id) => {
   try {
     const response = await axios.get(url + "getById/" + id);
 
-    console.log(
-      "Response data: ",
-      response.data,
-      "\nResponse status: ",
-      response.status
-    );
     return {
       data: response.data,
       status: response.status,
     };
   } catch (error) {
-    // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
       errorMessage: error.response.data.message,
       status: error.response.status,
@@ -65,6 +57,7 @@ export const getUsuarioById = async (id) => {
 
 export const updateUsuario = async (id, data) => {
   const url = API_URL.replace("#", "usuarios");
+  console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
     let formData = {};
     formData["nombre_usuario"] = data.nombre_usuario;
@@ -76,20 +69,11 @@ export const updateUsuario = async (id, data) => {
     console.log("Form hecho: ", formData, "\nID: ", id);
 
     const response = await axios.put(url + "update/" + id, formData);
-    console.log(
-      "Response data: ",
-      response.data,
-      "\nResponse status: ",
-      response.status
-    );
-    return response;
+    return {
+      data: response.data,
+      status: response.status,
+    };
   } catch (error) {
-    console.log(
-      "Error response data: ",
-      error.response.data.message,
-      "\nError response status: ",
-      error.response.status
-    );
     return {
       errorMessage: error.response.data.message,
       status: error.response.status,
@@ -102,16 +86,15 @@ export const deleteUsuario = async (id) => {
   try {
     const response = await axios.delete(url + "delete/" + id);
     console.log("Response delete: ", response);
-    return "ELIMINADO";
+    return {
+      data: response.data,
+      status: response.status,
+    };
   } catch (error) {
-    console.log(
-      "Error response data: ",
-      error.response.data,
-      "\nError response status: ",
-      error.response.status
-    );
-    // Poner abajo el error y el status como en update
-    return "ERROR AL ELIMINAR";
+    return {
+      errorMessage: error.response.data.message,
+      status: error.response.status,
+    };
   }
 };
 
@@ -125,11 +108,17 @@ export const authenticateUser = async (nombre_usuario, password) => {
 
   try {
     const response = await axios.post(url + "login", data);
-    console.log("Response es: ", response.data.resultado);
-    return response.data.resultado;
+    console.log("Response es: ", response);
+    return {
+      data: response.data.resultado,
+      status: response.status,
+    }
   } catch (error) {
-    console.error();
-    return "Error";
+    console.error(error);
+    return {
+      errorMessage: error.response.data.message,
+      status: error.response.status,
+    };
   }
 };
 
@@ -140,18 +129,11 @@ export const getUsuarioByNombreUsuario = async (nombre_usuario) => {
       url + "getByNombreUsuario/" + nombre_usuario
     );
 
-    console.log(
-      "Response data: ",
-      response.data,
-      "\nResponse status: ",
-      response.status
-    );
     return {
       data: response.data,
       status: response.status,
     };
   } catch (error) {
-    // console.log("Error response data: ", error.response.data.message, "\nError response status: ", error.response.status);
     return {
       errorMessage: error.response.data.message,
       status: error.response.status,

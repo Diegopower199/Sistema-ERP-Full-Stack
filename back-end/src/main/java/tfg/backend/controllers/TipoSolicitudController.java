@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.TipoSolicitudModel;
 import tfg.backend.services.TipoSolicitudService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -49,12 +49,9 @@ public class TipoSolicitudController {
         try {
             TipoSolicitudModel newTipoSolicitud = tipoSolicitudService.saveTipoSolicitud(tipoSolicitudRequest);
 
-            if (newTipoSolicitud == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity
-                        .ok(tipoSolicitudService.getTipoSolicitudById(newTipoSolicitud.getId_tipo_solicitud()));
-            }
+            return ResponseEntity
+                    .ok(tipoSolicitudService.getTipoSolicitudById(newTipoSolicitud.getId_tipo_solicitud()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -82,12 +79,9 @@ public class TipoSolicitudController {
         try {
             TipoSolicitudModel updateTipoSolicitud = tipoSolicitudService.updateTipoSolicitud(tipoSolicitudRequest, id);
 
-            if (updateTipoSolicitud == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity
-                        .ok(tipoSolicitudService.getTipoSolicitudById(updateTipoSolicitud.getId_tipo_solicitud()));
-            }
+            return ResponseEntity
+                    .ok(tipoSolicitudService.getTipoSolicitudById(updateTipoSolicitud.getId_tipo_solicitud()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -102,7 +96,7 @@ public class TipoSolicitudController {
             tipoSolicitudService.deleteTipoSolicitud(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

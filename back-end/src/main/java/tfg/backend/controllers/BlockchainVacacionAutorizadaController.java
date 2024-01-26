@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import commonclasses.TransaccionVacacion;
-import tfg.backend.constants.GlobalConstants;
-
 import tfg.backend.services.BlockchainVacacionAutorizadaService;
+import tfg.backend.utils.GlobalConstants;
 
 // Propósito: Controla la interacción con el cliente y maneja las solicitudes HTTP relacionadas con las vacaciones autorizadas.
 

@@ -13,6 +13,7 @@ import tfg.backend.models.PersonaModel;
 import tfg.backend.models.TipoPersonaModel;
 import tfg.backend.repositories.PersonaRepository;
 import tfg.backend.repositories.TipoPersonaRepository;
+import tfg.backend.utils.RegexPatterns;
 
 @Service
 public class PersonaService {
@@ -23,9 +24,6 @@ public class PersonaService {
     @Autowired
     private TipoPersonaRepository tipoPersonaRepository;
 
-    private static final String DNI_REGEX = "\\d{8}[A-HJ-NP-TV-Z]";
-    private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-    private static final String TELEFONO_CON_PREFIJO_REGEX = "^34[6-9]\\d{8}$";
 
     public List<Map<String, Object>> getAllPersonas() {
         List<PersonaModel> listaPersonas = personaRepository.findAllOrderedById();
@@ -183,21 +181,21 @@ public class PersonaService {
     }
 
     private static boolean validarDNI(String dni) {
-        Pattern pattern = Pattern.compile(DNI_REGEX);
+        Pattern pattern = Pattern.compile(RegexPatterns.DNI_REGEX);
         Matcher matcher = pattern.matcher(dni);
 
         return matcher.matches();
     }
 
     private static boolean validarEmail(String email) {
-        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        Pattern pattern = Pattern.compile(RegexPatterns.EMAIL_REGEX);
         Matcher matcher = pattern.matcher(email);
 
         return matcher.matches();
     }
 
     private static boolean validarNumeroTelefono(String telefono) {
-        Pattern pattern = Pattern.compile(TELEFONO_CON_PREFIJO_REGEX);
+        Pattern pattern = Pattern.compile(RegexPatterns.TELEFONO_CON_PREFIJO_REGEX);
         Matcher matcher = pattern.matcher(telefono);
 
         return matcher.matches();

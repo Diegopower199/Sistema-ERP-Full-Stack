@@ -53,7 +53,7 @@ export default function Login() {
       );
       console.log("Respuesta de back-end: ", resultado);
 
-      if (resultado === true) {
+      if (resultado.data === true) {
         const infoUsuario = await getUsuarioByNombreUsuario(
           formulario.nombre_usuario
         );
@@ -64,10 +64,10 @@ export default function Login() {
           nombre_usuario: formulario.nombre_usuario,
           password: formulario.password,
           persona: {
-            id_persona: Number(infoUsuario.data.persona.id_persona),
+            id_persona: parseInt(infoUsuario.data.persona.id_persona),
           },
           tipo_usuario: {
-            id_tipo_usuario: Number(
+            id_tipo_usuario: parseInt(
               infoUsuario.data.tipo_usuario.id_tipo_usuario
             ),
           },

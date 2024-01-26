@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.PersonaModel;
 import tfg.backend.services.PersonaService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -49,11 +49,8 @@ public class PersonaController {
         try {
             PersonaModel newPersona = personaService.savePersona(personaRequest);
 
-            if (newPersona == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } else {
-                return ResponseEntity.ok(personaService.getPersonaById(newPersona.getId_persona()));
-            }
+            return ResponseEntity.ok(personaService.getPersonaById(newPersona.getId_persona()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -81,11 +78,8 @@ public class PersonaController {
         try {
             PersonaModel updatePersona = personaService.updatePersona(personaRequest, id);
 
-            if (updatePersona == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity.ok(personaService.getPersonaById(updatePersona.getId_persona()));
-            }
+            return ResponseEntity.ok(personaService.getPersonaById(updatePersona.getId_persona()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -100,7 +94,7 @@ public class PersonaController {
             personaService.deletePersona(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package tfg.backend.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,16 +18,13 @@ public interface UsuarioRepository extends JpaRepository<UsuarioModel, Integer> 
     List<UsuarioModel> findAllOrderedById();
 
     @Query("SELECT c FROM UsuarioModel c WHERE c.nombre_usuario = :nombre_usuario")
-    UsuarioModel findByNombre_usuario(@Param("nombre_usuario") String nombre_usuario);
+    Optional<UsuarioModel> findByNombre_usuario(@Param("nombre_usuario") String nombre_usuario);
 
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM UsuarioModel c WHERE c.nombre_usuario = :nombre_usuario")
     boolean existsByNombre_usuario(@Param("nombre_usuario") String nombre_usuario);
 
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM UsuarioModel c WHERE c.persona = :id_persona")
-    boolean existsByPersona(@Param("id_persona") PersonaModel id_persona); // Debo poner como params el nombre de
-                                                                           // la columna y el c.persona es porque
-                                                                           // model es el nombre de la variable que
-                                                                           // me he creado como llave foranea
+    boolean existsByPersona(@Param("id_persona") PersonaModel id_persona);
 
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM UsuarioModel c WHERE c.nombre_usuario = :nombre_usuario AND c.password = :password")
     boolean existsByNombre_usuarioAndPassword(@Param("nombre_usuario") String nombre_usuario,

@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.ClienteModel;
 import tfg.backend.services.ClienteService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -49,12 +49,9 @@ public class ClienteController {
         try {
             ClienteModel newCliente = clienteService.saveCliente(clienteRequest);
 
-            if (newCliente == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } else {
-                return ResponseEntity
-                        .ok(clienteService.getClienteById(newCliente.getId_cliente()));
-            }
+            return ResponseEntity
+                    .ok(clienteService.getClienteById(newCliente.getId_cliente()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -82,12 +79,9 @@ public class ClienteController {
         try {
             ClienteModel updateCliente = clienteService.updateCliente(clienteRequest, id);
 
-            if (updateCliente == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity
-                        .ok(clienteService.getClienteById(updateCliente.getId_cliente()));
-            }
+            return ResponseEntity
+                    .ok(clienteService.getClienteById(updateCliente.getId_cliente()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -102,7 +96,7 @@ public class ClienteController {
             clienteService.deleteCliente(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

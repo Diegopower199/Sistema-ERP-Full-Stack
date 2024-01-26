@@ -28,7 +28,7 @@ public class AsistenciaEmpleadoModel implements Serializable {
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
-    @Column(name = "hora_entrada", nullable = false) // LocalTime tiempoEspecifico = LocalTime.of(12, 30, 45);
+    @Column(name = "hora_entrada", nullable = false)
     private LocalTime hora_entrada;
 
     @Column(name = "hora_salida", nullable = true)

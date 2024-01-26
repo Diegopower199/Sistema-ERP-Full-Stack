@@ -1,10 +1,10 @@
 package tfg.backend.services;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,24 +57,12 @@ public class VacacionEmpleadoService {
             throw new RuntimeException("El campo 'fecha_finalizacion' no puede ser null");
         }
 
-        if (nuevoVacacionEmpleado.getDias_solicitados() == 0) {
-            throw new RuntimeException("El campo 'dias_solicitados' no puede ser 0");
-        }
-
-        if (nuevoVacacionEmpleado.getDias_disfrutados() == 0) {
-            throw new RuntimeException("El campo 'dias_disfrutados' no puede ser 0");
-        }
-
-        if (nuevoVacacionEmpleado.getDias_restantes() == 0) {
-            throw new RuntimeException("El campo 'dias_restantes' no puede ser 0");
-        }
-
         if (nuevoVacacionEmpleado.getPersona() == null) {
             throw new RuntimeException("El objeto 'persona' no puede ser null");
         }
 
-        if (nuevoVacacionEmpleado.getPersona().getId_persona() == 0) {
-            throw new RuntimeException("El campo 'id_persona' no puede ser 0");
+        if (nuevoVacacionEmpleado.getPersona().getDni() == null) {
+            throw new RuntimeException("El campo 'dni' no puede ser null");
         }
 
         if (nuevoVacacionEmpleado.getTipo_estado() == null) {
@@ -87,10 +75,35 @@ public class VacacionEmpleadoService {
 
         // En el front estas variables no las tiene que poner el usuario:
         // dias_disponibles, dias_disfrutados, dias_restantes
-        int id_persona = nuevoVacacionEmpleado.getPersona().getId_persona();
+        String dniPersona = nuevoVacacionEmpleado.getPersona().getDni();
 
-        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                .orElseThrow(() -> new RuntimeException("Persona con id " + id_persona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
+                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
+
+        TipoEstadoModel tipoEstadoAceptada = new TipoEstadoModel();
+        tipoEstadoAceptada.setId_tipo_estado(2);
+
+        Optional<VacacionEmpleadoModel> ultimaVacacionEmpleado = vacacionEmpleadoRepository
+                .findUltimaVacacionAceptada(personaEncontrado, tipoEstadoAceptada);
+
+        int diasSolicitadosCalculado = (int) ChronoUnit.DAYS.between(nuevoVacacionEmpleado.getFecha_inicio(),
+                nuevoVacacionEmpleado.getFecha_fin()) + 1;
+
+        // Imprimir el resultado
+        System.out.println("\n\n\n\n\n\nNúmero de días entre " + nuevoVacacionEmpleado.getFecha_inicio() + " y "
+                + nuevoVacacionEmpleado.getFecha_fin() + ": " + diasSolicitadosCalculado + "\n\n\n\n\n");
+
+        if (ultimaVacacionEmpleado.isEmpty()) {
+
+            nuevoVacacionEmpleado.setDias_restantes(30);
+            nuevoVacacionEmpleado.setDias_disfrutados(0);
+            nuevoVacacionEmpleado.setDias_solicitados(diasSolicitadosCalculado);
+
+        } else { // TODO TAMBIEN TENGO QUE CALCULARLO, Y ADEMAS EN DIAS DISFRUTADOS CONTROLAR CUANDO SE ACEPTE LA ANTERIOR SOLICITUD
+            nuevoVacacionEmpleado.setDias_solicitados(diasSolicitadosCalculado);
+            nuevoVacacionEmpleado.setDias_disfrutados(ultimaVacacionEmpleado.get().getDias_disfrutados());
+            nuevoVacacionEmpleado.setDias_restantes(ultimaVacacionEmpleado.get().getDias_restantes());
+        }
 
         nuevoVacacionEmpleado.setPersona(personaEncontrado);
         personaEncontrado.getVacacionesEmpleados().add(nuevoVacacionEmpleado);
@@ -102,18 +115,6 @@ public class VacacionEmpleadoService {
 
         nuevoVacacionEmpleado.setTipo_estado(tipoEstadoEncontrado);
         tipoEstadoEncontrado.getVacacionesEmpleados().add(nuevoVacacionEmpleado);
-
-        /*
-         * LocalDateTime fechaHoraActual = LocalDateTime.now();
-         * 
-         * // Formatear la fecha y hora según el formato deseado
-         * DateTimeFormatter formato =
-         * DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-         * String fechaHoraFormateada = fechaHoraActual.format(formato);
-         * 
-         * // Imprimir la fecha y hora formateada
-         * System.out.println("aaaaaaaaaaaaaaaaaaaa: " + fechaHoraFormateada);
-         */
 
         if (vacacionEmpleadoRepository.existsByPersonaAndFecha_inicioAndFecha_fin(personaEncontrado,
                 nuevoVacacionEmpleado.getFecha_inicio(), nuevoVacacionEmpleado.getFecha_fin())) {
@@ -128,20 +129,19 @@ public class VacacionEmpleadoService {
     }
 
     public Map<String, Object> getVacacionEmpleadoById(int idVacacionEmpleado) {
-        VacacionEmpleadoModel VacacionEmpleadoEncontrado = vacacionEmpleadoRepository.findById(idVacacionEmpleado)
+        VacacionEmpleadoModel vacacionEmpleadoEncontrado = vacacionEmpleadoRepository.findById(idVacacionEmpleado)
                 .orElseThrow(() -> new RuntimeException(
                         "Vacacion empleado con id " + idVacacionEmpleado + " no encontrado"));
 
-        Map<String, Object> vacacionEmpleadoMap = VacacionEmpleadoEncontrado.toMap();
+        Map<String, Object> vacacionEmpleadoMap = vacacionEmpleadoEncontrado.toMap();
 
         vacacionEmpleadoMap.put("persona",
-                VacacionEmpleadoEncontrado.getPersona() != null ? VacacionEmpleadoEncontrado.getPersona().toMap()
+                vacacionEmpleadoEncontrado.getPersona() != null ? vacacionEmpleadoEncontrado.getPersona().toMap()
                         : null);
 
-        vacacionEmpleadoMap.put("tipo_estado",
-                VacacionEmpleadoEncontrado.getTipo_estado() != null
-                        ? VacacionEmpleadoEncontrado.getTipo_estado().toMap()
-                        : null);
+        vacacionEmpleadoMap.put("tipo_estado", vacacionEmpleadoEncontrado.getTipo_estado() != null
+                ? vacacionEmpleadoEncontrado.getTipo_estado().toMap()
+                : null);
 
         return vacacionEmpleadoMap;
     }
@@ -160,24 +160,12 @@ public class VacacionEmpleadoService {
             throw new RuntimeException("El campo 'fecha_finalizacion' no puede ser null");
         }
 
-        if (cambiosVacacionEmpleado.getDias_solicitados() == 0) {
-            throw new RuntimeException("El campo 'dias_disponibles' no puede ser 0");
-        }
-
-        if (cambiosVacacionEmpleado.getDias_disfrutados() == 0) {
-            throw new RuntimeException("El campo 'dias_disfrutados' no puede ser 0");
-        }
-
-        if (cambiosVacacionEmpleado.getDias_restantes() == 0) {
-            throw new RuntimeException("El campo 'dias_restantes' no puede ser 0");
-        }
-
         if (cambiosVacacionEmpleado.getPersona() == null) {
             throw new RuntimeException("El objeto 'persona' no puede ser null");
         }
 
-        if (cambiosVacacionEmpleado.getPersona().getId_persona() == 0) {
-            throw new RuntimeException("El campo 'id_persona' no puede ser 0");
+        if (cambiosVacacionEmpleado.getPersona().getDni() == null) {
+            throw new RuntimeException("El campo 'dni' no puede ser null");
         }
 
         if (cambiosVacacionEmpleado.getTipo_estado() == null) {
@@ -193,11 +181,10 @@ public class VacacionEmpleadoService {
         vacacionEmpleadoExistente.setDias_restantes(cambiosVacacionEmpleado.getDias_restantes());
         vacacionEmpleadoExistente.setComentarios(cambiosVacacionEmpleado.getComentarios());
 
-        int id_persona = cambiosVacacionEmpleado.getPersona().getId_persona();
+        String dniPersona = cambiosVacacionEmpleado.getPersona().getDni();
 
-        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                .orElseThrow(() -> new RuntimeException("Persona con id " + id_persona + " no encontrado"));
-
+        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
+                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
         vacacionEmpleadoExistente.getPersona().getVacacionesEmpleados().remove(vacacionEmpleadoExistente);
         vacacionEmpleadoExistente.setPersona(personaEncontrado);
         personaEncontrado.getVacacionesEmpleados().add(vacacionEmpleadoExistente);
@@ -212,12 +199,12 @@ public class VacacionEmpleadoService {
         tipoEstadoEncontrado.getVacacionesEmpleados().add(vacacionEmpleadoExistente);
 
         if (!vacacionEmpleadoExistente.getFecha_inicio().equals(cambiosVacacionEmpleado.getFecha_inicio())
-                && !vacacionEmpleadoExistente.getFecha_fin()
-                        .equals(cambiosVacacionEmpleado.getFecha_fin())) {
+                && !vacacionEmpleadoExistente.getFecha_fin().equals(cambiosVacacionEmpleado.getFecha_fin())) {
             if (vacacionEmpleadoRepository.existsByPersonaAndFecha_inicioAndFecha_fin(personaEncontrado,
                     cambiosVacacionEmpleado.getFecha_inicio(), cambiosVacacionEmpleado.getFecha_fin())) {
                 throw new RuntimeException("Solapamiento de fechas");
             }
+
             vacacionEmpleadoExistente.setFecha_inicio(cambiosVacacionEmpleado.getFecha_inicio());
             vacacionEmpleadoExistente.setFecha_fin(cambiosVacacionEmpleado.getFecha_fin());
         }
@@ -229,9 +216,8 @@ public class VacacionEmpleadoService {
     }
 
     public void deleteVacacionEmpleado(int idVacacionEmpleado) {
-        vacacionEmpleadoRepository.findById(idVacacionEmpleado)
-                .orElseThrow(() -> new RuntimeException(
-                        "Vacacion empleado con id " + idVacacionEmpleado + " no encontrado"));
+        vacacionEmpleadoRepository.findById(idVacacionEmpleado).orElseThrow(
+                () -> new RuntimeException("Vacacion empleado con id " + idVacacionEmpleado + " no encontrado"));
 
         vacacionEmpleadoRepository.deleteById(idVacacionEmpleado);
     }

@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.PagoFacturaClienteModel;
 import tfg.backend.services.PagoFacturaClienteService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -50,13 +50,10 @@ public class PagoFacturaClienteController {
             PagoFacturaClienteModel newPagoFacturaCliente = pagoFacturaClienteService
                     .savePagoFacturaCliente(pagoFacturaClienteRequest);
 
-            if (newPagoFacturaCliente == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } else {
-                return ResponseEntity
-                        .ok(pagoFacturaClienteService
-                                .getPagoFacturaClienteById(newPagoFacturaCliente.getId_pago_factura_cliente()));
-            }
+            return ResponseEntity
+                    .ok(pagoFacturaClienteService
+                            .getPagoFacturaClienteById(newPagoFacturaCliente.getId_pago_factura_cliente()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -85,13 +82,10 @@ public class PagoFacturaClienteController {
             PagoFacturaClienteModel updatePagoFacturaCliente = pagoFacturaClienteService
                     .updatePagoFacturaCliente(pagoFacturaClienteRequest, id);
 
-            if (updatePagoFacturaCliente == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity
-                        .ok(pagoFacturaClienteService
-                                .getPagoFacturaClienteById(updatePagoFacturaCliente.getId_pago_factura_cliente()));
-            }
+            return ResponseEntity
+                    .ok(pagoFacturaClienteService
+                            .getPagoFacturaClienteById(updatePagoFacturaCliente.getId_pago_factura_cliente()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -106,7 +100,7 @@ public class PagoFacturaClienteController {
             pagoFacturaClienteService.deletePagoFacturaCliente(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

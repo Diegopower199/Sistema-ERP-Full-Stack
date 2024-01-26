@@ -156,10 +156,8 @@ public class AsistenciaEmpleadoService {
     }
 
     public void deleteAsistenciaEmpleado(int idAsistenciaEmpleado) {
-        asistenciaEmpleadoRepository.findById(idAsistenciaEmpleado)
-                .orElseThrow(() -> new RuntimeException(
-                        "Asistencia empleado con id " + idAsistenciaEmpleado
-                                + " no encontrado"));
+        asistenciaEmpleadoRepository.findById(idAsistenciaEmpleado).orElseThrow(
+                () -> new RuntimeException("Asistencia empleado con id " + idAsistenciaEmpleado + " no encontrado"));
 
         asistenciaEmpleadoRepository.deleteById(idAsistenciaEmpleado);
     }

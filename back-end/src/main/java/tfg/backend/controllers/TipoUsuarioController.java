@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.TipoUsuarioModel;
 import tfg.backend.services.TipoUsuarioService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -49,11 +49,8 @@ public class TipoUsuarioController {
         try {
             TipoUsuarioModel newTipoUsuario = tipoUsuarioService.saveTipoUsuario(tipoUsuarioRequest);
 
-            if (newTipoUsuario == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity.ok(tipoUsuarioService.getTipoUsuarioById(newTipoUsuario.getId_tipo_usuario()));
-            }
+            return ResponseEntity.ok(tipoUsuarioService.getTipoUsuarioById(newTipoUsuario.getId_tipo_usuario()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -81,11 +78,8 @@ public class TipoUsuarioController {
         try {
             TipoUsuarioModel updateTipoUsuario = tipoUsuarioService.updateTipoUsuario(tipoUsuarioRequest, id);
 
-            if (updateTipoUsuario == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity.ok(tipoUsuarioService.getTipoUsuarioById(updateTipoUsuario.getId_tipo_usuario()));
-            }
+            return ResponseEntity.ok(tipoUsuarioService.getTipoUsuarioById(updateTipoUsuario.getId_tipo_usuario()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -100,7 +94,7 @@ public class TipoUsuarioController {
             tipoUsuarioService.deleteTipoUsuario(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

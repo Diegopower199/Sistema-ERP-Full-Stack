@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.TipoPersonaModel;
 import tfg.backend.services.TipoPersonaService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -49,11 +49,8 @@ public class TipoPersonaController {
         try {
             TipoPersonaModel newTipoPersona = tipoPersonaService.saveTipoPersona(tipoPersonaRequest);
 
-            if (newTipoPersona == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity.ok(tipoPersonaService.getTipoPersonaById(newTipoPersona.getId_tipo_persona()));
-            }
+            return ResponseEntity.ok(tipoPersonaService.getTipoPersonaById(newTipoPersona.getId_tipo_persona()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -81,11 +78,8 @@ public class TipoPersonaController {
         try {
             TipoPersonaModel updateTipoPersona = tipoPersonaService.updateTipoPersona(tipoPersonaRequest, id);
 
-            if (updateTipoPersona == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity.ok(tipoPersonaService.getTipoPersonaById(updateTipoPersona.getId_tipo_persona()));
-            }
+            return ResponseEntity.ok(tipoPersonaService.getTipoPersonaById(updateTipoPersona.getId_tipo_persona()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -100,7 +94,7 @@ public class TipoPersonaController {
             tipoPersonaService.deleteTipoPersona(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

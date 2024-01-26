@@ -229,11 +229,8 @@ public class UsuarioService {
             throw new RuntimeException("El campo 'passwordNueva' no puede ser null");
         }
 
-        UsuarioModel usuarioEncontrado = usuarioRepository.findByNombre_usuario(nombreUsuario);
-
-        if (usuarioEncontrado == null) {
-            throw new RuntimeException("El usuario no existe");
-        }
+        UsuarioModel usuarioEncontrado = usuarioRepository.findByNombre_usuario(nombreUsuario)
+                .orElseThrow(() -> new RuntimeException("El usuario no existe"));
 
         usuarioEncontrado.setPassword(passwordNueva);
 
@@ -243,11 +240,8 @@ public class UsuarioService {
     }
 
     public Map<String, Object> getUsuarioByNombreUsuario(String nombre_usuario) {
-        UsuarioModel usuarioEncontrado = usuarioRepository.findByNombre_usuario(nombre_usuario);
-
-        if (usuarioEncontrado == null) {
-            throw new RuntimeException("Usuario con nombre_usuario " + nombre_usuario + " no encontrado");
-        }
+        UsuarioModel usuarioEncontrado = usuarioRepository.findByNombre_usuario(nombre_usuario).orElseThrow(
+                () -> new RuntimeException("Usuario con nombre_usuario " + nombre_usuario + " no encontrado"));
 
         Map<String, Object> usuarioMap = usuarioEncontrado.toMap();
         usuarioMap.put("persona",

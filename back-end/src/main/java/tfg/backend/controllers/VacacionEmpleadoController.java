@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.constants.GlobalConstants;
 import tfg.backend.models.VacacionEmpleadoModel;
 import tfg.backend.services.VacacionEmpleadoService;
+import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
@@ -50,12 +50,9 @@ public class VacacionEmpleadoController {
             VacacionEmpleadoModel newVacacionEmpleado = vacacionEmpleadoService
                     .saveVacacionEmpleado(vacacionEmpleadoRequest);
 
-            if (newVacacionEmpleado == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } else {
-                return ResponseEntity.ok(vacacionEmpleadoService
-                        .getVacacionEmpleadoById(newVacacionEmpleado.getId_vacacion_empleado()));
-            }
+            return ResponseEntity.ok(vacacionEmpleadoService
+                    .getVacacionEmpleadoById(newVacacionEmpleado.getId_vacacion_empleado()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -84,12 +81,9 @@ public class VacacionEmpleadoController {
             VacacionEmpleadoModel updateVacacionEmpleado = vacacionEmpleadoService
                     .updateVacacionEmpleado(vacacionEmpleadoRequest, id);
 
-            if (updateVacacionEmpleado == null) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity.ok(vacacionEmpleadoService
-                        .getVacacionEmpleadoById(updateVacacionEmpleado.getId_vacacion_empleado()));
-            }
+            return ResponseEntity.ok(vacacionEmpleadoService
+                    .getVacacionEmpleadoById(updateVacacionEmpleado.getId_vacacion_empleado()));
+
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -104,7 +98,7 @@ public class VacacionEmpleadoController {
             vacacionEmpleadoService.deleteVacacionEmpleado(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

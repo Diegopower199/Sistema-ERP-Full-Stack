@@ -1,7 +1,7 @@
-import { savePersona, updatePersona } from "@/services/PersonaService";
-import { getAllTiposEstados } from "@/services/TipoEstadoService";
-import { getAllTiposPersonas } from "@/services/TipoPersonaService";
 import React, { useEffect, useState } from "react";
+import { savePersona, updatePersona } from "@/services/PersonaService";
+import { getAllTiposPersonas } from "@/services/TipoPersonaService";
+import { regexDateYYYMMDD } from "@/utils/regexPatterns";
 
 export default function FormPersonas({
   toggleForm,
@@ -21,7 +21,7 @@ export default function FormPersonas({
   ]);
 
   const [formValue, setFormValue] = useState({
-    numero_empleado: "",
+    numero_empleado: "0",
     nombre: "",
     apellidos: "",
     genero: "Masculino",
@@ -30,7 +30,7 @@ export default function FormPersonas({
     direccion: "",
     numero_telefono: "34",
     correo_electronico: "",
-    id_tipo_persona: "",
+    id_tipo_persona: "1",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -38,7 +38,7 @@ export default function FormPersonas({
   const fetchTiposPersonasOptions = async () => {
     try {
       const resultado = await getAllTiposPersonas();
-      console.log("Resultado: ", resultado);
+      // console.log("Resultado: ", resultado);
       setTiposPersonasOptions(resultado);
       setFormValue((prevState) => {
         return {
@@ -50,6 +50,10 @@ export default function FormPersonas({
       console.error("El error es: ", error);
     }
   };
+
+  function validarFechaYYYYMMDD(fecha) {
+    return fecha.match(regexDateYYYMMDD);
+  }
 
   function formatearFechaAYYYYMMDD(fechaConFormatoOriginal) {
     const [dia, mes, year] = fechaConFormatoOriginal.split("-");
@@ -64,17 +68,23 @@ export default function FormPersonas({
 
         console.log("operationType: ", operationType);
 
-        if (operationType === "update") {
-          const fechaFormateada = formatearFechaAYYYYMMDD(
-            personaDataForm.fecha_nacimiento
-          );
-          console.log("fechaFormateada: ", fechaFormateada);
-          console.log("personaDataForm: ", personaDataForm);
+        if (operationType === "update" || operationType === "view") {
+          if (validarFechaYYYYMMDD(personaDataForm.fecha_nacimiento) === null) {
+            const fechaFormateada = formatearFechaAYYYYMMDD(
+              personaDataForm.fecha_nacimiento
+            );
 
-          setFormValue(() => ({
-            ...personaDataForm,
-            fecha_nacimiento: fechaFormateada,
-          }));
+            console.log("fechaFormateada: ", fechaFormateada);
+
+            setFormValue(() => ({
+              ...personaDataForm,
+              fecha_nacimiento: fechaFormateada,
+            }));
+          } else {
+            setFormValue(() => ({
+              ...personaDataForm,
+            }));
+          }
         }
       } catch (error) {
         console.error("Error en useEffect: ", error);
@@ -86,7 +96,6 @@ export default function FormPersonas({
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-    console.log("NAME: ", name, "\nValue: ", value);
     if (name === "numero_telefono") {
       // Si el valor no comienza con "34", mantenlo con "34" al principio
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
@@ -97,7 +106,6 @@ export default function FormPersonas({
         [name]: nuevoValor,
       }));
     } else {
-      console.log("VALUE: ", value, name);
       setFormValue((prevState) => {
         return {
           ...prevState,
@@ -112,9 +120,11 @@ export default function FormPersonas({
     let errorDevueltoBack = false;
     try {
       if (operationType === "create") {
-        console.log(formValue);
         const resultado = await savePersona(formValue);
-        console.log("Resultado en handleSubmit: ", resultado);
+        console.log(
+          `Resultado en handleSubmit en ${operationType} : `,
+          resultado
+        );
 
         if (resultado.status !== 200) {
           const mensajeError = resultado.errorMessage;
@@ -131,9 +141,11 @@ export default function FormPersonas({
           formUpdateTrigger();
         }
       } else if (operationType === "update") {
-        console.log(formValue);
-        const resultado = await updatePersona(formValue);
-        console.log("Resultado en handleSubmit: ", resultado);
+        const resultado = await updatePersona(formValue.id, formValue);
+        console.log(
+          `Resultado en handleSubmit en ${operationType} : `,
+          resultado
+        );
 
         if (resultado.status !== 200) {
           const mensajeError = resultado.errorMessage;
@@ -166,7 +178,8 @@ export default function FormPersonas({
           type="number"
           name="numero_empleado"
           value={formValue.numero_empleado}
-          onChange={handleChange}
+          onChange={operationType === 'view' ? null : handleChange}
+          readOnly={operationType === 'view' ? true : false}
         />
       </label>
       <br />
@@ -177,7 +190,8 @@ export default function FormPersonas({
           type="text"
           name="nombre"
           value={formValue.nombre}
-          onChange={handleChange}
+          onChange={operationType === 'view' ? null : handleChange}
+          readOnly={operationType === 'view' ? true : false}
         />
       </label>
       <br />
@@ -188,14 +202,15 @@ export default function FormPersonas({
           type="text"
           name="apellidos"
           value={formValue.apellidos}
-          onChange={handleChange}
+          onChange={operationType === 'view' ? null : handleChange}
+          readOnly={operationType === 'view' ? true : false}
         />
       </label>
       <br />
       <br />
       <label>
         Genero:
-        <select name="genero" value={formValue.genero} onChange={handleChange}>
+        <select name="genero" value={formValue.genero} onChange={operationType === 'view' ? null : handleChange} readOnly={operationType === 'view' ? true : false}>
           {generoOptions.map((genero) => (
             <option key={genero.value} value={genero.value}>
               {genero.value}
@@ -211,7 +226,8 @@ export default function FormPersonas({
           type="date"
           name="fecha_nacimiento"
           value={formValue.fecha_nacimiento}
-          onChange={handleChange}
+          onChange={operationType === 'view' ? null : handleChange}
+          readOnly={operationType === 'view' ? true : false}
         />
       </label>
       <br />
@@ -222,7 +238,8 @@ export default function FormPersonas({
           type="text"
           name="dni"
           value={formValue.dni}
-          onChange={handleChange}
+          onChange={operationType === 'view' ? null : handleChange}
+          readOnly={operationType === 'view' ? true : false}
         />
       </label>
       <br />
@@ -233,7 +250,8 @@ export default function FormPersonas({
           type="text"
           name="direccion"
           value={formValue.direccion}
-          onChange={handleChange}
+          onChange={operationType === 'view' ? null : handleChange}
+          readOnly={operationType === 'view' ? true : false}
         />
       </label>
       <br />
@@ -244,7 +262,8 @@ export default function FormPersonas({
           type="text"
           name="numero_telefono"
           value={formValue.numero_telefono}
-          onChange={handleChange}
+          onChange={operationType === 'view' ? null : handleChange}
+          readOnly={operationType === 'view' ? true : false}
         />
       </label>
       <br />
@@ -255,7 +274,8 @@ export default function FormPersonas({
           type="text"
           name="correo_electronico"
           value={formValue.correo_electronico}
-          onChange={handleChange}
+          onChange={operationType === 'view' ? null : handleChange}
+          readOnly={operationType === 'view' ? true : false}
         />
       </label>
       <br />
@@ -265,7 +285,8 @@ export default function FormPersonas({
         <select
           name="id_tipo_persona"
           value={formValue.id_tipo_persona}
-          onChange={handleChange}
+          onChange={operationType === 'view' ? null : handleChange}
+          readOnly={operationType === 'view' ? true : false}
         >
           {tiposPersonasOptions.map((tipoPersona, index) => (
             <option key={tipoPersona.value} value={tipoPersona.value}>

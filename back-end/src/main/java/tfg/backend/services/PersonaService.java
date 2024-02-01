@@ -181,21 +181,21 @@ public class PersonaService {
     }
 
     private static boolean validarDNI(String dni) {
-        Pattern pattern = Pattern.compile(RegexPatterns.DNI_REGEX);
+        Pattern pattern = Pattern.compile(RegexPatterns.REGEX_DNI);
         Matcher matcher = pattern.matcher(dni);
 
         return matcher.matches();
     }
 
     private static boolean validarEmail(String email) {
-        Pattern pattern = Pattern.compile(RegexPatterns.EMAIL_REGEX);
+        Pattern pattern = Pattern.compile(RegexPatterns.REGEX_EMAIL);
         Matcher matcher = pattern.matcher(email);
 
         return matcher.matches();
     }
 
     private static boolean validarNumeroTelefono(String telefono) {
-        Pattern pattern = Pattern.compile(RegexPatterns.TELEFONO_CON_PREFIJO_REGEX);
+        Pattern pattern = Pattern.compile(RegexPatterns.REGEX_TELEFONO_CON_PREFIJO);
         Matcher matcher = pattern.matcher(telefono);
 
         return matcher.matches();

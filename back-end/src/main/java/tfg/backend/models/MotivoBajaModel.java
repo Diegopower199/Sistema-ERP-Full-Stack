@@ -31,8 +31,7 @@ public class MotivoBajaModel implements Serializable {
     private String motivo_baja;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "motivo_baja", cascade = CascadeType.REMOVE) // En el mappedBy debo poner la variable que he
-                                                                       // puesto en usuario, en lo del private
+    @OneToMany(mappedBy = "motivo_baja", cascade = CascadeType.REMOVE)
     private List<BajaLaboralEmpleadoModel> bajasLaboralesEmpleados;
 
     public Map<String, Object> toMap() {

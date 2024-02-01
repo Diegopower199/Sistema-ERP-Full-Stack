@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { savePersona, updatePersona } from "@/services/PersonaService";
 import { getAllTiposPersonas } from "@/services/TipoPersonaService";
-import { regexDateYYYMMDD } from "@/utils/regexPatterns";
+import { REGEX_DATE_YYYYMMDD } from "@/utils/regexPatterns";
 
-export default function FormNominasEmpleados({
+export default function FormPersonas({
   toggleForm,
   personaDataForm,
   formUpdateTrigger,
   operationType,
 }) {
-  const [tiposPersonasOptions, setTiposPersonasOptions] = useState([]);
-
-  const [generoOptions, setGeneroOptions] = useState([
+  const generoOptions = [
     {
       value: "Masculino",
     },
     {
       value: "Femenino",
     },
-  ]);
+  ];
 
-  const [formValue, setFormValue] = useState({
+  const [tiposPersonasOptions, setTiposPersonasOptions] = useState([]);
+
+  const [formData, setFormData] = useState({
     numero_empleado: "0",
     nombre: "",
     apellidos: "",
@@ -37,13 +37,13 @@ export default function FormNominasEmpleados({
 
   const fetchTiposPersonasOptions = async () => {
     try {
-      const resultado = await getAllTiposPersonas();
+      const responseReadAllTiposPersonas = await getAllTiposPersonas();
       // console.log("Resultado: ", resultado);
-      setTiposPersonasOptions(resultado);
-      setFormValue((prevState) => {
+      setTiposPersonasOptions(responseReadAllTiposPersonas);
+      setFormData((prevState) => {
         return {
           ...prevState,
-          ["id_tipo_persona"]: resultado[0].value.toString(),
+          ["id_tipo_persona"]: responseReadAllTiposPersonas[0].value.toString(),
         };
       });
     } catch (error) {
@@ -52,7 +52,7 @@ export default function FormNominasEmpleados({
   };
 
   function validarFechaYYYYMMDD(fecha) {
-    return fecha.match(regexDateYYYMMDD);
+    return fecha.match(REGEX_DATE_YYYYMMDD);
   }
 
   function formatearFechaAYYYYMMDD(fechaConFormatoOriginal) {
@@ -76,12 +76,12 @@ export default function FormNominasEmpleados({
 
             console.log("fechaFormateada: ", fechaFormateada);
 
-            setFormValue(() => ({
+            setFormData(() => ({
               ...personaDataForm,
               fecha_nacimiento: fechaFormateada,
             }));
           } else {
-            setFormValue(() => ({
+            setFormData(() => ({
               ...personaDataForm,
             }));
           }
@@ -101,12 +101,12 @@ export default function FormNominasEmpleados({
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
 
       // Actualiza el estado con el nuevo valor
-      setFormValue((prevFormValue) => ({
+      setFormData((prevFormValue) => ({
         ...prevFormValue,
         [name]: nuevoValor,
       }));
     } else {
-      setFormValue((prevState) => {
+      setFormData((prevState) => {
         return {
           ...prevState,
           [name]: type === "checkbox" ? checked : value,
@@ -120,14 +120,14 @@ export default function FormNominasEmpleados({
     let errorDevueltoBack = false;
     try {
       if (operationType === "create") {
-        const resultado = await savePersona(formValue);
+        const responseCreatePersona = await savePersona(formData);
         console.log(
           `Resultado en handleSubmit en ${operationType} : `,
-          resultado
+          responseCreatePersona
         );
 
-        if (resultado.status !== 200) {
-          const mensajeError = resultado.errorMessage;
+        if (responseCreatePersona.status !== 200) {
+          const mensajeError = responseCreatePersona.errorMessage;
           console.log("El error es: ", mensajeError);
           setErrorMessage(mensajeError);
           errorDevueltoBack = true;
@@ -141,14 +141,17 @@ export default function FormNominasEmpleados({
           formUpdateTrigger();
         }
       } else if (operationType === "update") {
-        const resultado = await updatePersona(formValue.id, formValue);
+        const responseUpdatePersona = await updatePersona(
+          formData.id,
+          formData
+        );
         console.log(
           `Resultado en handleSubmit en ${operationType} : `,
-          resultado
+          responseUpdatePersona
         );
 
-        if (resultado.status !== 200) {
-          const mensajeError = resultado.errorMessage;
+        if (responseUpdatePersona.status !== 200) {
+          const mensajeError = responseUpdatePersona.errorMessage;
           console.log("El error es: ", mensajeError);
           setErrorMessage(mensajeError);
           errorDevueltoBack = true;
@@ -177,9 +180,9 @@ export default function FormNominasEmpleados({
         <input
           type="number"
           name="numero_empleado"
-          value={formValue.numero_empleado}
-          onChange={operationType === 'view' ? null : handleChange}
-          readOnly={operationType === 'view' ? true : false}
+          value={formData.numero_empleado}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
         />
       </label>
       <br />
@@ -189,9 +192,9 @@ export default function FormNominasEmpleados({
         <input
           type="text"
           name="nombre"
-          value={formValue.nombre}
-          onChange={operationType === 'view' ? null : handleChange}
-          readOnly={operationType === 'view' ? true : false}
+          value={formData.nombre}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
         />
       </label>
       <br />
@@ -201,16 +204,21 @@ export default function FormNominasEmpleados({
         <input
           type="text"
           name="apellidos"
-          value={formValue.apellidos}
-          onChange={operationType === 'view' ? null : handleChange}
-          readOnly={operationType === 'view' ? true : false}
+          value={formData.apellidos}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
         />
       </label>
       <br />
       <br />
       <label>
         Genero:
-        <select name="genero" value={formValue.genero} onChange={operationType === 'view' ? null : handleChange} readOnly={operationType === 'view' ? true : false}>
+        <select
+          name="genero"
+          value={formData.genero}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
+        >
           {generoOptions.map((genero) => (
             <option key={genero.value} value={genero.value}>
               {genero.value}
@@ -225,9 +233,9 @@ export default function FormNominasEmpleados({
         <input
           type="date"
           name="fecha_nacimiento"
-          value={formValue.fecha_nacimiento}
-          onChange={operationType === 'view' ? null : handleChange}
-          readOnly={operationType === 'view' ? true : false}
+          value={formData.fecha_nacimiento}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
         />
       </label>
       <br />
@@ -237,9 +245,9 @@ export default function FormNominasEmpleados({
         <input
           type="text"
           name="dni"
-          value={formValue.dni}
-          onChange={operationType === 'view' ? null : handleChange}
-          readOnly={operationType === 'view' ? true : false}
+          value={formData.dni}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
         />
       </label>
       <br />
@@ -249,9 +257,9 @@ export default function FormNominasEmpleados({
         <input
           type="text"
           name="direccion"
-          value={formValue.direccion}
-          onChange={operationType === 'view' ? null : handleChange}
-          readOnly={operationType === 'view' ? true : false}
+          value={formData.direccion}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
         />
       </label>
       <br />
@@ -261,9 +269,9 @@ export default function FormNominasEmpleados({
         <input
           type="text"
           name="numero_telefono"
-          value={formValue.numero_telefono}
-          onChange={operationType === 'view' ? null : handleChange}
-          readOnly={operationType === 'view' ? true : false}
+          value={formData.numero_telefono}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
         />
       </label>
       <br />
@@ -273,9 +281,9 @@ export default function FormNominasEmpleados({
         <input
           type="text"
           name="correo_electronico"
-          value={formValue.correo_electronico}
-          onChange={operationType === 'view' ? null : handleChange}
-          readOnly={operationType === 'view' ? true : false}
+          value={formData.correo_electronico}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
         />
       </label>
       <br />
@@ -284,9 +292,9 @@ export default function FormNominasEmpleados({
         Selecciona un tipo de persona:
         <select
           name="id_tipo_persona"
-          value={formValue.id_tipo_persona}
-          onChange={operationType === 'view' ? null : handleChange}
-          readOnly={operationType === 'view' ? true : false}
+          value={formData.id_tipo_persona}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
         >
           {tiposPersonasOptions.map((tipoPersona, index) => (
             <option key={tipoPersona.value} value={tipoPersona.value}>
@@ -295,9 +303,19 @@ export default function FormNominasEmpleados({
           ))}
         </select>
       </label>
-      <br /> <br />
-      <button onClick={toggleForm}>Cancelar</button>{" "}
-      <button onClick={handleSubmit}>Guardar</button>
+      {(operationType === "create" || operationType === "update") && (
+        <>
+          <br /> <br />
+          <button onClick={toggleForm}>Cancelar</button>{" "}
+          <button onClick={handleSubmit}>Guardar</button>
+        </>
+      )}
+      {operationType === "view" && (
+        <>
+          <br /> <br />
+          <button onClick={toggleForm}>Salir</button>
+        </>
+      )}
     </>
   );
 }

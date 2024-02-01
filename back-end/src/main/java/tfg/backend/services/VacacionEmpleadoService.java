@@ -94,15 +94,15 @@ public class VacacionEmpleadoService {
                 + nuevoVacacionEmpleado.getFecha_fin() + ": " + diasSolicitadosCalculado + "\n\n\n\n\n");
 
         if (ultimaVacacionEmpleado.isEmpty()) {
-
-            nuevoVacacionEmpleado.setDias_restantes(30);
+            nuevoVacacionEmpleado.setDias_disponibles(30);
+            nuevoVacacionEmpleado.setDias_pendientes(0);
             nuevoVacacionEmpleado.setDias_disfrutados(0);
             nuevoVacacionEmpleado.setDias_solicitados(diasSolicitadosCalculado);
-
-        } else { // TODO TAMBIEN TENGO QUE CALCULARLO, Y ADEMAS EN DIAS DISFRUTADOS CONTROLAR CUANDO SE ACEPTE LA ANTERIOR SOLICITUD
+        } else {
+            nuevoVacacionEmpleado.setDias_disponibles(ultimaVacacionEmpleado.get().getDias_disponibles());
+            nuevoVacacionEmpleado.setDias_pendientes(ultimaVacacionEmpleado.get().getDias_pendientes());
             nuevoVacacionEmpleado.setDias_solicitados(diasSolicitadosCalculado);
             nuevoVacacionEmpleado.setDias_disfrutados(ultimaVacacionEmpleado.get().getDias_disfrutados());
-            nuevoVacacionEmpleado.setDias_restantes(ultimaVacacionEmpleado.get().getDias_restantes());
         }
 
         nuevoVacacionEmpleado.setPersona(personaEncontrado);
@@ -176,11 +176,6 @@ public class VacacionEmpleadoService {
             throw new RuntimeException("El campo 'id_tipo_estado' no puede ser 0");
         }
 
-        vacacionEmpleadoExistente.setDias_disfrutados(cambiosVacacionEmpleado.getDias_disfrutados());
-        vacacionEmpleadoExistente.setDias_solicitados(cambiosVacacionEmpleado.getDias_solicitados());
-        vacacionEmpleadoExistente.setDias_restantes(cambiosVacacionEmpleado.getDias_restantes());
-        vacacionEmpleadoExistente.setComentarios(cambiosVacacionEmpleado.getComentarios());
-
         String dniPersona = cambiosVacacionEmpleado.getPersona().getDni();
 
         PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
@@ -208,6 +203,40 @@ public class VacacionEmpleadoService {
             vacacionEmpleadoExistente.setFecha_inicio(cambiosVacacionEmpleado.getFecha_inicio());
             vacacionEmpleadoExistente.setFecha_fin(cambiosVacacionEmpleado.getFecha_fin());
         }
+
+        TipoEstadoModel tipoEstadoAceptada = new TipoEstadoModel();
+        tipoEstadoAceptada.setId_tipo_estado(2);
+
+        Optional<VacacionEmpleadoModel> ultimaVacacionEmpleado = vacacionEmpleadoRepository
+                .findUltimaVacacionAceptada(personaEncontrado, tipoEstadoAceptada);
+
+        int diasSolicitadosCalculado = (int) ChronoUnit.DAYS.between(cambiosVacacionEmpleado.getFecha_inicio(),
+                cambiosVacacionEmpleado.getFecha_fin()) + 1;
+
+        // Imprimir el resultado
+        System.out.println("\n\n\n\n\n\nNúmero de días entre " + cambiosVacacionEmpleado.getFecha_inicio() + " y "
+                + cambiosVacacionEmpleado.getFecha_fin() + ": " + diasSolicitadosCalculado + "\n\n\n\n\n");
+
+        if (tipoEstadoEncontrado.getTipo_estado().equals("Aprobada")) {
+            vacacionEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
+
+            if (ultimaVacacionEmpleado.isEmpty()) {
+                vacacionEmpleadoExistente.setDias_disponibles(
+                        vacacionEmpleadoExistente.getDias_disponibles() - diasSolicitadosCalculado);
+                vacacionEmpleadoExistente.setDias_pendientes(diasSolicitadosCalculado);
+                vacacionEmpleadoExistente.setDias_disfrutados(0);
+                vacacionEmpleadoExistente.setDias_solicitados(diasSolicitadosCalculado);
+            } else { // TODO TAMBIEN TENGO QUE CALCULARLO, Y ADEMAS EN DIAS DISFRUTADOS CONTROLAR
+                vacacionEmpleadoExistente.setDias_disfrutados(ultimaVacacionEmpleado.get().getDias_disfrutados());
+                vacacionEmpleadoExistente.setDias_pendientes(
+                        ultimaVacacionEmpleado.get().getDias_pendientes() + diasSolicitadosCalculado);
+                vacacionEmpleadoExistente.setDias_solicitados(diasSolicitadosCalculado);
+                vacacionEmpleadoExistente.setDias_disponibles(
+                        ultimaVacacionEmpleado.get().getDias_disponibles() - diasSolicitadosCalculado);
+            }
+        }
+
+        vacacionEmpleadoExistente.setComentarios(cambiosVacacionEmpleado.getComentarios());
 
         VacacionEmpleadoModel vacacionEmpleadoActualizado = vacacionEmpleadoRepository.save(vacacionEmpleadoExistente);
 

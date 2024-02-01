@@ -25,7 +25,16 @@ import Link from "next/link";
 
 const PAGE_SIZE_OPTIONS = [5, 10, 25, 50, 100];
 
-export default function AsistenciasEmpleados() {
+const LOCALIZED_COLUMN_MENU_TEXTS = {
+  columnMenuUnsort: "No Sort",
+  columnMenuSortAsc: "Sort Ascending",
+  columnMenuSortDesc: "Sort Descending",
+  columnMenuFilter: "Filter",
+  columnMenuHideColumn: "Hide Column",
+  columnMenuShowColumns: "Show Columns",
+};
+
+export default function Personas() {
   const {
     authUser,
     setAuthUser,
@@ -38,9 +47,11 @@ export default function AsistenciasEmpleados() {
   const router = useRouter();
 
   const [showFormCreate, setShowFormCreate] = useState(false);
-  const [showFormModify, setShowFormModify] = useState(false);
-  const [showFormPersonaUnique, setShowFormPersonaUnique] = useState(false);
+  const [showFormUpdate, setShowFormUpdate] = useState(false);
+  const [showFormViewUnique, setShowFormViewUnique] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+
+  const [tableLoading, setTableLoading] = useState(true);
 
   const [idPersonaSelected, setIdPersonaSelected] = useState(0);
   const [namePersonaSelected, setNamePersonaSelected] = useState("");
@@ -114,14 +125,14 @@ export default function AsistenciasEmpleados() {
           <GridActionsCellItem
             icon={<VisibilityIcon />}
             label="Visibility"
-            onClick={handleVisibilityClick(id)}
+            onClick={handleViewUniqueClick(id)}
             color="inherit"
           />,
           <GridActionsCellItem
             icon={<EditIcon />}
             label="Edit"
             className="textPrimary"
-            onClick={handleEditClick(id)}
+            onClick={handleUpdateClick(id)}
             color="inherit"
           />,
           <GridActionsCellItem
@@ -137,9 +148,9 @@ export default function AsistenciasEmpleados() {
 
   const fetchGetAllPersonas = async () => {
     try {
-      const resultado = await getAllPersonas();
-      console.log("Resultado: ", resultado[0]);
-      const personasMap = resultado.map((persona) => {
+      setTableLoading(true);
+      const responseReadAllPersonas = await getAllPersonas();
+      const personasMap = responseReadAllPersonas.map((persona) => {
         return {
           id: persona.id_persona,
           numero_empleado: persona.numero_empleado,
@@ -156,6 +167,7 @@ export default function AsistenciasEmpleados() {
         };
       });
       setRows(personasMap);
+      setTableLoading(false);
     } catch (error) {
       console.error("El error es: ", error);
     }
@@ -188,31 +200,28 @@ export default function AsistenciasEmpleados() {
     setPersonaFormUpdated(!personaFormUpdated);
   }
 
-  function togglePersonaForm() {
-    if (showFormCreate) {
-      setShowFormCreate(false);
-    }
-    if (showFormModify) {
-      setShowFormModify(false);
-    }
-    if (showFormPersonaUnique) {
-      setShowFormPersonaUnique(false);
-    }
+  function toggleCreatePersonaForm() {
+    setShowFormCreate(!showFormCreate);
   }
 
-  function toggleEditForm() {
-    setShowFormModify(!showFormModify);
+  function toggleUpdatePersonaForm() {
+    setShowFormUpdate(!showFormUpdate);
   }
 
-  function toggleViewPersonaUniqueForm() {
-    setShowFormPersonaUnique(!showFormPersonaUnique);
+  function toggleViewUniquePersonaForm() {
+    setShowFormViewUnique(!showFormViewUnique);
   }
 
-  const handleEditClick = (id) => () => {
-    console.log("Boton para editar");
+  const handleCreateClick = () => {
+    console.log("Añadir nueva persona");
+    toggleCreatePersonaForm();
+  };
+
+  const handleUpdateClick = (id) => () => {
+    console.log("Boton para actualizar");
     const filaSeleccionada = rows.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleEditForm();
+    toggleUpdatePersonaForm();
   };
 
   const handleDeleteClick = (id) => () => {
@@ -224,23 +233,17 @@ export default function AsistenciasEmpleados() {
     setShowDelete(true);
   };
 
-  const handleVisibilityClick = (id) => () => {
+  const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una persona");
     const filaSeleccionada = rows.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleViewPersonaUniqueForm();
-  };
-
-  // toggleForm, formFields
-  const handleAddClick = () => {
-    console.log("Añadir nueva persona");
-    setShowFormCreate(true);
+    toggleViewUniquePersonaForm();
   };
 
   // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const resultado = await deletePersona(idPersonaSelected);
-    if (resultado.status === 200) {
+    const responseDeletePersona = await deletePersona(idPersonaSelected);
+    if (responseDeletePersona.status === 200) {
       setPersonaDelete(true);
     }
     // console.log("Resultado delete: ", resultado);
@@ -253,8 +256,8 @@ export default function AsistenciasEmpleados() {
 
   function resetStates() {
     setShowFormCreate(false);
-    setShowFormModify(false);
-    setShowFormPersonaUnique(false);
+    setShowFormUpdate(false);
+    setShowFormViewUnique(false);
     setShowDelete(false);
     setIdPersonaSelected(0);
     setNamePersonaSelected("");
@@ -375,7 +378,7 @@ export default function AsistenciasEmpleados() {
           <Button
             color="primary"
             startIcon={<AddIcon />}
-            onClick={handleAddClick}
+            onClick={handleCreateClick}
           >
             Añadir persona
           </Button>
@@ -383,7 +386,8 @@ export default function AsistenciasEmpleados() {
           <DataGrid
             rows={rows}
             columns={columns}
-            loading={false}
+            loading={tableLoading}
+            localeText={LOCALIZED_COLUMN_MENU_TEXTS}
             checkboxSelection={false}
             disableRowSelectionOnClick={false}
             paginationModel={paginationModel}
@@ -407,29 +411,29 @@ export default function AsistenciasEmpleados() {
     return (
       <>
         <FormPersonas
-          toggleForm={togglePersonaForm}
+          toggleForm={toggleCreatePersonaForm}
           personaDataForm={""}
           formUpdateTrigger={personaFormUpdatedTrigger}
           operationType={"create"}
         ></FormPersonas>
       </>
     );
-  } else if (showFormModify) {
+  } else if (showFormUpdate) {
     return (
       <>
         <FormPersonas
-          toggleForm={toggleEditForm}
+          toggleForm={toggleUpdatePersonaForm}
           personaDataForm={rowSelected}
           formUpdateTrigger={personaFormUpdatedTrigger}
           operationType={"update"}
         ></FormPersonas>
       </>
     );
-  } else if (showFormPersonaUnique) {
+  } else if (showFormViewUnique) {
     return (
       <>
         <FormPersonas
-          toggleForm={toggleViewPersonaUniqueForm}
+          toggleForm={toggleViewUniquePersonaForm}
           personaDataForm={rowSelected}
           formUpdateTrigger={personaFormUpdatedTrigger}
           operationType={"view"}

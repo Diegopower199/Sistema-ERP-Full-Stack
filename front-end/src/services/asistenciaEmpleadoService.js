@@ -46,7 +46,7 @@ export const startOfWorkdayAsistenciaEmpleado = async (data) => { // Inicio de l
 
 export const endOfWorkdayAsistenciaEmpleado = async (data) => { // Fin de la jornada laboral (NO ESTE BIEN, NO SÉ IDENTIFICARLO)
   const url = API_URL.replace("#", "asistenciasEmpleados");
-  console.log("FORM PERSONA: ", data);
+  console.log("FORM ASISTENCIA EMPLEADO: ", data);
   try {
     let formData = {};
     formData["numero_empleado"] = parseInt(data.numero_empleado);
@@ -93,7 +93,7 @@ export const getAsistenciaEmpleadoById = async (id) => {
 
 export const updateAsistenciaEmpleado = async (id, data) => {
   const url = API_URL.replace("#", "asistenciasEmpleados");
-  console.log(`FORM PERSONA CON id ${id}: `, data);
+  console.log(`FORM ASISTENCIA EMPLEADO CON id ${id}: `, data);
   try {
     let formData = {};
     formData["numero_empleado"] = parseInt(data.numero_empleado);
@@ -133,7 +133,7 @@ export const deleteAsistenciaEmpleado = async (id) => {
     };
   } catch (error) {
     return {
-      errorMessage: error.response.data.message,
+      errorMessage: error.response.data,
       status: error.response.status,
     };
   }

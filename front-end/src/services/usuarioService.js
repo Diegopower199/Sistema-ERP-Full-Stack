@@ -14,7 +14,7 @@ export const getAllUsuarios = async () => {
 
 export const saveUsuario = async (data) => {
   const url = API_URL.replace("#", "usuarios");
-  console.log("FORM PERSONA: ", data);
+  console.log("FORM USUARIO: ", data);
   try {
     let formData = {};
     formData["nombre_usuario"] = data.nombre_usuario;
@@ -57,7 +57,7 @@ export const getUsuarioById = async (id) => {
 
 export const updateUsuario = async (id, data) => {
   const url = API_URL.replace("#", "usuarios");
-  console.log(`FORM PERSONA CON id ${id}: `, data);
+  console.log(`FORM USUARIO CON id ${id}: `, data);
   try {
     let formData = {};
     formData["nombre_usuario"] = data.nombre_usuario;
@@ -92,7 +92,7 @@ export const deleteUsuario = async (id) => {
     };
   } catch (error) {
     return {
-      errorMessage: error.response.data.message,
+      errorMessage: error.response.data,
       status: error.response.status,
     };
   }

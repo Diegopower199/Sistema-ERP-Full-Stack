@@ -57,7 +57,6 @@ public class PersonaModel implements Serializable {
     @Column(name = "correo_electronico", unique = true, nullable = false)
     private String correo_electronico;
 
-    // Sirve para tener un campo con la clave foránea
     @ManyToOne
     @JoinColumn(name = "id_tipo_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_personas_tipos_personas"))
     private TipoPersonaModel tipo_persona;

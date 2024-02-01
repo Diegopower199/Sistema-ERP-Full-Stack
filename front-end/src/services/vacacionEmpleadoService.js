@@ -13,9 +13,10 @@ export const getAllVacacionesEmpleados = async () => {
   }
 };
 
-export const saveVacacionEmpleado = async (data) => { // Los dias los calculo en el back
+export const saveVacacionEmpleado = async (data) => {
+  // Los dias los calculo en el back
   const url = API_URL.replace("#", "vacacionesEmpleados");
-  console.log("FORM PERSONA: ", data);
+  console.log("FORM VACACIONES EMPLEADOS: ", data);
   try {
     let formData = {};
     formData["fecha_inicio"] = data.fecha_inicio;
@@ -27,7 +28,7 @@ export const saveVacacionEmpleado = async (data) => { // Los dias los calculo en
     formData["tipo_estado"] = {
       id_tipo_estado: parseInt(data.id_tipo_estado),
     };
-    console.log("FORM DATA: ", formData)
+    
     const response = await axios.post(url + "save", formData);
 
     return {
@@ -58,24 +59,22 @@ export const getVacacionEmpleadoById = async (id) => {
   }
 };
 
-export const updateVacacionEmpleado = async (id, data) => { // Los dias los calculo en el back, si los rechazo se devuelven los datos anteriores
+export const updateVacacionEmpleado = async (id, data) => {
+  // Los dias los calculo en el back, si los rechazo se devuelven los datos anteriores
   const url = API_URL.replace("#", "vacacionesEmpleados");
-  console.log(`FORM PERSONA CON id ${id}: `, data);
+  console.log(`FORM VACACIONES EMPLEADOS CON id ${id}: `, data);
   try {
     let formData = {};
-    formData["numero_empleado"] = parseInt(data.numero_empleado);
-    formData["nombre"] = data.nombre;
-    formData["apellidos"] = data.apellidos;
-    formData["genero"] = data.genero;
-    formData["fecha_nacimiento"] = data.fecha_nacimiento;
-    formData["dni"] = data.dni;
-    formData["direccion"] = data.direccion;
-    formData["numero_telefono"] = data.numero_telefono;
-    formData["correo_electronico"] = data.correo_electronico;
-    formData["tipo_persona"] = {
-      id_tipo_persona: parseInt(data.id_tipo_persona),
+    formData["fecha_inicio"] = data.fecha_inicio;
+    formData["fecha_fin"] = data.fecha_fin;
+    formData["comentarios"] = data.comentarios;
+    formData["persona"] = {
+      dni: data.dni,
     };
-    console.log("Form hecho: ", formData, "\nID: ", id);
+    formData["tipo_estado"] = {
+      id_tipo_estado: parseInt(data.id_tipo_estado),
+    };
+    console.log("FORM DATA: ", formData, "-- ID: ", id);
 
     const response = await axios.put(url + "update/" + id, formData);
     return {
@@ -100,7 +99,7 @@ export const deleteVacacionEmpleado = async (id) => {
     };
   } catch (error) {
     return {
-      errorMessage: error.response.data.message,
+      errorMessage: error.response.data,
       status: error.response.status,
     };
   }

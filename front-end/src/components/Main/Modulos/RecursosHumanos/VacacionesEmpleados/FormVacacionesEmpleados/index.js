@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { regexDateYYYMMDD } from "@/utils/regexPatterns";
+import { REGEX_DATE_YYYYMMDD } from "@/utils/regexPatterns";
 import { getAllTiposEstados } from "@/services/TipoEstadoService";
 import {
   saveVacacionEmpleado,
   updateVacacionEmpleado,
 } from "@/services/VacacionEmpleadoService";
 import moment from "moment";
+import { saveTransaccionVacacionAutorizada } from "@/services/BlockchainVacacionAutorizadaService";
 
 export default function FormVacacionesEmpleados({
   toggleForm,
@@ -15,12 +16,13 @@ export default function FormVacacionesEmpleados({
 }) {
   const [tiposEstadosOptions, setTiposEstadosOptions] = useState([]);
 
-  const [formValue, setFormValue] = useState({
+  const [formData, setFormData] = useState({
     fecha_inicio: "",
     fecha_fin: "",
+    dias_disponibles: "0",
+    dias_pendientes: "0",
     dias_solicitados: "0",
     dias_disfrutados: "0",
-    dias_restantes: "0",
     comentarios: "",
     dni: "",
     id_tipo_estado: "1",
@@ -30,12 +32,12 @@ export default function FormVacacionesEmpleados({
 
   const fetchTiposEstadosOptions = async () => {
     try {
-      const resultado = await getAllTiposEstados();
-      setTiposEstadosOptions(resultado);
-      setFormValue((prevState) => {
+      const responseReadAllTiposEstados = await getAllTiposEstados();
+      setTiposEstadosOptions(responseReadAllTiposEstados);
+      setFormData((prevState) => {
         return {
           ...prevState,
-          ["id_tipo_estado"]: resultado[0].value.toString(),
+          ["id_tipo_estado"]: responseReadAllTiposEstados[0].value.toString(),
         };
       });
     } catch (error) {
@@ -44,7 +46,7 @@ export default function FormVacacionesEmpleados({
   };
 
   function validarFechaYYYYMMDD(fecha) {
-    return fecha.match(regexDateYYYMMDD);
+    return fecha.match(REGEX_DATE_YYYYMMDD);
   }
 
   function formatearFechaAYYYYMMDD(fechaConFormatoOriginal) {
@@ -61,7 +63,7 @@ export default function FormVacacionesEmpleados({
         console.log("operationType: ", operationType, vacacionEmpleadoDataForm);
 
         if (operationType === "update" || operationType === "view") {
-          setFormValue(() => ({
+          setFormData(() => ({
             ...vacacionEmpleadoDataForm,
           }));
         }
@@ -74,18 +76,20 @@ export default function FormVacacionesEmpleados({
   }, []); // Se ejecuta solo al montar el componente
 
   const handleChange = (event) => {
+    console.log("event", event);
     const { name, value, type, checked } = event.target;
     if (name === "numero_telefono") {
       // Si el valor no comienza con "34", mantenlo con "34" al principio
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
 
       // Actualiza el estado con el nuevo valor
-      setFormValue((prevFormValue) => ({
+      setFormData((prevFormValue) => ({
         ...prevFormValue,
         [name]: nuevoValor,
       }));
     } else {
-      setFormValue((prevState) => {
+      console.log("value: ", value);
+      setFormData((prevState) => {
         return {
           ...prevState,
           [name]: type === "checkbox" ? checked : value,
@@ -99,14 +103,14 @@ export default function FormVacacionesEmpleados({
     let errorDevueltoBack = false;
     try {
       if (operationType === "create") {
-        const resultado = await saveVacacionEmpleado(formValue);
+        const responseCreateVacacion = await saveVacacionEmpleado(formData);
         console.log(
-          `Resultado en handleSubmit en ${operationType} : `,
-          resultado
+          `Response en handleSubmit en ${operationType} : `,
+          responseCreateVacacion
         );
 
-        if (resultado.status !== 200) {
-          const mensajeError = resultado.errorMessage;
+        if (responseCreateVacacion.status !== 200) {
+          const mensajeError = responseCreateVacacion.errorMessage;
           console.log("El error es: ", mensajeError);
           setErrorMessage(mensajeError);
           errorDevueltoBack = true;
@@ -120,18 +124,56 @@ export default function FormVacacionesEmpleados({
           formUpdateTrigger();
         }
       } else if (operationType === "update") {
-        const resultado = await updateVacacionEmpleado(formValue.id, formValue);
-        console.log(
-          `Resultado en handleSubmit en ${operationType} : `,
-          resultado
+        const responseUpdateVacacion = await updateVacacionEmpleado(
+          formData.id,
+          formData
         );
 
-        if (resultado.status !== 200) {
-          const mensajeError = resultado.errorMessage;
+        console.log(
+          `Response en handleSubmit en ${operationType} : `,
+          responseUpdateVacacion
+        );
+
+        if (responseUpdateVacacion.status !== 200) {
+          const mensajeError = responseUpdateVacacion.errorMessage;
           console.log("El error es: ", mensajeError);
           setErrorMessage(mensajeError);
           errorDevueltoBack = true;
         } else {
+          if (
+            responseUpdateVacacion.data.tipo_estado.tipo_estado === "Aprobado"
+          ) {
+            const dataVacacionAutorizada = {
+              id_vacacion_empleado:
+                responseUpdateVacacion.data.id_vacacion_empleado,
+              fecha_inicio: responseUpdateVacacion.data.fecha_inicio,
+              fecha_fin: responseUpdateVacacion.data.fecha_fin,
+              dias_disponibles: responseUpdateVacacion.data.dias_disponibles,
+              dias_pendientes: responseUpdateVacacion.data.dias_pendientes,
+              dias_solicitados: responseUpdateVacacion.data.dias_solicitados,
+              dias_disfrutados: responseUpdateVacacion.data.dias_disfrutados,
+              comentarios: responseUpdateVacacion.data.comentarios,
+              dni: responseUpdateVacacion.data.persona.dni,
+              tipo_estado: responseUpdateVacacion.data.tipo_estado.tipo_estado,
+            };
+
+            const responseCreateBlockchainVacacionAutorizada =
+              await saveTransaccionVacacionAutorizada(dataVacacionAutorizada);
+
+            console.log(
+              "responseCreateBlockchainVacacionAutorizada: ",
+              responseCreateBlockchainVacacionAutorizada
+            );
+
+            if (responseCreateBlockchainVacacionAutorizada.status !== 200) {
+              const mensajeError =
+                responseCreateBlockchainVacacionAutorizada.errorMessage;
+              console.log("El error es: ", mensajeError);
+              setErrorMessage(mensajeError);
+              errorDevueltoBack = true;
+            }
+          }
+
           errorDevueltoBack = false;
         }
 
@@ -150,12 +192,17 @@ export default function FormVacacionesEmpleados({
 
   return (
     <>
+      AQUI TENGO QUE HACER LO DE TIPOS DE SOLICITUDES PORQUE DESDE AQUI LLAMO A
+      LA FUNCION DE CREAR O ACTUALIZAR EL TIPO DE SOLICITUD
+      <br />
+      <br />
       <label>
         Fecha inicio:
         <input
           type="date"
           name="fecha_inicio"
-          value={formValue.fecha_inicio}
+          value={formData.fecha_inicio}
+          placeholder="Fecha inicio"
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
         />
@@ -167,7 +214,8 @@ export default function FormVacacionesEmpleados({
         <input
           type="date"
           name="fecha_fin"
-          value={formValue.fecha_fin}
+          value={formData.fecha_fin}
+          placeholder="Fecha fin"
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
         />
@@ -177,11 +225,33 @@ export default function FormVacacionesEmpleados({
           <br />
           <br />
           <label>
+            Dias disponibles:
+            <input
+              type="number"
+              name="dias_disponibles"
+              value={formData.dias_disponibles}
+              readOnly={true}
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            Dias pendientes:
+            <input
+              type="number"
+              name="dias_pendientes"
+              value={formData.dias_pendientes}
+              readOnly={true}
+            />
+          </label>
+          <br />
+          <br />
+          <label>
             Dias solicitados:
             <input
               type="number"
               name="dias_solicitados"
-              value={formValue.dias_solicitados}
+              value={formData.dias_solicitados}
               readOnly={true}
             />
           </label>
@@ -192,18 +262,7 @@ export default function FormVacacionesEmpleados({
             <input
               type="number"
               name="dias_disfrutados"
-              value={formValue.dias_disfrutados}
-              readOnly={true}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            Dias restantes:
-            <input
-              type="number"
-              name="dias_restantes"
-              value={formValue.dias_restantes}
+              value={formData.dias_disfrutados}
               readOnly={true}
             />
           </label>
@@ -216,7 +275,8 @@ export default function FormVacacionesEmpleados({
         <input
           type="text"
           name="comentarios"
-          value={formValue.comentarios}
+          value={formData.comentarios}
+          placeholder="Comentarios"
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
         />
@@ -228,7 +288,8 @@ export default function FormVacacionesEmpleados({
         <input
           type="text"
           name="dni"
-          value={formValue.dni}
+          value={formData.dni}
+          placeholder="Dni"
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
         />
@@ -241,7 +302,7 @@ export default function FormVacacionesEmpleados({
             Selecciona un tipo de estado:
             <select
               name="id_tipo_estado"
-              value={formValue.id_tipo_estado}
+              value={formData.id_tipo_estado}
               onChange={operationType === "view" ? null : handleChange}
               readOnly={operationType === "view" ? true : false}
             >
@@ -254,9 +315,19 @@ export default function FormVacacionesEmpleados({
           </label>
         </>
       )}
-      <br /> <br />
-      <button onClick={toggleForm}>Cancelar</button>{" "}
-      <button onClick={handleSubmit}>Guardar</button>
+      {(operationType === "create" || operationType === "update") && (
+        <>
+          <br /> <br />
+          <button onClick={toggleForm}>Cancelar</button>{" "}
+          <button onClick={handleSubmit}>Guardar</button>
+        </>
+      )}
+      {operationType === "view" && (
+        <>
+          <br /> <br />
+          <button onClick={toggleForm}>Salir</button>
+        </>
+      )}
     </>
   );
 }

@@ -102,7 +102,7 @@ export const deleteSolicitudEmpleado = async (id) => {
     };
   } catch (error) {
     return {
-      errorMessage: error.response.data.message,
+      errorMessage: error.response.data,
       status: error.response.status,
     };
   }

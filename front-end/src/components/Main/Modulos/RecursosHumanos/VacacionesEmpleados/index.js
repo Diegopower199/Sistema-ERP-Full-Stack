@@ -25,17 +25,10 @@ import {
   deleteVacacionEmpleado,
   getAllVacacionesEmpleados,
 } from "@/services/VacacionEmpleadoService";
-
-const PAGE_SIZE_OPTIONS = [5, 10, 25, 50, 100];
-
-const LOCALIZED_COLUMN_MENU_TEXTS = {
-  columnMenuUnsort: "No Sort",
-  columnMenuSortAsc: "Sort Ascending",
-  columnMenuSortDesc: "Sort Descending",
-  columnMenuFilter: "Filter",
-  columnMenuHideColumn: "Hide Column",
-  columnMenuShowColumns: "Show Columns",
-};
+import {
+  LOCALIZED_COLUMN_MENU_TEXTS,
+  PAGE_SIZE_OPTIONS,
+} from "@/utils/constants";
 
 export default function VacacionesEmpleados() {
   const {
@@ -58,8 +51,10 @@ export default function VacacionesEmpleados() {
 
   const [idVacacionEmpleadoSelected, setIdVacacionEmpleadoSelected] =
     useState(0);
-  const [dniPersonaVacacionEmpleado, setDniPersonaVacacionEmpleado] =
-    useState("");
+  const [
+    dniPersonaVacacionEmpleadoSelected,
+    setDniPersonaVacacionEmpleadoSelected,
+  ] = useState("");
   const [
     fechaInicioAndFinVacacionEmpleadoSelected,
     setFechaInicioAndFinVacacionEmpleadoSelected,
@@ -250,7 +245,7 @@ export default function VacacionesEmpleados() {
     const filaSeleccionada = rows.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
     setIdVacacionEmpleadoSelected(id);
-    setDniPersonaVacacionEmpleado(filaSeleccionada.dni);
+    setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
     setFechaInicioAndFinVacacionEmpleadoSelected([
       filaSeleccionada.fecha_inicio,
       filaSeleccionada.fecha_fin,
@@ -287,7 +282,7 @@ export default function VacacionesEmpleados() {
     setShowFormViewUnique(false);
     setShowDelete(false);
     setIdVacacionEmpleadoSelected(0);
-    setDniPersonaVacacionEmpleado("");
+    setDniPersonaVacacionEmpleadoSelected("");
     setFechaInicioAndFinVacacionEmpleadoSelected([]);
   }
 
@@ -367,12 +362,11 @@ export default function VacacionesEmpleados() {
   }
 
   const renderTableVacacionEmpleado = () => {
-    // Hacer aqui el deleteModal
 
     function deleteModal() {
       return (
         <Modal
-          title={`¿Desea eliminar las vacaciones asociadas al DNI ${dniPersonaVacacionEmpleado} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
+          title={`¿Desea eliminar las vacaciones asociadas a la persona con DNI ${dniPersonaVacacionEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
           open={showDelete}
           okText="Aceptar"
           onOk={handleModalOk}

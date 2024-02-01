@@ -18,23 +18,19 @@ import {
   gridVisibleColumnFieldsSelector,
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
-import { deletePersona, getAllPersonas } from "@/services/PersonaService";
-import FormPersonas from "./FormPersonas";
 import { Modal } from "antd";
 import Link from "next/link";
+import {
+  deleteSolicitudEmpleado,
+  getAllSolicitudesEmpleados,
+} from "@/services/SolicitudEmpleadoService";
+import FormSolicitudesEmpleados from "./FormSolicitudesEmpleados";
+import {
+  LOCALIZED_COLUMN_MENU_TEXTS,
+  PAGE_SIZE_OPTIONS,
+} from "@/utils/constants";
 
-const PAGE_SIZE_OPTIONS = [5, 10, 25, 50, 100];
-
-const LOCALIZED_COLUMN_MENU_TEXTS = {
-  columnMenuUnsort: "No Sort",
-  columnMenuSortAsc: "Sort Ascending",
-  columnMenuSortDesc: "Sort Descending",
-  columnMenuFilter: "Filter",
-  columnMenuHideColumn: "Hide Column",
-  columnMenuShowColumns: "Show Columns",
-};
-
-export default function Personas() {
+export default function SolicitudesEmpleados() {
   const {
     authUser,
     setAuthUser,
@@ -53,11 +49,18 @@ export default function Personas() {
 
   const [tableLoading, setTableLoading] = useState(true);
 
-  const [idPersonaSelected, setIdPersonaSelected] = useState(0);
-  const [namePersonaSelected, setNamePersonaSelected] = useState("");
+  const [idSolicitudEmpleadoSelected, setIdSolicitudEmpleadoSelected] =
+    useState(0);
+  const [
+    dniPersonaSolicitudEmpleadoSelected,
+    setDniPersonaSolicitudEmpleadoSelected,
+  ] = useState("");
+  const [fechaSolicitudEmpleadoSelected, setFechaSolicitudEmpleadoSelected] =
+    useState("");
 
-  const [personaDelete, setPersonaDelete] = useState(false);
-  const [personaFormUpdated, setPersonaFormUpdated] = useState(false);
+  const [solicitudEmpleadoDelete, setSolicitudEmpleadoDelete] = useState(false);
+  const [solicitudEmpleadoFormUpdated, setSolicitudEmpleadoFormUpdated] =
+    useState(false);
   const [rowSelected, setRowSelected] = useState(null);
 
   const [paginationModel, setPaginationModel] = useState({
@@ -68,49 +71,39 @@ export default function Personas() {
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
   const [rows, setRows] = useState([]);
   const columns = [
-    { field: "id", headerName: "ID", width: 85, editable: false },
     {
-      field: "numero_empleado",
-      headerName: "Numero empleado",
-      width: 180,
+      field: "id",
+      headerName: "ID",
+      width: 85,
       editable: false,
     },
-    { field: "nombre", headerName: "Nombre", width: 180, editable: false },
     {
-      field: "apellidos",
-      headerName: "Apellidos",
-      width: 180,
-      editable: false,
-    },
-    { field: "genero", headerName: "Genero", width: 130, editable: false },
-    {
-      field: "fecha_nacimiento",
-      headerName: "Fecha nacimiento",
-      width: 180,
-      editable: false,
-    },
-    { field: "dni", headerName: "DNI", width: 180, editable: false },
-    {
-      field: "direccion",
-      headerName: "Direccion",
+      field: "fecha_solicitud",
+      headerName: "Fecha solicitud",
       width: 180,
       editable: false,
     },
     {
-      field: "numero_telefono",
-      headerName: "Numero telefono",
+      field: "comentarios",
+      headerName: "Comentarios",
       width: 180,
       editable: false,
     },
     {
-      field: "correo_electronico",
-      headerName: "Correo electronico",
+      field: "dni",
+      headerName: "Dni persona",
       width: 180,
       editable: false,
     },
     {
-      field: "tipo_persona",
-      headerName: "Tipo persona",
+      field: "tipo_solicitud",
+      headerName: "Tipo solicitud",
+      width: 130,
+      editable: false,
+    },
+    {
+      field: "tipo_estado",
+      headerName: "Tipo estado",
       width: 130,
       editable: false,
     },
@@ -146,27 +139,28 @@ export default function Personas() {
     },
   ];
 
-  const fetchGetAllPersonas = async () => {
+  const fetchGetAllSolicitudesEmpleados = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllPersonas = await getAllPersonas();
-      const personasMap = responseReadAllPersonas.map((persona) => {
-        return {
-          id: persona.id_persona,
-          numero_empleado: persona.numero_empleado,
-          nombre: persona.nombre,
-          apellidos: persona.apellidos,
-          genero: persona.genero,
-          fecha_nacimiento: persona.fecha_nacimiento,
-          dni: persona.dni,
-          direccion: persona.direccion,
-          numero_telefono: persona.numero_telefono,
-          correo_electronico: persona.correo_electronico,
-          tipo_persona: persona.tipo_persona.tipo_persona,
-          id_tipo_persona: persona.tipo_persona.id_tipo_persona,
-        };
-      });
-      setRows(personasMap);
+      const responseReadAllSolicitudesEmpleados =
+        await getAllSolicitudesEmpleados();
+      const solicitudesEmpleadosMap = responseReadAllSolicitudesEmpleados.map(
+        (solicitudEmpleado) => {
+          return {
+            id: solicitudEmpleado.id_solicitud_empleado,
+            fecha_solicitud: solicitudEmpleado.fecha_solicitud,
+            comentarios: solicitudEmpleado.comentarios,
+            id_persona: solicitudEmpleado.persona.id_persona,
+            dni: solicitudEmpleado.persona.dni,
+            tipo_solicitud: solicitudEmpleado.tipo_solicitud.tipo_solicitud,
+            id_tipo_solicitud:
+              solicitudEmpleado.tipo_solicitud.id_tipo_solicitud,
+            tipo_estado: solicitudEmpleado.tipo_estado.tipo_estado,
+            id_tipo_estado: solicitudEmpleado.tipo_estado.id_tipo_estado,
+          };
+        }
+      );
+      setRows(solicitudesEmpleadosMap);
       setTableLoading(false);
     } catch (error) {
       console.error("El error es: ", error);
@@ -174,77 +168,80 @@ export default function Personas() {
   };
 
   useEffect(() => {
-    console.log("Pagina de personas: ");
+    console.log("Pagina de solicitudes empleados: ");
     console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllPersonas();
+      fetchGetAllSolicitudesEmpleados();
     }
   }, [authUser]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (personaFormUpdated === true) {
-        await fetchGetAllPersonas();
-        setPersonaFormUpdated(false);
-      } else if (personaDelete === true) {
-        await fetchGetAllPersonas();
-        setPersonaDelete(false);
+      if (solicitudEmpleadoFormUpdated === true) {
+        await fetchGetAllSolicitudesEmpleados();
+        setSolicitudEmpleadoFormUpdated(false);
+      } else if (solicitudEmpleadoDelete === true) {
+        await fetchGetAllSolicitudesEmpleados();
+        setSolicitudEmpleadoDelete(false);
       }
     };
     fetchData();
-  }, [personaFormUpdated, personaDelete]);
+  }, [solicitudEmpleadoFormUpdated, solicitudEmpleadoDelete]);
 
-  function personaFormUpdatedTrigger() {
-    setPersonaFormUpdated(!personaFormUpdated);
+  function solicitudEmpleadoFormUpdatedTrigger() {
+    setSolicitudEmpleadoFormUpdated(!solicitudEmpleadoFormUpdated);
   }
 
-  function toggleCreatePersonaForm() {
+  function toggleCreateSolicitudEmpleadoForm() {
     setShowFormCreate(!showFormCreate);
   }
 
-  function toggleUpdatePersonaForm() {
+  function toggleUpdateSolicitudEmpleadoForm() {
     setShowFormUpdate(!showFormUpdate);
   }
 
-  function toggleViewUniquePersonaForm() {
+  function toggleViewUniqueSolicitudEmpleadoForm() {
     setShowFormViewUnique(!showFormViewUnique);
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nueva persona");
-    toggleCreatePersonaForm();
+    console.log("Añadir nueva solicitud empleado");
+    toggleCreateSolicitudEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
     const filaSeleccionada = rows.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleUpdatePersonaForm();
+    toggleUpdateSolicitudEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
     console.log("ID:", id);
     const filaSeleccionada = rows.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
-    setIdPersonaSelected(id);
-    setNamePersonaSelected(filaSeleccionada.nombre);
+    setIdSolicitudEmpleadoSelected(id);
+    setFechaSolicitudEmpleadoSelected(filaSeleccionada.fecha_solicitud);
+    setDniPersonaSolicitudEmpleadoSelected(filaSeleccionada.dni);
     setShowDelete(true);
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una persona");
+    console.log("Boton para ver una solicitud empleado");
     const filaSeleccionada = rows.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleViewUniquePersonaForm();
+    toggleViewUniqueSolicitudEmpleadoForm();
   };
 
   // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeletePersona = await deletePersona(idPersonaSelected);
-    if (responseDeletePersona.status === 200) {
-      setPersonaDelete(true);
+    const responseDeleteSolicitudEmpleado = await deleteSolicitudEmpleado(
+      idSolicitudEmpleadoSelected
+    );
+    if (responseDeleteSolicitudEmpleado.status === 200) {
+      setSolicitudEmpleadoDelete(true);
     }
     // console.log("Resultado delete: ", resultado);
     resetStates();
@@ -259,8 +256,9 @@ export default function Personas() {
     setShowFormUpdate(false);
     setShowFormViewUnique(false);
     setShowDelete(false);
-    setIdPersonaSelected(0);
-    setNamePersonaSelected("");
+    setIdSolicitudEmpleadoSelected(0);
+    setDniPersonaSolicitudEmpleadoSelected("");
+    setFechaSolicitudEmpleadoSelected("");
   }
 
   const getJson = (apiRef) => {
@@ -338,28 +336,25 @@ export default function Personas() {
     );
   }
 
-  const renderTablePersona = () => {
-    // Hacer aqui el deleteModal
+  const renderTableSolicitudEmpleado = () => {
 
     function deleteModal() {
       return (
         <Modal
-          title={`¿Eliminar a la siguiente persona ${namePersonaSelected}?`}
+          title={`¿Desea eliminar la solicitud asociada a la persona con DNI ${dniPersonaSolicitudEmpleadoSelected} en la fecha ${fechaSolicitudEmpleadoSelected}?`}
           open={showDelete}
           okText="Aceptar"
           onOk={handleModalOk}
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        >
-          <p>AAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
-        </Modal>
+        ></Modal>
       );
     }
 
     return (
       <div>
-        <h1>Personas</h1>
+        <h1>Solicitudes Empleados</h1>
         <h2>
           <Link href={"/recursos-humanos"}>Menu Recursos humanos</Link>
         </h2>
@@ -380,7 +375,7 @@ export default function Personas() {
             startIcon={<AddIcon />}
             onClick={handleCreateClick}
           >
-            Añadir persona
+            Añadir solicitud empleado
           </Button>
 
           <DataGrid
@@ -410,37 +405,37 @@ export default function Personas() {
   if (showFormCreate) {
     return (
       <>
-        <FormPersonas
-          toggleForm={toggleCreatePersonaForm}
-          personaDataForm={""}
-          formUpdateTrigger={personaFormUpdatedTrigger}
+        <FormSolicitudesEmpleados
+          toggleForm={toggleCreateSolicitudEmpleadoForm}
+          solicitudEmpleadoDataForm={""}
+          formUpdateTrigger={solicitudEmpleadoFormUpdatedTrigger}
           operationType={"create"}
-        ></FormPersonas>
+        ></FormSolicitudesEmpleados>
       </>
     );
   } else if (showFormUpdate) {
     return (
       <>
-        <FormPersonas
-          toggleForm={toggleUpdatePersonaForm}
-          personaDataForm={rowSelected}
-          formUpdateTrigger={personaFormUpdatedTrigger}
+        <FormSolicitudesEmpleados
+          toggleForm={toggleUpdateSolicitudEmpleadoForm}
+          solicitudEmpleadoDataForm={rowSelected}
+          formUpdateTrigger={solicitudEmpleadoFormUpdatedTrigger}
           operationType={"update"}
-        ></FormPersonas>
+        ></FormSolicitudesEmpleados>
       </>
     );
   } else if (showFormViewUnique) {
     return (
       <>
-        <FormPersonas
-          toggleForm={toggleViewUniquePersonaForm}
-          personaDataForm={rowSelected}
-          formUpdateTrigger={personaFormUpdatedTrigger}
+        <FormSolicitudesEmpleados
+          toggleForm={toggleViewUniqueSolicitudEmpleadoForm}
+          solicitudEmpleadoDataForm={rowSelected}
+          formUpdateTrigger={solicitudEmpleadoFormUpdatedTrigger}
           operationType={"view"}
-        ></FormPersonas>
+        ></FormSolicitudesEmpleados>
       </>
     );
   } else {
-    return renderTablePersona();
+    return renderTableSolicitudEmpleado();
   }
 }

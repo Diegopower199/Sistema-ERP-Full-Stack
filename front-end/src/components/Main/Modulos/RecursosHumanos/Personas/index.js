@@ -22,17 +22,10 @@ import { deletePersona, getAllPersonas } from "@/services/PersonaService";
 import FormPersonas from "./FormPersonas";
 import { Modal } from "antd";
 import Link from "next/link";
-
-const PAGE_SIZE_OPTIONS = [5, 10, 25, 50, 100];
-
-const LOCALIZED_COLUMN_MENU_TEXTS = {
-  columnMenuUnsort: "No Sort",
-  columnMenuSortAsc: "Sort Ascending",
-  columnMenuSortDesc: "Sort Descending",
-  columnMenuFilter: "Filter",
-  columnMenuHideColumn: "Hide Column",
-  columnMenuShowColumns: "Show Columns",
-};
+import {
+  LOCALIZED_COLUMN_MENU_TEXTS,
+  PAGE_SIZE_OPTIONS,
+} from "@/utils/constants";
 
 export default function Personas() {
   const {
@@ -351,8 +344,7 @@ export default function Personas() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        >
-        </Modal>
+        ></Modal>
       );
     }
 

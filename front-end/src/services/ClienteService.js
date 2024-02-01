@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "@/context/constants";
+import { API_URL } from "@/utils/constants";
 
 export const getAllPersonas = async () => {
   const url = API_URL.replace("#", "personas");

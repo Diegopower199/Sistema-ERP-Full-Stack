@@ -76,7 +76,6 @@ export default function FormVacacionesEmpleados({
   }, []); // Se ejecuta solo al montar el componente
 
   const handleChange = (event) => {
-    console.log("event", event);
     const { name, value, type, checked } = event.target;
     if (name === "numero_telefono") {
       // Si el valor no comienza con "34", mantenlo con "34" al principio
@@ -88,7 +87,6 @@ export default function FormVacacionesEmpleados({
         [name]: nuevoValor,
       }));
     } else {
-      console.log("value: ", value);
       setFormData((prevState) => {
         return {
           ...prevState,

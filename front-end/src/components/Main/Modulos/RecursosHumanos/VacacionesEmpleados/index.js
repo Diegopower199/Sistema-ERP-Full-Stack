@@ -73,7 +73,12 @@ export default function VacacionesEmpleados() {
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
   const [rows, setRows] = useState([]);
   const columns = [
-    { field: "id", headerName: "ID", width: 85, editable: false },
+    {
+      field: "id",
+      headerName: "ID",
+      width: 85,
+      editable: false,
+    },
     {
       field: "fecha_inicio",
       headerName: "Fecha inicio",
@@ -163,26 +168,29 @@ export default function VacacionesEmpleados() {
   const fetchGetAllVacacionesEmpleados = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllVacaciones = await getAllVacacionesEmpleados();
-      const vacacionesEmpleadosMap = responseReadAllVacaciones.map(
-        (vacacionEmpleado) => {
-          return {
-            id: vacacionEmpleado.id_vacacion_empleado,
-            fecha_inicio: vacacionEmpleado.fecha_inicio,
-            fecha_fin: vacacionEmpleado.fecha_fin,
-            dias_disponibles: vacacionEmpleado.dias_disponibles,
-            dias_pendientes: vacacionEmpleado.dias_pendientes,
-            dias_solicitados: vacacionEmpleado.dias_solicitados,
-            dias_disfrutados: vacacionEmpleado.dias_disfrutados,
-            comentarios: vacacionEmpleado.comentarios,
-            id_persona: vacacionEmpleado.persona.id_persona,
-            dni: vacacionEmpleado.persona.dni,
-            tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
-            id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
-          };
-        }
-      );
-      setRows(vacacionesEmpleadosMap);
+      const responseReadAllVacacionesEmpleados =
+        await getAllVacacionesEmpleados();
+      if (responseReadAllVacacionesEmpleados.status === 200) {
+        const vacacionesEmpleadosMap = responseReadAllVacacionesEmpleados.data.map(
+          (vacacionEmpleado) => {
+            return {
+              id: vacacionEmpleado.id_vacacion_empleado,
+              fecha_inicio: vacacionEmpleado.fecha_inicio,
+              fecha_fin: vacacionEmpleado.fecha_fin,
+              dias_disponibles: vacacionEmpleado.dias_disponibles,
+              dias_pendientes: vacacionEmpleado.dias_pendientes,
+              dias_solicitados: vacacionEmpleado.dias_solicitados,
+              dias_disfrutados: vacacionEmpleado.dias_disfrutados,
+              comentarios: vacacionEmpleado.comentarios,
+              id_persona: vacacionEmpleado.persona.id_persona,
+              dni: vacacionEmpleado.persona.dni,
+              tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
+              id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
+            };
+          }
+        );
+        setRows(vacacionesEmpleadosMap);
+      }
       setTableLoading(false);
     } catch (error) {
       console.error("El error es: ", error);
@@ -262,10 +270,10 @@ export default function VacacionesEmpleados() {
 
   // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeleteVacacion = await deleteVacacionEmpleado(
+    const responseDeleteVacacionEmpleado = await deleteVacacionEmpleado(
       idVacacionEmpleadoSelected
     );
-    if (responseDeleteVacacion.status === 200) {
+    if (responseDeleteVacacionEmpleado.status === 200) {
       setVacacionEmpleadoDelete(true);
     }
     // console.log("Response delete: ", response);
@@ -362,7 +370,6 @@ export default function VacacionesEmpleados() {
   }
 
   const renderTableVacacionEmpleado = () => {
-
     function deleteModal() {
       return (
         <Modal

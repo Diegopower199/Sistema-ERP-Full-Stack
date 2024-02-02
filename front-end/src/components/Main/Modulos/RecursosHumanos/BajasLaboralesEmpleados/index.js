@@ -18,19 +18,19 @@ import {
   gridVisibleColumnFieldsSelector,
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
-import FormVacacionesEmpleados from "./FormVacacionesEmpleados";
 import { Modal } from "antd";
 import Link from "next/link";
-import {
-  deleteVacacionEmpleado,
-  getAllVacacionesEmpleados,
-} from "@/services/VacacionEmpleadoService";
 import {
   LOCALIZED_COLUMN_MENU_TEXTS,
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
+import FormBajasLaboralesEmpleados from "./FormBajasLaboralesEmpleados";
+import {
+  deleteBajaLaboralEmpleado,
+  getAllBajasLaboralesEmpleados,
+} from "@/services/BajaLaboralEmpleadoService";
 
-export default function VacacionesEmpleados() {
+export default function BajasLaboralesEmpleados() {
   const {
     authUser,
     setAuthUser,
@@ -49,19 +49,21 @@ export default function VacacionesEmpleados() {
 
   const [tableLoading, setTableLoading] = useState(true);
 
-  const [idVacacionEmpleadoSelected, setIdVacacionEmpleadoSelected] =
+  const [idBajaLaboralEmpleadoSelected, setIdBajaLaboralEmpleadoSelected] =
     useState(0);
   const [
-    dniPersonaVacacionEmpleadoSelected,
-    setDniPersonaVacacionEmpleadoSelected,
+    dniPersonaBajaLaboralEmpleadoSelected,
+    setDniPersonaBajaLaboralEmpleadoSelected,
   ] = useState("");
   const [
-    fechaInicioAndFinVacacionEmpleadoSelected,
-    setFechaInicioAndFinVacacionEmpleadoSelected,
+    fechaInicioAndFinBajaLaboralEmpleadoSelected,
+    setFechaInicioAndFinBajaLaboralEmpleadoSelected,
   ] = useState([]);
+  const [motivoBajaSelected, setMotivoBajaSelected] = useState("");
 
-  const [vacacionEmpleadoDelete, setVacacionEmpleadoDelete] = useState(false);
-  const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
+  const [bajaLaboralEmpleadoDelete, setBajaLaboralEmpleadoDelete] =
+    useState(false);
+  const [bajaLaboralEmpleadoFormUpdated, setBajaLaboralEmpleadoFormUpdated] =
     useState(false);
   const [rowSelected, setRowSelected] = useState(null);
 
@@ -73,7 +75,12 @@ export default function VacacionesEmpleados() {
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
   const [rows, setRows] = useState([]);
   const columns = [
-    { field: "id", headerName: "ID", width: 85, editable: false },
+    {
+      field: "id",
+      headerName: "ID",
+      width: 85,
+      editable: false,
+    },
     {
       field: "fecha_inicio",
       headerName: "Fecha inicio",
@@ -87,30 +94,6 @@ export default function VacacionesEmpleados() {
       editable: false,
     },
     {
-      field: "dias_disponibles",
-      headerName: "Dias disponibles",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "dias_pendientes",
-      headerName: "Dias pendientes",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "dias_solicitados",
-      headerName: "Dias solicitados",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "dias_disfrutados",
-      headerName: "Dias disfrutados",
-      width: 130,
-      editable: false,
-    },
-    {
       field: "comentarios",
       headerName: "Comentarios",
       width: 180,
@@ -119,6 +102,12 @@ export default function VacacionesEmpleados() {
     {
       field: "dni",
       headerName: "Dni persona",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "motivo_baja",
+      headerName: "Motivo baja",
       width: 180,
       editable: false,
     },
@@ -160,29 +149,29 @@ export default function VacacionesEmpleados() {
     },
   ];
 
-  const fetchGetAllVacacionesEmpleados = async () => {
+  const fetchGetAllBajasLaboralesEmpleados = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllVacaciones = await getAllVacacionesEmpleados();
-      const vacacionesEmpleadosMap = responseReadAllVacaciones.map(
-        (vacacionEmpleado) => {
-          return {
-            id: vacacionEmpleado.id_vacacion_empleado,
-            fecha_inicio: vacacionEmpleado.fecha_inicio,
-            fecha_fin: vacacionEmpleado.fecha_fin,
-            dias_disponibles: vacacionEmpleado.dias_disponibles,
-            dias_pendientes: vacacionEmpleado.dias_pendientes,
-            dias_solicitados: vacacionEmpleado.dias_solicitados,
-            dias_disfrutados: vacacionEmpleado.dias_disfrutados,
-            comentarios: vacacionEmpleado.comentarios,
-            id_persona: vacacionEmpleado.persona.id_persona,
-            dni: vacacionEmpleado.persona.dni,
-            tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
-            id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
-          };
-        }
-      );
-      setRows(vacacionesEmpleadosMap);
+      const responseReadAllBajasLaboralesEmpleados =
+        await getAllBajasLaboralesEmpleados();
+      if (responseReadAllBajasLaboralesEmpleados.status === 200) {
+        const bajasLaboralesEmpleadosMap =
+          responseReadAllBajasLaboralesEmpleados.data.map((bajaLaboralEmpleado) => {
+            return {
+              id: bajaLaboralEmpleado.id_baja_laboral_empleado,
+              fecha_inicio: bajaLaboralEmpleado.fecha_inicio,
+              fecha_fin: bajaLaboralEmpleado.fecha_fin,
+              comentarios: bajaLaboralEmpleado.comentarios,
+              id_persona: bajaLaboralEmpleado.persona.id_persona,
+              dni: bajaLaboralEmpleado.persona.dni,
+              motivo_baja: bajaLaboralEmpleado.motivo_baja.motivo_baja,
+              id_motivo_baja: bajaLaboralEmpleado.motivo_baja.id_motivo_baja,
+              tipo_estado: bajaLaboralEmpleado.tipo_estado.tipo_estado,
+              id_tipo_estado: bajaLaboralEmpleado.tipo_estado.id_tipo_estado,
+            };
+          });
+        setRows(bajasLaboralesEmpleadosMap);
+      }
       setTableLoading(false);
     } catch (error) {
       console.error("El error es: ", error);
@@ -190,83 +179,84 @@ export default function VacacionesEmpleados() {
   };
 
   useEffect(() => {
-    console.log("Pagina de vacaciones empleados: ");
+    console.log("Pagina de bajas laborales empleados: ");
     console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllVacacionesEmpleados();
+      fetchGetAllBajasLaboralesEmpleados();
     }
   }, [authUser]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (vacacionEmpleadoFormUpdated === true) {
-        await fetchGetAllVacacionesEmpleados();
-        setVacacionEmpleadoFormUpdated(false);
-      } else if (vacacionEmpleadoDelete === true) {
-        await fetchGetAllVacacionesEmpleados();
-        setVacacionEmpleadoDelete(false);
+      if (bajaLaboralEmpleadoFormUpdated === true) {
+        await fetchGetAllBajasLaboralesEmpleados();
+        setBajaLaboralEmpleadoFormUpdated(false);
+      } else if (bajaLaboralEmpleadoDelete === true) {
+        await fetchGetAllBajasLaboralesEmpleados();
+        setBajaLaboralEmpleadoDelete(false);
       }
     };
     fetchData();
-  }, [vacacionEmpleadoFormUpdated, vacacionEmpleadoDelete]);
+  }, [bajaLaboralEmpleadoFormUpdated, bajaLaboralEmpleadoDelete]);
 
-  function vacacionEmpleadoFormUpdatedTrigger() {
-    setVacacionEmpleadoFormUpdated(!vacacionEmpleadoFormUpdated);
+  function bajaLaboralEmpleadoFormUpdatedTrigger() {
+    setBajaLaboralEmpleadoFormUpdated(!bajaLaboralEmpleadoFormUpdated);
   }
 
-  function toggleCreateVacacionEmpleadoForm() {
+  function toggleCreateBajaLaboralEmpleadoForm() {
     setShowFormCreate(!showFormCreate);
   }
 
-  function toggleUpdateVacacionEmpleadoForm() {
+  function toggleUpdateBajaLaboralEmpleadoForm() {
     setShowFormUpdate(!showFormUpdate);
   }
 
-  function toggleViewUniqueVacacionEmpleadoForm() {
+  function toggleViewUniqueBajaLaboralEmpleadoForm() {
     setShowFormViewUnique(!showFormViewUnique);
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nueva vacacion empleado");
-    toggleCreateVacacionEmpleadoForm();
+    console.log("Añadir nueva baja laboral empleado");
+    toggleCreateBajaLaboralEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
     const filaSeleccionada = rows.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleUpdateVacacionEmpleadoForm();
+    toggleUpdateBajaLaboralEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
     console.log("ID:", id);
     const filaSeleccionada = rows.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
-    setIdVacacionEmpleadoSelected(id);
-    setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
-    setFechaInicioAndFinVacacionEmpleadoSelected([
+    setIdBajaLaboralEmpleadoSelected(id);
+    setDniPersonaBajaLaboralEmpleadoSelected(filaSeleccionada.dni);
+    setFechaInicioAndFinBajaLaboralEmpleadoSelected([
       filaSeleccionada.fecha_inicio,
       filaSeleccionada.fecha_fin,
     ]);
+    setMotivoBajaSelected(filaSeleccionada.motivo_baja);
     setShowDelete(true);
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una vacacion empleado");
+    console.log("Boton para ver una baja laboral empleado");
     const filaSeleccionada = rows.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleViewUniqueVacacionEmpleadoForm();
+    toggleViewUniqueBajaLaboralEmpleadoForm();
   };
 
   // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeleteVacacion = await deleteVacacionEmpleado(
-      idVacacionEmpleadoSelected
+    const responseDeleteBajaLaboralEmpleado = await deleteBajaLaboralEmpleado(
+      idBajaLaboralEmpleadoSelected
     );
-    if (responseDeleteVacacion.status === 200) {
-      setVacacionEmpleadoDelete(true);
+    if (responseDeleteBajaLaboralEmpleado.status === 200) {
+      setBajaLaboralEmpleadoDelete(true);
     }
     // console.log("Response delete: ", response);
     resetStates();
@@ -281,9 +271,10 @@ export default function VacacionesEmpleados() {
     setShowFormUpdate(false);
     setShowFormViewUnique(false);
     setShowDelete(false);
-    setIdVacacionEmpleadoSelected(0);
-    setDniPersonaVacacionEmpleadoSelected("");
-    setFechaInicioAndFinVacacionEmpleadoSelected([]);
+    setIdBajaLaboralEmpleadoSelected(0);
+    setDniPersonaBajaLaboralEmpleadoSelected("");
+    setFechaInicioAndFinBajaLaboralEmpleadoSelected([]);
+    setMotivoBajaSelected("");
   }
 
   const getJson = (apiRef) => {
@@ -361,13 +352,13 @@ export default function VacacionesEmpleados() {
     );
   }
 
-  const renderTableVacacionEmpleado = () => {
+  const renderTableBajaLaboralEmpleado = () => {
     // Hacer aqui el deleteModal
 
     function deleteModal() {
       return (
         <Modal
-          title={`¿Desea eliminar las vacaciones asociadas al DNI ${dniPersonaVacacionEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
+          title={`¿Desea eliminar las vacaciones asociadas al DNI ${dniPersonaBajaLaboralEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinBajaLaboralEmpleadoSelected[0]} hasta el ${fechaInicioAndFinBajaLaboralEmpleadoSelected[1]}?`}
           open={showDelete}
           okText="Aceptar"
           onOk={handleModalOk}
@@ -380,7 +371,7 @@ export default function VacacionesEmpleados() {
 
     return (
       <div>
-        <h1>Vacaciones Empleados</h1>
+        <h1>Bajas Laborales Empleados</h1>
         <h2>
           <Link href={"/recursos-humanos"}>Menu Recursos humanos</Link>
         </h2>
@@ -401,7 +392,7 @@ export default function VacacionesEmpleados() {
             startIcon={<AddIcon />}
             onClick={handleCreateClick}
           >
-            Añadir vacacion empleado
+            Añadir baja laboral empleado
           </Button>
 
           <DataGrid
@@ -431,37 +422,37 @@ export default function VacacionesEmpleados() {
   if (showFormCreate) {
     return (
       <>
-        <FormVacacionesEmpleados
-          toggleForm={toggleCreateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={""}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+        <FormBajasLaboralesEmpleados
+          toggleForm={toggleCreateBajaLaboralEmpleadoForm}
+          bajaLaboralEmpleadoDataForm={""}
+          formUpdateTrigger={bajaLaboralEmpleadoFormUpdatedTrigger}
           operationType={"create"}
-        ></FormVacacionesEmpleados>
+        ></FormBajasLaboralesEmpleados>
       </>
     );
   } else if (showFormUpdate) {
     return (
       <>
-        <FormVacacionesEmpleados
-          toggleForm={toggleUpdateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+        <FormBajasLaboralesEmpleados
+          toggleForm={toggleUpdateBajaLaboralEmpleadoForm}
+          bajaLaboralEmpleadoDataForm={rowSelected}
+          formUpdateTrigger={bajaLaboralEmpleadoFormUpdatedTrigger}
           operationType={"update"}
-        ></FormVacacionesEmpleados>
+        ></FormBajasLaboralesEmpleados>
       </>
     );
   } else if (showFormViewUnique) {
     return (
       <>
-        <FormVacacionesEmpleados
-          toggleForm={toggleViewUniqueVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+        <FormBajasLaboralesEmpleados
+          toggleForm={toggleViewUniqueBajaLaboralEmpleadoForm}
+          bajaLaboralEmpleadoDataForm={rowSelected}
+          formUpdateTrigger={bajaLaboralEmpleadoFormUpdatedTrigger}
           operationType={"view"}
-        ></FormVacacionesEmpleados>
+        ></FormBajasLaboralesEmpleados>
       </>
     );
   } else {
-    return renderTableVacacionEmpleado();
+    return renderTableBajaLaboralEmpleado();
   }
 }

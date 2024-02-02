@@ -61,28 +61,48 @@ export default function Personas() {
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
   const [rows, setRows] = useState([]);
   const columns = [
-    { field: "id", headerName: "ID", width: 85, editable: false },
+    {
+      field: "id",
+      headerName: "ID",
+      width: 85,
+      editable: false,
+    },
     {
       field: "numero_empleado",
       headerName: "Numero empleado",
       width: 180,
       editable: false,
     },
-    { field: "nombre", headerName: "Nombre", width: 180, editable: false },
+    {
+      field: "nombre",
+      headerName: "Nombre",
+      width: 180,
+      editable: false,
+    },
     {
       field: "apellidos",
       headerName: "Apellidos",
       width: 180,
       editable: false,
     },
-    { field: "genero", headerName: "Genero", width: 130, editable: false },
+    {
+      field: "genero",
+      headerName: "Genero",
+      width: 130,
+      editable: false,
+    },
     {
       field: "fecha_nacimiento",
       headerName: "Fecha nacimiento",
       width: 180,
       editable: false,
     },
-    { field: "dni", headerName: "DNI", width: 180, editable: false },
+    {
+      field: "dni",
+      headerName: "DNI",
+      width: 180,
+      editable: false,
+    },
     {
       field: "direccion",
       headerName: "Direccion",
@@ -143,23 +163,25 @@ export default function Personas() {
     try {
       setTableLoading(true);
       const responseReadAllPersonas = await getAllPersonas();
-      const personasMap = responseReadAllPersonas.map((persona) => {
-        return {
-          id: persona.id_persona,
-          numero_empleado: persona.numero_empleado,
-          nombre: persona.nombre,
-          apellidos: persona.apellidos,
-          genero: persona.genero,
-          fecha_nacimiento: persona.fecha_nacimiento,
-          dni: persona.dni,
-          direccion: persona.direccion,
-          numero_telefono: persona.numero_telefono,
-          correo_electronico: persona.correo_electronico,
-          tipo_persona: persona.tipo_persona.tipo_persona,
-          id_tipo_persona: persona.tipo_persona.id_tipo_persona,
-        };
-      });
-      setRows(personasMap);
+      if (responseReadAllPersonas.status === 200) {
+        const personasMap = responseReadAllPersonas.data.map((persona) => {
+          return {
+            id: persona.id_persona,
+            numero_empleado: persona.numero_empleado,
+            nombre: persona.nombre,
+            apellidos: persona.apellidos,
+            genero: persona.genero,
+            fecha_nacimiento: persona.fecha_nacimiento,
+            dni: persona.dni,
+            direccion: persona.direccion,
+            numero_telefono: persona.numero_telefono,
+            correo_electronico: persona.correo_electronico,
+            tipo_persona: persona.tipo_persona.tipo_persona,
+            id_tipo_persona: persona.tipo_persona.id_tipo_persona,
+          };
+        });
+        setRows(personasMap);
+      }
       setTableLoading(false);
     } catch (error) {
       console.error("El error es: ", error);

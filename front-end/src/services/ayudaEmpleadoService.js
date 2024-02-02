@@ -6,7 +6,10 @@ export const getAllAyudasEmpleados = async () => {
 
   try {
     const response = await axios.get(url + "getAll");
-    return response.data;
+    return {
+      data: response.data,
+      status: response.status,
+    };
   } catch (error) {
     console.error();
     return "Error";

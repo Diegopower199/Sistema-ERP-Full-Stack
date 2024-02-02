@@ -1,11 +1,14 @@
 import axios from "axios";
 import { API_URL } from "@/utils/constants";
 
-export const getAllPersonas = async () => {
-  const url = API_URL.replace("#", "personas");
+export const getAllNominasEmpleados = async () => {
+  const url = API_URL.replace("#", "nominasEmpleados");
   try {
     const response = await axios.get(url + "getAll");
-    return response.data;
+    return {
+      data: response.data,
+      status: response.status,
+    };
   } catch (error) {
     console.error();
     return "Error";
@@ -13,7 +16,7 @@ export const getAllPersonas = async () => {
 };
 
 export const savePersona = async (data) => {
-  const url = API_URL.replace("#", "personas");
+  const url = API_URL.replace("#", "nominasEmpleados");
   console.log("FORM PERSONA: ", data);
   try {
     let formData = {};
@@ -44,7 +47,7 @@ export const savePersona = async (data) => {
 };
 
 export const getPersonaById = async (id) => {
-  const url = API_URL.replace("#", "personas");
+  const url = API_URL.replace("#", "nominasEmpleados");
   try {
     const response = await axios.get(url + "getById/" + id);
     return {
@@ -60,7 +63,7 @@ export const getPersonaById = async (id) => {
 };
 
 export const updatePersona = async (id, data) => {
-  const url = API_URL.replace("#", "personas");
+  const url = API_URL.replace("#", "nominasEmpleados");
   console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
     let formData = {};
@@ -91,7 +94,7 @@ export const updatePersona = async (id, data) => {
 };
 
 export const deletePersona = async (id) => {
-  const url = API_URL.replace("#", "personas");
+  const url = API_URL.replace("#", "nominasEmpleados");
   try {
     const response = await axios.delete(url + "delete/" + id);
     return {

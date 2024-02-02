@@ -18,19 +18,15 @@ import {
   gridVisibleColumnFieldsSelector,
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
-import FormVacacionesEmpleados from "./FormVacacionesEmpleados";
 import { Modal } from "antd";
 import Link from "next/link";
-import {
-  deleteVacacionEmpleado,
-  getAllVacacionesEmpleados,
-} from "@/services/VacacionEmpleadoService";
 import {
   LOCALIZED_COLUMN_MENU_TEXTS,
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
+import { getAllNominasEmpleados } from "@/services/NominaEmpleadoService";
 
-export default function VacacionesEmpleados() {
+export default function NominasEmpleados() {
   const {
     authUser,
     setAuthUser,
@@ -73,58 +69,87 @@ export default function VacacionesEmpleados() {
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
   const [rows, setRows] = useState([]);
   const columns = [
-    { field: "id", headerName: "ID", width: 85, editable: false },
+    { 
+      field: "id", 
+      headerName: "ID", 
+      width: 85, 
+      editable: false 
+    },
     {
-      field: "fecha_inicio",
-      headerName: "Fecha inicio",
+      field: "year",
+      headerName: "Año",
       width: 180,
       editable: false,
     },
     {
-      field: "fecha_fin",
-      headerName: "Fecha fin",
+      field: "mes",
+      headerName: "Mes",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_disponibles",
-      headerName: "Dias disponibles",
+      field: "tipo_nomina",
+      headerName: "Tipo nomina",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_pendientes",
-      headerName: "Dias pendientes",
+      field: "salario_base",
+      headerName: " Salario base",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_solicitados",
-      headerName: "Dias solicitados",
+      field: "deducciones",
+      headerName: "Deducciones",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_disfrutados",
-      headerName: "Dias disfrutados",
-      width: 130,
+      field: "bonificacion",
+      headerName: "Bonificacion",
+      width: 180,
       editable: false,
     },
     {
-      field: "comentarios",
-      headerName: "Comentarios",
+      field: "salario_bruto",
+      headerName: "Salario bruto",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "irpf",
+      headerName: "IRPF",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "seguridad_social",
+      headerName: "Seguridad social",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "anticipos",
+      headerName: "Anticipos",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "salario_neto",
+      headerName: "Salario neto",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "cuenta_bancaria",
+      headerName: "Cuenta bancaria",
       width: 180,
       editable: false,
     },
     {
       field: "dni",
       headerName: "Dni persona",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "tipo_estado",
-      headerName: "Tipo estado",
       width: 180,
       editable: false,
     },
@@ -160,29 +185,34 @@ export default function VacacionesEmpleados() {
     },
   ];
 
-  const fetchGetAllVacacionesEmpleados = async () => {
+  const fetchGetAllNominasEmpleados = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllVacaciones = await getAllVacacionesEmpleados();
-      const vacacionesEmpleadosMap = responseReadAllVacaciones.map(
-        (vacacionEmpleado) => {
-          return {
-            id: vacacionEmpleado.id_vacacion_empleado,
-            fecha_inicio: vacacionEmpleado.fecha_inicio,
-            fecha_fin: vacacionEmpleado.fecha_fin,
-            dias_disponibles: vacacionEmpleado.dias_disponibles,
-            dias_pendientes: vacacionEmpleado.dias_pendientes,
-            dias_solicitados: vacacionEmpleado.dias_solicitados,
-            dias_disfrutados: vacacionEmpleado.dias_disfrutados,
-            comentarios: vacacionEmpleado.comentarios,
-            id_persona: vacacionEmpleado.persona.id_persona,
-            dni: vacacionEmpleado.persona.dni,
-            tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
-            id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
-          };
-        }
-      );
-      setRows(vacacionesEmpleadosMap);
+      const responseReadAllNominasEmpleados = await getAllNominasEmpleados();
+      if (responseReadAllNominasEmpleados.status === 200) {
+        const nominasEmpleadosMap = responseReadAllNominasEmpleados.data.map(
+          (nominasEmpleado) => {
+            return {
+              id: nominasEmpleado.id_nomina_empleado,
+              year: nominasEmpleado.year,
+              mes: nominasEmpleado.mes,
+              tipo_nomina: nominasEmpleado.tipo_nomina,
+              salario_base: nominasEmpleado.salario_base,
+              deducciones: nominasEmpleado.deducciones,
+              bonificacion: nominasEmpleado.bonificacion,
+              salario_bruto: nominasEmpleado.salario_bruto,
+              irpf: nominasEmpleado.irpf,
+              seguridad_social: nominasEmpleado.seguridad_social,
+              anticipos: nominasEmpleado.anticipos,
+              salario_neto: nominasEmpleado.salario_neto,
+              cuenta_bancaria: nominasEmpleado.cuenta_bancaria,
+              id_persona: nominasEmpleado.persona.id_persona,
+              dni: nominasEmpleado.persona.dni,
+            };
+          }
+        );
+        setRows(nominasEmpleadosMap);
+      }
       setTableLoading(false);
     } catch (error) {
       console.error("El error es: ", error);
@@ -195,17 +225,17 @@ export default function VacacionesEmpleados() {
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllVacacionesEmpleados();
+      fetchGetAllNominasEmpleados();
     }
   }, [authUser]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (vacacionEmpleadoFormUpdated === true) {
-        await fetchGetAllVacacionesEmpleados();
+        await fetchGetAllNominasEmpleados();
         setVacacionEmpleadoFormUpdated(false);
       } else if (vacacionEmpleadoDelete === true) {
-        await fetchGetAllVacacionesEmpleados();
+        await fetchGetAllNominasEmpleados();
         setVacacionEmpleadoDelete(false);
       }
     };
@@ -262,10 +292,10 @@ export default function VacacionesEmpleados() {
 
   // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeleteVacacion = await deleteVacacionEmpleado(
+    const responseDeleteVacacionEmpleado = await deleteVacacionEmpleado(
       idVacacionEmpleadoSelected
     );
-    if (responseDeleteVacacion.status === 200) {
+    if (responseDeleteVacacionEmpleado.status === 200) {
       setVacacionEmpleadoDelete(true);
     }
     // console.log("Response delete: ", response);

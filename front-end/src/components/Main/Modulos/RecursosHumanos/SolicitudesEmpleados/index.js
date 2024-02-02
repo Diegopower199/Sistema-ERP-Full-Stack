@@ -144,23 +144,25 @@ export default function SolicitudesEmpleados() {
       setTableLoading(true);
       const responseReadAllSolicitudesEmpleados =
         await getAllSolicitudesEmpleados();
-      const solicitudesEmpleadosMap = responseReadAllSolicitudesEmpleados.map(
-        (solicitudEmpleado) => {
-          return {
-            id: solicitudEmpleado.id_solicitud_empleado,
-            fecha_solicitud: solicitudEmpleado.fecha_solicitud,
-            comentarios: solicitudEmpleado.comentarios,
-            id_persona: solicitudEmpleado.persona.id_persona,
-            dni: solicitudEmpleado.persona.dni,
-            tipo_solicitud: solicitudEmpleado.tipo_solicitud.tipo_solicitud,
-            id_tipo_solicitud:
-              solicitudEmpleado.tipo_solicitud.id_tipo_solicitud,
-            tipo_estado: solicitudEmpleado.tipo_estado.tipo_estado,
-            id_tipo_estado: solicitudEmpleado.tipo_estado.id_tipo_estado,
-          };
-        }
-      );
-      setRows(solicitudesEmpleadosMap);
+      if (responseReadAllSolicitudesEmpleados.status === 200) {
+        const solicitudesEmpleadosMap = responseReadAllSolicitudesEmpleados.data.map(
+          (solicitudEmpleado) => {
+            return {
+              id: solicitudEmpleado.id_solicitud_empleado,
+              fecha_solicitud: solicitudEmpleado.fecha_solicitud,
+              comentarios: solicitudEmpleado.comentarios,
+              id_persona: solicitudEmpleado.persona.id_persona,
+              dni: solicitudEmpleado.persona.dni,
+              tipo_solicitud: solicitudEmpleado.tipo_solicitud.tipo_solicitud,
+              id_tipo_solicitud:
+                solicitudEmpleado.tipo_solicitud.id_tipo_solicitud,
+              tipo_estado: solicitudEmpleado.tipo_estado.tipo_estado,
+              id_tipo_estado: solicitudEmpleado.tipo_estado.id_tipo_estado,
+            };
+          }
+        );
+        setRows(solicitudesEmpleadosMap);
+      }
       setTableLoading(false);
     } catch (error) {
       console.error("El error es: ", error);
@@ -337,7 +339,6 @@ export default function SolicitudesEmpleados() {
   }
 
   const renderTableSolicitudEmpleado = () => {
-
     function deleteModal() {
       return (
         <Modal

@@ -18,19 +18,19 @@ import {
   gridVisibleColumnFieldsSelector,
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
-import FormVacacionesEmpleados from "./FormVacacionesEmpleados";
 import { Modal } from "antd";
 import Link from "next/link";
-import {
-  deleteVacacionEmpleado,
-  getAllVacacionesEmpleados,
-} from "@/services/VacacionEmpleadoService";
 import {
   LOCALIZED_COLUMN_MENU_TEXTS,
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
+import {
+  deleteAsistenciaEmpleado,
+  getAllAsistenciaEmpleados,
+} from "@/services/AsistenciaEmpleadoService";
+import FormAsistenciasEmpleados from "./FormAsistenciasEmpleados";
 
-export default function VacacionesEmpleados() {
+export default function AsistenciasEmpleados() {
   const {
     authUser,
     setAuthUser,
@@ -49,19 +49,18 @@ export default function VacacionesEmpleados() {
 
   const [tableLoading, setTableLoading] = useState(true);
 
-  const [idVacacionEmpleadoSelected, setIdVacacionEmpleadoSelected] =
+  const [idAsistenciaEmpleadoSelected, setIdAsistenciaEmpleadoSelected] =
     useState(0);
   const [
-    dniPersonaVacacionEmpleadoSelected,
-    setDniPersonaVacacionEmpleadoSelected,
+    dniPersonaAsistenciaEmpleadoSelected,
+    setDniPersonaAsistenciaEmpleadoSelected,
   ] = useState("");
-  const [
-    fechaInicioAndFinVacacionEmpleadoSelected,
-    setFechaInicioAndFinVacacionEmpleadoSelected,
-  ] = useState([]);
+  const [fechaAsistenciaEmpleadoSelected, setFechaAsistenciaEmpleadoSelected] =
+    useState("");
 
-  const [vacacionEmpleadoDelete, setVacacionEmpleadoDelete] = useState(false);
-  const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
+  const [asistenciaEmpleadoDelete, setAsistenciaEmpleadoDelete] =
+    useState(false);
+  const [asistenciaEmpleadoFormUpdated, setAsistenciaEmpleadoFormUpdated] =
     useState(false);
   const [rowSelected, setRowSelected] = useState(null);
 
@@ -73,41 +72,34 @@ export default function VacacionesEmpleados() {
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
   const [rows, setRows] = useState([]);
   const columns = [
-    { field: "id", headerName: "ID", width: 85, editable: false },
     {
-      field: "fecha_inicio",
-      headerName: "Fecha inicio",
+      field: "id",
+      headerName: "ID",
+      width: 85,
+      editable: false,
+    },
+    {
+      field: "fecha",
+      headerName: "Fecha",
       width: 180,
       editable: false,
     },
     {
-      field: "fecha_fin",
-      headerName: "Fecha fin",
+      field: "hora_entrada",
+      headerName: "Hora entrada",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_disponibles",
-      headerName: "Dias disponibles",
+      field: "hora_salida",
+      headerName: "Hora salida",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_pendientes",
-      headerName: "Dias pendientes",
+      field: "total_horas_trabajadas",
+      headerName: "Total horas trabajadas",
       width: 180,
-      editable: false,
-    },
-    {
-      field: "dias_solicitados",
-      headerName: "Dias solicitados",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "dias_disfrutados",
-      headerName: "Dias disfrutados",
-      width: 130,
       editable: false,
     },
     {
@@ -119,12 +111,6 @@ export default function VacacionesEmpleados() {
     {
       field: "dni",
       headerName: "Dni persona",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "tipo_estado",
-      headerName: "Tipo estado",
       width: 180,
       editable: false,
     },
@@ -160,29 +146,28 @@ export default function VacacionesEmpleados() {
     },
   ];
 
-  const fetchGetAllVacacionesEmpleados = async () => {
+  const fetchGetAllAsistenciasEmpleados = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllVacaciones = await getAllVacacionesEmpleados();
-      const vacacionesEmpleadosMap = responseReadAllVacaciones.map(
-        (vacacionEmpleado) => {
-          return {
-            id: vacacionEmpleado.id_vacacion_empleado,
-            fecha_inicio: vacacionEmpleado.fecha_inicio,
-            fecha_fin: vacacionEmpleado.fecha_fin,
-            dias_disponibles: vacacionEmpleado.dias_disponibles,
-            dias_pendientes: vacacionEmpleado.dias_pendientes,
-            dias_solicitados: vacacionEmpleado.dias_solicitados,
-            dias_disfrutados: vacacionEmpleado.dias_disfrutados,
-            comentarios: vacacionEmpleado.comentarios,
-            id_persona: vacacionEmpleado.persona.id_persona,
-            dni: vacacionEmpleado.persona.dni,
-            tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
-            id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
-          };
-        }
-      );
-      setRows(vacacionesEmpleadosMap);
+      const responseReadAllAsistenciasEmpleados =
+        await getAllAsistenciaEmpleados();
+      if (responseReadAllAsistenciasEmpleados.status === 200) {
+        const asistenciasEmpleadosMap = responseReadAllAsistenciasEmpleados.data.map(
+          (asistenciaEmpleado) => {
+            return {
+              id: asistenciaEmpleado.id_asistencia_empleado,
+              fecha: asistenciaEmpleado.fecha,
+              hora_entrada: asistenciaEmpleado.hora_entrada,
+              hora_salida: asistenciaEmpleado.hora_salida,
+              total_horas_trabajadas: asistenciaEmpleado.total_horas_trabajadas,
+              comentarios: asistenciaEmpleado.comentarios,
+              id_persona: asistenciaEmpleado.persona.id_persona,
+              dni: asistenciaEmpleado.persona.dni,
+            };
+          }
+        );
+        setRows(asistenciasEmpleadosMap);
+      }
       setTableLoading(false);
     } catch (error) {
       console.error("El error es: ", error);
@@ -190,83 +175,80 @@ export default function VacacionesEmpleados() {
   };
 
   useEffect(() => {
-    console.log("Pagina de vacaciones empleados: ");
+    console.log("Pagina de asistencias empleados: ");
     console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllVacacionesEmpleados();
+      fetchGetAllAsistenciasEmpleados();
     }
   }, [authUser]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (vacacionEmpleadoFormUpdated === true) {
-        await fetchGetAllVacacionesEmpleados();
-        setVacacionEmpleadoFormUpdated(false);
-      } else if (vacacionEmpleadoDelete === true) {
-        await fetchGetAllVacacionesEmpleados();
-        setVacacionEmpleadoDelete(false);
+      if (asistenciaEmpleadoFormUpdated === true) {
+        await fetchGetAllAsistenciasEmpleados();
+        setAsistenciaEmpleadoFormUpdated(false);
+      } else if (asistenciaEmpleadoDelete === true) {
+        await fetchGetAllAsistenciasEmpleados();
+        setAsistenciaEmpleadoDelete(false);
       }
     };
     fetchData();
-  }, [vacacionEmpleadoFormUpdated, vacacionEmpleadoDelete]);
+  }, [asistenciaEmpleadoFormUpdated, asistenciaEmpleadoDelete]);
 
-  function vacacionEmpleadoFormUpdatedTrigger() {
-    setVacacionEmpleadoFormUpdated(!vacacionEmpleadoFormUpdated);
+  function asistenciaEmpleadoFormUpdatedTrigger() {
+    setAsistenciaEmpleadoFormUpdated(!asistenciaEmpleadoFormUpdated);
   }
 
-  function toggleCreateVacacionEmpleadoForm() {
+  function toggleCreateAsistenciaEmpleadoForm() {
     setShowFormCreate(!showFormCreate);
   }
 
-  function toggleUpdateVacacionEmpleadoForm() {
+  function toggleUpdateAsistenciaEmpleadoForm() {
     setShowFormUpdate(!showFormUpdate);
   }
 
-  function toggleViewUniqueVacacionEmpleadoForm() {
+  function toggleViewUniqueAsistenciaEmpleadoForm() {
     setShowFormViewUnique(!showFormViewUnique);
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nueva vacacion empleado");
-    toggleCreateVacacionEmpleadoForm();
+    console.log("Añadir nueva asistencia empleado");
+    toggleCreateAsistenciaEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
     const filaSeleccionada = rows.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleUpdateVacacionEmpleadoForm();
+    toggleUpdateAsistenciaEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
     console.log("ID:", id);
     const filaSeleccionada = rows.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
-    setIdVacacionEmpleadoSelected(id);
-    setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
-    setFechaInicioAndFinVacacionEmpleadoSelected([
-      filaSeleccionada.fecha_inicio,
-      filaSeleccionada.fecha_fin,
-    ]);
+    setIdAsistenciaEmpleadoSelected(id);
+    setDniPersonaAsistenciaEmpleadoSelected(filaSeleccionada.dni);
+    setFechaAsistenciaEmpleadoSelected(filaSeleccionada.fecha);
     setShowDelete(true);
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una vacacion empleado");
+    console.log("Boton para ver una asistencia empleado");
     const filaSeleccionada = rows.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleViewUniqueVacacionEmpleadoForm();
+    toggleViewUniqueAsistenciaEmpleadoForm();
   };
 
   // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeleteVacacion = await deleteVacacionEmpleado(
-      idVacacionEmpleadoSelected
+    const responseDeleteAsistenciaEmpleado = await deleteAsistenciaEmpleado(
+      idAsistenciaEmpleadoSelected
     );
-    if (responseDeleteVacacion.status === 200) {
-      setVacacionEmpleadoDelete(true);
+    if (responseDeleteAsistenciaEmpleado.status === 200) {
+      setAsistenciaEmpleadoDelete(true);
     }
     // console.log("Response delete: ", response);
     resetStates();
@@ -281,9 +263,9 @@ export default function VacacionesEmpleados() {
     setShowFormUpdate(false);
     setShowFormViewUnique(false);
     setShowDelete(false);
-    setIdVacacionEmpleadoSelected(0);
-    setDniPersonaVacacionEmpleadoSelected("");
-    setFechaInicioAndFinVacacionEmpleadoSelected([]);
+    setIdAsistenciaEmpleadoSelected(0);
+    setDniPersonaAsistenciaEmpleadoSelected("");
+    setFechaAsistenciaEmpleadoSelected("");
   }
 
   const getJson = (apiRef) => {
@@ -361,13 +343,13 @@ export default function VacacionesEmpleados() {
     );
   }
 
-  const renderTableVacacionEmpleado = () => {
+  const renderTableAsistenciaEmpleado = () => {
     // Hacer aqui el deleteModal
 
     function deleteModal() {
       return (
         <Modal
-          title={`¿Desea eliminar las vacaciones asociadas al DNI ${dniPersonaVacacionEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
+          title={`¿Desea eliminar la asistencia asociadas al DNI ${dniPersonaAsistenciaEmpleadoSelected} en esta fecha ${fechaAsistenciaEmpleadoSelected}?`}
           open={showDelete}
           okText="Aceptar"
           onOk={handleModalOk}
@@ -380,7 +362,7 @@ export default function VacacionesEmpleados() {
 
     return (
       <div>
-        <h1>Vacaciones Empleados</h1>
+        <h1>Asistencia Empleados</h1>
         <h2>
           <Link href={"/recursos-humanos"}>Menu Recursos humanos</Link>
         </h2>
@@ -401,7 +383,7 @@ export default function VacacionesEmpleados() {
             startIcon={<AddIcon />}
             onClick={handleCreateClick}
           >
-            Añadir vacacion empleado
+            Añadir asistencia empleado
           </Button>
 
           <DataGrid
@@ -431,37 +413,37 @@ export default function VacacionesEmpleados() {
   if (showFormCreate) {
     return (
       <>
-        <FormVacacionesEmpleados
-          toggleForm={toggleCreateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={""}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+        <FormAsistenciasEmpleados
+          toggleForm={toggleCreateAsistenciaEmpleadoForm}
+          asistenciaEmpleadoDataForm={""}
+          formUpdateTrigger={asistenciaEmpleadoFormUpdatedTrigger}
           operationType={"create"}
-        ></FormVacacionesEmpleados>
+        ></FormAsistenciasEmpleados>
       </>
     );
   } else if (showFormUpdate) {
     return (
       <>
-        <FormVacacionesEmpleados
-          toggleForm={toggleUpdateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+        <FormAsistenciasEmpleados
+          toggleForm={toggleUpdateAsistenciaEmpleadoForm}
+          asistenciaEmpleadoDataForm={rowSelected}
+          formUpdateTrigger={asistenciaEmpleadoFormUpdatedTrigger}
           operationType={"update"}
-        ></FormVacacionesEmpleados>
+        ></FormAsistenciasEmpleados>
       </>
     );
   } else if (showFormViewUnique) {
     return (
       <>
-        <FormVacacionesEmpleados
-          toggleForm={toggleViewUniqueVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+        <FormAsistenciasEmpleados
+          toggleForm={toggleViewUniqueAsistenciaEmpleadoForm}
+          asistenciaEmpleadoDataForm={rowSelected}
+          formUpdateTrigger={asistenciaEmpleadoFormUpdatedTrigger}
           operationType={"view"}
-        ></FormVacacionesEmpleados>
+        ></FormAsistenciasEmpleados>
       </>
     );
   } else {
-    return renderTableVacacionEmpleado();
+    return renderTableAsistenciaEmpleado();
   }
 }

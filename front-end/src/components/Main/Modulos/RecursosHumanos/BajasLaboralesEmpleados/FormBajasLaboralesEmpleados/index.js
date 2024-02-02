@@ -3,9 +3,9 @@ import { savePersona, updatePersona } from "@/services/PersonaService";
 import { getAllTiposPersonas } from "@/services/TipoPersonaService";
 import { REGEX_DATE_YYYYMMDD } from "@/utils/regexPatterns";
 
-export default function FormPersonas({
+export default function FormBajasLaboralesEmpleados({
   toggleForm,
-  personaDataForm,
+  bajaLaboralEmpleadoDataForm,
   formUpdateTrigger,
   operationType,
 }) {
@@ -69,20 +69,20 @@ export default function FormPersonas({
         console.log("operationType: ", operationType);
 
         if (operationType === "update" || operationType === "view") {
-          if (validarFechaYYYYMMDD(personaDataForm.fecha_nacimiento) === null) {
+          if (validarFechaYYYYMMDD(bajaLaboralEmpleadoDataForm.fecha_nacimiento) === null) {
             const fechaFormateada = formatearFechaAYYYYMMDD(
-              personaDataForm.fecha_nacimiento
+              bajaLaboralEmpleadoDataForm.fecha_nacimiento
             );
 
             console.log("fechaFormateada: ", fechaFormateada);
 
             setFormData(() => ({
-              ...personaDataForm,
+              ...bajaLaboralEmpleadoDataForm,
               fecha_nacimiento: fechaFormateada,
             }));
           } else {
             setFormData(() => ({
-              ...personaDataForm,
+              ...bajaLaboralEmpleadoDataForm,
             }));
           }
         }

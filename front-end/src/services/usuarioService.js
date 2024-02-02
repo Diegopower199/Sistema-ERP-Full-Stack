@@ -5,7 +5,10 @@ export const getAllUsuarios = async () => {
   const url = API_URL.replace("#", "usuarios");
   try {
     const response = await axios.get(url + "getAll");
-    return response.data;
+    return {
+      data: response.data,
+      status: response.status,
+    };
   } catch (error) {
     console.error();
     return "Error";

@@ -5,7 +5,7 @@ import { REGEX_DATE_YYYYMMDD } from "@/utils/regexPatterns";
 
 export default function FormSolicitudesEmpleados({
   toggleForm,
-  personaDataForm: solicitudEmpleadoDataForm,
+  solicitudEmpleadoDataForm,
   formUpdateTrigger,
   operationType,
 }) {

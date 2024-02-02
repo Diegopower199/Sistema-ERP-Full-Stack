@@ -46,6 +46,14 @@ public class TipoEstadoModel implements Serializable {
     @OneToMany(mappedBy = "tipo_estado", cascade = CascadeType.REMOVE)
     private List<VacacionEmpleadoModel> vacacionesEmpleados;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "tipo_estado", cascade = CascadeType.REMOVE)
+    private List<PedidoClienteModel> pedidosClientes;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "tipo_estado", cascade = CascadeType.REMOVE)
+    private List<FacturaClienteModel> facturasClientes;
+
     public Map<String, Object> toMap() {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("id_tipo_estado", id_tipo_estado);

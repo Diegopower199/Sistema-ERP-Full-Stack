@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import tfg.backend.models.ClienteModel;
 import tfg.backend.models.FacturaClienteModel;
+import tfg.backend.models.TipoEstadoModel;
 import tfg.backend.repositories.ClienteRepository;
 import tfg.backend.repositories.FacturaClienteRepository;
+import tfg.backend.repositories.TipoEstadoRepository;
 
 @Service
 public class FacturaClienteService {
@@ -21,6 +23,9 @@ public class FacturaClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private TipoEstadoRepository tipoEstadoRepository;
+
     public List<Map<String, Object>> getAllFacturasClientes() {
         List<FacturaClienteModel> listaFacturasClientes = facturaClienteRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
@@ -29,8 +34,10 @@ public class FacturaClienteService {
             Map<String, Object> facturaClienteMap = facturaCliente.toMap();
 
             facturaClienteMap.put("cliente",
-                    facturaCliente.getCliente() != null ? facturaCliente.getCliente().toMap()
-                            : null);
+                    facturaCliente.getCliente() != null ? facturaCliente.getCliente().toMap() : null);
+
+            facturaClienteMap.put("tipo_estado",
+                    facturaCliente.getTipo_estado() != null ? facturaCliente.getTipo_estado().toMap() : null);
 
             resultado.add(facturaClienteMap);
         }
@@ -56,6 +63,14 @@ public class FacturaClienteService {
         nuevoFacturaCliente.setCliente(clienteEncontrado);
         clienteEncontrado.getFacturasClientes().add(nuevoFacturaCliente);
 
+        int id_tipo_estado = nuevoFacturaCliente.getTipo_estado().getId_tipo_estado();
+
+        TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
+                .orElseThrow(() -> new RuntimeException("Tipo estado con id " + id_tipo_estado + " no encontrado"));
+
+        nuevoFacturaCliente.setTipo_estado(tipoEstadoEncontrado);
+        tipoEstadoEncontrado.getFacturasClientes().add(nuevoFacturaCliente);
+
         FacturaClienteModel facturaClienteGuardado = facturaClienteRepository
                 .save(nuevoFacturaCliente);
 
@@ -71,8 +86,10 @@ public class FacturaClienteService {
         Map<String, Object> facturaClienteMap = facturaClienteEncontrado.toMap();
 
         facturaClienteMap.put("cliente",
-                facturaClienteEncontrado.getCliente() != null
-                        ? facturaClienteEncontrado.getCliente().toMap()
+                facturaClienteEncontrado.getCliente() != null ? facturaClienteEncontrado.getCliente().toMap() : null);
+
+        facturaClienteMap.put("tipo_estado",
+                facturaClienteEncontrado.getTipo_estado() != null ? facturaClienteEncontrado.getTipo_estado().toMap()
                         : null);
 
         return facturaClienteMap;
@@ -104,6 +121,15 @@ public class FacturaClienteService {
         facturaClienteExistente.getCliente().getFacturasClientes().remove(facturaClienteExistente);
         facturaClienteExistente.setCliente(clienteEncontrado);
         clienteEncontrado.getFacturasClientes().add(facturaClienteExistente);
+
+        int id_tipo_estado = cambiosFacturaCliente.getTipo_estado().getId_tipo_estado();
+
+        TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
+                .orElseThrow(() -> new RuntimeException("Tipo estado con id " + id_tipo_estado + " no encontrado"));
+
+        facturaClienteExistente.getTipo_estado().getFacturasClientes().remove(facturaClienteExistente);
+        facturaClienteExistente.setTipo_estado(tipoEstadoEncontrado);
+        tipoEstadoEncontrado.getFacturasClientes().add(facturaClienteExistente);
 
         FacturaClienteModel facturaClienteActualizado = facturaClienteRepository
                 .save(facturaClienteExistente);

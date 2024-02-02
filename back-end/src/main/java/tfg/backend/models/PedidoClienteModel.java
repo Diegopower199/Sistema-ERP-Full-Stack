@@ -33,12 +33,13 @@ public class PedidoClienteModel implements Serializable {
     @Column(name = "fecha_entrega_real", nullable = false)
     private LocalDate fecha_entrega_real;
 
-    @Column(name = "tipo_estado_pedido", nullable = false)
-    private String tipo_estado_pedido;
-
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false, foreignKey = @ForeignKey(name = "FK_pedidos_clientes_clientes"))
     private ClienteModel cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_estado", nullable = false, foreignKey = @ForeignKey(name = "FK_pedidos_clientes_tipos_estados"))
+    private TipoEstadoModel tipo_estado;
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new LinkedHashMap<>();
@@ -46,7 +47,6 @@ public class PedidoClienteModel implements Serializable {
         map.put("fecha_solicitud_pedido", fecha_solicitud_pedido);
         map.put("fecha_entrega_prevista", fecha_entrega_prevista);
         map.put("fecha_entrega_real", fecha_entrega_real);
-        map.put("tipo_estado_pedido", tipo_estado_pedido);
         return map;
     }
 

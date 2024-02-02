@@ -33,12 +33,13 @@ public class FacturaClienteModel implements Serializable {
     @Column(name = "total_factura", nullable = false)
     private float total_factura;
 
-    @Column(name = "tipo_estado_factura", nullable = false)
-    private String tipo_estado_factura;
-
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false, foreignKey = @ForeignKey(name = "FK_facturas_clientes_clientes"))
     private ClienteModel cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_estado", nullable = false, foreignKey = @ForeignKey(name = "FK_facturas_clientes_tipos_estados"))
+    private TipoEstadoModel tipo_estado;
 
     @JsonIgnore
     @OneToMany(mappedBy = "factura_cliente", cascade = CascadeType.REMOVE)
@@ -53,7 +54,6 @@ public class FacturaClienteModel implements Serializable {
         map.put("id_factura_cliente", id_factura_cliente);
         map.put("fecha_factura_emitida", fecha_factura_emitida);
         map.put("total_factura", total_factura);
-        map.put("tipo_estado_factura", tipo_estado_factura);
         return map;
     }
 

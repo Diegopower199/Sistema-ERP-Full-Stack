@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import tfg.backend.models.ClienteModel;
 import tfg.backend.models.PedidoClienteModel;
+import tfg.backend.models.TipoEstadoModel;
 import tfg.backend.repositories.ClienteRepository;
 import tfg.backend.repositories.PedidoClienteRepository;
+import tfg.backend.repositories.TipoEstadoRepository;
 
 @Service
 public class PedidoClienteService {
@@ -21,6 +23,9 @@ public class PedidoClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private TipoEstadoRepository tipoEstadoRepository;
+
     public List<Map<String, Object>> getAllPedidosClientes() {
         List<PedidoClienteModel> listaPedidosClientes = pedidoClienteRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
@@ -29,9 +34,10 @@ public class PedidoClienteService {
             Map<String, Object> pedidoClienteMap = pedidoCliente.toMap();
 
             pedidoClienteMap.put("cliente",
-                    pedidoCliente.getCliente() != null
-                            ? pedidoCliente.getCliente().toMap()
-                            : null);
+                    pedidoCliente.getCliente() != null ? pedidoCliente.getCliente().toMap() : null);
+
+            pedidoClienteMap.put("tipo_estado",
+                    pedidoCliente.getTipo_estado() != null ? pedidoCliente.getTipo_estado().toMap() : null);
 
             resultado.add(pedidoClienteMap);
         }
@@ -57,6 +63,14 @@ public class PedidoClienteService {
         nuevoPedidoCliente.setCliente(clienteEncontrado);
         clienteEncontrado.getPedidosClientes().add(nuevoPedidoCliente);
 
+        int id_tipo_estado = nuevoPedidoCliente.getTipo_estado().getId_tipo_estado();
+
+        TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
+                .orElseThrow(() -> new RuntimeException("Tipo estado con id " + id_tipo_estado + " no encontrado"));
+
+        nuevoPedidoCliente.setTipo_estado(tipoEstadoEncontrado);
+        tipoEstadoEncontrado.getPedidosClientes().add(nuevoPedidoCliente);
+
         PedidoClienteModel pedidoClienteGuardado = pedidoClienteRepository
                 .save(nuevoPedidoCliente);
 
@@ -71,8 +85,10 @@ public class PedidoClienteService {
         Map<String, Object> pedidoClienteMap = pedidoClienteEncontrado.toMap();
 
         pedidoClienteMap.put("cliente",
-                pedidoClienteEncontrado.getCliente() != null
-                        ? pedidoClienteEncontrado.getCliente().toMap()
+                pedidoClienteEncontrado.getCliente() != null ? pedidoClienteEncontrado.getCliente().toMap() : null);
+
+        pedidoClienteMap.put("tipo_estado",
+                pedidoClienteEncontrado.getTipo_estado() != null ? pedidoClienteEncontrado.getTipo_estado().toMap()
                         : null);
 
         return pedidoClienteMap;
@@ -103,6 +119,15 @@ public class PedidoClienteService {
         pedidoClienteExistente.getCliente().getPedidosClientes().remove(pedidoClienteExistente);
         pedidoClienteExistente.setCliente(clienteEncontrado);
         clienteEncontrado.getPedidosClientes().add(pedidoClienteExistente);
+
+        int id_tipo_estado = cambiosPedidoCliente.getTipo_estado().getId_tipo_estado();
+
+        TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
+                .orElseThrow(() -> new RuntimeException("Tipo estado con id " + id_tipo_estado + " no encontrado"));
+
+        pedidoClienteExistente.getTipo_estado().getPedidosClientes().remove(pedidoClienteExistente);
+        pedidoClienteExistente.setTipo_estado(tipoEstadoEncontrado);
+        tipoEstadoEncontrado.getPedidosClientes().add(pedidoClienteExistente);
 
         PedidoClienteModel pedidoClienteActualizado = pedidoClienteRepository.save(pedidoClienteExistente);
 

@@ -61,6 +61,56 @@ export default function FormPersonas({
     return fechaFormateada;
   }
 
+  const validateRequiredFields = () => {
+    const requiredFields = [
+      "numero_empleado",
+      "nombre",
+      "apellidos",
+      "genero",
+      "fecha_nacimiento",
+      "dni",
+      "direccion",
+      "numero_telefono",
+      "correo_electronico",
+      "id_tipo_persona",
+    ];
+
+    const formDataHasUndefinedOrEmptyString = requiredFields.some((field) => {
+      console.log("field: ", field)
+      return formData[field] === "" || formData[field] === undefined;
+    });
+
+    if (formDataHasUndefinedOrEmptyString) {
+      console.log("Al menos un campo requerido es undefined o ''.");
+    } else {
+      console.log(
+        "Todos los campos requeridos tienen valores distintos de undefined y ''."
+      );
+    }
+
+    return formDataHasUndefinedOrEmptyString;
+  };
+
+  const validateFormData = () => {
+    const errorForm = {};
+
+    if (!formData.fecha_nacimiento) {
+      errorForm.fecha_nacimiento = "Por favor, selecciona una fecha de inicio";
+    }
+
+    if (!formData.dni) {
+      errorForm.dni = "Por favor, ingresa un DNI";
+    }
+
+    // Actualiza el estado de errores
+    // setErroresDelFormulario(nuevosErrores);
+
+    console.log("errorForm", errorForm);
+
+    // Devuelve verdadero si hay errores, falso si no hay errores
+    return Object.keys(errorForm).length !== 0;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -117,6 +167,21 @@ export default function FormPersonas({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const requiredFieldsError = validateRequiredFields();
+    if (requiredFieldsError) {
+      console.log("Error en campos obligatorios: ", requiredFieldsError);
+      setErrorMessage(requiredFieldsError);
+      return;
+    }
+
+    const formDataError = validateFormData();
+    if (formDataError) {
+      console.log("Error en datos correctos: ", formDataError);
+      setErrorMessage(formDataError);
+      return;
+    }
+
     let errorDevueltoBack = false;
     try {
       if (operationType === "create") {
@@ -175,6 +240,7 @@ export default function FormPersonas({
 
   return (
     <>
+      <button onClick={() => console.log(formData)}>WWWWWWWW</button>
       <label>
         Numero empleado:
         <input

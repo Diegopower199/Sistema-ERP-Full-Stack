@@ -69,11 +69,11 @@ export default function NominasEmpleados() {
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
   const [rows, setRows] = useState([]);
   const columns = [
-    { 
-      field: "id", 
-      headerName: "ID", 
-      width: 85, 
-      editable: false 
+    {
+      field: "id",
+      headerName: "ID",
+      width: 85,
+      editable: false,
     },
     {
       field: "year",

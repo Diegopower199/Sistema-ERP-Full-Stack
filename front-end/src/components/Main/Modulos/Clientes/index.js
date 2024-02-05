@@ -14,6 +14,17 @@ export default function Clientes() {
       <p>
         <Link href={"/menu-principal"}>Menu Principal</Link>
       </p>
+      <br />
+      <p>
+        <Link href={"clientes/clientes"}>Clientes</Link>
+      </p>
+      <br />
+      <p>
+        <Link href={"clientes/pedidos-clientes"}>
+        Pedidos clientes
+        </Link>
+      </p>
+      <br />
     </>
   );
 }

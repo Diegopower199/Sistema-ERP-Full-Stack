@@ -85,6 +85,7 @@ Bibliotecas instaladas:
     - npm install @mui/x-data-grid
     - npm install moment --save
     - npm install antd --save
+    - npm install resend (no esta puesto)
 
 
 

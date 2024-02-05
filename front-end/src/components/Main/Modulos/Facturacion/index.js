@@ -14,6 +14,21 @@ export default function Facturacion() {
       <p>
         <Link href={"/menu-principal"}>Menu Principal</Link>
       </p>
+      <br />
+      <p>
+        <Link href={"facturacion/detalles-facturas-clientes"}>Detalles facturas clientes</Link>
+      </p>
+      <br />
+      <p>
+        <Link href={"facturacion/facturas-clientes"}>
+        Facturas clientes
+        </Link>
+      </p>
+      <br />
+      <p>
+        <Link href={"facturacion/pagos-facturas-clientes"}>Pagos facturas clientes</Link>
+      </p>
+      <br />
     </>
   );
 }

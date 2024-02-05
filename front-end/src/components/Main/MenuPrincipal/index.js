@@ -36,22 +36,22 @@ export default function MenuPrincipal() {
       <br />
       <br />
       <p>
-        <Link href={`/recursos-humanos`} as={`/recursos-humanos`}>
-          Recursos Humanos
+        <Link href={`/menu-recursos-humanos`} as={`/menu-recursos-humanos`}>
+          Menu Recursos Humanos
         </Link>
       </p>
       <br />
       <br />
       <p>
-        <Link href={`/clientes`} as={`/clientes`}>
-          Clientes
+        <Link href={`/menu-clientes`} as={`/menu-clientes`}>
+          Menu Clientes
         </Link>
       </p>
       <br />
       <br />
       <p>
-        <Link href={`/facturacion`} as={`/facturacion`}>
-          Facturacion
+        <Link href={`/menu-facturacion`} as={`/menu-facturacion`}>
+          Menu Facturacion
         </Link>
       </p>
     </>

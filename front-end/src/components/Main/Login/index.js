@@ -111,7 +111,7 @@ export default function Login() {
             privacidad.
           </p>
           <p className={styles.parrafo}>
-            <Link href={"./registrarUser"}>¿Has olvidado tu contraseña?</Link>
+            <Link href={"/update-password"}>¿Has olvidado tu contraseña?</Link>
           </p>
         </div>
       </div>

@@ -79,15 +79,25 @@ Para ejecutar solo archivos .js debo poner "node script.js" y tener node instala
 Descargarme esto para ver fallos de javascript: ESLint en extensiones
 
 Bibliotecas instaladas: 
+    - npm install dotenv
+    - npm install axios
     - npm install @mui/material @emotion/react @emotion/styled
     - npm install @mui/icons-material
     - npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
     - npm install @mui/x-data-grid
-    - npm install moment --save
-    - npm install antd --save
-    - npm install resend (no esta puesto)
+    - npm install moment
+    - npm install antd
+    - npm install resend
 
 
 
 
 Componentes: https://mui.com/components/
+
+
+
+me puedes decir como crear una tabla de permisos para un sistema erp, donde hay tres modulos, recursos huamnos donde hay asistencia empleado, solicitudes empleados, bajas laborales, etc y puedes crear actualizar ver y borrar una tupla, otro de clientes y pedidos de clientes y por ultimo facturacon, que campos pongo en la tabla, ya que depende del usaurio tiene unos permisos u otros
+
+
+Permisos, muy importante de ver esto: https://chat.openai.com/share/4a7cd15e-d632-4f68-97ea-1b1b7ee55df2
+https://chat.openai.com/share/a3be0acd-921c-4e1b-9854-678a48643f0b

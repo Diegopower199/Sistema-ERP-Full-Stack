@@ -1,8 +1,8 @@
 import axios from "axios";
-import { API_URL } from "@/utils/constants";
+import { API_URL_BACK_END } from "@/utils/constants";
 
 export const getAllAyudasEmpleados = async () => {
-  const url = API_URL.replace("#", "ayudasEmpleados");
+  const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
 
   try {
     const response = await axios.get(url + "getAll");
@@ -17,7 +17,7 @@ export const getAllAyudasEmpleados = async () => {
 };
 
 export const saveAyudaEmpleado = async (data) => {
-  const url = API_URL.replace("#", "ayudasEmpleados");
+  const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
   console.log("FORM PERSONA: ", data);
   try {
     let formData = {};
@@ -48,7 +48,7 @@ export const saveAyudaEmpleado = async (data) => {
 };
 
 export const getAyudaEmpleadoById = async (id) => {
-  const url = API_URL.replace("#", "ayudasEmpleados");
+  const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
   try {
     const response = await axios.get(url + "getById/" + id);
     return {
@@ -64,7 +64,7 @@ export const getAyudaEmpleadoById = async (id) => {
 };
 
 export const updateAyudaEmpleado = async (id, data) => {
-  const url = API_URL.replace("#", "ayudasEmpleados");
+  const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
   console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
     let formData = {};
@@ -96,7 +96,7 @@ export const updateAyudaEmpleado = async (id, data) => {
 };
 
 export const deleteAyudaEmpleado = async (id) => {
-  const url = API_URL.replace("#", "ayudasEmpleados");
+  const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
   try {
     const response = await axios.delete(url + "delete/" + id);
     return {

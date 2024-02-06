@@ -203,36 +203,36 @@ public class UsuarioService {
 
             throw new RuntimeException("Falta completar el campo nombre usuario");
         }
-        // COMPROBAR QUE EL USUARIO Y CONTRASEÑA SEAN CORRECTOS
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: "
-                + usuarioRepository.existsByNombre_usuarioAndPassword(credencialesUsuario.getNombre_usuario(),
-                        credencialesUsuario.getPassword()));
+
+        System.out.println(usuarioRepository.existsByNombre_usuarioAndPassword(credencialesUsuario.getNombre_usuario(),
+                credencialesUsuario.getPassword()));
 
         if (!usuarioRepository.existsByNombre_usuarioAndPassword(credencialesUsuario.getNombre_usuario(),
                 credencialesUsuario.getPassword())) {
             return false;
-            // throw new RuntimeException("El nombre usuario y contraseña no se encuentran
-            // en la base de datos");
         }
 
         return true;
     }
 
-    public Boolean changePassword(String nombreUsuario, String passwordNueva) {
-        System.out.println("nombreUsuario: " + nombreUsuario + "\npasswordNueva: " + passwordNueva);
+    public Boolean updatePassword(String correoElectronico, String newPassword) {
+        System.out.println("Correo electronico: " + correoElectronico + "\nnewPassword: " + newPassword);
 
-        if (nombreUsuario == null) {
-            throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
+        if (correoElectronico == null) {
+            throw new RuntimeException("El campo 'correo_electronico' no puede ser null");
         }
 
-        if (passwordNueva == null) {
-            throw new RuntimeException("El campo 'passwordNueva' no puede ser null");
+        if (newPassword == null) {
+            throw new RuntimeException("El campo 'new_password' no puede ser null");
         }
 
-        UsuarioModel usuarioEncontrado = usuarioRepository.findByNombre_usuario(nombreUsuario)
-                .orElseThrow(() -> new RuntimeException("El usuario no existe"));
+        PersonaModel personaEncontrada = personaRepository.findByCorreo_electronico(correoElectronico)
+                .orElseThrow(() -> new RuntimeException("El correo electronico no existe"));
 
-        usuarioEncontrado.setPassword(passwordNueva);
+        UsuarioModel usuarioEncontrado = usuarioRepository.findById_persona(personaEncontrada)
+                .orElseThrow(() -> new RuntimeException("La persona no existe"));
+
+        usuarioEncontrado.setPassword(newPassword);
 
         usuarioRepository.save(usuarioEncontrado);
 

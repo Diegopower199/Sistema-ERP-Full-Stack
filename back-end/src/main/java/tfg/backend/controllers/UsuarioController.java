@@ -118,10 +118,10 @@ public class UsuarioController {
     @PutMapping("/api/updatePassword")
     public ResponseEntity<Map<String, Object>> updatePassword(@RequestBody Map<String, String> passwordUpdateRequest) {
         try {
-            String nombreUsuario = passwordUpdateRequest.get("nombre_usuario");
-            String passwordNueva = passwordUpdateRequest.get("password_nueva");
+            String correoElectronico = passwordUpdateRequest.get("correo_electronico");
+            String newPassword = passwordUpdateRequest.get("new_password");
             // Lógica para cambiar la contraseña aquí utilizando los valores proporcionados
-            boolean changePasswordResponse = usuarioService.changePassword(nombreUsuario, passwordNueva);
+            boolean changePasswordResponse = usuarioService.updatePassword(correoElectronico, newPassword);
 
             if (changePasswordResponse) {
                 Map<String, Object> response = new HashMap<>();

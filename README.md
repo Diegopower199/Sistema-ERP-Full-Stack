@@ -115,10 +115,15 @@ https://medium.com/@thearaseng/building-a-full-stack-product-app-with-react-spri
 
 
 
-Datos ficticios creados (todos los tipos y el motivo de baja estan hechos)
 
-    - Personas
-    - Usuarios
-    - Asistencia Empleado
-    - Ayuda Empleado
-    - Baja Laboral Empleado
+Comandos a ejecutar:
+
+    - back-end: ./mvnw clean install spring-boot:run 
+
+    - blockchain-authorized-vacations: mvn clean install exec:java
+
+    - common-backend-and-blockchain-classes: mvn clean install exec:java
+
+    - front-end: npm run dev
+
+    - servidor-correo-node-mailer: npm run dev

@@ -20,6 +20,9 @@ public interface UsuarioRepository extends JpaRepository<UsuarioModel, Integer> 
     @Query("SELECT c FROM UsuarioModel c WHERE c.nombre_usuario = :nombre_usuario")
     Optional<UsuarioModel> findByNombre_usuario(@Param("nombre_usuario") String nombre_usuario);
 
+    @Query("SELECT c FROM UsuarioModel c WHERE c.persona = :id_persona")
+    Optional<UsuarioModel> findById_persona(@Param("id_persona") PersonaModel id_persona);
+
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM UsuarioModel c WHERE c.nombre_usuario = :nombre_usuario")
     boolean existsByNombre_usuario(@Param("nombre_usuario") String nombre_usuario);
 

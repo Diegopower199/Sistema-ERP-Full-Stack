@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { RESEND_API_KEY } from "@/utils/constants";
-import { Resend } from "resend";
+import { sendEmailNodeMailer } from "@/services/EmailService";
+import { updatePassword } from "@/services/UsuarioService";
 
 export default function UpdatePassword() {
   const router = useRouter();
@@ -15,8 +15,8 @@ export default function UpdatePassword() {
   const [formData, setFormData] = useState({
     correo_electronico: "",
     codigo_verificacion: "",
-    newPassword: "",
-    confirmNewPassword: "",
+    new_password: "",
+    confirm_new_password: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -33,46 +33,32 @@ export default function UpdatePassword() {
 
   const sendEmail = async () => {
     try {
-      // Siempre será correcto el email
       const codigoVerificacion = generateRandomNumber();
       console.log("codigoVerificacion: ", codigoVerificacion);
       setCodigoVerificacion(codigoVerificacion);
-      const resendInstance = new Resend(RESEND_API_KEY);
-      /*const response = await resendInstance.emails.send({
-        from: "TechSoluciones Informáticas S.L <soporte@techsoluciones.com>",
-        to: ["dgonzalezs2@alumnos.nebrija.es"],
-        subject: "Saludos, que tal te encuentras",
-        html: `
-          <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h2>Código de Verificación</h2>
-            <p>Estimado Usuario,</p>
-            <p>Aquí tienes tu código de verificación:</p>
-            <h1 style="font-size: 2em; background-color: #f0f0f0; padding: 10px; border-radius: 5px;">${codigoVerificacion}</h1>
-            <p>Por favor, utiliza este código para completar tu proceso de verificación.</p>
-            <p>Gracias,<br>Equipo de Soporte</p>
-          </div>
-        `,
-      });
-      console.log("Response: ", response);*/
-      setCorrectEmail(true);
+      const data = {
+        correo_electronico: formData.correo_electronico,
+        codigo_verificacion: codigoVerificacion,
+      };
+
+      const responseSendEmail = await sendEmailNodeMailer(data);
+
+      console.log("responseSendEmail: ", responseSendEmail);
+      if (responseSendEmail.status === 200) {
+        setCorrectEmail(true);
+      }
     } catch (error) {
-      console.error("Error: ", error.message);
+      console.error("El Error es: ", error.message);
     }
   };
 
   const verifyCode = () => {
-    console.log(codigoVerificacion);
-
-    console.log(
-      "formData.codigo_verificacion: ",
-      formData.codigo_verificacion,
-      "\ncodigoVerificacion: ",
-      codigoVerificacion
-    );
+    console.log("formData.codigo_verificacion: ", formData.codigo_verificacion);
+    console.log("codigoVerificacion: ", codigoVerificacion);
     if (
       parseInt(formData.codigo_verificacion) !== parseInt(codigoVerificacion)
     ) {
-      console.log("ESTA MAL");
+      console.log("No coincide");
       setUserAttempts(userAttempts + 1);
       return false;
     } else {
@@ -81,7 +67,34 @@ export default function UpdatePassword() {
     }
   };
 
-  const changePassword = async () => {};
+  const changePassword = async () => {
+    try {
+      console.log("change password");
+
+      if (formData.new_password === formData.confirm_new_password) {
+        const responseUpdatePassword = await updatePassword(formData);
+
+        console.log("responseUpdatePassword: ", responseUpdatePassword);
+        router.push("/login");
+      } else {
+        console.log("La contraseñas no coinciden");
+      }
+    } catch (error) {
+      console.error("El Error es: ", error.message);
+    }
+  };
+
+  function redirectToLogin() {
+    router.push("/login");
+  }
+
+  function resetStates() {
+    setCorrectEmail(false);
+    setCorrectVerificationCode(false);
+    setUserAttempts(0);
+    setCodigoVerificacion("");
+    setFormData({});
+  }
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -92,23 +105,6 @@ export default function UpdatePassword() {
         [name]: value,
       };
     });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    console.log("FORM DATA: ", formData);
-
-    // Se envia aqui el correo: sendEmail
-    sendEmail();
-
-    console.log("email exists: ", correctEmail);
-
-    let errorDevueltoBack = false;
-    try {
-    } catch (error) {
-      console.log("Error al agregar registro: ", error);
-    }
   };
 
   return (
@@ -160,8 +156,8 @@ export default function UpdatePassword() {
             Nueva contraseña:
             <input
               type="text"
-              name="newPassword"
-              value={formData.newPassword}
+              name="new_password"
+              value={formData.new_password}
               onChange={handleChange}
             />
           </label>
@@ -171,8 +167,8 @@ export default function UpdatePassword() {
             Confirmar nueva contraseña:
             <input
               type="text"
-              name="confirmNewPassword"
-              value={formData.confirmNewPassword}
+              name="confirm_new_password"
+              value={formData.confirm_new_password}
               onChange={handleChange}
             />
           </label>
@@ -183,35 +179,19 @@ export default function UpdatePassword() {
 
       {correctEmail === false && correctVerificationCode === false && (
         <>
-          <button onClick={() => router.push("/login")}>Cancelar</button>{" "}
-          <button onClick={handleSubmit}>Continuar</button>
+          <button onClick={redirectToLogin}>Cancelar</button>{" "}
+          <button onClick={sendEmail}>Continuar</button>
         </>
       )}
       {correctEmail === true && correctVerificationCode === false && (
         <>
-          <button
-            onClick={() => {
-              setUserAttempts(0);
-              setCorrectEmail(false);
-            }}
-          >
-            Anterior
-          </button>{" "}
+          <button onClick={resetStates}>Anterior</button>{" "}
           <button onClick={verifyCode}>Verificar</button>
         </>
       )}
       {correctEmail === true && correctVerificationCode === true && (
         <>
-          <button
-            onClick={() => {
-              setCorrectEmail(false);
-              setCorrectVerificationCode(false);
-              setUserAttempts(0);
-              setCodigoVerificacion("");
-            }}
-          >
-            Anterior
-          </button>{" "}
+          <button onClick={resetStates}>Anterior</button>{" "}
           <button onClick={changePassword}>Cambiar la contraseña</button>
         </>
       )}

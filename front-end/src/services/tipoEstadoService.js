@@ -1,9 +1,9 @@
 import axios from "axios";
-import { API_URL } from "@/utils/constants";
+import { API_URL_BACK_END } from "@/utils/constants";
 
 export async function getAllTiposEstados() {
   try {
-    const url = API_URL.replace("#", "tiposEstados");
+    const url = API_URL_BACK_END.replace("#", "tiposEstados");
 
     const response = await axios.get(url + "getAll");
     console.log("Response de getAllTiposEstados es: ", response);

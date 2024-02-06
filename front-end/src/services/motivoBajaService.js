@@ -1,9 +1,9 @@
 import axios from "axios";
-import { API_URL } from "@/utils/constants";
+import { API_URL_BACK_END } from "@/utils/constants";
 
 export async function getAllMotivosBajas() {
   try {
-    const url = API_URL.replace("#", "motivosBajas");
+    const url = API_URL_BACK_END.replace("#", "motivosBajas");
 
     const response = await axios.get(url + "getAll");
     console.log("Response de getAllMotivosBajas es: ", response);

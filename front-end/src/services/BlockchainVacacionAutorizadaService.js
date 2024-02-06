@@ -1,8 +1,8 @@
 import axios from "axios";
-import { API_URL } from "@/utils/constants";
+import { API_URL_BACK_END } from "@/utils/constants";
 
 export const getAllTransaccionesVacacionesAutorizadas = async () => {
-  const url = API_URL.replace("#", "blockchainVacacionesAutorizadas");
+  const url = API_URL_BACK_END.replace("#", "blockchainVacacionesAutorizadas");
 
   try {
     const response = await axios.get(url + "getAll");
@@ -17,7 +17,7 @@ export const getAllTransaccionesVacacionesAutorizadas = async () => {
 };
 
 export const saveTransaccionVacacionAutorizada = async (data) => {
-  const url = API_URL.replace("#", "blockchainVacacionesAutorizadas");
+  const url = API_URL_BACK_END.replace("#", "blockchainVacacionesAutorizadas");
   console.log("FORM blockchain Vacaciones Autorizadas: ", data);
   try {
     let formData = {};

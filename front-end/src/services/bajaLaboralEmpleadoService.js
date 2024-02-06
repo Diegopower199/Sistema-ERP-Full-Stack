@@ -1,8 +1,8 @@
 import axios from "axios";
-import { API_URL } from "@/utils/constants";
+import { API_URL_BACK_END } from "@/utils/constants";
 
 export const getAllBajasLaboralesEmpleados = async () => {
-  const url = API_URL.replace("#", "bajasLaboralesEmpleados");
+  const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
 
   try {
     const response = await axios.get(url + "getAll");
@@ -17,7 +17,7 @@ export const getAllBajasLaboralesEmpleados = async () => {
 };
 
 export const saveBajaLaboralEmpleado = async (data) => {
-  const url = API_URL.replace("#", "bajasLaboralesEmpleados");
+  const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
   console.log("FORM PERSONA: ", data);
   try {
     let formData = {};
@@ -48,7 +48,7 @@ export const saveBajaLaboralEmpleado = async (data) => {
 };
 
 export const getBajaLaboralEmpleadoById = async (id) => {
-  const url = API_URL.replace("#", "bajasLaboralesEmpleados");
+  const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
   try {
     const response = await axios.get(url + "getById/" + id);
     return {
@@ -64,7 +64,7 @@ export const getBajaLaboralEmpleadoById = async (id) => {
 };
 
 export const updateBajaLaboralEmpleado = async (id, data) => {
-  const url = API_URL.replace("#", "bajasLaboralesEmpleados");
+  const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
   console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
     let formData = {};
@@ -96,7 +96,7 @@ export const updateBajaLaboralEmpleado = async (id, data) => {
 };
 
 export const deleteBajaLaboralEmpleado = async (id) => {
-  const url = API_URL.replace("#", "bajasLaboralesEmpleados");
+  const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
   try {
     const response = await axios.delete(url + "delete/" + id);
     return {

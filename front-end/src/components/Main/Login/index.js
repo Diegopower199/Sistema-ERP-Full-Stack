@@ -47,28 +47,28 @@ export default function Login() {
     event.preventDefault();
     try {
       console.log(formulario);
-      const resultado = await authenticateUser(
+      const responseAuthenticateUser = await authenticateUser(
         formulario.nombre_usuario,
         formulario.password
       );
-      console.log("Respuesta de back-end: ", resultado);
+      console.log("Respuesta de back-end: ", responseAuthenticateUser);
 
-      if (resultado.data === true) {
-        const infoUsuario = await getUsuarioByNombreUsuario(
+      if (responseAuthenticateUser.data.resultado === true) {
+        const responseNombreUsuario = await getUsuarioByNombreUsuario(
           formulario.nombre_usuario
         );
-        console.log("Respuesta de este usuario: ", infoUsuario.data);
+        console.log("Respuesta de este usuario: ", responseNombreUsuario.data);
 
         setIsLoggedIn(true);
         setAuthUser({
           nombre_usuario: formulario.nombre_usuario,
           password: formulario.password,
           persona: {
-            id_persona: parseInt(infoUsuario.data.persona.id_persona),
+            id_persona: parseInt(responseNombreUsuario.data.persona.id_persona),
           },
           tipo_usuario: {
             id_tipo_usuario: parseInt(
-              infoUsuario.data.tipo_usuario.id_tipo_usuario
+              responseNombreUsuario.data.tipo_usuario.id_tipo_usuario
             ),
           },
         });

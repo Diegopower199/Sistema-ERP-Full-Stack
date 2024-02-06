@@ -1,8 +1,8 @@
 import axios from "axios";
-import { API_URL } from "@/utils/constants";
+import { API_URL_BACK_END } from "@/utils/constants";
 
 export const getAllAsistenciaEmpleados = async () => {
-  const url = API_URL.replace("#", "asistenciasEmpleados");
+  const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
 
   try {
     const response = await axios.get(url + "getAll");
@@ -17,7 +17,7 @@ export const getAllAsistenciaEmpleados = async () => {
 };
 
 export const startOfWorkdayAsistenciaEmpleado = async (data) => { // Inicio de la jornada laboral
-  const url = API_URL.replace("#", "asistenciasEmpleados");
+  const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
   console.log("FORM PERSONA: ", data);
   try {
     let formData = {};
@@ -48,7 +48,7 @@ export const startOfWorkdayAsistenciaEmpleado = async (data) => { // Inicio de l
 };
 
 export const endOfWorkdayAsistenciaEmpleado = async (data) => { // Fin de la jornada laboral (NO ESTE BIEN, NO SÉ IDENTIFICARLO)
-  const url = API_URL.replace("#", "asistenciasEmpleados");
+  const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
   console.log("FORM ASISTENCIA EMPLEADO: ", data);
   try {
     let formData = {};
@@ -79,7 +79,7 @@ export const endOfWorkdayAsistenciaEmpleado = async (data) => { // Fin de la jor
 };
 
 export const getAsistenciaEmpleadoById = async (id) => {
-  const url = API_URL.replace("#", "asistenciasEmpleados");
+  const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
   try {
     const response = await axios.get(url + "getById/" + id);
     return {
@@ -95,7 +95,7 @@ export const getAsistenciaEmpleadoById = async (id) => {
 };
 
 export const updateAsistenciaEmpleado = async (id, data) => {
-  const url = API_URL.replace("#", "asistenciasEmpleados");
+  const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
   console.log(`FORM ASISTENCIA EMPLEADO CON id ${id}: `, data);
   try {
     let formData = {};
@@ -127,7 +127,7 @@ export const updateAsistenciaEmpleado = async (id, data) => {
 };
 
 export const deleteAsistenciaEmpleado = async (id) => {
-  const url = API_URL.replace("#", "asistenciasEmpleados");
+  const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
   try {
     const response = await axios.delete(url + "delete/" + id);
     return {

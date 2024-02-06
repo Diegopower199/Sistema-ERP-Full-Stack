@@ -1,82 +1,82 @@
 div.contenedor {
-    width: 100%;
-    padding: 15px;
-    box-sizing: border-box;
-  }
-  
-  div.formulario {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    background: #fff;
-    margin-top: 150px;
-    margin-left: 200px;
-    margin-right: 200px;
-    padding: 3px;
-    box-sizing: border-box;
-  }
-  
-  h1.tituloH1 {
-    text-align: center;
-    color: #1a2537;
-    font-size: 40px;
-    box-sizing: border-box;
-  }
-  
-  input.inputEmailUsuarioPassword {
-    font-size: 20px;
-    width: 800px;
-    padding: 10px;
-    border: none;
-    box-sizing: border-box;
-  }
-  
-  div.contenedorInput {
-    margin-bottom: 15px;
-    border: 1px solid #aaa;
-    box-sizing: border-box;
-  }
-  
-  img.imagenesIconos {
-    margin: 3px;
-    width: 40px;
-    height: 60px;
-    text-align: center;
-    color: #999;
-    box-sizing: border-box;
-  }
-  
-  input.inputLogin {
-    border: none;
-    width: 100%;
-    color: white;
-    font-size: 20px;
-    background: #1a2537;
-    padding: 15px 20px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    cursor: pointer;
-    /*:hover {
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+div.formulario {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: #fff;
+  margin-top: 150px;
+  margin-left: 200px;
+  margin-right: 200px;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+h1.tituloH1 {
+  text-align: center;
+  color: #1a2537;
+  font-size: 40px;
+  box-sizing: border-box;
+}
+
+input.inputEmailUsuarioPassword {
+  font-size: 20px;
+  width: 800px;
+  padding: 10px;
+  border: none;
+  box-sizing: border-box;
+}
+
+div.contenedorInput {
+  margin-bottom: 15px;
+  border: 1px solid #aaa;
+  box-sizing: border-box;
+}
+
+img.imagenesIconos {
+  margin: 3px;
+  width: 40px;
+  height: 60px;
+  text-align: center;
+  color: #999;
+  box-sizing: border-box;
+}
+
+input.inputLogin {
+  border: none;
+  width: 100%;
+  color: white;
+  font-size: 20px;
+  background: #1a2537;
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  /*:hover {
       background: cadetblue;
     }*/
-  }
-  
-  p.parrafo {
-    text-align: center;
-    box-sizing: border-box;
-  }
-  
-  link.linkPaginaLogin {
-    text-decoration: none;
-    color: #1a2537;
-    font-weight: 600;
-    box-sizing: border-box;
-    /*:hover {
+}
+
+p.parrafo {
+  text-align: center;
+  box-sizing: border-box;
+}
+
+link.linkPaginaLogin {
+  text-decoration: none;
+  color: #1a2537;
+  font-weight: 600;
+  box-sizing: border-box;
+  /*:hover {
       color: cadetblue;
     }*/
-  }
-  
-  p.errorMessage {
-    color: red;
-    font-weight: 600;
-  }
+}
+
+p.errorMessage {
+  color: red;
+  font-weight: 600;
+}

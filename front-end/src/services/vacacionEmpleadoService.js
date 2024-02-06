@@ -1,8 +1,8 @@
 import axios from "axios";
-import { API_URL } from "@/utils/constants";
+import { API_URL_BACK_END } from "@/utils/constants";
 
 export const getAllVacacionesEmpleados = async () => {
-  const url = API_URL.replace("#", "vacacionesEmpleados");
+  const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
 
   try {
     const response = await axios.get(url + "getAll");
@@ -18,7 +18,7 @@ export const getAllVacacionesEmpleados = async () => {
 
 export const saveVacacionEmpleado = async (data) => {
   // Los dias los calculo en el back
-  const url = API_URL.replace("#", "vacacionesEmpleados");
+  const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
   console.log("FORM VACACIONES EMPLEADOS: ", data);
   try {
     let formData = {};
@@ -47,7 +47,7 @@ export const saveVacacionEmpleado = async (data) => {
 };
 
 export const getVacacionEmpleadoById = async (id) => {
-  const url = API_URL.replace("#", "vacacionesEmpleados");
+  const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
   try {
     const response = await axios.get(url + "getById/" + id);
     return {
@@ -64,7 +64,7 @@ export const getVacacionEmpleadoById = async (id) => {
 
 export const updateVacacionEmpleado = async (id, data) => {
   // Los dias los calculo en el back, si los rechazo se devuelven los datos anteriores
-  const url = API_URL.replace("#", "vacacionesEmpleados");
+  const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
   console.log(`FORM VACACIONES EMPLEADOS CON id ${id}: `, data);
   try {
     let formData = {};
@@ -93,7 +93,7 @@ export const updateVacacionEmpleado = async (id, data) => {
 };
 
 export const deleteVacacionEmpleado = async (id) => {
-  const url = API_URL.replace("#", "vacacionesEmpleados");
+  const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
   try {
     const response = await axios.delete(url + "delete/" + id);
     return {

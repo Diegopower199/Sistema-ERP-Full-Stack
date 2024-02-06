@@ -1,6 +1,6 @@
-export const API_URL = `http://${process.env.NEXT_PUBLIC_WEB_SERVER}:${process.env.NEXT_PUBLIC_WEB_PORT}/#/api/`;
+export const API_URL_BACK_END = `http://${process.env.NEXT_PUBLIC_WEB_SERVER}:${process.env.NEXT_PUBLIC_WEB_PORT_BACK_END}/#/api/`;
 
-export const RESEND_API_KEY = `${process.env.NEXT_PUBLIC_RESEND_API_KEY}`;
+export const API_URL_EMAIL = `http://${process.env.NEXT_PUBLIC_WEB_SERVER}:${process.env.NEXT_PUBLIC_WEB_PORT_EMAIL}/`
 
 export const PAGE_SIZE_OPTIONS = [5, 10, 25, 50, 100];
 

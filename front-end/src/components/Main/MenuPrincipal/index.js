@@ -4,13 +4,13 @@ import Link from "next/link";
 import { useAuth } from "@/context/UserContext";
 
 export default function MenuPrincipal() {
-  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
+  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn, permisosUser, setPermisosUser } = useAuth();
 
   const router = useRouter();
 
   useEffect(() => {
     console.log("Pagina de menu principal: ");
-    console.log("authUser: ", authUser);
+    console.log("authUser: ", authUser, "permisosUser: ", permisosUser);
     if (!authUser) {
       router.push("/login");
     }
@@ -23,6 +23,7 @@ export default function MenuPrincipal() {
   function cerrarSesion() {
     setIsLoggedIn(false);
     setAuthUser(null);
+    setPermisosUser(null)
     console.log("Cerramos sesion: ", isLoggedIn);
   }
 

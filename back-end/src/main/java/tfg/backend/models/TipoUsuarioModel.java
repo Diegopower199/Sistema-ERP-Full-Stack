@@ -30,6 +30,10 @@ public class TipoUsuarioModel implements Serializable {
     @Column(name = "tipo_usuario", unique = true, nullable = false)
     private String tipo_usuario;
 
+    @ManyToOne
+    @JoinColumn(name = "id_permiso_usuario", unique = true, nullable = false, foreignKey = @ForeignKey(name = "FK_tipos_usuarios_permisos_usuarios"))
+    private PermisoUsuarioModel permiso_usuario;
+
     @JsonIgnore
     @OneToMany(mappedBy = "tipo_usuario", cascade = CascadeType.REMOVE)
     private List<UsuarioModel> usuarios;

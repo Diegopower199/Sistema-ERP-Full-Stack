@@ -19,3 +19,20 @@ export async function getAllTiposUsuarios() {
     return "Error";
   }
 }
+
+export const getTipoUsuarioById = async (id) => {
+  const url = API_URL_BACK_END.replace("#", "tiposUsuarios");
+  try {
+    const response = await axios.get(url + "getById/" + id);
+
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    return {
+      errorMessage: error.response.data.message,
+      status: error.response.status,
+    };
+  }
+};

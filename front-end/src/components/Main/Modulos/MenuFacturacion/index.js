@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useAuth } from "@/context/UserContext";
 
 export default function MenuFacturacion() {
-  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
+  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn, permisosUser, setPermisosUser } = useAuth();
 
   const router = useRouter();
 

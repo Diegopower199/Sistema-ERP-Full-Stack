@@ -1,6 +1,3 @@
-/*INSERT INTO `trabajotfgerp`.`solicitudes` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('a', '2023-01-01', '2', '1', '1');*/
--- SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM solicitudes c WHERE c.id_persona = 1 AND c.fecha_solicitud = "2023-12-1";
--- SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM VacacionEmpleadoModel c WHERE c.persona = :id_persona AND c.fecha_inicio <= :fecha_finalizacion AND c.fecha_finalizacion >= :fecha_inicio")
 -- Configuración de Usuario y Esquema en MySQL
 /*DROP USER IF EXISTS 'diegogonzalez'@'localhost';
 
@@ -222,40 +219,236 @@ CONSTRAINT `FK_vacaciones_empleados_tipos_estados` FOREIGN KEY (`id_tipo_estado`
 );
  */
 -- ========================================
+-- Permisos Usuarios
+-- ========================================
+-- Permiso Administradores
+INSERT INTO
+    `trabajotfgerp`.`permisos_usuarios` (
+        `actualizar_asistencias`,
+        `actualizar_ayudas`,
+        `actualizar_bajas_laborales`,
+        `actualizar_clientes`,
+        `actualizar_detalles_facturas`,
+        `actualizar_facturas`,
+        `actualizar_nominas`,
+        `actualizar_pagos_facturas_clientes`,
+        `actualizar_pedidos_clientes`,
+        `actualizar_personas`,
+        `actualizar_solicitudes`,
+        `actualizar_usuarios`,
+        `actualizar_vacaciones`,
+        `borrar_asistencias`,
+        `borrar_ayudas`,
+        `borrar_bajas_laborales`,
+        `borrar_clientes`,
+        `borrar_detalles_facturas`,
+        `borrar_facturas`,
+        `borrar_nominas`,
+        `borrar_pagos_facturas_clientes`,
+        `borrar_pedidos_clientes`,
+        `borrar_personas`,
+        `borrar_solicitudes`,
+        `borrar_usuarios`,
+        `borrar_vacaciones`,
+        `crear_asistencias`,
+        `crear_ayudas`,
+        `crear_bajas_laborales`,
+        `crear_clientes`,
+        `crear_detalles_facturas`,
+        `crear_facturas`,
+        `crear_nominas`,
+        `crear_pagos_facturas_clientes`,
+        `crear_pedidos_clientes`,
+        `crear_personas`,
+        `crear_solicitudes`,
+        `crear_usuarios`,
+        `crear_vacaciones`,
+        `ver_asistencias`,
+        `ver_ayudas`,
+        `ver_bajas_laborales`,
+        `ver_clientes`,
+        `ver_detalles_facturas`,
+        `ver_facturas`,
+        `ver_nominas`,
+        `ver_pagos_facturas_clientes`,
+        `ver_pedidos_clientes`,
+        `ver_personas`,
+        `ver_solicitudes`,
+        `ver_usuarios`,
+        `ver_vacaciones`
+    )
+VALUES
+    (
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+    );
+
+-- Permiso Usuarios Normales
+INSERT INTO
+    `trabajotfgerp`.`permisos_usuarios` (`ver_asistencias`, `ver_ayudas`, `ver_bajas_laborales`, `ver_personas`, `ver_solicitudes`, `ver_vacaciones`, `ver_clientes`, `ver_pedidos_clientes`, `ver_facturas`, `ver_detalles_facturas`, `ver_pagos_facturas_clientes`)
+VALUES
+    (true, true, true, true, true, true, true, true, true, true, true);
+
+-- Permiso Recursos Humanos
+INSERT INTO
+    `trabajotfgerp`.`permisos_usuarios` (
+        `actualizar_asistencias`,
+        `actualizar_ayudas`,
+        `actualizar_bajas_laborales`,
+        `actualizar_facturas`,
+        `actualizar_personas`,
+        `actualizar_solicitudes`,
+        `actualizar_vacaciones`,
+        `crear_asistencias`,
+        `crear_ayudas`,
+        `crear_bajas_laborales`,
+        `crear_nominas`,
+        `crear_personas`,
+        `crear_solicitudes`,
+        `crear_vacaciones`,
+        `ver_asistencias`,
+        `ver_ayudas`,
+        `ver_bajas_laborales`,
+        `ver_nominas`,
+        `ver_personas`,
+        `ver_solicitudes`,
+        `ver_vacaciones`
+    )
+VALUES
+    ('1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
+
+-- Permiso Facturación
+INSERT INTO
+    `trabajotfgerp`.`permisos_usuarios` (`crear_facturas`, `crear_detalles_facturas`, `crear_pagos_facturas_clientes`, `actualizar_facturas`, `actualizar_detalles_facturas`, `actualizar_pagos_facturas_clientes`, `ver_facturas`, `ver_detalles_facturas`, `ver_pagos_facturas_clientes`)
+VALUES
+    (true, true, true, true, true, true, true, true, true);
+
+-- Permiso Clientes
+INSERT INTO
+    `trabajotfgerp`.`permisos_usuarios` (`crear_clientes`, `actualizar_clientes`, `ver_clientes`, `crear_pedidos_clientes`, `actualizar_pedidos_clientes`, `ver_pedidos_clientes`)
+VALUES
+    (true, true, true, true, true, true);
+
+-- ========================================
 -- Tipos estados
 -- ========================================
 INSERT INTO
     `trabajotfgerp`.`tipos_estados` (`tipo_estado`)
 VALUES
-    ('Pendiente');
+    ('Pendiente de revisión');
 
 INSERT INTO
     `trabajotfgerp`.`tipos_estados` (`tipo_estado`)
 VALUES
-    ('Aprobada');
+    ('Aprobado');
 
 INSERT INTO
     `trabajotfgerp`.`tipos_estados` (`tipo_estado`)
 VALUES
-    ('Rechazada');
+    ('Rechazado');
+
+INSERT INTO
+    `trabajotfgerp`.`tipos_estados` (`tipo_estado`)
+VALUES
+    ('Pendiente de pago');
+
+INSERT INTO
+    `trabajotfgerp`.`tipos_estados` (`tipo_estado`)
+VALUES
+    ('Pago realizado');
+
+INSERT INTO
+    `trabajotfgerp`.`tipos_estados` (`tipo_estado`)
+VALUES
+    ('Cancelado');
+
+INSERT INTO
+    `trabajotfgerp`.`tipos_estados` (`tipo_estado`)
+VALUES
+    ('Generada');
+
+INSERT INTO
+    `trabajotfgerp`.`tipos_estados` (`tipo_estado`)
+VALUES
+    ('Enviada');
 
 -- ========================================
 -- Tipos usuarios
 -- ========================================
 INSERT INTO
-    `trabajotfgerp`.`tipos_usuarios` (`tipo_usuario`)
+    `trabajotfgerp`.`tipos_usuarios` (`tipo_usuario`, `id_permiso_usuario`)
 VALUES
-    ('Administrador');
+    ('Administrador', '1');
 
 INSERT INTO
-    `trabajotfgerp`.`tipos_usuarios` (`tipo_usuario`)
+    `trabajotfgerp`.`tipos_usuarios` (`tipo_usuario`, `id_permiso_usuario`)
 VALUES
-    ('Normal');
+    ('Usuario Normal', '2');
 
 INSERT INTO
-    `trabajotfgerp`.`tipos_usuarios` (`tipo_usuario`)
+    `trabajotfgerp`.`tipos_usuarios` (`tipo_usuario`, `id_permiso_usuario`)
 VALUES
-    ('Recursos humanos');
+    ('Recursos humanos', '3');
+
+INSERT INTO
+    `trabajotfgerp`.`tipos_usuarios` (`tipo_usuario`, `id_permiso_usuario`)
+VALUES
+    ('Cliente', '4');
+
+INSERT INTO
+    `trabajotfgerp`.`tipos_usuarios` (`tipo_usuario`, `id_permiso_usuario`)
+VALUES
+    ('Facturación', '5');
 
 -- ========================================
 -- Tipos personas
@@ -351,7 +544,7 @@ VALUES
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
 VALUES
-    ('Master', 'admin@example.com', 'Calle Administrativa 1', '12345678A', '1986-01-01', 'Masculino', 'Admin', '1', '34678901234', '1');
+    ('Master', 'diegogs2323@gmail.com', 'Calle Administrativa 1', '12345678A', '1986-01-01', 'Masculino', 'Admin', '1', '34678901234', '1');
 
 INSERT INTO
     `trabajotfgerp`.`personas` (`apellidos`, `correo_electronico`, `direccion`, `dni`, `fecha_nacimiento`, `genero`, `nombre`, `numero_empleado`, `numero_telefono`, `id_tipo_persona`)
@@ -2393,205 +2586,205 @@ VALUES
 -- Persona 1
 -- Aceptadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para mayo.', '5', '25', '5', '2024-05-05', '2024-05-01', '1', '2');
+    ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-05', '2023-05-01', '1', '2');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para junio.', '5', '20', '5', '2024-06-05', '2024-06-01', '1', '2');
+    ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-05', '2023-06-01', '1', '2');
 
 -- Denegadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Solicitud de vacaciones denegada.', '0', '20', '5', '2024-07-05', '2024-07-01', '1', '3');
+    ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-05', '2023-07-01', '1', '3');
 
 -- Persona 2
 -- Aceptadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para mayo.', '5', '25', '5', '2024-05-15', '2024-05-10', '2', '2');
+    ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '2', '2');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para junio.', '5', '20', '5', '2024-06-15', '2024-06-10', '2', '2');
+    ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '2', '2');
 
 -- Denegadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Solicitud de vacaciones denegada.', '0', '20', '5', '2024-07-15', '2024-07-10', '2', '3');
+    ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '2', '3');
 
 -- Persona 3
 -- Aceptadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para mayo.', '5', '25', '5', '2024-05-15', '2024-05-10', '3', '2');
+    ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '3', '2');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para junio.', '5', '20', '5', '2024-06-15', '2024-06-10', '3', '2');
+    ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '3', '2');
 
 -- Denegadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Solicitud de vacaciones denegada.', '0', '20', '5', '2024-07-15', '2024-07-10', '3', '3');
+    ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '3', '3');
 
 -- Persona 4
 -- Aceptadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para mayo.', '5', '25', '5', '2024-05-15', '2024-05-10', '4', '2');
+    ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '4', '2');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para junio.', '5', '20', '5', '2024-06-15', '2024-06-10', '4', '2');
+    ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '4', '2');
 
 -- Denegadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Solicitud de vacaciones denegada.', '0', '20', '5', '2024-07-15', '2024-07-10', '4', '3');
+    ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '4', '3');
 
 -- Persona 5
 -- Aceptadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para mayo.', '5', '25', '5', '2024-05-15', '2024-05-10', '5', '2');
+    ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '5', '2');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para junio.', '5', '20', '5', '2024-06-15', '2024-06-10', '5', '2');
+    ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '5', '2');
 
 -- Denegadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Solicitud de vacaciones denegada.', '0', '20', '5', '2024-07-15', '2024-07-10', '5', '3');
+    ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '5', '3');
 
 -- Persona 6
 -- Aceptadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para mayo.', '5', '20', '5', '2024-05-20', '2024-05-15', '6', '2');
+    ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-20', '2023-05-15', '6', '2');
 
 -- Denegadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Solicitud de vacaciones denegada.', '0', '20', '5', '2024-06-20', '2024-06-15', '6', '3');
+    ('Solicitud de vacaciones denegada.', '5', '25', '0', '5', '2023-06-20', '2023-06-15', '6', '3');
 
 -- Persona 7
 -- Aceptadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para mayo.', '5', '20', '5', '2024-05-20', '2024-05-15', '7', '2');
+    ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-20', '2023-05-15', '7', '2');
 
 -- Denegadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Solicitud de vacaciones denegada.', '0', '20', '5', '2024-06-20', '2024-06-15', '7', '3');
+    ('Solicitud de vacaciones denegada.', '5', '25', '0', '5', '2023-06-20', '2023-06-15', '7', '3');
 
 -- Persona 8
 -- Aceptadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aprobadas.', '0', '25', '5', '2024-06-05', '2024-06-01', '8', '2');
+    ('Vacaciones aprobadas.', '5', '25', '0', '5', '2023-06-05', '2023-06-01', '8', '2');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aprobadas.', '0', '21', '4', '2024-06-18', '2024-06-15', '8', '2');
+    ('Vacaciones aprobadas.', '9', '21', '0', '4', '2023-06-18', '2023-06-15', '8', '2');
 
 -- Denegadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones denegadas.', '0', '21', '5', '2024-07-05', '2024-07-01', '8', '3');
+    ('Vacaciones denegadas.', '9', '21', '0', '5', '2023-07-05', '2023-07-01', '8', '3');
 
 -- Vacaciones Persona 9
 -- Aceptadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para julio.', '0', '16', '5', '2024-07-05', '2024-07-01', '9', '2');
+    ('Vacaciones aceptadas para julio.', '5', '25', '0', '5', '2023-07-05', '2023-07-01', '9', '2');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para agosto.', '0', '11', '5', '2024-08-14', '2024-08-10', '9', '2');
+    ('Vacaciones aceptadas para agosto.', '10', '20', '0', '5', '2023-08-14', '2023-08-10', '9', '2');
 
 -- Denegadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones denegadas para septiembre.', '0', '16', '5', '2024-09-05', '2024-09-01', '9', '3');
+    ('Vacaciones denegadas para septiembre.', '10', '20', '0', '5', '2023-09-05', '2023-09-01', '9', '3');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones denegadas para octubre.', '0', '11', '5', '2024-10-14', '2024-10-10', '9', '3');
+    ('Vacaciones denegadas para octubre.', '10', '20', '0', '5', '2023-10-14', '2023-10-10', '9', '3');
 
 -- Persona 10
 -- Aceptadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para mayo.', '0', '15', '5', '2024-05-05', '2024-05-01', '10', '2');
+    ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-05', '2023-05-01', '10', '2');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para junio.', '0', '10', '5', '2024-06-14', '2024-06-10', '10', '2');
+    ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-14', '2023-06-10', '10', '2');
 
 -- Denegadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones denegadas para julio.', '0', '15', '5', '2024-07-05', '2024-07-01', '10', '3');
+    ('Vacaciones denegadas para julio.', '10', '20', '0', '5', '2023-07-05', '2023-07-01', '10', '3');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones denegadas para agosto.', '0', '10', '5', '2024-08-14', '2024-08-10', '10', '3');
+    ('Vacaciones denegadas para agosto.', '10', '20', '0', '5', '2023-08-14', '2023-08-10', '10', '3');
 
 -- Vacaciones Persona 11
 -- Aceptadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para mayo.', '0', '15', '5', '2024-05-05', '2024-05-01', '11', '2');
+    ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-05', '2023-05-01', '11', '2');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones aceptadas para junio.', '0', '10', '5', '2024-06-19', '2024-06-15', '11', '2');
+    ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-19', '2023-06-15', '11', '2');
 
 -- Denegadas
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones denegadas para julio.', '0', '15', '5', '2024-07-05', '2024-07-01', '11', '3');
+    ('Vacaciones denegadas para julio.', '10', '20', '0', '5', '2023-07-05', '2023-07-01', '11', '3');
 
 INSERT INTO
-    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_restantes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
+    `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`)
 VALUES
-    ('Vacaciones denegadas para agosto.', '0', '10', '5', '2024-08-14', '2024-08-10', '11', '3');
+    ('Vacaciones denegadas para agosto.', '10', '20', '0', '5', '2023-08-14', '2023-08-10', '11', '3');
 
 -- ========================================
 --  Clientes

@@ -8,6 +8,7 @@ const app = express();
 
 // Middleware para analizar el cuerpo de las solicitudes POST
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Configurar CORS
 app.use(

@@ -93,7 +93,12 @@ export default function UpdatePassword() {
     setCorrectVerificationCode(false);
     setUserAttempts(0);
     setCodigoVerificacion("");
-    setFormData({});
+    setFormData({
+      correo_electronico: "",
+      codigo_verificacion: "",
+      new_password: "",
+      confirm_new_password: "",
+    });
   }
 
   const handleChange = (event) => {

@@ -226,6 +226,8 @@ public class UsuarioService {
             throw new RuntimeException("El campo 'new_password' no puede ser null");
         }
 
+        // TODO Si es la misma contraseña que ya habia puesta lanzar un error
+
         PersonaModel personaEncontrada = personaRepository.findByCorreo_electronico(correoElectronico)
                 .orElseThrow(() -> new RuntimeException("El correo electronico no existe"));
 

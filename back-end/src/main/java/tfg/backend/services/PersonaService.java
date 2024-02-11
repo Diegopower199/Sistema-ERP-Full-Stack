@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import tfg.backend.models.PersonaModel;
 import tfg.backend.models.TipoPersonaModel;
+import tfg.backend.models.UsuarioModel;
 import tfg.backend.repositories.PersonaRepository;
 import tfg.backend.repositories.TipoPersonaRepository;
 import tfg.backend.utils.RegexPatterns;
@@ -23,7 +24,6 @@ public class PersonaService {
 
     @Autowired
     private TipoPersonaRepository tipoPersonaRepository;
-
 
     public List<Map<String, Object>> getAllPersonas() {
         List<PersonaModel> listaPersonas = personaRepository.findAllOrderedById();
@@ -178,6 +178,16 @@ public class PersonaService {
 
         personaRepository.deleteById(idPersona);
 
+    }
+
+    // LAS DE ABAJO NO ESTAN COMPROBADAS
+    public Boolean existsCorreoElectronico(String correo_electronico) {
+
+        if (!personaRepository.existsBycorreo_electronico(correo_electronico)) {
+            return false;
+        }
+
+        return true;
     }
 
     private static boolean validarDNI(String dni) {

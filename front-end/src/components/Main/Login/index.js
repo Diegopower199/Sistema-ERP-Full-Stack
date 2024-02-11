@@ -10,7 +10,14 @@ import { useAuth } from "@/context/UserContext";
 import { getTipoUsuarioById } from "@/services/TipoUsuarioService";
 
 export default function Login() {
-  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn, permisosUser, setPermisosUser } = useAuth();
+  const {
+    authUser,
+    setAuthUser,
+    isLoggedIn,
+    setIsLoggedIn,
+    permisosUser,
+    setPermisosUser,
+  } = useAuth();
 
   const router = useRouter();
 
@@ -83,58 +90,161 @@ export default function Login() {
           },
         });
         setPermisosUser({
-          actualizar_usuarios: true,
-          actualizar_personas: true,
-          actualizar_nominas: true,
-          actualizar_asistencias: true,
-          actualizar_ayudas: true,
-          actualizar_bajas_laborales: true,
-          actualizar_solicitudes: true,
-          actualizar_vacaciones: true,
-          actualizar_clientes: true,
-          actualizar_pedidos_clientes: true,
-          actualizar_facturas: true,
-          actualizar_detalles_facturas: true,
-          actualizar_pagos_facturas_clientes: true,
-          borrar_usuarios: true,
-          borrar_personas: true,
-          borrar_nominas: true,
-          borrar_asistencias: true,
-          borrar_ayudas: true,
-          borrar_bajas_laborales: true,
-          borrar_solicitudes: true,
-          borrar_vacaciones: true,
-          borrar_clientes: true,
-          borrar_pedidos_clientes: true,
-          borrar_facturas: true,
-          borrar_detalles_facturas: true,
-          borrar_pagos_facturas_clientes: true,
-          crear_usuarios: true,
-          crear_personas: true,
-          crear_nominas: true,
-          crear_asistencias: true,
-          crear_ayudas: true,
-          crear_bajas_laborales: true,
-          crear_solicitudes: true,
-          crear_vacacione: true,
-          crear_clientes: true,
-          crear_pedidos_clientes: true,
-          crear_facturas: true,
-          crear_detalles_facturas: true,
-          crear_pagos_facturas_clientes: true,
-          ver_usuarios: true,
-          ver_personas: true,
-          ver_nominas: true,
-          ver_asistencias: true,
-          ver_ayudas: true,
-          ver_bajas_laborales: true,
-          ver_solicitudes: true,
-          ver_vacaciones: true,
-          ver_clientes: true,
-          ver_pedidos_clientes: true,
-          ver_facturas: true,
-          ver_detalles_facturas: true,
-          ver_pagos_facturas_clientes: true,
+          actualizar_usuarios:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_usuarios,
+          actualizar_personas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_personas,
+          actualizar_nominas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_nominas,
+          actualizar_asistencias:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_asistencias,
+          actualizar_ayudas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_ayudas,
+          actualizar_bajas_laborales:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_bajas_laborales,
+          actualizar_solicitudes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_solicitudes,
+          actualizar_vacaciones:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_vacaciones,
+          actualizar_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_clientes,
+          actualizar_pedidos_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_pedidos_clientes,
+          actualizar_facturas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_facturas,
+          actualizar_detalles_facturas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_detalles_facturas,
+          actualizar_pagos_facturas_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .actualizar_pagos_facturas_clientes,
+          borrar_usuarios:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_usuarios,
+          borrar_personas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_personas,
+          borrar_nominas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_nominas,
+          borrar_asistencias:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_asistencias,
+          borrar_ayudas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_ayudas,
+          borrar_bajas_laborales:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_bajas_laborales,
+          borrar_solicitudes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_solicitudes,
+          borrar_vacaciones:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_vacaciones,
+          borrar_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_clientes,
+          borrar_pedidos_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_pedidos_clientes,
+          borrar_facturas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_facturas,
+          borrar_detalles_facturas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_detalles_facturas,
+          borrar_pagos_facturas_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .borrar_pagos_facturas_clientes,
+          crear_usuarios:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_usuarios,
+          crear_personas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_personas,
+          crear_nominas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_nominas,
+          crear_asistencias:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_asistencias,
+          crear_ayudas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_ayudas,
+          crear_bajas_laborales:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_bajas_laborales,
+          crear_solicitudes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_solicitudes,
+          crear_vacacione:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_vacaciones,
+          crear_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_clientes,
+          crear_pedidos_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_pedidos_clientes,
+          crear_facturas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_facturas,
+          crear_detalles_facturas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_detalles_facturas,
+          crear_pagos_facturas_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .crear_pagos_facturas_clientes,
+          ver_usuarios:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_usuarios,
+          ver_personas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_personas,
+          ver_nominas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_nominas,
+          ver_asistencias:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_asistencias,
+          ver_ayudas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario.ver_ayudas,
+          ver_bajas_laborales:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_bajas_laborales,
+          ver_solicitudes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_solicitudes,
+          ver_vacaciones:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_vacaciones,
+          ver_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_clientes,
+          ver_pedidos_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_pedidos_clientes,
+          ver_facturas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_facturas,
+          ver_detalles_facturas:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_detalles_facturas,
+          ver_pagos_facturas_clientes:
+            responseTipoUsuarioDelNombreUsuario.data.permiso_usuario
+              .ver_pagos_facturas_clientes,
         });
       }
     } catch (error) {

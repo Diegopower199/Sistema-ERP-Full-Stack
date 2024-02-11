@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { sendEmailNodeMailer } from "@/services/EmailService";
 import { updatePassword } from "@/services/UsuarioService";
+import { existsCorreoElectronico } from "@/services/PersonaService";
 
 export default function UpdatePassword() {
   const router = useRouter();
@@ -19,7 +20,8 @@ export default function UpdatePassword() {
     confirm_new_password: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [erroresDelFormulario, setErroresDelFormulario] = useState({});
+  const [requiredFields, setRequiredFields] = useState([]);
 
   function generateRandomNumber() {
     // Generate a random number between 0 and 999999 (inclusive)
@@ -31,8 +33,30 @@ export default function UpdatePassword() {
     return formattedNumber;
   }
 
+  const validateRequiredFields = (requiredFields) => {
+    const formDataHasUndefinedOrEmptyString = requiredFields.some((field) => {
+      console.log("field: ", field);
+      return formData[field] === "" || formData[field] === undefined;
+    });
+
+    if (formDataHasUndefinedOrEmptyString) {
+      console.log("Al menos un campo requerido es undefined o ''.");
+    } else {
+      console.log(
+        "Todos los campos requeridos tienen valores distintos de undefined y ''."
+      );
+    }
+
+    return formDataHasUndefinedOrEmptyString;
+  };
+
   const sendEmail = async () => {
     try {
+      const requiredFields = ["correo_electronico"];
+      const validate = validateRequiredFields(requiredFields);
+
+      console.log("AAAAAAAAAAAA", validate, "\n\n\n\n");
+
       const codigoVerificacion = generateRandomNumber();
       console.log("codigoVerificacion: ", codigoVerificacion);
       setCodigoVerificacion(codigoVerificacion);
@@ -41,11 +65,21 @@ export default function UpdatePassword() {
         codigo_verificacion: codigoVerificacion,
       };
 
-      const responseSendEmail = await sendEmailNodeMailer(data);
+      const responseExistsEmail = await existsCorreoElectronico(
+        data.correo_electronico
+      );
 
-      console.log("responseSendEmail: ", responseSendEmail);
-      if (responseSendEmail.status === 200) {
-        setCorrectEmail(true);
+      console.log("responseExistsEmail: ", responseExistsEmail);
+
+      if (responseExistsEmail.data === true) {
+        const responseSendEmail = await sendEmailNodeMailer(data);
+
+        console.log("responseSendEmail: ", responseSendEmail);
+        if (responseSendEmail.status === 200) {
+          setCorrectEmail(true);
+        }
+      } else {
+        console.log("EMAIL NO EXISTE");
       }
     } catch (error) {
       console.error("El Error es: ", error.message);

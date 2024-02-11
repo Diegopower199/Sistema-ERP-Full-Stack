@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { savePersona, updatePersona } from "@/services/PersonaService";
 import { getAllTiposPersonas } from "@/services/TipoPersonaService";
-import { REGEX_DATE_YYYYMMDD } from "@/utils/regexPatterns";
+import {
+  REGEX_DATE_YYYYMMDD,
+  REGEX_DNI,
+  REGEX_EMAIL,
+  REGEX_TELEFONO_CON_PREFIJO,
+} from "@/utils/regexPatterns";
+import styles from "./styles.module.css";
+import ErrorIcon from "@mui/icons-material/Error";
 
 export default function FormPersonas({
   toggleForm,
@@ -21,7 +28,7 @@ export default function FormPersonas({
   const [tiposPersonasOptions, setTiposPersonasOptions] = useState([]);
 
   const [formData, setFormData] = useState({
-    numero_empleado: "0",
+    numero_empleado: "",
     nombre: "",
     apellidos: "",
     genero: "Masculino",
@@ -33,12 +40,14 @@ export default function FormPersonas({
     id_tipo_persona: "1",
   });
 
+  const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState([]);
+  const [formErrors, setFormErrors] = useState({});
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const fetchTiposPersonasOptions = async () => {
     try {
       const responseReadAllTiposPersonas = await getAllTiposPersonas();
-      // console.log("Resultado: ", resultado);
       setTiposPersonasOptions(responseReadAllTiposPersonas);
       setFormData((prevState) => {
         return {
@@ -75,36 +84,33 @@ export default function FormPersonas({
       "id_tipo_persona",
     ];
 
-    const formDataHasUndefinedOrEmptyString = requiredFields.some((field) => {
-      console.log("field: ", field)
-      return formData[field] === "" || formData[field] === undefined;
+    const missingFields = requiredFields.filter((field) => {
+      return !formData[field];
     });
+    setRequiredFieldsIncomplete(missingFields);
 
-    if (formDataHasUndefinedOrEmptyString) {
-      console.log("Al menos un campo requerido es undefined o ''.");
-    } else {
-      console.log(
-        "Todos los campos requeridos tienen valores distintos de undefined y ''."
-      );
-    }
+    console.log("missingFields: ", missingFields);
 
-    return formDataHasUndefinedOrEmptyString;
+    return missingFields.length > 0;
   };
 
   const validateFormData = () => {
     const errorForm = {};
 
-    if (!formData.fecha_nacimiento) {
-      errorForm.fecha_nacimiento = "Por favor, selecciona una fecha de inicio";
+    if (!formData.dni.match(REGEX_DNI)) {
+      errorForm.dni = "Por favor, ingresa un DNI válido";
     }
 
-    if (!formData.dni) {
-      errorForm.dni = "Por favor, ingresa un DNI";
+    if (!formData.numero_telefono.match(REGEX_TELEFONO_CON_PREFIJO)) {
+      errorForm.numero_telefono =
+        "Por favor, ingresa un numero de telefono válido";
     }
 
-    // Actualiza el estado de errores
-    // setErroresDelFormulario(nuevosErrores);
+    if (!formData.correo_electronico.match(REGEX_EMAIL)) {
+      errorForm.correo_electronico = "Por favor, ingresa un email válido";
+    }
 
+    setFormErrors(errorForm);
     console.log("errorForm", errorForm);
 
     // Devuelve verdadero si hay errores, falso si no hay errores
@@ -171,14 +177,15 @@ export default function FormPersonas({
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
       console.log("Error en campos obligatorios: ", requiredFieldsError);
-      setErrorMessage(requiredFieldsError);
+      setErrorMessage(
+        "No se puede añadir un registro con uno o más campos vacios "
+      );
       return;
     }
 
     const formDataError = validateFormData();
     if (formDataError) {
       console.log("Error en datos correctos: ", formDataError);
-      setErrorMessage(formDataError);
       return;
     }
 
@@ -240,7 +247,6 @@ export default function FormPersonas({
 
   return (
     <>
-      <button onClick={() => console.log(formData)}>WWWWWWWW</button>
       <label>
         Numero empleado:
         <input
@@ -249,6 +255,11 @@ export default function FormPersonas({
           value={formData.numero_empleado}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.includes("numero_empleado")
+              ? styles.inputError
+              : ""
+          }
         />
       </label>
       <br />
@@ -261,6 +272,9 @@ export default function FormPersonas({
           value={formData.nombre}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.includes("nombre") ? styles.inputError : ""
+          }
         />
       </label>
       <br />
@@ -273,6 +287,11 @@ export default function FormPersonas({
           value={formData.apellidos}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.includes("apellidos")
+              ? styles.inputError
+              : ""
+          }
         />
       </label>
       <br />
@@ -284,6 +303,9 @@ export default function FormPersonas({
           value={formData.genero}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.includes("genero") ? styles.inputError : ""
+          }
         >
           {generoOptions.map((genero) => (
             <option key={genero.value} value={genero.value}>
@@ -302,6 +324,11 @@ export default function FormPersonas({
           value={formData.fecha_nacimiento}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.includes("fecha_nacimiento")
+              ? styles.inputError
+              : ""
+          }
         />
       </label>
       <br />
@@ -314,7 +341,17 @@ export default function FormPersonas({
           value={formData.dni}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.includes("dni") || formErrors.dni
+              ? styles.inputError
+              : ""
+          }
         />
+        {formErrors.dni && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {formErrors.dni}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -326,6 +363,11 @@ export default function FormPersonas({
           value={formData.direccion}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.includes("direccion")
+              ? styles.inputError
+              : ""
+          }
         />
       </label>
       <br />
@@ -338,7 +380,18 @@ export default function FormPersonas({
           value={formData.numero_telefono}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.includes("numero_telefono") ||
+            formErrors.numero_telefono
+              ? styles.inputError
+              : ""
+          }
         />
+        {formErrors.numero_telefono && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {formErrors.numero_telefono}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -350,7 +403,18 @@ export default function FormPersonas({
           value={formData.correo_electronico}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.includes("correo_electronico") ||
+            formErrors.correo_electronico
+              ? styles.inputError
+              : ""
+          }
         />
+        {formErrors.correo_electronico && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {formErrors.correo_electronico}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -361,6 +425,11 @@ export default function FormPersonas({
           value={formData.id_tipo_persona}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.includes("id_tipo_persona")
+              ? styles.inputError
+              : ""
+          }
         >
           {tiposPersonasOptions.map((tipoPersona, index) => (
             <option key={tipoPersona.value} value={tipoPersona.value}>
@@ -369,6 +438,15 @@ export default function FormPersonas({
           ))}
         </select>
       </label>
+      <br /> <br />
+      {errorMessage.length !== 0 && (
+        <>
+          <p className={styles.errorMessage}>
+            <ErrorIcon fontSize="medium" color="red" />
+            Error: {errorMessage}
+          </p>
+        </>
+      )}
       {(operationType === "create" || operationType === "update") && (
         <>
           <br /> <br />

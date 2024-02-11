@@ -23,7 +23,7 @@ import tfg.backend.services.PersonaService;
 import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
-        RequestMethod.PUT, RequestMethod.DELETE })
+    RequestMethod.PUT, RequestMethod.DELETE })
 @RestController
 @RequestMapping("/personas")
 public class PersonaController {
@@ -95,6 +95,23 @@ public class PersonaController {
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    // localhost:8080/personas/api/getExistsCorreoElectronico/{correo_electronico}
+    @PostMapping("/api/getExistsCorreoElectronico/{correo_electronico}")
+    public ResponseEntity<Map<String, Object>> getExistsCorreoElectronico(
+            @PathVariable("correo_electronico") String correo_electronico) {
+        try {
+            boolean existeCorreoElectronico = personaService.existsCorreoElectronico(correo_electronico);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("resultado", existeCorreoElectronico);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 

@@ -108,3 +108,23 @@ export const deletePersona = async (id) => {
     };
   }
 };
+
+export const existsCorreoElectronico = async (correo_electronico) => {
+  const url = API_URL_BACK_END.replace("#", "personas");
+  try {
+    const response = await axios.post(
+      url + "getExistsCorreoElectronico/" + correo_electronico
+    );
+
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("error", error)
+    return {
+      errorMessage: error.response.data.message,
+      status: error.response.status,
+    };
+  }
+};

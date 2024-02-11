@@ -1,12 +1,5 @@
 package tfg.backend.services;
 
-public class PermisoUsuarioService {
-    
-}
-
-/*
-package tfg.backend.services;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,78 +7,60 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tfg.backend.models.TipoPersonaModel;
-import tfg.backend.repositories.TipoPersonaRepository;
+import tfg.backend.models.PermisoUsuarioModel;
+import tfg.backend.repositories.PermisoUsuarioRepository;
 
 @Service
-public class TipoPersonaService {
+public class PermisoUsuarioService {
 
     @Autowired
-    TipoPersonaRepository tipoPersonaRepository;
+    PermisoUsuarioRepository permisoUsuarioRepository;
 
-    public List<Map<String, Object>> getAllTiposPersonas() {
-        List<TipoPersonaModel> listaTiposPersonas = tipoPersonaRepository.findAllOrderedById();
+    public List<Map<String, Object>> getAllPermisosUsuarios() {
+        List<PermisoUsuarioModel> listaPermisosUsuarios = permisoUsuarioRepository.findAllOrderedById();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
-        for (TipoPersonaModel tipoPersona : listaTiposPersonas) {
-            Map<String, Object> tipoPersonaMap = tipoPersona.toMap();
+        for (PermisoUsuarioModel permisoUsuario : listaPermisosUsuarios) {
+            Map<String, Object> permisoUsuarioMap = permisoUsuario.toMap();
 
-            resultado.add(tipoPersonaMap);
+            resultado.add(permisoUsuarioMap);
         }
 
         return resultado;
     }
 
-    public TipoPersonaModel saveTipoPersona(TipoPersonaModel nuevoTipoPersona) {
+    public PermisoUsuarioModel savePermisoUsuario(PermisoUsuarioModel nuevoPermisoUsuario) {
+        PermisoUsuarioModel permisoUsuarioGuardado = permisoUsuarioRepository.save(nuevoPermisoUsuario);
 
-        if (nuevoTipoPersona.getTipo_persona() == null) {
-            throw new RuntimeException("El campo 'tipo_persona' no puede ser null");
-        }
-
-        if (tipoPersonaRepository.existsByTipo_persona(nuevoTipoPersona.getTipo_persona())) {
-            throw new RuntimeException("El tipo de persona ya existe");
-        }
-
-        TipoPersonaModel tipoPersonaGuardado = tipoPersonaRepository.save(nuevoTipoPersona);
-        return tipoPersonaGuardado;
+        return permisoUsuarioGuardado;
     }
 
-    public Map<String, Object> getTipoPersonaById(int idTipoPersona) {
-        TipoPersonaModel tipoPersonaEncontrado = tipoPersonaRepository.findById(idTipoPersona)
-                .orElseThrow(() -> new RuntimeException("Tipo de persona con id " + idTipoPersona + " no encontrado"));
+    public Map<String, Object> getPermisoUsuarioById(int idPermisoUsuario) {
+        PermisoUsuarioModel permisoUsuarioEncontrado = permisoUsuarioRepository.findById(idPermisoUsuario)
+                .orElseThrow(
+                        () -> new RuntimeException("Permiso usuario con id " + idPermisoUsuario + " no encontrado"));
 
-        Map<String, Object> tipoPersonaMap = tipoPersonaEncontrado.toMap();
+        Map<String, Object> permisoUsuarioMap = permisoUsuarioEncontrado.toMap();
 
-        return tipoPersonaMap;
+        return permisoUsuarioMap;
     }
 
-    public TipoPersonaModel updateTipoPersona(TipoPersonaModel cambiosTipoPersona, int idTipoPersona) {
-        TipoPersonaModel tipoPersonaExistente = tipoPersonaRepository.findById(idTipoPersona)
-                .orElseThrow(() -> new RuntimeException("Tipo de persona con id " + idTipoPersona + " no encontrado"));
+    public PermisoUsuarioModel updatePermisoUsuario(PermisoUsuarioModel cambiosPermisoUsuario, int idPermisoUsuario) {
+        PermisoUsuarioModel permisoUsuarioExistente = permisoUsuarioRepository.findById(idPermisoUsuario)
+                .orElseThrow(
+                        () -> new RuntimeException("Permiso usuario con id " + idPermisoUsuario + " no encontrado"));
 
-        if (cambiosTipoPersona.getTipo_persona() == null) {
-            throw new RuntimeException("El campo 'tipo_persona' no puede ser null");
-        }
+        PermisoUsuarioModel permisoUsuarioActualizado = permisoUsuarioRepository.save(permisoUsuarioExistente);
 
-        if (!tipoPersonaExistente.getTipo_persona().equals(cambiosTipoPersona.getTipo_persona())) {
-            if (tipoPersonaRepository.existsByTipo_persona(cambiosTipoPersona.getTipo_persona())) {
-                throw new RuntimeException("El tipo de persona ya existe");
-            }
-            tipoPersonaExistente.setTipo_persona(cambiosTipoPersona.getTipo_persona());
-        }
-
-        TipoPersonaModel tipoPersonaActualizado = tipoPersonaRepository.save(tipoPersonaExistente);
-
-        return tipoPersonaActualizado;
+        return permisoUsuarioActualizado;
     }
 
-    public void deleteTipoPersona(int idTipoPersona) {
-        tipoPersonaRepository.findById(idTipoPersona)
-                .orElseThrow(() -> new RuntimeException("Tipo de persona con id " + idTipoPersona + " no encontrado"));
+    public void deletePermisoUsuario(int idpermisoUsuario) {
+        permisoUsuarioRepository.findById(idpermisoUsuario)
+                .orElseThrow(
+                        () -> new RuntimeException("Permiso usuario con id " + idpermisoUsuario + " no encontrado"));
 
-        tipoPersonaRepository.deleteById(idTipoPersona);
+        permisoUsuarioRepository.deleteById(idpermisoUsuario);
 
     }
 }
-
-*/

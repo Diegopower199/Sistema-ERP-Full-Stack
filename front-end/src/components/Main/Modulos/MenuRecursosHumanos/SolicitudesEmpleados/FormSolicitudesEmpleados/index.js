@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { savePersona, updatePersona } from "@/services/PersonaService";
 import { getAllTiposPersonas } from "@/services/TipoPersonaService";
 import { REGEX_DATE_YYYYMMDD } from "@/utils/regexPatterns";
+import { getAllTiposSolicitudes } from "@/services/TipoSolicitudService";
+import { getAllTiposEstados } from "@/services/TipoEstadoService";
 
 export default function FormSolicitudesEmpleados({
   toggleForm,
@@ -9,28 +11,17 @@ export default function FormSolicitudesEmpleados({
   formUpdateTrigger,
   operationType,
 }) {
-  const generoOptions = [
-    {
-      value: "Masculino",
-    },
-    {
-      value: "Femenino",
-    },
-  ];
-
   const [tiposPersonasOptions, setTiposPersonasOptions] = useState([]);
 
+  const [tiposEstadosOptions, setTiposEstadosOptions] = useState([]);
+  const [tiposSolicitudesOptions, setTiposSolicitudesOptions] = useState([]);
+
   const [formData, setFormData] = useState({
-    numero_empleado: "0",
-    nombre: "",
-    apellidos: "",
-    genero: "Masculino",
-    fecha_nacimiento: "",
+    fecha_solicitud: "",
+    comentarios: "",
     dni: "",
-    direccion: "",
-    numero_telefono: "34",
-    correo_electronico: "",
-    id_tipo_persona: "1",
+    id_tipo_solicitud: "1",
+    id_tipo_estado: "1",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -44,6 +35,36 @@ export default function FormSolicitudesEmpleados({
         return {
           ...prevState,
           ["id_tipo_persona"]: responseReadAllTiposPersonas[0].value.toString(),
+        };
+      });
+    } catch (error) {
+      console.error("El error es: ", error);
+    }
+  };
+
+  const fetchTiposSolicitudesOptions = async () => {
+    try {
+      const responseReadAllTiposSolicitudes = await getAllTiposSolicitudes();
+      setTiposSolicitudesOptions(responseReadAllTiposSolicitudes);
+      setFormData((prevState) => {
+        return {
+          ...prevState,
+          ["id_tipo_solicitud"]: responseReadAllTiposSolicitudes[0].value.toString(),
+        };
+      });
+    } catch (error) {
+      console.error("El error es: ", error);
+    }
+  };
+
+  const fetchTiposEstadosOptions = async () => {
+    try {
+      const responseReadAllTiposEstados = await getAllTiposEstados();
+      setTiposEstadosOptions(responseReadAllTiposEstados);
+      setFormData((prevState) => {
+        return {
+          ...prevState,
+          ["id_tipo_estado"]: responseReadAllTiposEstados[0].value.toString(),
         };
       });
     } catch (error) {
@@ -65,20 +86,25 @@ export default function FormSolicitudesEmpleados({
     const fetchData = async () => {
       try {
         await fetchTiposPersonasOptions();
+        await fetchTiposSolicitudesOptions();
+        await fetchTiposEstadosOptions();
 
         console.log("operationType: ", operationType);
 
         if (operationType === "update" || operationType === "view") {
-          if (validarFechaYYYYMMDD(solicitudEmpleadoDataForm.fecha_nacimiento) === null) {
-            const fechaFormateada = formatearFechaAYYYYMMDD(
-              solicitudEmpleadoDataForm.fecha_nacimiento
+          if (
+            validarFechaYYYYMMDD(solicitudEmpleadoDataForm.fecha_solicitud) ===
+            null
+          ) {
+            const fechaSolicitudFormateada = formatearFechaAYYYYMMDD(
+              solicitudEmpleadoDataForm.fecha_solicitud
             );
 
-            console.log("fechaFormateada: ", fechaFormateada);
+            console.log("fechaFormateada: ", fechaSolicitudFormateada);
 
             setFormData(() => ({
               ...solicitudEmpleadoDataForm,
-              fecha_nacimiento: fechaFormateada,
+              fecha_solicitud: fechaSolicitudFormateada,
             }));
           } else {
             setFormData(() => ({
@@ -95,24 +121,14 @@ export default function FormSolicitudesEmpleados({
   }, []); // Se ejecuta solo al montar el componente
 
   const handleChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    if (name === "numero_telefono") {
-      // Si el valor no comienza con "34", mantenlo con "34" al principio
-      const nuevoValor = value.startsWith("34") ? value : "34" + value;
+    const { name, value } = event.target;
 
-      // Actualiza el estado con el nuevo valor
-      setFormData((prevFormValue) => ({
-        ...prevFormValue,
-        [name]: nuevoValor,
-      }));
-    } else {
-      setFormData((prevState) => {
-        return {
-          ...prevState,
-          [name]: type === "checkbox" ? checked : value,
-        };
-      });
-    }
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
   };
 
   const handleSubmit = async (event) => {
@@ -168,7 +184,6 @@ export default function FormSolicitudesEmpleados({
     } catch (error) {
       console.log("Error al agregar registro: ", error);
     }
-    // Realizar acciones adicionales con los datos del formulario
   };
 
   // https://es.stackoverflow.com/questions/289413/bloquear-n%C3%BAmeros-letras-y-o-caracteres-especiales-en-un-input MIRARME ESTO
@@ -176,64 +191,11 @@ export default function FormSolicitudesEmpleados({
   return (
     <>
       <label>
-        Numero empleado:
-        <input
-          type="number"
-          name="numero_empleado"
-          value={formData.numero_empleado}
-          onChange={operationType === "view" ? null : handleChange}
-          readOnly={operationType === "view" ? true : false}
-        />
-      </label>
-      <br />
-      <br />
-      <label>
-        Nombre:
-        <input
-          type="text"
-          name="nombre"
-          value={formData.nombre}
-          onChange={operationType === "view" ? null : handleChange}
-          readOnly={operationType === "view" ? true : false}
-        />
-      </label>
-      <br />
-      <br />
-      <label>
-        Apellidos:
-        <input
-          type="text"
-          name="apellidos"
-          value={formData.apellidos}
-          onChange={operationType === "view" ? null : handleChange}
-          readOnly={operationType === "view" ? true : false}
-        />
-      </label>
-      <br />
-      <br />
-      <label>
-        Genero:
-        <select
-          name="genero"
-          value={formData.genero}
-          onChange={operationType === "view" ? null : handleChange}
-          readOnly={operationType === "view" ? true : false}
-        >
-          {generoOptions.map((genero) => (
-            <option key={genero.value} value={genero.value}>
-              {genero.value}
-            </option>
-          ))}
-        </select>
-      </label>
-      <br />
-      <br />
-      <label>
-        Fecha nacimiento:
+        Fecha de solicitud:
         <input
           type="date"
-          name="fecha_nacimiento"
-          value={formData.fecha_nacimiento}
+          name="fecha_solicitud"
+          value={formData.fecha_solicitud}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
         />
@@ -241,7 +203,19 @@ export default function FormSolicitudesEmpleados({
       <br />
       <br />
       <label>
-        Dni:
+        Comentarios:
+        <input
+          type="text"
+          name="comentarios"
+          value={formData.comentarios}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
+        />
+      </label>
+      <br />
+      <br />
+      <label>
+        Dni persona:
         <input
           type="text"
           name="dni"
@@ -252,40 +226,7 @@ export default function FormSolicitudesEmpleados({
       </label>
       <br />
       <br />
-      <label>
-        Direccion:
-        <input
-          type="text"
-          name="direccion"
-          value={formData.direccion}
-          onChange={operationType === "view" ? null : handleChange}
-          readOnly={operationType === "view" ? true : false}
-        />
-      </label>
-      <br />
-      <br />
-      <label>
-        Numero telefono:
-        <input
-          type="text"
-          name="numero_telefono"
-          value={formData.numero_telefono}
-          onChange={operationType === "view" ? null : handleChange}
-          readOnly={operationType === "view" ? true : false}
-        />
-      </label>
-      <br />
-      <br />
-      <label>
-        Correo electronico:
-        <input
-          type="text"
-          name="correo_electronico"
-          value={formData.correo_electronico}
-          onChange={operationType === "view" ? null : handleChange}
-          readOnly={operationType === "view" ? true : false}
-        />
-      </label>
+
       <br />
       <br />
       <label>

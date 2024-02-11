@@ -71,27 +71,58 @@ export default function FormPersonas({
   }
 
   const validateRequiredFields = () => {
-    const requiredFields = [
-      "numero_empleado",
-      "nombre",
-      "apellidos",
-      "genero",
-      "fecha_nacimiento",
-      "dni",
-      "direccion",
-      "numero_telefono",
-      "correo_electronico",
-      "id_tipo_persona",
-    ];
+    const errorMissingFields = {};
 
-    const missingFields = requiredFields.filter((field) => {
-      return !formData[field];
-    });
-    setRequiredFieldsIncomplete(missingFields);
+    if (!formData.numero_empleado) {
+      errorMissingFields.numero_empleado =
+        "Por favor, ingresa un numero empleado";
+    }
 
-    console.log("missingFields: ", missingFields);
+    if (!formData.nombre) {
+      errorMissingFields.nombre = "Por favor, ingresa un nombre";
+    }
 
-    return missingFields.length > 0;
+    if (!formData.apellidos) {
+      errorMissingFields.apellidos = "Por favor, ingresa un apellido";
+    }
+
+    if (!formData.genero) {
+      errorMissingFields.genero = "Por favor, ingresa un género";
+    }
+
+    if (!formData.fecha_nacimiento) {
+      errorMissingFields.fecha_nacimiento =
+        "Por favor, selecciona una fecha de nacimiento";
+    }
+
+    if (!formData.dni) {
+      errorMissingFields.dni = "Por favor, ingresa un DNI";
+    }
+
+    if (!formData.direccion) {
+      errorMissingFields.direccion = "Por favor, ingresa una direccion";
+    }
+
+    if (!formData.numero_telefono || formData.numero_telefono === "34") {
+      errorMissingFields.numero_telefono =
+        "Por favor, ingresa un numero de telefono";
+    }
+
+    if (!formData.correo_electronico) {
+      errorMissingFields.correo_electronico =
+        "Por favor, ingresa un correo electronico";
+    }
+
+    if (!formData.id_tipo_persona) {
+      errorMissingFields.id_tipo_persona =
+        "Por favor, ingresa un tipo de persona";
+    }
+
+    setRequiredFieldsIncomplete(errorMissingFields);
+
+    console.log("errorMissingFields: ", errorMissingFields);
+
+    return Object.keys(errorMissingFields).length !== 0;
   };
 
   const validateFormData = () => {
@@ -113,7 +144,6 @@ export default function FormPersonas({
     setFormErrors(errorForm);
     console.log("errorForm", errorForm);
 
-    // Devuelve verdadero si hay errores, falso si no hay errores
     return Object.keys(errorForm).length !== 0;
   };
 
@@ -126,15 +156,15 @@ export default function FormPersonas({
 
         if (operationType === "update" || operationType === "view") {
           if (validarFechaYYYYMMDD(personaDataForm.fecha_nacimiento) === null) {
-            const fechaFormateada = formatearFechaAYYYYMMDD(
+            const fechaNacimientoFormateada = formatearFechaAYYYYMMDD(
               personaDataForm.fecha_nacimiento
             );
 
-            console.log("fechaFormateada: ", fechaFormateada);
+            console.log("fechaFormateada: ", fechaNacimientoFormateada);
 
             setFormData(() => ({
               ...personaDataForm,
-              fecha_nacimiento: fechaFormateada,
+              fecha_nacimiento: fechaNacimientoFormateada,
             }));
           } else {
             setFormData(() => ({
@@ -256,11 +286,14 @@ export default function FormPersonas({
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
           className={
-            requiredFieldsIncomplete.includes("numero_empleado")
-              ? styles.inputError
-              : ""
+            requiredFieldsIncomplete.numero_empleado ? styles.inputError : ""
           }
         />
+        {requiredFieldsIncomplete.numero_empleado && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.numero_empleado}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -272,10 +305,13 @@ export default function FormPersonas({
           value={formData.nombre}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.includes("nombre") ? styles.inputError : ""
-          }
+          className={requiredFieldsIncomplete.nombre ? styles.inputError : ""}
         />
+        {requiredFieldsIncomplete.nombre && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.nombre}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -288,11 +324,14 @@ export default function FormPersonas({
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
           className={
-            requiredFieldsIncomplete.includes("apellidos")
-              ? styles.inputError
-              : ""
+            requiredFieldsIncomplete.apellidos ? styles.inputError : ""
           }
         />
+        {requiredFieldsIncomplete.apellidos && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.apellidos}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -303,9 +342,7 @@ export default function FormPersonas({
           value={formData.genero}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.includes("genero") ? styles.inputError : ""
-          }
+          className={requiredFieldsIncomplete.genero ? styles.inputError : ""}
         >
           {generoOptions.map((genero) => (
             <option key={genero.value} value={genero.value}>
@@ -313,6 +350,11 @@ export default function FormPersonas({
             </option>
           ))}
         </select>
+        {requiredFieldsIncomplete.genero && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.genero}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -325,11 +367,14 @@ export default function FormPersonas({
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
           className={
-            requiredFieldsIncomplete.includes("fecha_nacimiento")
-              ? styles.inputError
-              : ""
+            requiredFieldsIncomplete.fecha_nacimiento ? styles.inputError : ""
           }
         />
+        {requiredFieldsIncomplete.fecha_nacimiento && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.fecha_nacimiento}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -342,11 +387,16 @@ export default function FormPersonas({
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
           className={
-            requiredFieldsIncomplete.includes("dni") || formErrors.dni
+            requiredFieldsIncomplete.dni || formErrors.dni
               ? styles.inputError
               : ""
           }
         />
+        {requiredFieldsIncomplete.dni && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.dni}
+          </div>
+        )}
         {formErrors.dni && (
           <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
             {formErrors.dni}
@@ -364,11 +414,14 @@ export default function FormPersonas({
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
           className={
-            requiredFieldsIncomplete.includes("direccion")
-              ? styles.inputError
-              : ""
+            requiredFieldsIncomplete.direccion ? styles.inputError : ""
           }
         />
+        {requiredFieldsIncomplete.direccion && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.direccion}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -381,12 +434,17 @@ export default function FormPersonas({
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
           className={
-            requiredFieldsIncomplete.includes("numero_telefono") ||
+            requiredFieldsIncomplete.numero_telefono ||
             formErrors.numero_telefono
               ? styles.inputError
               : ""
           }
         />
+        {requiredFieldsIncomplete.numero_telefono && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.numero_telefono}
+          </div>
+        )}
         {formErrors.numero_telefono && (
           <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
             {formErrors.numero_telefono}
@@ -404,12 +462,17 @@ export default function FormPersonas({
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
           className={
-            requiredFieldsIncomplete.includes("correo_electronico") ||
+            requiredFieldsIncomplete.correo_electronico ||
             formErrors.correo_electronico
               ? styles.inputError
               : ""
           }
         />
+        {requiredFieldsIncomplete.correo_electronico && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.correo_electronico}
+          </div>
+        )}
         {formErrors.correo_electronico && (
           <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
             {formErrors.correo_electronico}
@@ -426,9 +489,7 @@ export default function FormPersonas({
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
           className={
-            requiredFieldsIncomplete.includes("id_tipo_persona")
-              ? styles.inputError
-              : ""
+            requiredFieldsIncomplete.id_tipo_persona ? styles.inputError : ""
           }
         >
           {tiposPersonasOptions.map((tipoPersona, index) => (
@@ -437,6 +498,11 @@ export default function FormPersonas({
             </option>
           ))}
         </select>
+        {requiredFieldsIncomplete.id_tipo_persona && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.id_tipo_persona}
+          </div>
+        )}
       </label>
       <br /> <br />
       {errorMessage.length !== 0 && (

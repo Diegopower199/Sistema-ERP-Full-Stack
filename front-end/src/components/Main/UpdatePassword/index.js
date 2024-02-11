@@ -136,7 +136,7 @@ export default function UpdatePassword() {
   }
 
   const handleChange = (event) => {
-    const { name, value, type, checked } = event.target;
+    const { name, value } = event.target;
 
     setFormData((prevState) => {
       return {

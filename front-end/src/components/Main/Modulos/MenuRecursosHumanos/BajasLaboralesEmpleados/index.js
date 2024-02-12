@@ -29,6 +29,7 @@ import {
   deleteBajaLaboralEmpleado,
   getAllBajasLaboralesEmpleados,
 } from "@/services/BajaLaboralEmpleadoService";
+import styles from "./styles.module.css";
 
 export default function BajasLaboralesEmpleados() {
   const {

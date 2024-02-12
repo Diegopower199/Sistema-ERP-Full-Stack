@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { savePersona, updatePersona } from "@/services/PersonaService";
 import { getAllTiposPersonas } from "@/services/TipoPersonaService";
-import { REGEX_DATE_YYYYMMDD } from "@/utils/regexPatterns";
+import {
+  REGEX_DNI,
+  REGEX_EMAIL,
+  REGEX_TELEFONO_CON_PREFIJO,
+} from "@/utils/regexPatterns";
+import styles from "./styles.module.css";
+import ErrorIcon from "@mui/icons-material/Error";
+import {
+  formatearFechaYYYYMMDD,
+  validarFechaYYYYMMDD,
+} from "@/utils/functionsFecha";
 
 export default function FormAyudasEmpleados({
   toggleForm,
@@ -21,7 +31,7 @@ export default function FormAyudasEmpleados({
   const [tiposPersonasOptions, setTiposPersonasOptions] = useState([]);
 
   const [formData, setFormData] = useState({
-    numero_empleado: "0",
+    numero_empleado: "",
     nombre: "",
     apellidos: "",
     genero: "Masculino",
@@ -33,12 +43,14 @@ export default function FormAyudasEmpleados({
     id_tipo_persona: "1",
   });
 
+  const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
+  const [formErrors, setFormErrors] = useState({});
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const fetchTiposPersonasOptions = async () => {
     try {
       const responseReadAllTiposPersonas = await getAllTiposPersonas();
-      // console.log("Resultado: ", resultado);
       setTiposPersonasOptions(responseReadAllTiposPersonas);
       setFormData((prevState) => {
         return {
@@ -51,15 +63,82 @@ export default function FormAyudasEmpleados({
     }
   };
 
-  function validarFechaYYYYMMDD(fecha) {
-    return fecha.match(REGEX_DATE_YYYYMMDD);
-  }
+  const validateRequiredFields = () => {
+    const errorMissingFields = {};
 
-  function formatearFechaAYYYYMMDD(fechaConFormatoOriginal) {
-    const [dia, mes, year] = fechaConFormatoOriginal.split("-");
-    const fechaFormateada = `${year}-${mes}-${dia}`;
-    return fechaFormateada;
-  }
+    if (!formData.numero_empleado) {
+      errorMissingFields.numero_empleado =
+        "Por favor, ingresa un numero empleado";
+    }
+
+    if (!formData.nombre) {
+      errorMissingFields.nombre = "Por favor, ingresa un nombre";
+    }
+
+    if (!formData.apellidos) {
+      errorMissingFields.apellidos = "Por favor, ingresa un apellido";
+    }
+
+    if (!formData.genero) {
+      errorMissingFields.genero = "Por favor, ingresa un género";
+    }
+
+    if (!formData.fecha_nacimiento) {
+      errorMissingFields.fecha_nacimiento =
+        "Por favor, selecciona una fecha de nacimiento";
+    }
+
+    if (!formData.dni) {
+      errorMissingFields.dni = "Por favor, ingresa un DNI";
+    }
+
+    if (!formData.direccion) {
+      errorMissingFields.direccion = "Por favor, ingresa una direccion";
+    }
+
+    if (!formData.numero_telefono || formData.numero_telefono === "34") {
+      errorMissingFields.numero_telefono =
+        "Por favor, ingresa un numero de telefono";
+    }
+
+    if (!formData.correo_electronico) {
+      errorMissingFields.correo_electronico =
+        "Por favor, ingresa un correo electronico";
+    }
+
+    if (!formData.id_tipo_persona) {
+      errorMissingFields.id_tipo_persona =
+        "Por favor, ingresa un tipo de persona";
+    }
+
+    setRequiredFieldsIncomplete(errorMissingFields);
+
+    console.log("errorMissingFields: ", errorMissingFields);
+
+    return Object.keys(errorMissingFields).length !== 0;
+  };
+
+  const validateFormData = () => {
+    const errorForm = {};
+
+    if (!formData.dni.match(REGEX_DNI)) {
+      errorForm.dni = "Por favor, ingresa un DNI válido";
+    }
+
+    if (!formData.numero_telefono.match(REGEX_TELEFONO_CON_PREFIJO)) {
+      errorForm.numero_telefono =
+        "Por favor, ingresa un numero de telefono válido";
+    }
+
+    if (!formData.correo_electronico.match(REGEX_EMAIL)) {
+      errorForm.correo_electronico = "Por favor, ingresa un email válido";
+    }
+
+    setFormErrors(errorForm);
+    console.log("errorForm", errorForm);
+
+    return Object.keys(errorForm).length !== 0;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,15 +149,15 @@ export default function FormAyudasEmpleados({
 
         if (operationType === "update" || operationType === "view") {
           if (validarFechaYYYYMMDD(ayudaEmpleadoDataForm.fecha_nacimiento) === null) {
-            const fechaFormateada = formatearFechaAYYYYMMDD(
+            const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
               ayudaEmpleadoDataForm.fecha_nacimiento
             );
 
-            console.log("fechaFormateada: ", fechaFormateada);
+            console.log("fechaFormateada: ", fechaNacimientoFormateada);
 
             setFormData(() => ({
               ...ayudaEmpleadoDataForm,
-              fecha_nacimiento: fechaFormateada,
+              fecha_nacimiento: fechaNacimientoFormateada,
             }));
           } else {
             setFormData(() => ({
@@ -92,15 +171,13 @@ export default function FormAyudasEmpleados({
     };
 
     fetchData();
-  }, []); // Se ejecuta solo al montar el componente
+  }, []);
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     if (name === "numero_telefono") {
-      // Si el valor no comienza con "34", mantenlo con "34" al principio
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
 
-      // Actualiza el estado con el nuevo valor
       setFormData((prevFormValue) => ({
         ...prevFormValue,
         [name]: nuevoValor,
@@ -117,6 +194,23 @@ export default function FormAyudasEmpleados({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const requiredFieldsError = validateRequiredFields();
+    if (requiredFieldsError) {
+      console.log("Error en campos obligatorios: ", requiredFieldsError);
+      setErrorMessage(
+        "No se puede añadir un registro con uno o más campos vacios "
+      );
+      return;
+    }
+
+    const formDataError = validateFormData();
+    if (formDataError) {
+      console.log("Error en datos correctos: ", formDataError);
+      setErrorMessage("");
+      return;
+    }
+
     let errorDevueltoBack = false;
     try {
       if (operationType === "create") {
@@ -168,7 +262,6 @@ export default function FormAyudasEmpleados({
     } catch (error) {
       console.log("Error al agregar registro: ", error);
     }
-    // Realizar acciones adicionales con los datos del formulario
   };
 
   // https://es.stackoverflow.com/questions/289413/bloquear-n%C3%BAmeros-letras-y-o-caracteres-especiales-en-un-input MIRARME ESTO
@@ -183,7 +276,15 @@ export default function FormAyudasEmpleados({
           value={formData.numero_empleado}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.numero_empleado ? styles.inputError : ""
+          }
         />
+        {requiredFieldsIncomplete.numero_empleado && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.numero_empleado}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -195,7 +296,13 @@ export default function FormAyudasEmpleados({
           value={formData.nombre}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={requiredFieldsIncomplete.nombre ? styles.inputError : ""}
         />
+        {requiredFieldsIncomplete.nombre && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.nombre}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -207,7 +314,15 @@ export default function FormAyudasEmpleados({
           value={formData.apellidos}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.apellidos ? styles.inputError : ""
+          }
         />
+        {requiredFieldsIncomplete.apellidos && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.apellidos}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -218,6 +333,7 @@ export default function FormAyudasEmpleados({
           value={formData.genero}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={requiredFieldsIncomplete.genero ? styles.inputError : ""}
         >
           {generoOptions.map((genero) => (
             <option key={genero.value} value={genero.value}>
@@ -225,6 +341,11 @@ export default function FormAyudasEmpleados({
             </option>
           ))}
         </select>
+        {requiredFieldsIncomplete.genero && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.genero}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -236,7 +357,15 @@ export default function FormAyudasEmpleados({
           value={formData.fecha_nacimiento}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.fecha_nacimiento ? styles.inputError : ""
+          }
         />
+        {requiredFieldsIncomplete.fecha_nacimiento && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.fecha_nacimiento}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -248,7 +377,22 @@ export default function FormAyudasEmpleados({
           value={formData.dni}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.dni || formErrors.dni
+              ? styles.inputError
+              : ""
+          }
         />
+        {requiredFieldsIncomplete.dni && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.dni}
+          </div>
+        )}
+        {formErrors.dni && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {formErrors.dni}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -260,7 +404,15 @@ export default function FormAyudasEmpleados({
           value={formData.direccion}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.direccion ? styles.inputError : ""
+          }
         />
+        {requiredFieldsIncomplete.direccion && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.direccion}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -272,7 +424,23 @@ export default function FormAyudasEmpleados({
           value={formData.numero_telefono}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.numero_telefono ||
+            formErrors.numero_telefono
+              ? styles.inputError
+              : ""
+          }
         />
+        {requiredFieldsIncomplete.numero_telefono && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.numero_telefono}
+          </div>
+        )}
+        {formErrors.numero_telefono && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {formErrors.numero_telefono}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -284,7 +452,23 @@ export default function FormAyudasEmpleados({
           value={formData.correo_electronico}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.correo_electronico ||
+            formErrors.correo_electronico
+              ? styles.inputError
+              : ""
+          }
         />
+        {requiredFieldsIncomplete.correo_electronico && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.correo_electronico}
+          </div>
+        )}
+        {formErrors.correo_electronico && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {formErrors.correo_electronico}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -295,6 +479,9 @@ export default function FormAyudasEmpleados({
           value={formData.id_tipo_persona}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.id_tipo_persona ? styles.inputError : ""
+          }
         >
           {tiposPersonasOptions.map((tipoPersona, index) => (
             <option key={tipoPersona.value} value={tipoPersona.value}>
@@ -302,7 +489,21 @@ export default function FormAyudasEmpleados({
             </option>
           ))}
         </select>
+        {requiredFieldsIncomplete.id_tipo_persona && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.id_tipo_persona}
+          </div>
+        )}
       </label>
+      {errorMessage.length !== 0 && (
+        <>
+          <br /> <br />
+          <p className={styles.errorMessage}>
+            <ErrorIcon fontSize="medium" color="red" />
+            Error: {errorMessage}
+          </p>
+        </>
+      )}
       {(operationType === "create" || operationType === "update") && (
         <>
           <br /> <br />

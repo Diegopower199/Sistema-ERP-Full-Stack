@@ -18,21 +18,21 @@ export const getAllSolicitudesEmpleados = async () => {
 
 export const saveSolicitudEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "solicitudesEmpleados");
-  console.log("FORM PERSONA: ", data);
+  console.log("FORM SOLICITUD EMPLEADO: ", data);
   try {
     let formData = {};
-    formData["numero_empleado"] = parseInt(data.numero_empleado);
-    formData["nombre"] = data.nombre;
-    formData["apellidos"] = data.apellidos;
-    formData["genero"] = data.genero;
-    formData["fecha_nacimiento"] = data.fecha_nacimiento;
-    formData["dni"] = data.dni;
-    formData["direccion"] = data.direccion;
-    formData["numero_telefono"] = data.numero_telefono;
-    formData["correo_electronico"] = data.correo_electronico;
-    formData["tipo_persona"] = {
-      id_tipo_persona: parseInt(data.id_tipo_persona),
+    formData["fecha_solicitud"] = data.fecha_solicitud;
+    formData["comentarios"] = data.comentarios;
+    formData["persona"] = {
+      dni: data.dni,
     };
+    formData["tipo_solicitud"] = {
+      id_tipo_solicitud: parseInt(data.id_tipo_solicitud),
+    };
+    formData["tipo_estado"] = {
+      id_tipo_estado: parseInt(data.id_tipo_estado),
+    };
+
     const response = await axios.post(url + "save", formData);
 
     return {
@@ -68,17 +68,16 @@ export const updateSolicitudEmpleado = async (id, data) => {
   console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
     let formData = {};
-    formData["numero_empleado"] = parseInt(data.numero_empleado);
-    formData["nombre"] = data.nombre;
-    formData["apellidos"] = data.apellidos;
-    formData["genero"] = data.genero;
-    formData["fecha_nacimiento"] = data.fecha_nacimiento;
-    formData["dni"] = data.dni;
-    formData["direccion"] = data.direccion;
-    formData["numero_telefono"] = data.numero_telefono;
-    formData["correo_electronico"] = data.correo_electronico;
-    formData["tipo_persona"] = {
-      id_tipo_persona: parseInt(data.id_tipo_persona),
+    formData["fecha_solicitud"] = data.fecha_solicitud;
+    formData["comentarios"] = data.comentarios;
+    formData["persona"] = {
+      dni: data.dni,
+    };
+    formData["tipo_solicitud"] = {
+      id_tipo_solicitud: parseInt(data.id_tipo_solicitud),
+    };
+    formData["tipo_estado"] = {
+      id_tipo_estado: parseInt(data.id_tipo_estado),
     };
     console.log("Form hecho: ", formData, "\nID: ", id);
 

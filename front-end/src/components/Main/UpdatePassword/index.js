@@ -4,6 +4,7 @@ import Link from "next/link";
 import { sendEmailNodeMailer } from "@/services/EmailService";
 import { updatePassword } from "@/services/UsuarioService";
 import { existsCorreoElectronico } from "@/services/PersonaService";
+import styles from "./styles.module.css";
 
 export default function UpdatePassword() {
   const router = useRouter();

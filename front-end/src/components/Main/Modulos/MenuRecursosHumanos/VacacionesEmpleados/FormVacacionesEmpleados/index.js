@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { REGEX_DATE_YYYYMMDD } from "@/utils/regexPatterns";
+import { REGEX_DNI } from "@/utils/regexPatterns";
 import { getAllTiposEstados } from "@/services/TipoEstadoService";
 import {
   saveVacacionEmpleado,
   updateVacacionEmpleado,
 } from "@/services/VacacionEmpleadoService";
-import moment from "moment";
 import { saveTransaccionVacacionAutorizada } from "@/services/BlockchainVacacionAutorizadaService";
+import styles from "./styles.module.css";
+import ErrorIcon from "@mui/icons-material/Error";
+import {
+  formatearFechaYYYYMMDD,
+  validarFechaYYYYMMDD,
+} from "@/utils/functionsFecha";
 
 export default function FormVacacionesEmpleados({
   toggleForm,
@@ -28,6 +33,9 @@ export default function FormVacacionesEmpleados({
     id_tipo_estado: "1",
   });
 
+  const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
+  const [formErrors, setFormErrors] = useState({});
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const fetchTiposEstadosOptions = async () => {
@@ -45,15 +53,46 @@ export default function FormVacacionesEmpleados({
     }
   };
 
-  function validarFechaYYYYMMDD(fecha) {
-    return fecha.match(REGEX_DATE_YYYYMMDD);
-  }
+  const validateRequiredFields = () => {
+    const errorMissingFields = {};
 
-  function formatearFechaAYYYYMMDD(fechaConFormatoOriginal) {
-    const [dia, mes, year] = fechaConFormatoOriginal.split("-");
-    const fechaFormateada = `${year}-${mes}-${dia}`;
-    return fechaFormateada;
-  }
+    if (!formData.fecha_inicio) {
+      errorMissingFields.fecha_inicio =
+        "Por favor, selecciona una fecha de inicio";
+    }
+
+    if (!formData.fecha_fin) {
+      errorMissingFields.fecha_fin = "Por favor, selecciona una fecha de fin";
+    }
+
+    if (!formData.dni) {
+      errorMissingFields.dni = "Por favor, ingresa un DNI";
+    }
+
+    if (!formData.id_tipo_estado) {
+      errorMissingFields.id_tipo_estado =
+        "Por favor, ingresa un tipo de estado";
+    }
+
+    setRequiredFieldsIncomplete(errorMissingFields);
+
+    console.log("errorMissingFields: ", errorMissingFields);
+
+    return Object.keys(errorMissingFields).length !== 0;
+  };
+
+  const validateFormData = () => {
+    const errorForm = {};
+
+    if (!formData.dni.match(REGEX_DNI)) {
+      errorForm.dni = "Por favor, ingresa un DNI válido";
+    }
+
+    setFormErrors(errorForm);
+    console.log("errorForm", errorForm);
+
+    return Object.keys(errorForm).length !== 0;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,9 +102,32 @@ export default function FormVacacionesEmpleados({
         console.log("operationType: ", operationType, vacacionEmpleadoDataForm);
 
         if (operationType === "update" || operationType === "view") {
-          setFormData(() => ({
-            ...vacacionEmpleadoDataForm,
-          }));
+          if (
+            validarFechaYYYYMMDD(vacacionEmpleadoDataForm.fecha_inicio) ===
+              null ||
+            validarFechaYYYYMMDD(vacacionEmpleadoDataForm.fecha_fin) === null
+          ) {
+            const fechaInicioFormateada = formatearFechaYYYYMMDD(
+              vacacionEmpleadoDataForm.fecha_inicio
+            );
+
+            const fechaFinFormateada = formatearFechaYYYYMMDD(
+              vacacionEmpleadoDataForm.fecha_fin
+            );
+
+            console.log("fechaInicioFormateada: ", fechaInicioFormateada);
+            console.log("fechaFinFormateada: ", fechaFinFormateada);
+
+            setFormData(() => ({
+              ...vacacionEmpleadoDataForm,
+              fecha_inicio: fechaInicioFormateada,
+              fecha_fin: fechaFinFormateada,
+            }));
+          } else {
+            setFormData(() => ({
+              ...vacacionEmpleadoDataForm,
+            }));
+          }
         }
       } catch (error) {
         console.error("Error en useEffect: ", error);
@@ -73,31 +135,38 @@ export default function FormVacacionesEmpleados({
     };
 
     fetchData();
-  }, []); // Se ejecuta solo al montar el componente
+  }, []);
 
   const handleChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    if (name === "numero_telefono") {
-      // Si el valor no comienza con "34", mantenlo con "34" al principio
-      const nuevoValor = value.startsWith("34") ? value : "34" + value;
+    const { name, value } = event.target;
 
-      // Actualiza el estado con el nuevo valor
-      setFormData((prevFormValue) => ({
-        ...prevFormValue,
-        [name]: nuevoValor,
-      }));
-    } else {
-      setFormData((prevState) => {
-        return {
-          ...prevState,
-          [name]: type === "checkbox" ? checked : value,
-        };
-      });
-    }
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const requiredFieldsError = validateRequiredFields();
+    if (requiredFieldsError) {
+      console.log("Error en campos obligatorios: ", requiredFieldsError);
+      setErrorMessage(
+        "No se puede añadir un registro con uno o más campos vacios "
+      );
+      return;
+    }
+
+    const formDataError = validateFormData();
+    if (formDataError) {
+      console.log("Error en datos correctos: ", formDataError);
+      setErrorMessage("");
+      return;
+    }
+
     let errorDevueltoBack = false;
     try {
       if (operationType === "create") {
@@ -190,10 +259,6 @@ export default function FormVacacionesEmpleados({
 
   return (
     <>
-      AQUI TENGO QUE HACER LO DE TIPOS DE SOLICITUDES PORQUE DESDE AQUI LLAMO A
-      LA FUNCION DE CREAR O ACTUALIZAR EL TIPO DE SOLICITUD
-      <br />
-      <br />
       <label>
         Fecha inicio:
         <input
@@ -203,7 +268,15 @@ export default function FormVacacionesEmpleados({
           placeholder="Fecha inicio"
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.fecha_inicio ? styles.inputError : ""
+          }
         />
+        {requiredFieldsIncomplete.fecha_inicio && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.fecha_inicio}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -216,7 +289,15 @@ export default function FormVacacionesEmpleados({
           placeholder="Fecha fin"
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.fecha_fin ? styles.inputError : ""
+          }
         />
+        {requiredFieldsIncomplete.fecha_fin && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.fecha_fin}
+          </div>
+        )}
       </label>
       {(operationType === "update" || operationType === "view") && (
         <>
@@ -290,7 +371,18 @@ export default function FormVacacionesEmpleados({
           placeholder="Dni"
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={requiredFieldsIncomplete.dni ? styles.inputError : ""}
         />
+        {requiredFieldsIncomplete.dni && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.dni}
+          </div>
+        )}
+        {formErrors.dni && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {formErrors.dni}
+          </div>
+        )}
       </label>
       {(operationType === "update" || operationType === "view") && (
         <>
@@ -303,6 +395,9 @@ export default function FormVacacionesEmpleados({
               value={formData.id_tipo_estado}
               onChange={operationType === "view" ? null : handleChange}
               readOnly={operationType === "view" ? true : false}
+              className={
+                requiredFieldsIncomplete.id_tipo_estado ? styles.inputError : ""
+              }
             >
               {tiposEstadosOptions.map((tipoEstado, index) => (
                 <option key={tipoEstado.value} value={tipoEstado.value}>
@@ -311,6 +406,20 @@ export default function FormVacacionesEmpleados({
               ))}
             </select>
           </label>
+          {requiredFieldsIncomplete.id_tipo_estado && (
+            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+              {requiredFieldsIncomplete.id_tipo_estado}
+            </div>
+          )}
+        </>
+      )}
+      {errorMessage.length !== 0 && (
+        <>
+          <br /> <br />
+          <p className={styles.errorMessage}>
+            <ErrorIcon fontSize="medium" color="red" />
+            Error: {errorMessage}
+          </p>
         </>
       )}
       {(operationType === "create" || operationType === "update") && (

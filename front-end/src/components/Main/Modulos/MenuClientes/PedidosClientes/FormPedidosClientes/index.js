@@ -1,43 +1,61 @@
 import React, { useEffect, useState } from "react";
-import { REGEX_DATE_YYYYMMDD } from "@/utils/regexPatterns";
-import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import { savePersona, updatePersona } from "@/services/PersonaService";
+import { getAllTiposPersonas } from "@/services/TipoPersonaService";
 import {
-  saveVacacionEmpleado,
-  updateVacacionEmpleado,
-} from "@/services/VacacionEmpleadoService";
-import moment from "moment";
-import { saveTransaccionVacacionAutorizada } from "@/services/BlockchainVacacionAutorizadaService";
+  REGEX_DNI,
+  REGEX_EMAIL,
+  REGEX_TELEFONO_CON_PREFIJO,
+} from "@/utils/regexPatterns";
+import styles from "./styles.module.css";
+import ErrorIcon from "@mui/icons-material/Error";
+import {
+  formatearFechaYYYYMMDD,
+  validarFechaYYYYMMDD,
+} from "@/utils/functionsFecha";
 
 export default function FormPedidosClientes({
   toggleForm,
-  vacacionEmpleadoDataForm,
+  pedidoClienteDataForm,
   formUpdateTrigger,
   operationType,
 }) {
-  const [tiposEstadosOptions, setTiposEstadosOptions] = useState([]);
+  const generoOptions = [
+    {
+      value: "Masculino",
+    },
+    {
+      value: "Femenino",
+    },
+  ];
+
+  const [tiposPersonasOptions, setTiposPersonasOptions] = useState([]);
 
   const [formData, setFormData] = useState({
-    fecha_inicio: "",
-    fecha_fin: "",
-    dias_disponibles: "0",
-    dias_pendientes: "0",
-    dias_solicitados: "0",
-    dias_disfrutados: "0",
-    comentarios: "",
+    numero_empleado: "",
+    nombre: "",
+    apellidos: "",
+    genero: "Masculino",
+    fecha_nacimiento: "",
     dni: "",
-    id_tipo_estado: "1",
+    direccion: "",
+    numero_telefono: "34",
+    correo_electronico: "",
+    id_tipo_persona: "1",
   });
+
+  const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
+  const [formErrors, setFormErrors] = useState({});
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  const fetchTiposEstadosOptions = async () => {
+  const fetchTiposPersonasOptions = async () => {
     try {
-      const responseReadAllTiposEstados = await getAllTiposEstados();
-      setTiposEstadosOptions(responseReadAllTiposEstados);
+      const responseReadAllTiposPersonas = await getAllTiposPersonas();
+      setTiposPersonasOptions(responseReadAllTiposPersonas);
       setFormData((prevState) => {
         return {
           ...prevState,
-          ["id_tipo_estado"]: responseReadAllTiposEstados[0].value.toString(),
+          ["id_tipo_persona"]: responseReadAllTiposPersonas[0].value.toString(),
         };
       });
     } catch (error) {
@@ -45,27 +63,107 @@ export default function FormPedidosClientes({
     }
   };
 
-  function validarFechaYYYYMMDD(fecha) {
-    return fecha.match(REGEX_DATE_YYYYMMDD);
-  }
+  const validateRequiredFields = () => {
+    const errorMissingFields = {};
 
-  function formatearFechaAYYYYMMDD(fechaConFormatoOriginal) {
-    const [dia, mes, year] = fechaConFormatoOriginal.split("-");
-    const fechaFormateada = `${year}-${mes}-${dia}`;
-    return fechaFormateada;
-  }
+    if (!formData.numero_empleado) {
+      errorMissingFields.numero_empleado =
+        "Por favor, ingresa un numero empleado";
+    }
+
+    if (!formData.nombre) {
+      errorMissingFields.nombre = "Por favor, ingresa un nombre";
+    }
+
+    if (!formData.apellidos) {
+      errorMissingFields.apellidos = "Por favor, ingresa un apellido";
+    }
+
+    if (!formData.genero) {
+      errorMissingFields.genero = "Por favor, ingresa un género";
+    }
+
+    if (!formData.fecha_nacimiento) {
+      errorMissingFields.fecha_nacimiento =
+        "Por favor, selecciona una fecha de nacimiento";
+    }
+
+    if (!formData.dni) {
+      errorMissingFields.dni = "Por favor, ingresa un DNI";
+    }
+
+    if (!formData.direccion) {
+      errorMissingFields.direccion = "Por favor, ingresa una direccion";
+    }
+
+    if (!formData.numero_telefono || formData.numero_telefono === "34") {
+      errorMissingFields.numero_telefono =
+        "Por favor, ingresa un numero de telefono";
+    }
+
+    if (!formData.correo_electronico) {
+      errorMissingFields.correo_electronico =
+        "Por favor, ingresa un correo electronico";
+    }
+
+    if (!formData.id_tipo_persona) {
+      errorMissingFields.id_tipo_persona =
+        "Por favor, ingresa un tipo de persona";
+    }
+
+    setRequiredFieldsIncomplete(errorMissingFields);
+
+    console.log("errorMissingFields: ", errorMissingFields);
+
+    return Object.keys(errorMissingFields).length !== 0;
+  };
+
+  const validateFormData = () => {
+    const errorForm = {};
+
+    if (!formData.dni.match(REGEX_DNI)) {
+      errorForm.dni = "Por favor, ingresa un DNI válido";
+    }
+
+    if (!formData.numero_telefono.match(REGEX_TELEFONO_CON_PREFIJO)) {
+      errorForm.numero_telefono =
+        "Por favor, ingresa un numero de telefono válido";
+    }
+
+    if (!formData.correo_electronico.match(REGEX_EMAIL)) {
+      errorForm.correo_electronico = "Por favor, ingresa un email válido";
+    }
+
+    setFormErrors(errorForm);
+    console.log("errorForm", errorForm);
+
+    return Object.keys(errorForm).length !== 0;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchTiposEstadosOptions();
+        await fetchTiposPersonasOptions();
 
-        console.log("operationType: ", operationType, vacacionEmpleadoDataForm);
+        console.log("operationType: ", operationType);
 
         if (operationType === "update" || operationType === "view") {
-          setFormData(() => ({
-            ...vacacionEmpleadoDataForm,
-          }));
+          if (validarFechaYYYYMMDD(pedidoClienteDataForm.fecha_nacimiento) === null) {
+            const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
+              pedidoClienteDataForm.fecha_nacimiento
+            );
+
+            console.log("fechaFormateada: ", fechaNacimientoFormateada);
+
+            setFormData(() => ({
+              ...pedidoClienteDataForm,
+              fecha_nacimiento: fechaNacimientoFormateada,
+            }));
+          } else {
+            setFormData(() => ({
+              ...pedidoClienteDataForm,
+            }));
+          }
         }
       } catch (error) {
         console.error("Error en useEffect: ", error);
@@ -73,15 +171,13 @@ export default function FormPedidosClientes({
     };
 
     fetchData();
-  }, []); // Se ejecuta solo al montar el componente
+  }, []);
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     if (name === "numero_telefono") {
-      // Si el valor no comienza con "34", mantenlo con "34" al principio
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
 
-      // Actualiza el estado con el nuevo valor
       setFormData((prevFormValue) => ({
         ...prevFormValue,
         [name]: nuevoValor,
@@ -98,17 +194,34 @@ export default function FormPedidosClientes({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const requiredFieldsError = validateRequiredFields();
+    if (requiredFieldsError) {
+      console.log("Error en campos obligatorios: ", requiredFieldsError);
+      setErrorMessage(
+        "No se puede añadir un registro con uno o más campos vacios "
+      );
+      return;
+    }
+
+    const formDataError = validateFormData();
+    if (formDataError) {
+      console.log("Error en datos correctos: ", formDataError);
+      setErrorMessage("");
+      return;
+    }
+
     let errorDevueltoBack = false;
     try {
       if (operationType === "create") {
-        const responseCreateVacacion = await saveVacacionEmpleado(formData);
+        const responseCreatePersona = await savePersona(formData);
         console.log(
-          `Response en handleSubmit en ${operationType} : `,
-          responseCreateVacacion
+          `Resultado en handleSubmit en ${operationType} : `,
+          responseCreatePersona
         );
 
-        if (responseCreateVacacion.status !== 200) {
-          const mensajeError = responseCreateVacacion.errorMessage;
+        if (responseCreatePersona.status !== 200) {
+          const mensajeError = responseCreatePersona.errorMessage;
           console.log("El error es: ", mensajeError);
           setErrorMessage(mensajeError);
           errorDevueltoBack = true;
@@ -122,56 +235,21 @@ export default function FormPedidosClientes({
           formUpdateTrigger();
         }
       } else if (operationType === "update") {
-        const responseUpdateVacacion = await updateVacacionEmpleado(
+        const responseUpdatePersona = await updatePersona(
           formData.id,
           formData
         );
-
         console.log(
-          `Response en handleSubmit en ${operationType} : `,
-          responseUpdateVacacion
+          `Resultado en handleSubmit en ${operationType} : `,
+          responseUpdatePersona
         );
 
-        if (responseUpdateVacacion.status !== 200) {
-          const mensajeError = responseUpdateVacacion.errorMessage;
+        if (responseUpdatePersona.status !== 200) {
+          const mensajeError = responseUpdatePersona.errorMessage;
           console.log("El error es: ", mensajeError);
           setErrorMessage(mensajeError);
           errorDevueltoBack = true;
         } else {
-          if (
-            responseUpdateVacacion.data.tipo_estado.tipo_estado === "Aprobado"
-          ) {
-            const dataVacacionAutorizada = {
-              id_vacacion_empleado:
-                responseUpdateVacacion.data.id_vacacion_empleado,
-              fecha_inicio: responseUpdateVacacion.data.fecha_inicio,
-              fecha_fin: responseUpdateVacacion.data.fecha_fin,
-              dias_disponibles: responseUpdateVacacion.data.dias_disponibles,
-              dias_pendientes: responseUpdateVacacion.data.dias_pendientes,
-              dias_solicitados: responseUpdateVacacion.data.dias_solicitados,
-              dias_disfrutados: responseUpdateVacacion.data.dias_disfrutados,
-              comentarios: responseUpdateVacacion.data.comentarios,
-              dni: responseUpdateVacacion.data.persona.dni,
-              tipo_estado: responseUpdateVacacion.data.tipo_estado.tipo_estado,
-            };
-
-            const responseCreateBlockchainVacacionAutorizada =
-              await saveTransaccionVacacionAutorizada(dataVacacionAutorizada);
-
-            console.log(
-              "responseCreateBlockchainVacacionAutorizada: ",
-              responseCreateBlockchainVacacionAutorizada
-            );
-
-            if (responseCreateBlockchainVacacionAutorizada.status !== 200) {
-              const mensajeError =
-                responseCreateBlockchainVacacionAutorizada.errorMessage;
-              console.log("El error es: ", mensajeError);
-              setErrorMessage(mensajeError);
-              errorDevueltoBack = true;
-            }
-          }
-
           errorDevueltoBack = false;
         }
 
@@ -190,94 +268,104 @@ export default function FormPedidosClientes({
 
   return (
     <>
-      AQUI TENGO QUE HACER LO DE TIPOS DE SOLICITUDES PORQUE DESDE AQUI LLAMO A
-      LA FUNCION DE CREAR O ACTUALIZAR EL TIPO DE SOLICITUD
-      <br />
-      <br />
       <label>
-        Fecha inicio:
+        Numero empleado:
         <input
-          type="date"
-          name="fecha_inicio"
-          value={formData.fecha_inicio}
-          placeholder="Fecha inicio"
+          type="number"
+          name="numero_empleado"
+          value={formData.numero_empleado}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.numero_empleado ? styles.inputError : ""
+          }
         />
+        {requiredFieldsIncomplete.numero_empleado && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.numero_empleado}
+          </div>
+        )}
       </label>
       <br />
       <br />
       <label>
-        Fecha fin:
-        <input
-          type="date"
-          name="fecha_fin"
-          value={formData.fecha_fin}
-          placeholder="Fecha fin"
-          onChange={operationType === "view" ? null : handleChange}
-          readOnly={operationType === "view" ? true : false}
-        />
-      </label>
-      {(operationType === "update" || operationType === "view") && (
-        <>
-          <br />
-          <br />
-          <label>
-            Dias disponibles:
-            <input
-              type="number"
-              name="dias_disponibles"
-              value={formData.dias_disponibles}
-              readOnly={true}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            Dias pendientes:
-            <input
-              type="number"
-              name="dias_pendientes"
-              value={formData.dias_pendientes}
-              readOnly={true}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            Dias solicitados:
-            <input
-              type="number"
-              name="dias_solicitados"
-              value={formData.dias_solicitados}
-              readOnly={true}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            Dias disfrutados:
-            <input
-              type="number"
-              name="dias_disfrutados"
-              value={formData.dias_disfrutados}
-              readOnly={true}
-            />
-          </label>
-        </>
-      )}
-      <br />
-      <br />
-      <label>
-        Comentarios:
+        Nombre:
         <input
           type="text"
-          name="comentarios"
-          value={formData.comentarios}
-          placeholder="Comentarios"
+          name="nombre"
+          value={formData.nombre}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={requiredFieldsIncomplete.nombre ? styles.inputError : ""}
         />
+        {requiredFieldsIncomplete.nombre && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.nombre}
+          </div>
+        )}
+      </label>
+      <br />
+      <br />
+      <label>
+        Apellidos:
+        <input
+          type="text"
+          name="apellidos"
+          value={formData.apellidos}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.apellidos ? styles.inputError : ""
+          }
+        />
+        {requiredFieldsIncomplete.apellidos && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.apellidos}
+          </div>
+        )}
+      </label>
+      <br />
+      <br />
+      <label>
+        Genero:
+        <select
+          name="genero"
+          value={formData.genero}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
+          className={requiredFieldsIncomplete.genero ? styles.inputError : ""}
+        >
+          {generoOptions.map((genero) => (
+            <option key={genero.value} value={genero.value}>
+              {genero.value}
+            </option>
+          ))}
+        </select>
+        {requiredFieldsIncomplete.genero && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.genero}
+          </div>
+        )}
+      </label>
+      <br />
+      <br />
+      <label>
+        Fecha nacimiento:
+        <input
+          type="date"
+          name="fecha_nacimiento"
+          value={formData.fecha_nacimiento}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.fecha_nacimiento ? styles.inputError : ""
+          }
+        />
+        {requiredFieldsIncomplete.fecha_nacimiento && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.fecha_nacimiento}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -287,30 +375,133 @@ export default function FormPedidosClientes({
           type="text"
           name="dni"
           value={formData.dni}
-          placeholder="Dni"
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.dni || formErrors.dni
+              ? styles.inputError
+              : ""
+          }
         />
+        {requiredFieldsIncomplete.dni && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.dni}
+          </div>
+        )}
+        {formErrors.dni && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {formErrors.dni}
+          </div>
+        )}
       </label>
-      {(operationType === "update" || operationType === "view") && (
+      <br />
+      <br />
+      <label>
+        Direccion:
+        <input
+          type="text"
+          name="direccion"
+          value={formData.direccion}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.direccion ? styles.inputError : ""
+          }
+        />
+        {requiredFieldsIncomplete.direccion && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.direccion}
+          </div>
+        )}
+      </label>
+      <br />
+      <br />
+      <label>
+        Numero telefono:
+        <input
+          type="text"
+          name="numero_telefono"
+          value={formData.numero_telefono}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.numero_telefono ||
+            formErrors.numero_telefono
+              ? styles.inputError
+              : ""
+          }
+        />
+        {requiredFieldsIncomplete.numero_telefono && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.numero_telefono}
+          </div>
+        )}
+        {formErrors.numero_telefono && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {formErrors.numero_telefono}
+          </div>
+        )}
+      </label>
+      <br />
+      <br />
+      <label>
+        Correo electronico:
+        <input
+          type="text"
+          name="correo_electronico"
+          value={formData.correo_electronico}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.correo_electronico ||
+            formErrors.correo_electronico
+              ? styles.inputError
+              : ""
+          }
+        />
+        {requiredFieldsIncomplete.correo_electronico && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.correo_electronico}
+          </div>
+        )}
+        {formErrors.correo_electronico && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {formErrors.correo_electronico}
+          </div>
+        )}
+      </label>
+      <br />
+      <br />
+      <label>
+        Selecciona un tipo de persona:
+        <select
+          name="id_tipo_persona"
+          value={formData.id_tipo_persona}
+          onChange={operationType === "view" ? null : handleChange}
+          readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.id_tipo_persona ? styles.inputError : ""
+          }
+        >
+          {tiposPersonasOptions.map((tipoPersona, index) => (
+            <option key={tipoPersona.value} value={tipoPersona.value}>
+              {tipoPersona.label}
+            </option>
+          ))}
+        </select>
+        {requiredFieldsIncomplete.id_tipo_persona && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.id_tipo_persona}
+          </div>
+        )}
+      </label>
+      {errorMessage.length !== 0 && (
         <>
-          <br />
-          <br />
-          <label>
-            Selecciona un tipo de estado:
-            <select
-              name="id_tipo_estado"
-              value={formData.id_tipo_estado}
-              onChange={operationType === "view" ? null : handleChange}
-              readOnly={operationType === "view" ? true : false}
-            >
-              {tiposEstadosOptions.map((tipoEstado, index) => (
-                <option key={tipoEstado.value} value={tipoEstado.value}>
-                  {tipoEstado.label}
-                </option>
-              ))}
-            </select>
-          </label>
+          <br /> <br />
+          <p className={styles.errorMessage}>
+            <ErrorIcon fontSize="medium" color="red" />
+            Error: {errorMessage}
+          </p>
         </>
       )}
       {(operationType === "create" || operationType === "update") && (

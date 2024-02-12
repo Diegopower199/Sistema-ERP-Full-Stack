@@ -67,11 +67,10 @@ public class SolicitudEmpleadoService {
          * }
          */
 
-        int id_persona = nuevoSolicitudEmpleado.getPersona().getId_persona();
+        String dniPersona = nuevoSolicitudEmpleado.getPersona().getDni();
 
-        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                .orElseThrow(() -> new RuntimeException(
-                        "Persona con id " + id_persona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
+                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
 
         nuevoSolicitudEmpleado.setPersona(personaEncontrado);
         personaEncontrado.getSolicitudesEmpleados().add(nuevoSolicitudEmpleado);
@@ -97,7 +96,7 @@ public class SolicitudEmpleadoService {
         if (solicitudEmpleadoRepository.existsByPersonaAndFecha_solicitud(personaEncontrado,
                 nuevoSolicitudEmpleado.getFecha_solicitud())) {
             throw new RuntimeException(
-                    "La persona con id " + id_persona
+                    "La persona con id " + personaEncontrado.getId_persona()
                             + " ya tiene una solicitud en esta fecha");
         }
 
@@ -147,11 +146,10 @@ public class SolicitudEmpleadoService {
 
         solicitudEmpleadoExistente.setComentarios(cambiosSolicitudEmpleado.getComentarios());
 
-        int id_persona = cambiosSolicitudEmpleado.getPersona().getId_persona();
+        String dniPersona = cambiosSolicitudEmpleado.getPersona().getDni();
 
-        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                .orElseThrow(() -> new RuntimeException(
-                        "Persona con id " + id_persona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
+                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
 
         solicitudEmpleadoExistente.getPersona().getSolicitudesEmpleados().remove(solicitudEmpleadoExistente);
         solicitudEmpleadoExistente.setPersona(personaEncontrado);

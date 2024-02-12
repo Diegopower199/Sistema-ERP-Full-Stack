@@ -26,6 +26,7 @@ import {
 } from "@/utils/constants";
 import { getAllNominasEmpleados } from "@/services/NominaEmpleadoService";
 import FormNominasEmpleados from "./FormNominasEmpleados";
+import styles from "./styles.module.css";
 
 export default function NominasEmpleados() {
   const {

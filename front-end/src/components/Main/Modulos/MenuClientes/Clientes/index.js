@@ -29,6 +29,7 @@ import {
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
 import FormClientes from "./FormClientes";
+import styles from "./styles.module.css";
 
 export default function Clientes() {
   const {

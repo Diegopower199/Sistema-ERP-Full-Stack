@@ -26,6 +26,7 @@ import {
   LOCALIZED_COLUMN_MENU_TEXTS,
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
+import styles from "./styles.module.css";
 
 export default function Personas() {
   const {

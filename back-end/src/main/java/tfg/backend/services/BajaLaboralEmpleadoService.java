@@ -69,11 +69,10 @@ public class BajaLaboralEmpleadoService {
          * }
          */
 
-        int id_persona = nuevoBajaLaboralEmpleado.getPersona().getId_persona();
+        String dniPersona = nuevoBajaLaboralEmpleado.getPersona().getDni();
 
-        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                .orElseThrow(() -> new RuntimeException(
-                        "Persona con id " + id_persona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
+                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
 
         nuevoBajaLaboralEmpleado.setPersona(personaEncontrado);
         personaEncontrado.getBajasLaboralesEmpleados().add(nuevoBajaLaboralEmpleado);
@@ -149,11 +148,10 @@ public class BajaLaboralEmpleadoService {
         bajaLaboralEmpleadoExistente.setFecha_fin(cambiosBajaLaboralEmpleado.getFecha_fin());
         bajaLaboralEmpleadoExistente.setComentarios(cambiosBajaLaboralEmpleado.getComentarios());
 
-        int id_persona = cambiosBajaLaboralEmpleado.getPersona().getId_persona();
+        String dniPersona = cambiosBajaLaboralEmpleado.getPersona().getDni();
 
-        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                .orElseThrow(() -> new RuntimeException(
-                        "Persona con id " + id_persona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
+                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
 
         bajaLaboralEmpleadoExistente.getPersona().getBajasLaboralesEmpleados()
                 .remove(bajaLaboralEmpleadoExistente);

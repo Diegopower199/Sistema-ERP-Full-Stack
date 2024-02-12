@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { savePersona, updatePersona } from "@/services/PersonaService";
 import { getAllTiposPersonas } from "@/services/TipoPersonaService";
 import {
-  REGEX_DATE_YYYYMMDD,
   REGEX_DNI,
   REGEX_EMAIL,
   REGEX_TELEFONO_CON_PREFIJO,
 } from "@/utils/regexPatterns";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
+import {
+  formatearFechaYYYYMMDD,
+  validarFechaYYYYMMDD,
+} from "@/utils/functionsFecha";
 
 export default function FormPersonas({
   toggleForm,
@@ -40,7 +43,7 @@ export default function FormPersonas({
     id_tipo_persona: "1",
   });
 
-  const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState([]);
+  const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -59,16 +62,6 @@ export default function FormPersonas({
       console.error("El error es: ", error);
     }
   };
-
-  function validarFechaYYYYMMDD(fecha) {
-    return fecha.match(REGEX_DATE_YYYYMMDD);
-  }
-
-  function formatearFechaAYYYYMMDD(fechaConFormatoOriginal) {
-    const [dia, mes, year] = fechaConFormatoOriginal.split("-");
-    const fechaFormateada = `${year}-${mes}-${dia}`;
-    return fechaFormateada;
-  }
 
   const validateRequiredFields = () => {
     const errorMissingFields = {};
@@ -156,7 +149,7 @@ export default function FormPersonas({
 
         if (operationType === "update" || operationType === "view") {
           if (validarFechaYYYYMMDD(personaDataForm.fecha_nacimiento) === null) {
-            const fechaNacimientoFormateada = formatearFechaAYYYYMMDD(
+            const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
               personaDataForm.fecha_nacimiento
             );
 
@@ -178,15 +171,13 @@ export default function FormPersonas({
     };
 
     fetchData();
-  }, []); // Se ejecuta solo al montar el componente
+  }, []);
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     if (name === "numero_telefono") {
-      // Si el valor no comienza con "34", mantenlo con "34" al principio
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
 
-      // Actualiza el estado con el nuevo valor
       setFormData((prevFormValue) => ({
         ...prevFormValue,
         [name]: nuevoValor,
@@ -216,6 +207,7 @@ export default function FormPersonas({
     const formDataError = validateFormData();
     if (formDataError) {
       console.log("Error en datos correctos: ", formDataError);
+      setErrorMessage("");
       return;
     }
 
@@ -270,7 +262,6 @@ export default function FormPersonas({
     } catch (error) {
       console.log("Error al agregar registro: ", error);
     }
-    // Realizar acciones adicionales con los datos del formulario
   };
 
   // https://es.stackoverflow.com/questions/289413/bloquear-n%C3%BAmeros-letras-y-o-caracteres-especiales-en-un-input MIRARME ESTO
@@ -504,9 +495,9 @@ export default function FormPersonas({
           </div>
         )}
       </label>
-      <br /> <br />
       {errorMessage.length !== 0 && (
         <>
+          <br /> <br />
           <p className={styles.errorMessage}>
             <ErrorIcon fontSize="medium" color="red" />
             Error: {errorMessage}

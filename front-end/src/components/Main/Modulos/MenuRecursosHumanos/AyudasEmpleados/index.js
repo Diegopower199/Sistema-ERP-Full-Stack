@@ -29,6 +29,7 @@ import {
   getAllAyudasEmpleados,
 } from "@/services/AyudaEmpleadoService";
 import FormAyudasEmpleados from "./FormAyudasEmpleados";
+import styles from "./styles.module.css";
 
 export default function AyudasEmpleados() {
   const {

@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { savePersona, updatePersona } from "@/services/PersonaService";
-import { getAllTiposPersonas } from "@/services/TipoPersonaService";
-import { REGEX_DATE_YYYYMMDD } from "@/utils/regexPatterns";
+import { REGEX_DNI } from "@/utils/regexPatterns";
+import styles from "./styles.module.css";
+import ErrorIcon from "@mui/icons-material/Error";
+import {
+  formatearFechaYYYYMMDD,
+  validarFechaYYYYMMDD,
+} from "@/utils/functionsFecha";
 import { getAllTiposSolicitudes } from "@/services/TipoSolicitudService";
 import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import {
+  saveSolicitudEmpleado,
+  updateSolicitudEmpleado,
+} from "@/services/SolicitudEmpleadoService";
 
 export default function FormSolicitudesEmpleados({
   toggleForm,
@@ -11,8 +20,6 @@ export default function FormSolicitudesEmpleados({
   formUpdateTrigger,
   operationType,
 }) {
-  const [tiposPersonasOptions, setTiposPersonasOptions] = useState([]);
-
   const [tiposEstadosOptions, setTiposEstadosOptions] = useState([]);
   const [tiposSolicitudesOptions, setTiposSolicitudesOptions] = useState([]);
 
@@ -24,23 +31,10 @@ export default function FormSolicitudesEmpleados({
     id_tipo_estado: "1",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
+  const [formErrors, setFormErrors] = useState({});
 
-  const fetchTiposPersonasOptions = async () => {
-    try {
-      const responseReadAllTiposPersonas = await getAllTiposPersonas();
-      // console.log("Resultado: ", resultado);
-      setTiposPersonasOptions(responseReadAllTiposPersonas);
-      setFormData((prevState) => {
-        return {
-          ...prevState,
-          ["id_tipo_persona"]: responseReadAllTiposPersonas[0].value.toString(),
-        };
-      });
-    } catch (error) {
-      console.error("El error es: ", error);
-    }
-  };
+  const [errorMessage, setErrorMessage] = useState("");
 
   const fetchTiposSolicitudesOptions = async () => {
     try {
@@ -49,7 +43,8 @@ export default function FormSolicitudesEmpleados({
       setFormData((prevState) => {
         return {
           ...prevState,
-          ["id_tipo_solicitud"]: responseReadAllTiposSolicitudes[0].value.toString(),
+          ["id_tipo_solicitud"]:
+            responseReadAllTiposSolicitudes[0].value.toString(),
         };
       });
     } catch (error) {
@@ -72,20 +67,36 @@ export default function FormSolicitudesEmpleados({
     }
   };
 
-  function validarFechaYYYYMMDD(fecha) {
-    return fecha.match(REGEX_DATE_YYYYMMDD);
-  }
+  const validateRequiredFields = () => {
+    const errorMissingFields = {};
 
-  function formatearFechaAYYYYMMDD(fechaConFormatoOriginal) {
-    const [dia, mes, year] = fechaConFormatoOriginal.split("-");
-    const fechaFormateada = `${year}-${mes}-${dia}`;
-    return fechaFormateada;
-  }
+    /*if (!formData.dni) {
+      errorMissingFields.dni = "Por favor, ingresa un DNI";
+    }*/
+
+    setRequiredFieldsIncomplete(errorMissingFields);
+
+    console.log("errorMissingFields: ", errorMissingFields);
+
+    return Object.keys(errorMissingFields).length !== 0;
+  };
+
+  const validateFormData = () => {
+    const errorForm = {};
+
+    /*if (!formData.dni.match(REGEX_DNI)) {
+      errorForm.dni = "Por favor, ingresa un DNI válido";
+    }*/
+
+    setFormErrors(errorForm);
+    console.log("errorForm", errorForm);
+
+    return Object.keys(errorForm).length !== 0;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchTiposPersonasOptions();
         await fetchTiposSolicitudesOptions();
         await fetchTiposEstadosOptions();
 
@@ -96,11 +107,11 @@ export default function FormSolicitudesEmpleados({
             validarFechaYYYYMMDD(solicitudEmpleadoDataForm.fecha_solicitud) ===
             null
           ) {
-            const fechaSolicitudFormateada = formatearFechaAYYYYMMDD(
+            const fechaSolicitudFormateada = formatearFechaYYYYMMDD(
               solicitudEmpleadoDataForm.fecha_solicitud
             );
 
-            console.log("fechaFormateada: ", fechaSolicitudFormateada);
+            console.log("fechaSolicitudFormateada: ", fechaSolicitudFormateada);
 
             setFormData(() => ({
               ...solicitudEmpleadoDataForm,
@@ -118,7 +129,7 @@ export default function FormSolicitudesEmpleados({
     };
 
     fetchData();
-  }, []); // Se ejecuta solo al montar el componente
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -133,17 +144,36 @@ export default function FormSolicitudesEmpleados({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const requiredFieldsError = validateRequiredFields();
+    if (requiredFieldsError) {
+      console.log("Error en campos obligatorios: ", requiredFieldsError);
+      setErrorMessage(
+        "No se puede añadir un registro con uno o más campos vacios "
+      );
+      return;
+    }
+
+    const formDataError = validateFormData();
+    if (formDataError) {
+      console.log("Error en datos correctos: ", formDataError);
+      setErrorMessage("");
+      return;
+    }
+
     let errorDevueltoBack = false;
     try {
       if (operationType === "create") {
-        const responseCreatePersona = await savePersona(formData);
+        const responseCreateSolicitudEmpleado = await saveSolicitudEmpleado(
+          formData
+        );
         console.log(
           `Resultado en handleSubmit en ${operationType} : `,
-          responseCreatePersona
+          responseCreateSolicitudEmpleado
         );
 
-        if (responseCreatePersona.status !== 200) {
-          const mensajeError = responseCreatePersona.errorMessage;
+        if (responseCreateSolicitudEmpleado.status !== 200) {
+          const mensajeError = responseCreateSolicitudEmpleado.errorMessage;
           console.log("El error es: ", mensajeError);
           setErrorMessage(mensajeError);
           errorDevueltoBack = true;
@@ -157,17 +187,17 @@ export default function FormSolicitudesEmpleados({
           formUpdateTrigger();
         }
       } else if (operationType === "update") {
-        const responseUpdatePersona = await updatePersona(
+        const responseUpdateSolicitudEmpleado = await updateSolicitudEmpleado(
           formData.id,
           formData
         );
         console.log(
           `Resultado en handleSubmit en ${operationType} : `,
-          responseUpdatePersona
+          responseUpdateSolicitudEmpleado
         );
 
-        if (responseUpdatePersona.status !== 200) {
-          const mensajeError = responseUpdatePersona.errorMessage;
+        if (responseUpdateSolicitudEmpleado.status !== 200) {
+          const mensajeError = responseUpdateSolicitudEmpleado.errorMessage;
           console.log("El error es: ", mensajeError);
           setErrorMessage(mensajeError);
           errorDevueltoBack = true;
@@ -198,7 +228,15 @@ export default function FormSolicitudesEmpleados({
           value={formData.fecha_solicitud}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.fecha_solicitud ? styles.inputError : ""
+          }
         />
+        {requiredFieldsIncomplete.fecha_solicitud && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.fecha_solicitud}
+          </div>
+        )}
       </label>
       <br />
       <br />
@@ -222,28 +260,86 @@ export default function FormSolicitudesEmpleados({
           value={formData.dni}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.dni || formErrors.dni
+              ? styles.inputError
+              : ""
+          }
         />
+        {requiredFieldsIncomplete.dni && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.dni}
+          </div>
+        )}
+        {formErrors.dni && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {formErrors.dni}
+          </div>
+        )}
       </label>
-      <br />
-      <br />
-
       <br />
       <br />
       <label>
-        Selecciona un tipo de persona:
+        Selecciona un tipo de solicitud:
         <select
-          name="id_tipo_persona"
-          value={formData.id_tipo_persona}
+          name="id_tipo_solicitud"
+          value={formData.id_tipo_solicitud}
           onChange={operationType === "view" ? null : handleChange}
           readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.id_tipo_solicitud ? styles.inputError : ""
+          }
         >
-          {tiposPersonasOptions.map((tipoPersona, index) => (
-            <option key={tipoPersona.value} value={tipoPersona.value}>
-              {tipoPersona.label}
+          {tiposSolicitudesOptions.map((tipoSolicitud, index) => (
+            <option key={tipoSolicitud.value} value={tipoSolicitud.value}>
+              {tipoSolicitud.label}
             </option>
           ))}
         </select>
+        {requiredFieldsIncomplete.id_tipo_solicitud && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.id_tipo_solicitud}
+          </div>
+        )}
       </label>
+      {(operationType === "update" || operationType === "view") && (
+        <>
+          <br />
+          <br />
+          <label>
+            Selecciona un tipo de estado:
+            <select
+              name="id_tipo_estado"
+              value={formData.id_tipo_estado}
+              onChange={operationType === "view" ? null : handleChange}
+              readOnly={operationType === "view" ? true : false}
+              className={
+                requiredFieldsIncomplete.id_tipo_estado ? styles.inputError : ""
+              }
+            >
+              {tiposEstadosOptions.map((tipoEstado, index) => (
+                <option key={tipoEstado.value} value={tipoEstado.value}>
+                  {tipoEstado.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          {requiredFieldsIncomplete.id_tipo_estado && (
+            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+              {requiredFieldsIncomplete.id_tipo_estado}
+            </div>
+          )}
+        </>
+      )}
+      {errorMessage.length !== 0 && (
+        <>
+          <br /> <br />
+          <p className={styles.errorMessage}>
+            <ErrorIcon fontSize="medium" color="red" />
+            Error: {errorMessage}
+          </p>
+        </>
+      )}
       {(operationType === "create" || operationType === "update") && (
         <>
           <br /> <br />

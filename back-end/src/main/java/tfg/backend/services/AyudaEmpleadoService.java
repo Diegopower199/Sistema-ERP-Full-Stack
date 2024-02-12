@@ -18,7 +18,7 @@ import tfg.backend.repositories.TipoEstadoRepository;
 
 @Service
 public class AyudaEmpleadoService {
-    
+
     @Autowired
     private AyudaEmpleadoRepository ayudaEmpleadoRepository;
 
@@ -64,11 +64,10 @@ public class AyudaEmpleadoService {
          * }
          */
 
-        int id_persona = nuevoAyudaEmpleado.getPersona().getId_persona();
+        String dniPersona = nuevoAyudaEmpleado.getPersona().getDni();
 
-        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                .orElseThrow(() -> new RuntimeException(
-                        "Persona con id " + id_persona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
+                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
 
         nuevoAyudaEmpleado.setPersona(personaEncontrado);
         personaEncontrado.getAyudasEmpleados().add(nuevoAyudaEmpleado);
@@ -138,11 +137,10 @@ public class AyudaEmpleadoService {
         ayudaEmpleadoExistente.setFecha_fin(cambiosAyudaEmpleado.getFecha_fin());
         ayudaEmpleadoExistente.setValor_asociado(cambiosAyudaEmpleado.getValor_asociado());
 
-        int id_persona = cambiosAyudaEmpleado.getPersona().getId_persona();
+        String dniPersona = cambiosAyudaEmpleado.getPersona().getDni();
 
-        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
-                .orElseThrow(() -> new RuntimeException(
-                        "Persona con id " + id_persona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
+                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
 
         ayudaEmpleadoExistente.getPersona().getAyudasEmpleados().remove(ayudaEmpleadoExistente);
         ayudaEmpleadoExistente.setPersona(personaEncontrado);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="blockchain.AppTest" time="0.047" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="blockchain.AppTest" time="0.043" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="ES"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-17\bin"/>
-    <property name="sun.java.command" value="C:\Users\Diego\AppData\Local\Temp\surefire17311852449799429983\surefirebooter6414343021660967585.jar C:\Users\Diego\AppData\Local\Temp\surefire17311852449799429983 2024-02-02T14-15-30_433-jvmRun1 surefire5074659693599331249tmp surefire_015920826867321669664tmp"/>
+    <property name="sun.java.command" value="C:\Users\Diego\AppData\Local\Temp\surefire16969604622443592127\surefirebooter13372457445411211.jar C:\Users\Diego\AppData\Local\Temp\surefire16969604622443592127 2024-02-12T13-07-30_897-jvmRun1 surefire2778581298454147290tmp surefire_03545885192428993451tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Trabajo-TFG\blockchain-authorized-vacations\target\test-classes;C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Trabajo-TFG\blockchain-authorized-vacations\target\classes;C:\Users\Diego\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Diego\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\Diego\.m2\repository\commonclasses\common-backend-and-blockchain-classes\1.0-SNAPSHOT\common-backend-and-blockchain-classes-1.0-SNAPSHOT.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Diego\AppData\Local\Temp\surefire17311852449799429983\surefirebooter6414343021660967585.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Diego\AppData\Local\Temp\surefire16969604622443592127\surefirebooter13372457445411211.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.9+11-LTS-201"/>
@@ -56,5 +56,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="blockchain.AppTest" time="0.002"/>
+  <testcase name="shouldAnswerWithTrue" classname="blockchain.AppTest" time="0.001"/>
 </testsuite>

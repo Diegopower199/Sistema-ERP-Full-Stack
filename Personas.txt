@@ -13,7 +13,8 @@ Tipo persona 1
         "correo_electronico": "admin@example.com",
         "tipo_persona": {
             "id_tipo_persona": 1
- }
+        }
+}
 
 {
     "numero_empleado": 2,

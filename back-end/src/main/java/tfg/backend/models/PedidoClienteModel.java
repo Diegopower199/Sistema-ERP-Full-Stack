@@ -30,7 +30,7 @@ public class PedidoClienteModel implements Serializable {
     @Column(name = "fecha_entrega_prevista", nullable = false)
     private LocalDate fecha_entrega_prevista;
 
-    @Column(name = "fecha_entrega_real", nullable = false)
+    @Column(name = "fecha_entrega_real", nullable = true)
     private LocalDate fecha_entrega_real;
 
     @ManyToOne

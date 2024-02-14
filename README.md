@@ -116,7 +116,7 @@ https://medium.com/@thearaseng/building-a-full-stack-product-app-with-react-spri
 
 
 
-Comandos a ejecutar:
+Comandos a ejecutar sin tener el archivo tasks.json:
 
     - back-end: ./mvnw clean install spring-boot:run 
 

@@ -1,4 +1,5 @@
 import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import * as antd from "antd";
 import React, { useEffect, useState } from "react";
 
 function FormularioVacacionEmpleado() {
@@ -16,12 +17,12 @@ function FormularioVacacionEmpleado() {
       const resultado = await getAllTiposEstados();
       console.log("Resultado: ", resultado);
       setTiposEstadosOptions(resultado);
-      setFormulario((prevState) => {
+      /*setFormulario((prevState) => {
         return {
           ...prevState,
           ["tipo_estado"]: resultado[0].value.toString(),
         };
-      });
+      });*/
     } catch (error) {
       console.error("El error es: ", error);
     }
@@ -75,17 +76,25 @@ function FormularioVacacionEmpleado() {
       <br />
       <label>
         Selecciona un tipo de estado:
-        <select
+        <antd.Select
           name="tipo_estado"
-          value={formulario.tipo_estado}
-          onChange={handleChange}
+          //value={formulario.tipo_estado}
+          defaultValue={formulario.tipo_estado ? formulario.tipo_estado : "Selecciona un tipo de estado"}
+          onChange={() => {
+            setFormulario((prevState) => {
+              return {
+                ...prevState,
+                ["tipo_estado"]: "2",
+              };
+            });
+          }}
         >
           {tiposEstadosOptions.map((tipoEstado, index) => (
-            <option key={tipoEstado.value} value={tipoEstado.value}>
+            <antd.Select.Option key={tipoEstado.value} value={tipoEstado.value}>
               {tipoEstado.label}
-            </option>
+            </antd.Select.Option>
           ))}
-        </select>
+        </antd.Select>
       </label>
       <br /> <br />
       <button onClick={handleSubmit}>Enviar</button>

@@ -131,7 +131,7 @@ export default function FormSolicitudesEmpleados({
     fetchData();
   }, []);
 
-  const handleChange = (event) => {
+  const handleFormChange = (event) => {
     const { name, value } = event.target;
 
     setFormData((prevState) => {
@@ -226,7 +226,7 @@ export default function FormSolicitudesEmpleados({
           type="date"
           name="fecha_solicitud"
           value={formData.fecha_solicitud}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.fecha_solicitud ? styles.inputError : ""
@@ -246,7 +246,7 @@ export default function FormSolicitudesEmpleados({
           type="text"
           name="comentarios"
           value={formData.comentarios}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
         />
       </label>
@@ -258,7 +258,7 @@ export default function FormSolicitudesEmpleados({
           type="text"
           name="dni"
           value={formData.dni}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.dni || formErrors.dni
@@ -284,7 +284,7 @@ export default function FormSolicitudesEmpleados({
         <select
           name="id_tipo_solicitud"
           value={formData.id_tipo_solicitud}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.id_tipo_solicitud ? styles.inputError : ""
@@ -311,7 +311,7 @@ export default function FormSolicitudesEmpleados({
             <select
               name="id_tipo_estado"
               value={formData.id_tipo_estado}
-              onChange={operationType === "view" ? null : handleChange}
+              onChange={operationType === "view" ? null : handleFormChange}
               readOnly={operationType === "view" ? true : false}
               className={
                 requiredFieldsIncomplete.id_tipo_estado ? styles.inputError : ""

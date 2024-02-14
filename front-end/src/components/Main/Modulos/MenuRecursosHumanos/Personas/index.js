@@ -20,7 +20,7 @@ import {
 import MenuItem from "@mui/material/MenuItem";
 import { deletePersona, getAllPersonas } from "@/services/PersonaService";
 import FormPersonas from "./FormPersonas";
-import { Modal } from "antd";
+import * as Antd from "antd";
 import Link from "next/link";
 import {
   LOCALIZED_COLUMN_MENU_TEXTS,
@@ -359,7 +359,7 @@ export default function Personas() {
 
     function deleteModal() {
       return (
-        <Modal
+        <Antd.Modal
           title={`¿Eliminar a la siguiente persona ${namePersonaSelected}?`}
           open={showDelete}
           okText="Aceptar"
@@ -367,7 +367,7 @@ export default function Personas() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Modal>
+        ></Antd.Modal>
       );
     }
 

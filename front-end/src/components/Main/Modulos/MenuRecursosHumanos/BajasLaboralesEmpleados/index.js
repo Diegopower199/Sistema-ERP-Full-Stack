@@ -18,7 +18,7 @@ import {
   gridVisibleColumnFieldsSelector,
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
-import { Modal } from "antd";
+import * as Antd from "antd";
 import Link from "next/link";
 import {
   LOCALIZED_COLUMN_MENU_TEXTS,
@@ -358,7 +358,7 @@ export default function BajasLaboralesEmpleados() {
 
     function deleteModal() {
       return (
-        <Modal
+        <Antd.Modal
           title={`¿Desea eliminar las vacaciones asociadas al DNI ${dniPersonaBajaLaboralEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinBajaLaboralEmpleadoSelected[0]} hasta el ${fechaInicioAndFinBajaLaboralEmpleadoSelected[1]}?`}
           open={showDelete}
           okText="Aceptar"
@@ -366,7 +366,7 @@ export default function BajasLaboralesEmpleados() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Modal>
+        ></Antd.Modal>
       );
     }
 

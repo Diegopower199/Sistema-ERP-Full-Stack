@@ -1,5 +1,6 @@
 import { getAllTiposEstados } from "@/services/TipoEstadoService";
-import * as antd from "antd";
+//import antd, { Button, Select } from "antd";
+import * as Antd from "antd";
 import React, { useEffect, useState } from "react";
 
 function FormularioVacacionEmpleado() {
@@ -32,7 +33,7 @@ function FormularioVacacionEmpleado() {
     fetchTiposEstadosOptions();
   }, []); // Se ejecuta solo al montar el componente
 
-  const handleChange = (event) => {
+  const handleFormChange = (event) => {
     const { name, value, type, checked } = event.target;
     console.log("NAME: ", name, "\nValue: ", value);
     // Manejar cambios según el tipo de input
@@ -40,6 +41,27 @@ function FormularioVacacionEmpleado() {
       return {
         ...prevState,
         [name]: type === "checkbox" ? checked : value,
+      };
+    });
+  };
+
+  const handleDateChange = (date) => {
+    const dateSelected = date.format("YYYY-MM-DD");
+    console.log("Dia seleccionado: ", dateSelected);
+    setFormulario((prevState) => {
+      return {
+        ...prevState,
+        ["year"]: dateSelected,
+      };
+    });
+  };
+
+  const handleTipoEstadoChange = (tipoEstado) => {
+    console.log("El tipo estado es: ", tipoEstado);
+    setFormulario((prevState) => {
+      return {
+        ...prevState,
+        ["tipo_estado"]: tipoEstado.toString(),
       };
     });
   };
@@ -58,7 +80,7 @@ function FormularioVacacionEmpleado() {
           type="date"
           name="fecha_inicio"
           value={formulario.fecha_inicio}
-          onChange={handleChange}
+          onChange={handleFormChange}
         />
       </label>
       <br />
@@ -69,33 +91,50 @@ function FormularioVacacionEmpleado() {
           type="date"
           name="fecha_finalizacion"
           value={formulario.fecha_finalizacion}
-          onChange={handleChange}
+          onChange={handleFormChange}
         />
       </label>
       <br />
       <br />
+      <br></br>
+      Select de antd
       <label>
         Selecciona un tipo de estado:
-        <antd.Select
-          name="tipo_estado"
-          //value={formulario.tipo_estado}
-          defaultValue={formulario.tipo_estado ? formulario.tipo_estado : "Selecciona un tipo de estado"}
-          onChange={() => {
-            setFormulario((prevState) => {
-              return {
-                ...prevState,
-                ["tipo_estado"]: "2",
-              };
-            });
-          }}
-        >
-          {tiposEstadosOptions.map((tipoEstado, index) => (
-            <antd.Select.Option key={tipoEstado.value} value={tipoEstado.value}>
-              {tipoEstado.label}
-            </antd.Select.Option>
-          ))}
-        </antd.Select>
+        {
+          <Antd.Select
+            name="tipo_estado"
+            defaultValue={
+              formulario.tipo_estado
+                ? formulario.tipo_estado
+                : "Selecciona un tipo de estado"
+            }
+            onChange={handleTipoEstadoChange}
+          >
+            {tiposEstadosOptions.map((tipoEstado, index) => (
+              <Antd.Select.Option
+                key={tipoEstado.value}
+                value={tipoEstado.value}
+              >
+                {tipoEstado.label}
+              </Antd.Select.Option>
+            ))}
+          </Antd.Select>
+        }
       </label>
+      <br></br>
+      DatePicker (fechas) de antd
+      <Antd.DatePicker onChange={handleDateChange}></Antd.DatePicker>
+      <Antd.Form>
+        <Antd.Form.Item label="Nombre">
+          <Antd.Input
+            type="text"
+            name="nombre"
+            id="nombre"
+            onChange={handleFormChange}
+            required
+          ></Antd.Input>
+        </Antd.Form.Item>
+      </Antd.Form>
       <br /> <br />
       <button onClick={handleSubmit}>Enviar</button>
     </>

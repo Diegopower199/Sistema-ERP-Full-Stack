@@ -19,7 +19,7 @@ import {
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
 import FormVacacionesEmpleados from "./FormVacacionesEmpleados";
-import { Modal } from "antd";
+import * as Antd from "antd";
 import Link from "next/link";
 import {
   deleteVacacionEmpleado,
@@ -373,7 +373,7 @@ export default function VacacionesEmpleados() {
   const renderTableVacacionEmpleado = () => {
     function deleteModal() {
       return (
-        <Modal
+        <Antd.Modal
           title={`¿Desea eliminar las vacaciones asociadas a la persona con DNI ${dniPersonaVacacionEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
           open={showDelete}
           okText="Aceptar"
@@ -381,7 +381,7 @@ export default function VacacionesEmpleados() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Modal>
+        ></Antd.Modal>
       );
     }
 

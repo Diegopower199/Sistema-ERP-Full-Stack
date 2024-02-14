@@ -18,7 +18,7 @@ import {
   gridVisibleColumnFieldsSelector,
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
-import { Modal } from "antd";
+import * as Antd from "antd";
 import Link from "next/link";
 import {
   deleteSolicitudEmpleado,
@@ -342,7 +342,7 @@ export default function SolicitudesEmpleados() {
   const renderTableSolicitudEmpleado = () => {
     function deleteModal() {
       return (
-        <Modal
+        <Antd.Modal
           title={`¿Desea eliminar la solicitud asociada a la persona con DNI ${dniPersonaSolicitudEmpleadoSelected} en la fecha ${fechaSolicitudEmpleadoSelected}?`}
           open={showDelete}
           okText="Aceptar"
@@ -350,7 +350,7 @@ export default function SolicitudesEmpleados() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Modal>
+        ></Antd.Modal>
       );
     }
 

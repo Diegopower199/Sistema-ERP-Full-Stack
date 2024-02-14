@@ -137,7 +137,7 @@ export default function FormVacacionesEmpleados({
     fetchData();
   }, []);
 
-  const handleChange = (event) => {
+  const handleFormChange = (event) => {
     const { name, value } = event.target;
 
     setFormData((prevState) => {
@@ -266,7 +266,7 @@ export default function FormVacacionesEmpleados({
           name="fecha_inicio"
           value={formData.fecha_inicio}
           placeholder="Fecha inicio"
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.fecha_inicio ? styles.inputError : ""
@@ -287,7 +287,7 @@ export default function FormVacacionesEmpleados({
           name="fecha_fin"
           value={formData.fecha_fin}
           placeholder="Fecha fin"
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.fecha_fin ? styles.inputError : ""
@@ -356,7 +356,7 @@ export default function FormVacacionesEmpleados({
           name="comentarios"
           value={formData.comentarios}
           placeholder="Comentarios"
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
         />
       </label>
@@ -369,7 +369,7 @@ export default function FormVacacionesEmpleados({
           name="dni"
           value={formData.dni}
           placeholder="Dni"
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={requiredFieldsIncomplete.dni ? styles.inputError : ""}
         />
@@ -393,7 +393,7 @@ export default function FormVacacionesEmpleados({
             <select
               name="id_tipo_estado"
               value={formData.id_tipo_estado}
-              onChange={operationType === "view" ? null : handleChange}
+              onChange={operationType === "view" ? null : handleFormChange}
               readOnly={operationType === "view" ? true : false}
               className={
                 requiredFieldsIncomplete.id_tipo_estado ? styles.inputError : ""

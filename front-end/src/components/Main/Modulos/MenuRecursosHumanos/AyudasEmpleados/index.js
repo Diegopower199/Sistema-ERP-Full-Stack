@@ -18,7 +18,7 @@ import {
   gridVisibleColumnFieldsSelector,
 } from "@mui/x-data-grid";
 import MenuItem from "@mui/material/MenuItem";
-import { Modal } from "antd";
+import * as Antd from "antd";
 import Link from "next/link";
 import {
   LOCALIZED_COLUMN_MENU_TEXTS,
@@ -361,7 +361,7 @@ export default function AyudasEmpleados() {
 
     function deleteModal() {
       return (
-        <Modal
+        <Antd.Modal
           title={`¿Desea eliminar la ayuda asociada al DNI ${dniPersonaAyudaEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinAyudaEmpleadoSelected[0]} hasta el ${fechaInicioAndFinAyudaEmpleadoSelected[1]}?`}
           open={showDelete}
           okText="Aceptar"
@@ -369,7 +369,7 @@ export default function AyudasEmpleados() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Modal>
+        ></Antd.Modal>
       );
     }
 

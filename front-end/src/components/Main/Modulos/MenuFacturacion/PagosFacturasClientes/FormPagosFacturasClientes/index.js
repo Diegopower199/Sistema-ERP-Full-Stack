@@ -177,7 +177,7 @@ export default function FormPagosFacturasClientes({
     fetchData();
   }, []);
 
-  const handleChange = (event) => {
+  const handleFormChange = (event) => {
     const { name, value, type, checked } = event.target;
     if (name === "numero_telefono") {
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
@@ -278,7 +278,7 @@ export default function FormPagosFacturasClientes({
           type="number"
           name="numero_empleado"
           value={formData.numero_empleado}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.numero_empleado ? styles.inputError : ""
@@ -298,7 +298,7 @@ export default function FormPagosFacturasClientes({
           type="text"
           name="nombre"
           value={formData.nombre}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={requiredFieldsIncomplete.nombre ? styles.inputError : ""}
         />
@@ -316,7 +316,7 @@ export default function FormPagosFacturasClientes({
           type="text"
           name="apellidos"
           value={formData.apellidos}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.apellidos ? styles.inputError : ""
@@ -335,7 +335,7 @@ export default function FormPagosFacturasClientes({
         <select
           name="genero"
           value={formData.genero}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={requiredFieldsIncomplete.genero ? styles.inputError : ""}
         >
@@ -359,7 +359,7 @@ export default function FormPagosFacturasClientes({
           type="date"
           name="fecha_nacimiento"
           value={formData.fecha_nacimiento}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.fecha_nacimiento ? styles.inputError : ""
@@ -379,7 +379,7 @@ export default function FormPagosFacturasClientes({
           type="text"
           name="dni"
           value={formData.dni}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.dni || formErrors.dni
@@ -406,7 +406,7 @@ export default function FormPagosFacturasClientes({
           type="text"
           name="direccion"
           value={formData.direccion}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.direccion ? styles.inputError : ""
@@ -426,7 +426,7 @@ export default function FormPagosFacturasClientes({
           type="text"
           name="numero_telefono"
           value={formData.numero_telefono}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.numero_telefono ||
@@ -454,7 +454,7 @@ export default function FormPagosFacturasClientes({
           type="text"
           name="correo_electronico"
           value={formData.correo_electronico}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.correo_electronico ||
@@ -481,7 +481,7 @@ export default function FormPagosFacturasClientes({
         <select
           name="id_tipo_persona"
           value={formData.id_tipo_persona}
-          onChange={operationType === "view" ? null : handleChange}
+          onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
             requiredFieldsIncomplete.id_tipo_persona ? styles.inputError : ""

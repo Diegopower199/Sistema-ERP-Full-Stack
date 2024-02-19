@@ -21,7 +21,7 @@ export default function Login() {
 
   const router = useRouter();
 
-  const [formulario, setFormulario] = useState({
+  const [formData, setFormData] = useState({
     nombre_usuario: "a",
     password: "a",
   });
@@ -43,9 +43,9 @@ export default function Login() {
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     // Manejar cambios según el tipo de input
-    setFormulario((prevState) => {
+    setFormData((prevDataState) => {
       return {
-        ...prevState,
+        ...prevDataState,
         [name]: type === "checkbox" ? checked : value,
       };
     });
@@ -54,16 +54,16 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      console.log(formulario);
+      console.log(formData);
       const responseAuthenticateUser = await authenticateUser(
-        formulario.nombre_usuario,
-        formulario.password
+        formData.nombre_usuario,
+        formData.password
       );
       console.log("Respuesta de back-end: ", responseAuthenticateUser);
 
       if (responseAuthenticateUser.data.resultado === true) {
         const responseNombreUsuario = await getUsuarioByNombreUsuario(
-          formulario.nombre_usuario
+          formData.nombre_usuario
         );
         console.log("Respuesta de este usuario: ", responseNombreUsuario.data);
 
@@ -78,8 +78,8 @@ export default function Login() {
         // Poner aqui abajo los permisos del usuario con setPermisosUser
         setIsLoggedIn(true);
         setAuthUser({
-          nombre_usuario: formulario.nombre_usuario,
-          password: formulario.password,
+          nombre_usuario: formData.nombre_usuario,
+          password: formData.password,
           persona: {
             id_persona: parseInt(responseNombreUsuario.data.persona.id_persona),
           },
@@ -264,7 +264,7 @@ export default function Login() {
                 className={styles.inputEmailUsuarioPassword}
                 type="text"
                 name="nombre_usuario"
-                value={formulario.nombre_usuario}
+                value={formData.nombre_usuario}
                 onChange={handleChange}
               />
             </div>
@@ -274,7 +274,7 @@ export default function Login() {
                 className={styles.inputEmailUsuarioPassword}
                 type="password"
                 name="password"
-                value={formulario.password}
+                value={formData.password}
                 onChange={handleChange}
               />
             </div>

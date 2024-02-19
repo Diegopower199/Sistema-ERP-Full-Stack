@@ -11,6 +11,8 @@ function FormularioVacacionEmpleado() {
     tipo_estado: "",
     fecha_inicio: "",
     fecha_finalizacion: "",
+    fecha_1_ANTD: "",
+    fecha_2_ANTD: "",
   });
 
   const fetchTiposEstadosOptions = async () => {
@@ -18,9 +20,9 @@ function FormularioVacacionEmpleado() {
       const resultado = await getAllTiposEstados();
       console.log("Resultado: ", resultado);
       setTiposEstadosOptions(resultado);
-      /*setFormulario((prevState) => {
+      /*setFormulario((prevDataState) => {
         return {
-          ...prevState,
+          ...prevDataState,
           ["tipo_estado"]: resultado[0].value.toString(),
         };
       });*/
@@ -34,33 +36,34 @@ function FormularioVacacionEmpleado() {
   }, []); // Se ejecuta solo al montar el componente
 
   const handleFormChange = (event) => {
-    const { name, value, type, checked } = event.target;
+    console.log("event: ", event.target);
+    const { name, value, type, checked, id } = event.target;
     console.log("NAME: ", name, "\nValue: ", value);
     // Manejar cambios según el tipo de input
-    setFormulario((prevState) => {
+    setFormulario((prevDataState) => {
       return {
-        ...prevState,
+        ...prevDataState,
         [name]: type === "checkbox" ? checked : value,
       };
     });
   };
 
-  const handleDateChange = (date) => {
+  const handleDateChange = (date, name) => {
     const dateSelected = date.format("YYYY-MM-DD");
-    console.log("Dia seleccionado: ", dateSelected);
-    setFormulario((prevState) => {
+    console.log("Dia seleccionado: ", dateSelected, " y el nombre es: ", name);
+    setFormulario((prevDataState) => {
       return {
-        ...prevState,
-        ["year"]: dateSelected,
+        ...prevDataState,
+        [name]: dateSelected,
       };
     });
   };
 
   const handleTipoEstadoChange = (tipoEstado) => {
     console.log("El tipo estado es: ", tipoEstado);
-    setFormulario((prevState) => {
+    setFormulario((prevDataState) => {
       return {
-        ...prevState,
+        ...prevDataState,
         ["tipo_estado"]: tipoEstado.toString(),
       };
     });
@@ -122,8 +125,21 @@ function FormularioVacacionEmpleado() {
         }
       </label>
       <br></br>
-      DatePicker (fechas) de antd
-      <Antd.DatePicker onChange={handleDateChange}></Antd.DatePicker>
+      DatePicker (fechas) de antd PARA EL YEAR
+      <Antd.DatePicker
+        onChange={(date) => handleDateChange(date, "year")}
+      />
+      <br></br>
+      DatePicker (fechas) de antd PARA EL VALOR FECHA 1
+      <Antd.DatePicker
+        onChange={(date) => handleDateChange(date, "fecha_1_ANTD")}
+      />
+      <br></br>
+      DatePicker (fechas) de antd PARA EL VALOR FECHA 2
+      <Antd.DatePicker
+        onChange={(date) => handleDateChange(date, "fecha_2_ANTD")}
+      />
+      <br></br>
       <Antd.Form>
         <Antd.Form.Item label="Nombre">
           <Antd.Input

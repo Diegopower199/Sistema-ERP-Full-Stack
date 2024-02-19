@@ -42,9 +42,9 @@ export default function FormVacacionesEmpleados({
     try {
       const responseReadAllTiposEstados = await getAllTiposEstados();
       setTiposEstadosOptions(responseReadAllTiposEstados);
-      setFormData((prevState) => {
+      setFormData((prevDataState) => {
         return {
-          ...prevState,
+          ...prevDataState,
           ["id_tipo_estado"]: responseReadAllTiposEstados[0].value.toString(),
         };
       });
@@ -140,9 +140,9 @@ export default function FormVacacionesEmpleados({
   const handleFormChange = (event) => {
     const { name, value } = event.target;
 
-    setFormData((prevState) => {
+    setFormData((prevDataState) => {
       return {
-        ...prevState,
+        ...prevDataState,
         [name]: value,
       };
     });

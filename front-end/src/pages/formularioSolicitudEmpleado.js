@@ -26,9 +26,9 @@ function FormularioSolicitud() {
       console.log("Resultado en fetchTiposSolicitudesOptions: ", resultado);
       if (resultado !== "Error") {
         setTiposSolicitudesOptions(resultado);
-        setFormulario((prevState) => {
+        setFormulario((prevDataState) => {
           return {
-            ...prevState,
+            ...prevDataState,
             ["tipo_solicitud"]: resultado[0].value.toString(),
           };
         });
@@ -44,9 +44,9 @@ function FormularioSolicitud() {
       console.log("Resultado: ", resultado);
       if (resultado !== "Error") {
         setTiposEstadosOptions(resultado);
-        setFormulario((prevState) => {
+        setFormulario((prevDataState) => {
           return {
-            ...prevState,
+            ...prevDataState,
             ["tipo_estado"]: resultado[0].value.toString(),
           };
         });
@@ -73,9 +73,9 @@ function FormularioSolicitud() {
     const { name, value, type, checked } = event.target;
     console.log("NAME: ", name, "\nValue: ", value);
     // Manejar cambios según el tipo de input
-    setFormulario((prevState) => {
+    setFormulario((prevDataState) => {
       return {
-        ...prevState,
+        ...prevDataState,
         [name]: type === "checkbox" ? checked : value,
       };
     });

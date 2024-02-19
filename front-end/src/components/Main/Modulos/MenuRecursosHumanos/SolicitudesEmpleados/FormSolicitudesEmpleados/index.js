@@ -40,9 +40,9 @@ export default function FormSolicitudesEmpleados({
     try {
       const responseReadAllTiposSolicitudes = await getAllTiposSolicitudes();
       setTiposSolicitudesOptions(responseReadAllTiposSolicitudes);
-      setFormData((prevState) => {
+      setFormData((prevDataState) => {
         return {
-          ...prevState,
+          ...prevDataState,
           ["id_tipo_solicitud"]:
             responseReadAllTiposSolicitudes[0].value.toString(),
         };
@@ -56,9 +56,9 @@ export default function FormSolicitudesEmpleados({
     try {
       const responseReadAllTiposEstados = await getAllTiposEstados();
       setTiposEstadosOptions(responseReadAllTiposEstados);
-      setFormData((prevState) => {
+      setFormData((prevDataState) => {
         return {
-          ...prevState,
+          ...prevDataState,
           ["id_tipo_estado"]: responseReadAllTiposEstados[0].value.toString(),
         };
       });
@@ -134,9 +134,9 @@ export default function FormSolicitudesEmpleados({
   const handleFormChange = (event) => {
     const { name, value } = event.target;
 
-    setFormData((prevState) => {
+    setFormData((prevDataState) => {
       return {
-        ...prevState,
+        ...prevDataState,
         [name]: value,
       };
     });

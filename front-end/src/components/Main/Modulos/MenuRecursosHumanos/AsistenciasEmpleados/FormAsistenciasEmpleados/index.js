@@ -52,9 +52,9 @@ export default function FormAsistenciasEmpleados({
     try {
       const responseReadAllTiposPersonas = await getAllTiposPersonas();
       setTiposPersonasOptions(responseReadAllTiposPersonas);
-      setFormData((prevState) => {
+      setFormData((prevDataState) => {
         return {
-          ...prevState,
+          ...prevDataState,
           ["id_tipo_persona"]: responseReadAllTiposPersonas[0].value.toString(),
         };
       });
@@ -183,9 +183,9 @@ export default function FormAsistenciasEmpleados({
         [name]: nuevoValor,
       }));
     } else {
-      setFormData((prevState) => {
+      setFormData((prevDataState) => {
         return {
-          ...prevState,
+          ...prevDataState,
           [name]: type === "checkbox" ? checked : value,
         };
       });

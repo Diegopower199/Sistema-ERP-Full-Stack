@@ -52,9 +52,9 @@ export default function FormBajasLaboralesEmpleados({
     try {
       const responseReadAllTiposPersonas = await getAllTiposPersonas();
       setTiposPersonasOptions(responseReadAllTiposPersonas);
-      setFormData((prevState) => {
+      setFormData((prevDataState) => {
         return {
-          ...prevState,
+          ...prevDataState,
           ["id_tipo_persona"]: responseReadAllTiposPersonas[0].value.toString(),
         };
       });
@@ -183,9 +183,9 @@ export default function FormBajasLaboralesEmpleados({
         [name]: nuevoValor,
       }));
     } else {
-      setFormData((prevState) => {
+      setFormData((prevDataState) => {
         return {
-          ...prevState,
+          ...prevDataState,
           [name]: type === "checkbox" ? checked : value,
         };
       });

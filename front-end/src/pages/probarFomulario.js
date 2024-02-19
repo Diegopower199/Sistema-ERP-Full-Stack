@@ -20,9 +20,9 @@ function MiFormulario() {
       const resultado = await getAllTiposEstados();
       console.log("Resultado: ", resultado);
       setTiposEstadosOptions(resultado);
-      setFormulario((prevState) => {
+      setFormulario((prevDataState) => {
         return {
-          ...prevState,
+          ...prevDataState,
           ["tipo_estado"]: resultado[0].value,
         };
       });
@@ -39,9 +39,9 @@ function MiFormulario() {
     const { name, value, type, checked } = event.target;
     // Manejar cambios según el tipo de input
     console.log("name", name, "\nvalue", value, "\nformulario", formulario);
-    setFormulario((prevState) => {
+    setFormulario((prevDataState) => {
       return {
-        ...prevState,
+        ...prevDataState,
         [name]: type === "checkbox" ? checked : value,
       };
     });

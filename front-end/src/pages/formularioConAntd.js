@@ -106,7 +106,7 @@ function FormularioVacacionEmpleado() {
         {
           <Antd.Select
             name="tipo_estado"
-            defaultValue={
+            value={
               formulario.tipo_estado
                 ? formulario.tipo_estado
                 : "Selecciona un tipo de estado"

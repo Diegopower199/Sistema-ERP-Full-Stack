@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="commonclasses.AppTest" time="0.041" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="commonclasses.AppTest" time="0.05" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Trabajo-TFG\common-backend-and-blockchain-classes\target\test-classes;C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Trabajo-TFG\common-backend-and-blockchain-classes\target\classes;C:\Users\Diego\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Diego\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="java.class.path" value="C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Sistema-ERP-Full-Stack\common-backend-and-blockchain-classes\target\test-classes;C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Sistema-ERP-Full-Stack\common-backend-and-blockchain-classes\target\classes;C:\Users\Diego\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Diego\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -15,9 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="ES"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-17\bin"/>
-    <property name="sun.java.command" value="C:\Users\Diego\AppData\Local\Temp\surefire5407932295659570132\surefirebooter889196671480349281.jar C:\Users\Diego\AppData\Local\Temp\surefire5407932295659570132 2024-02-12T13-07-15_897-jvmRun1 surefire15970346371682625297tmp surefire_017012144757081312519tmp"/>
+    <property name="sun.java.command" value="C:\Users\Diego\AppData\Local\Temp\surefire6199362800682398890\surefirebooter6364252657302616877.jar C:\Users\Diego\AppData\Local\Temp\surefire6199362800682398890 2024-02-26T04-22-01_775-jvmRun1 surefire8688671291025789303tmp surefire_09019957868133500794tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Trabajo-TFG\common-backend-and-blockchain-classes\target\test-classes;C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Trabajo-TFG\common-backend-and-blockchain-classes\target\classes;C:\Users\Diego\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Diego\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="surefire.test.class.path" value="C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Sistema-ERP-Full-Stack\common-backend-and-blockchain-classes\target\test-classes;C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Sistema-ERP-Full-Stack\common-backend-and-blockchain-classes\target\classes;C:\Users\Diego\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Diego\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Diego"/>
     <property name="user.language" value="es"/>
@@ -25,12 +25,12 @@
     <property name="java.version.date" value="2023-10-17"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-17"/>
     <property name="file.separator" value="\"/>
-    <property name="basedir" value="C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Trabajo-TFG\common-backend-and-blockchain-classes"/>
+    <property name="basedir" value="C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Sistema-ERP-Full-Stack\common-backend-and-blockchain-classes"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Diego\AppData\Local\Temp\surefire5407932295659570132\surefirebooter889196671480349281.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Diego\AppData\Local\Temp\surefire6199362800682398890\surefirebooter6364252657302616877.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.9+11-LTS-201"/>
@@ -44,7 +44,7 @@
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="C:\Users\Diego\AppData\Local\Temp\"/>
     <property name="java.version" value="17.0.9"/>
-    <property name="user.dir" value="C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Trabajo-TFG\common-backend-and-blockchain-classes"/>
+    <property name="user.dir" value="C:\Users\Diego\OneDrive - Universidad Antonio De Nebrija\Escritorio\Programas-Visual-Studio-Code\Sistema-ERP-Full-Stack\common-backend-and-blockchain-classes"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="sun.os.patch.level" value=""/>
@@ -56,5 +56,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="commonclasses.AppTest" time="0.001"/>
+  <testcase name="shouldAnswerWithTrue" classname="commonclasses.AppTest" time="0.002"/>
 </testsuite>

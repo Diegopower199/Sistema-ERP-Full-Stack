@@ -76,6 +76,7 @@ Pasos de creacion proyectos maven:
 
     El pom.xml debo poner plugin para poder ejecutarlo. Cuando tenga todo los ficheros correctos debo ejecutar el siguiente comando: "mvn clean install" y despues ejecutar "mvn exec:java".
 
+
 Para ejecutar Spring Boot debo hacer poner esto por la terminal: "./mvnw spring-boot:run"
 
 

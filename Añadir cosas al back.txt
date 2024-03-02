@@ -1,8 +1,14 @@
-Campos añadir:
+Aclaracón: 
+    - Para calcular la hora_inicio_desplazamiento tenemos que restar hora_inicio_servicio - hora_inicio_desplazamiento
+    - Para calcular la hora_fin_desplazamiento tenemos que restar hora_fin_servicio - hora_fin_desplazamiento
+    - Para calcular el tiempo_desplazamiento_total es sumar hora_inicio_desplazamiento + hora_fin_desplazamiento
 
-Para calcular la hora_inicio_desplazamiento tenemos que restar hora_inicio_servicio - hora_inicio_desplazamiento
-Para calcular la hora_fin_desplazamiento tenemos que restar hora_fin_servicio - hora_fin_desplazamiento
-Para calcular el tiempo_desplazamiento_total es sumar hora_inicio_desplazamiento + hora_fin_desplazamiento
+
+Ademas es recomendable cambiar a los campos que ponen comentarios por observaciones, pero eso se cambiará lo ultimo
+
+
+
+Campos que tengo que añadir en las siguientes tablas:
 
 Tabla PedidoClienteModel:
  - tecnico_encargado (una persona que se encarga) Esto es un id_persona -> nullable = true // Al crear no se pasa nada, es al modificar
@@ -13,16 +19,15 @@ Tabla PedidoClienteModel:
  - hora_inicio_servicio -> nullable = true 
  - hora_fin_servicio -> nullable = true 
  - tiempo_servicio_total -> nullable = true // En minutos
- - id_situacion_facturacion -> 1. pendiente facturar, 2. facturado, 3. cerrado sin facturar -> nullable = false Hasta que esto no este en la opcion 2 no se puede generar factura
+ - id_situacion_facturacion (clave foranea de esta tabla: Tipo_Estado_Facturacion) -> 1. pendiente facturar, 2. facturado, 3. cerrado sin facturar -> nullable = false Hasta que esto no este en la opcion 2 no se puede generar factura
  - comentario o descripcion -> nullable = true
 
 
+
+Despues en Facturas clientes voy a poner los campos de detalles facturas, ya que esa tabla por ahora no se va a utilizar ni los servicios ni nada
+
 FacturaClienteModel:
- - id_pedido_cliente -> Poner el pedido del cliente a la factura (foreign key) -> nullable = false
-
-
-
-DetalleFacturaClienteModel: 
+ - descripcion_servicio -> nullable = false
  - direccion_entrega -> nullable = false
  - hora_inicio_desplazamiento -> nullable = true
  - hora_fin_desplazamiento -> nullable = true
@@ -30,7 +35,15 @@ DetalleFacturaClienteModel:
  - hora_inicio_servicio -> nullable = true 
  - hora_fin_servicio -> nullable = true 
  - tiempo_servicio_total -> nullable = true // En minutos
- - fecha_entrega_real_pedido -> nullable = true // En minutos
+ - fecha_entrega_real_pedido -> nullable = true
+ - fecha_factura_emitida -> nullable = true
+ - tarifa_hora_desplazamiento -> nullable = true
+ - tarifa_hora_servicio -> nullable = true
+ - subtotal_factura_sin_iva -> nullable = true
+ - iva -> nullable = true
+ - total_factura -> nullable = true
+ - id_pedido_cliente -> Poner el pedido del cliente a la factura (foreign key) -> nullable = false
+
 
 
 Crearme una tabla Tipo_Estado_Facturacion (Como tipo estado)
@@ -39,7 +52,7 @@ Crearme una tabla Tipo_Estado_Facturacion (Como tipo estado)
 
 
 esto de abajo es para el codigo
-// Suponiendo que tienes las marcas de tiempo de inicio y fin del desplazamiento y del servicio
+// Suponiendo que tienes las marcas de tiempo de inicio y fin del desplazamiento y del servicio "LocalTime" mejor poner esto
 LocalDateTime horaInicioDesplazamiento = pedidoCliente.getHoraInicioDesplazamiento();
 LocalDateTime horaFinDesplazamiento = pedidoCliente.getHoraFinDesplazamiento();
 LocalDateTime horaInicioServicio = pedidoCliente.getHoraInicioServicio();

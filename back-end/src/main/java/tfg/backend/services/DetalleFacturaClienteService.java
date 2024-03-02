@@ -57,7 +57,7 @@ public class DetalleFacturaClienteService {
                         "Factura cliente con id " + id_factura_cliente + " no encontrado"));
 
         nuevoDetalleFacturaCliente.setFactura_cliente(facturaClienteEncontrado);
-        facturaClienteEncontrado.getDetallesPedidosClientes().add(nuevoDetalleFacturaCliente);
+        facturaClienteEncontrado.getDetallesFacturasClientes().add(nuevoDetalleFacturaCliente);
 
         DetalleFacturaClienteModel detalleFacturaClienteGuardado = detalleFacturaClienteRepository
                 .save(nuevoDetalleFacturaCliente);
@@ -106,10 +106,10 @@ public class DetalleFacturaClienteService {
                 .orElseThrow(() -> new RuntimeException(
                         "Factura cliente con id " + id_factura_cliente + " no encontrado"));
 
-        detalleFacturaClienteExistente.getFactura_cliente().getDetallesPedidosClientes()
+        detalleFacturaClienteExistente.getFactura_cliente().getDetallesFacturasClientes()
                 .remove(detalleFacturaClienteExistente);
         detalleFacturaClienteExistente.setFactura_cliente(facturaClienteEncontrado);
-        facturaClienteEncontrado.getDetallesPedidosClientes().add(detalleFacturaClienteExistente);
+        facturaClienteEncontrado.getDetallesFacturasClientes().add(detalleFacturaClienteExistente);
 
         DetalleFacturaClienteModel detalleFacturaClienteActualizado = detalleFacturaClienteRepository
                 .save(detalleFacturaClienteExistente);

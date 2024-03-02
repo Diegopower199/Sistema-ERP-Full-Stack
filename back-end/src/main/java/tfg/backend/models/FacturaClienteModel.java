@@ -43,7 +43,7 @@ public class FacturaClienteModel implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "factura_cliente", cascade = CascadeType.REMOVE)
-    private List<DetalleFacturaClienteModel> detallesPedidosClientes;
+    private List<DetalleFacturaClienteModel> detallesFacturasClientes;
 
     @JsonIgnore
     @OneToMany(mappedBy = "factura_cliente", cascade = CascadeType.REMOVE)

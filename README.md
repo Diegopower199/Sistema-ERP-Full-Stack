@@ -112,6 +112,13 @@ El archivo ".gitattributes" es un archivo de configuración en Git que se utiliz
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Limpiar el Caché de Git: A veces, Git puede estar reteniendo información en su caché que está interfiriendo con las reglas de .gitignore. Puedes limpiar la caché de Git utilizando el siguiente comando:
+
+  git rm -r --cached .
+  git add .
+  git commit -m "Limpiar caché de Git y volver a agregar archivos"
+
+
 
 
 https://medium.com/@thearaseng/building-a-full-stack-product-app-with-react-spring-boot-and-docker-compose-64a47f4a1080

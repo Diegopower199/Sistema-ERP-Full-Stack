@@ -13,6 +13,7 @@ function FormularioVacacionEmpleado() {
     fecha_finalizacion: "",
     fecha_1_ANTD: "",
     fecha_2_ANTD: "",
+    nombre: "aa",
   });
 
   const fetchTiposEstadosOptions = async () => {
@@ -146,6 +147,7 @@ function FormularioVacacionEmpleado() {
             type="text"
             name="nombre"
             id="nombre"
+            value={formulario.nombre}
             onChange={handleFormChange}
             required
           ></Antd.Input>

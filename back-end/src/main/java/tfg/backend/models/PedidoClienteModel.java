@@ -27,10 +27,10 @@ public class PedidoClienteModel implements Serializable {
     @Column(name = "fecha_solicitud_pedido", nullable = false)
     private LocalDate fecha_solicitud_pedido;
 
-    @Column(name = "fecha_entrega_prevista", nullable = false)
+    @Column(name = "fecha_entrega_prevista", nullable = true) // Al crear no se pasa nada, es al modificar
     private LocalDate fecha_entrega_prevista;
 
-    @Column(name = "fecha_entrega_real", nullable = true)
+    @Column(name = "fecha_entrega_real", nullable = true) // Al crear no se pasa nada, es al modificar
     private LocalDate fecha_entrega_real;
 
     @ManyToOne
@@ -60,4 +60,11 @@ public class PedidoClienteModel implements Serializable {
  * Fecha_Entrega_Prevista
  * Fecha_Entrega_Real
  * Tipo_Estado_Pedido
+ */
+
+/*
+ * 1. Pedido:
+ * 2. Planificacion
+ * 3. Ejecucion
+ * 4. Facturacion
  */

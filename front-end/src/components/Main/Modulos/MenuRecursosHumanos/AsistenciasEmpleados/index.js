@@ -104,8 +104,8 @@ export default function AsistenciasEmpleados() {
       editable: false,
     },
     {
-      field: "comentarios",
-      headerName: "Comentarios",
+      field: "observacion",
+      headerName: "Observacion",
       width: 180,
       editable: false,
     },
@@ -161,7 +161,7 @@ export default function AsistenciasEmpleados() {
               hora_entrada: asistenciaEmpleado.hora_entrada,
               hora_salida: asistenciaEmpleado.hora_salida,
               total_horas_trabajadas: asistenciaEmpleado.total_horas_trabajadas,
-              comentarios: asistenciaEmpleado.comentarios,
+              observacion: asistenciaEmpleado.observacion,
               id_persona: asistenciaEmpleado.persona.id_persona,
               dni: asistenciaEmpleado.persona.dni,
             };

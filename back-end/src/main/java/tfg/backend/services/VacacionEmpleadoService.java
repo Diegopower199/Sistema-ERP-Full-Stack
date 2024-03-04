@@ -236,7 +236,7 @@ public class VacacionEmpleadoService {
             }
         }
 
-        vacacionEmpleadoExistente.setComentarios(cambiosVacacionEmpleado.getComentarios());
+        vacacionEmpleadoExistente.setObservacion(cambiosVacacionEmpleado.getObservacion());
 
         VacacionEmpleadoModel vacacionEmpleadoActualizado = vacacionEmpleadoRepository.save(vacacionEmpleadoExistente);
 

@@ -1,4 +1,3 @@
-
 -- ========================================
 -- Permisos Usuarios
 -- ========================================
@@ -161,202 +160,202 @@ INSERT INTO `trabajotfgerp`.`usuarios` (`nombre_usuario`, `password`, `id_person
 -- ========================================
 -- Persona 1
 -- Bajas Laborales
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-08', '1', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo (Denegado)', '2024-03-18', '1', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril', '2024-04-13', '1', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo (Denegado)', '2024-05-03', '1', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-23', '1', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-08', '1', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo (Denegado)', '2024-03-18', '1', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril', '2024-04-13', '1', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo (Denegado)', '2024-05-03', '1', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-23', '1', '2', '3');
 -- Vacaciones Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-04-25', '1', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-05-27', '1', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-06-27', '1', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-04-25', '1', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-05-27', '1', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-06-27', '1', '3', '1');
 -- Ayudas Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-05', '1', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para marzo.', '2024-03-15', '1', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-04-10', '1', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para mayo.', '2024-04-30', '1', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-20', '1', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-05', '1', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para marzo.', '2024-03-15', '1', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-04-10', '1', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para mayo.', '2024-04-30', '1', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-20', '1', '2', '2');
 
 -- Persona 2
 -- Bajas Laborales
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero (Denegado)', '2024-02-13', '2', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo', '2024-03-23', '2', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril (Denegado)', '2024-04-08', '2', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo', '2024-05-18', '2', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-18', '2', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero (Denegado)', '2024-02-13', '2', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo', '2024-03-23', '2', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril (Denegado)', '2024-04-08', '2', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo', '2024-05-18', '2', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-18', '2', '2', '3');
 -- Vacaciones Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-05', '2', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-05', '2', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-07-05', '2', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-05', '2', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-05', '2', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-07-05', '2', '3', '1');
 -- Ayudas Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-10', '2', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-20', '2', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-04-05', '2', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-05-15', '2', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-15', '2', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-10', '2', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-20', '2', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-04-05', '2', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-05-15', '2', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-15', '2', '2', '2');
 
 -- Persona 3 
 -- Bajas Laborales
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero (Denegado)', '2024-02-26', '3', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo', '2024-03-08', '3', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril (Denegado)', '2024-04-16', '3', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo', '2024-05-03', '3', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-23', '3', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero (Denegado)', '2024-02-26', '3', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo', '2024-03-08', '3', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril (Denegado)', '2024-04-16', '3', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo', '2024-05-03', '3', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-23', '3', '2', '3');
 -- Vacaciones Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-05', '3', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-05', '3', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-07-05', '3', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-05', '3', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-05', '3', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-07-05', '3', '3', '1');
 -- Ayudas Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-25', '3', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-05', '3', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-04-13', '3', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-04-30', '3', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-28', '3', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-25', '3', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-05', '3', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-04-13', '3', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-04-30', '3', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-28', '3', '2', '2');
 
 -- Persona 4 
 -- Bajas Laborales
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-08', '4', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo (Denegado)', '2024-03-18', '4', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril', '2024-04-13', '4', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo (Denegado)', '2024-05-03', '4', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-23', '4', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-08', '4', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo (Denegado)', '2024-03-18', '4', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril', '2024-04-13', '4', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo (Denegado)', '2024-05-03', '4', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-23', '4', '2', '3');
 -- Vacaciones Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-05', '4', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-05', '4', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-07-05', '4', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-05', '4', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-05', '4', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-07-05', '4', '3', '1');
 -- Ayudas Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-05', '4', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para marzo.', '2024-03-15', '4', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-04-10', '4', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para mayo.', '2024-04-30', '4', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-23', '4', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-05', '4', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para marzo.', '2024-03-15', '4', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-04-10', '4', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para mayo.', '2024-04-30', '4', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-23', '4', '2', '2');
 
 -- Persona 5 
 -- Bajas Laborales
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero (Denegado)', '2024-02-16', '5', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo', '2024-03-13', '5', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril', '2024-04-03', '5', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo (Denegado)', '2024-05-18', '5', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-23', '5', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero (Denegado)', '2024-02-16', '5', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo', '2024-03-13', '5', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril', '2024-04-03', '5', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo (Denegado)', '2024-05-18', '5', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-23', '5', '2', '3');
 -- Vacaciones Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-05', '5', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-05', '5', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-07-05', '5', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-05', '5', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-05', '5', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-07-05', '5', '3', '1');
 -- Ayudas Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-15', '5', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-10', '5', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-03-31', '5', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para mayo.', '2024-05-15', '5', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-23', '5', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-15', '5', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-10', '5', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-03-31', '5', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para mayo.', '2024-05-15', '5', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-23', '5', '2', '2');
 
 -- Persona 6 
 -- Bajas Laborales
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-18', '6', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo (Denegado)', '2024-03-23', '6', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril', '2024-04-08', '6', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo', '2024-05-03', '6', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero (Denegado)', '2024-02-13', '6', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-18', '6', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo (Denegado)', '2024-03-23', '6', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril', '2024-04-08', '6', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo', '2024-05-03', '6', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero (Denegado)', '2024-02-13', '6', '3', '3');
 -- Vacaciones Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-13', '6', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-06-13', '6', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-13', '6', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-06-13', '6', '3', '1');
 -- Ayudas Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-15', '6', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-20', '6', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-04-05', '6', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-04-30', '6', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-13', '6', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-15', '6', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-20', '6', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-04-05', '6', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-04-30', '6', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-13', '6', '3', '2');
 
 -- Persona 7 
 -- Bajas Laborales
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en marzo', '2024-03-08', '7', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en abril (Denegado)', '2024-04-16', '7', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en mayo', '2024-05-13', '7', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en febrero', '2024-02-03', '7', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en abril (Denegado)', '2024-03-30', '7', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en marzo', '2024-03-08', '7', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en abril (Denegado)', '2024-04-16', '7', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en mayo', '2024-05-13', '7', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en febrero', '2024-02-03', '7', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en abril (Denegado)', '2024-03-30', '7', '3', '3');
 -- Vacaciones Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-13', '7', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-06-13', '7', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-05-13', '7', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-06-13', '7', '3', '1');
 -- Ayudas Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-08', '7', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-04-13', '7', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-05-10', '7', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-03', '7', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-03-30', '7', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-08', '7', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-04-13', '7', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-05-10', '7', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-03', '7', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-03-30', '7', '3', '2');
 
 -- Persona 8 
 -- Bajas Laborales
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en mayo', '2024-05-08', '8', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en febrero (Denegado)', '2024-02-16', '8', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en marzo', '2024-03-03', '8', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en abril', '2024-04-18', '8', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en mayo (Denegado)', '2024-05-23', '8', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en mayo', '2024-05-08', '8', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en febrero (Denegado)', '2024-02-16', '8', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en marzo', '2024-03-03', '8', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en abril', '2024-04-18', '8', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en mayo (Denegado)', '2024-05-23', '8', '3', '3');
 -- Vacaciones Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-05-30', '8', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-11', '8', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-06-27', '8', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-05-30', '8', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-11', '8', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada.', '2024-06-27', '8', '3', '1');
 -- Ayudas Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-05-08', '8', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-15', '8', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-01', '8', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-04-15', '8', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para mayo.', '2024-05-20', '8', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-05-08', '8', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-15', '8', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-03-01', '8', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-04-15', '8', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para mayo.', '2024-05-20', '8', '3', '2');
 
 -- Persona 9 
 -- Bajas Laborales
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-13', '9', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo (Denegado)', '2024-03-18', '9', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril', '2024-04-06', '9', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo', '2024-04-30', '9', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero (Denegado)', '2024-02-23', '9', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero', '2024-02-13', '9', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en marzo (Denegado)', '2024-03-18', '9', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en abril', '2024-04-06', '9', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en mayo', '2024-04-30', '9', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en febrero (Denegado)', '2024-02-23', '9', '3', '3');
 -- Vacaciones Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para julio.', '2024-06-29', '9', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para agosto.', '2024-08-05', '9', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para septiembre.', '2024-08-27', '9', '3', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para octubre.', '2024-10-05', '9', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para julio.', '2024-06-29', '9', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para agosto.', '2024-08-05', '9', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para septiembre.', '2024-08-27', '9', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para octubre.', '2024-10-05', '9', '3', '1');
 -- Ayudas Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-11', '9', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para marzo.', '2024-03-15', '9', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-03-30', '9', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-04-27', '9', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-22', '9', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-02-11', '9', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para marzo.', '2024-03-15', '9', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-03-30', '9', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-04-27', '9', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-22', '9', '3', '2');
 
 -- Persona 10 
 -- Bajas Laborales
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en marzo', '2024-02-29', '10', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en abril (Denegado)', '2024-04-11', '10', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en mayo', '2024-05-08', '10', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en febrero', '2024-02-03', '10', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en abril (Denegado)', '2024-04-01', '10', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en marzo', '2024-02-29', '10', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en abril (Denegado)', '2024-04-11', '10', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en mayo', '2024-05-08', '10', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en febrero', '2024-02-03', '10', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en abril (Denegado)', '2024-04-01', '10', '3', '3');
 -- Vacaciones Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-04-26', '10', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-05', '10', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para julio.', '2024-06-26', '10', '3', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para agosto.', '2024-08-03', '10', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-04-26', '10', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-05', '10', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para julio.', '2024-06-26', '10', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para agosto.', '2024-08-03', '10', '3', '1');
 -- Ayudas Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-02-27', '10', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-04-10', '10', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-04-05', '10', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-01-31', '10', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-03-29', '10', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-02-27', '10', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-04-10', '10', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-04-05', '10', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para febrero.', '2024-01-31', '10', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para abril.', '2024-03-29', '10', '3', '2');
 
 -- Persona 11 
 -- Bajas Laborales
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en mayo', '2024-05-18', '11', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en febrero (Denegado)', '2024-02-16', '11', '3', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en marzo', '2024-03-03', '11', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en abril', '2024-04-18', '11', '2', '3');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en mayo (Denegado)', '2024-05-23', '11', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en mayo', '2024-05-18', '11', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por enfermedad en febrero (Denegado)', '2024-02-16', '11', '3', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por licencia por maternidad en marzo', '2024-03-03', '11', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por estudios en abril', '2024-04-18', '11', '2', '3');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de baja por vacaciones en mayo (Denegado)', '2024-05-23', '11', '3', '3');
 -- Vacaciones Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-04-26', '11', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-08', '11', '2', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para julio.', '2024-06-26', '11', '3', '1');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para agosto.', '2024-08-03', '11', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para mayo.', '2024-04-26', '11', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones aceptadas para junio.', '2024-06-08', '11', '2', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para julio.', '2024-06-26', '11', '3', '1');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de vacaciones denegada para agosto.', '2024-08-03', '11', '3', '1');
 -- Ayudas Empleados
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-05-15', '11', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-13', '11', '3', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-02-28', '11', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-04-15', '11', '2', '2');
-INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para mayo.', '2024-05-18', '11', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para mayo.', '2024-05-15', '11', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para febrero.', '2024-02-13', '11', '3', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para marzo.', '2024-02-28', '11', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda aceptada para abril.', '2024-04-15', '11', '2', '2');
+INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`observacion`, `fecha_solicitud`, `id_persona`, `id_tipo_estado`, `id_tipo_solicitud`) VALUES ('Solicitud de ayuda denegada para mayo.', '2024-05-18', '11', '3', '2');
 
 
 
@@ -364,137 +363,137 @@ INSERT INTO `trabajotfgerp`.`solicitudes_empleados` (`comentarios`, `fecha_solic
 --  Asistencias Empleados
 -- ========================================
 -- Persona 1
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-05-01', '09:15:30', '18:45:20', '09:29:50', '1');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-06-05', '08:45:10', '17:20:45', '08:35:35', '1');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2024-07-10', '10:05:45', '18:58:30', '08:52:45', '1');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2024-08-15', '09:30:15', '18:15:40', '08:45:25', '1');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Proyectos y colaboración en equipo.', '2024-09-20', '08:55:30', '17:10:20', '08:14:50', '1');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Sesiones de planificación y desarrollo.', '2024-10-25', '10:10:05', '18:50:55', '08:40:50', '1');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-11-01', '09:15:30', '18:45:20', '09:29:50', '1');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-12-05', '08:45:10', '17:20:45', '08:35:35', '1');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2025-01-10', '10:05:45', '18:58:30', '08:52:45', '1');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2025-02-15', '09:30:15', '18:15:40', '08:45:25', '1');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Proyectos y colaboración en equipo.', '2025-03-20', '08:55:30', '17:10:20', '08:14:50', '1');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-05-01', '09:15:30', '18:45:20', '09:29:50', '1');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-06-05', '08:45:10', '17:20:45', '08:35:35', '1');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2024-07-10', '10:05:45', '18:58:30', '08:52:45', '1');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2024-08-15', '09:30:15', '18:15:40', '08:45:25', '1');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Proyectos y colaboración en equipo.', '2024-09-20', '08:55:30', '17:10:20', '08:14:50', '1');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Sesiones de planificación y desarrollo.', '2024-10-25', '10:10:05', '18:50:55', '08:40:50', '1');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-11-01', '09:15:30', '18:45:20', '09:29:50', '1');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-12-05', '08:45:10', '17:20:45', '08:35:35', '1');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2025-01-10', '10:05:45', '18:58:30', '08:52:45', '1');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2025-02-15', '09:30:15', '18:15:40', '08:45:25', '1');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Proyectos y colaboración en equipo.', '2025-03-20', '08:55:30', '17:10:20', '08:14:50', '1');
   
   -- Persona 2
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-02-16', '09:20:30', '18:40:20', '09:19:50', '2');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-03-21', '08:40:10', '17:25:45', '08:45:35', '2');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2024-04-26', '10:10:45', '18:53:30', '08:42:45', '2');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2024-03-01', '09:35:15', '18:20:40', '08:45:25', '2');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Proyectos y colaboración en equipo.', '2024-03-16', '09:00:30', '17:15:20', '08:14:50', '2');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Sesiones de planificación y desarrollo.', '2024-04-11', '10:15:05', '18:55:55', '08:40:50', '2');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-02-13', '09:20:30', '18:40:20', '09:19:50', '2');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-03-19', '08:40:10', '17:25:45', '08:45:35', '2');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2024-04-24', '10:10:45', '18:53:30', '08:42:45', '2');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2024-03-01', '09:35:15', '18:20:40', '08:45:25', '2');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-02-16', '09:20:30', '18:40:20', '09:19:50', '2');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-03-21', '08:40:10', '17:25:45', '08:45:35', '2');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2024-04-26', '10:10:45', '18:53:30', '08:42:45', '2');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2024-03-01', '09:35:15', '18:20:40', '08:45:25', '2');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Proyectos y colaboración en equipo.', '2024-03-16', '09:00:30', '17:15:20', '08:14:50', '2');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Sesiones de planificación y desarrollo.', '2024-04-11', '10:15:05', '18:55:55', '08:40:50', '2');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-02-13', '09:20:30', '18:40:20', '09:19:50', '2');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-03-19', '08:40:10', '17:25:45', '08:45:35', '2');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2024-04-24', '10:10:45', '18:53:30', '08:42:45', '2');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2024-03-01', '09:35:15', '18:20:40', '08:45:25', '2');
 
 -- Persona 3
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-02-16', '09:20:30', '18:40:20', '09:19:50', '3');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-03-21', '08:40:10', '17:25:45', '08:45:35', '3');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2024-04-26', '10:10:45', '18:53:30', '08:42:45', '3');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2024-03-01', '09:35:15', '18:20:40', '08:45:25', '3');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Proyectos y colaboración en equipo.', '2024-03-16', '09:00:30', '17:15:20', '08:14:50', '3');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Sesiones de planificación y desarrollo.', '2024-04-11', '10:15:05', '18:55:55', '08:40:50', '3');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-02-13', '09:20:30', '18:40:20', '09:19:50', '3');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-03-19', '08:40:10', '17:25:45', '08:45:35', '3');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2024-04-24', '10:10:45', '18:53:30', '08:42:45', '3');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2024-03-01', '09:35:15', '18:20:40', '08:45:25', '3');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-02-16', '09:20:30', '18:40:20', '09:19:50', '3');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-03-21', '08:40:10', '17:25:45', '08:45:35', '3');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2024-04-26', '10:10:45', '18:53:30', '08:42:45', '3');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2024-03-01', '09:35:15', '18:20:40', '08:45:25', '3');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Proyectos y colaboración en equipo.', '2024-03-16', '09:00:30', '17:15:20', '08:14:50', '3');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Sesiones de planificación y desarrollo.', '2024-04-11', '10:15:05', '18:55:55', '08:40:50', '3');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con minutos y segundos.', '2024-02-13', '09:20:30', '18:40:20', '09:19:50', '3');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo, incluyendo descanso.', '2024-03-19', '08:40:10', '17:25:45', '08:45:35', '3');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas asignadas.', '2024-04-24', '10:10:45', '18:53:30', '08:42:45', '3');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo con tareas asignadas.', '2024-03-01', '09:35:15', '18:20:40', '08:45:25', '3');
 
 -- Persona 4
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variación en minutos y segundos.', '2024-02-16', '09:25:45', '18:38:30', '09:12:45', '4');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo con pequeños ajustes.', '2024-03-21', '08:42:00', '17:23:15', '08:41:15', '4');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas con cambios.', '2024-04-26', '10:12:30', '18:55:10', '08:42:40', '4');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos con ajustes.', '2024-03-01', '09:36:45', '18:19:50', '08:43:05', '4');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo con cambios.', '2024-03-11', '08:18:15', '17:32:30', '09:14:15', '4');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de trabajo con modificaciones.', '2024-04-06', '10:02:45', '18:57:15', '08:54:30', '4');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variación en horas y minutos.', '2024-02-21', '09:47:30', '18:35:20', '08:47:50', '4');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada con cambios en el tiempo.', '2024-03-16', '08:30:00', '17:45:45', '09:15:45', '4');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Ajustes en horas y minutos.', '2024-04-11', '10:05:20', '18:45:00', '08:39:40', '4');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variaciones en horas y segundos.', '2024-02-26', '09:23:15', '18:40:45', '09:17:30', '4');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variación en minutos y segundos.', '2024-02-16', '09:25:45', '18:38:30', '09:12:45', '4');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo con pequeños ajustes.', '2024-03-21', '08:42:00', '17:23:15', '08:41:15', '4');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas con cambios.', '2024-04-26', '10:12:30', '18:55:10', '08:42:40', '4');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos con ajustes.', '2024-03-01', '09:36:45', '18:19:50', '08:43:05', '4');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo con cambios.', '2024-03-11', '08:18:15', '17:32:30', '09:14:15', '4');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de trabajo con modificaciones.', '2024-04-06', '10:02:45', '18:57:15', '08:54:30', '4');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variación en horas y minutos.', '2024-02-21', '09:47:30', '18:35:20', '08:47:50', '4');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada con cambios en el tiempo.', '2024-03-16', '08:30:00', '17:45:45', '09:15:45', '4');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Ajustes en horas y minutos.', '2024-04-11', '10:05:20', '18:45:00', '08:39:40', '4');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variaciones en horas y segundos.', '2024-02-26', '09:23:15', '18:40:45', '09:17:30', '4');
 
 -- Persona 5
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con cambios.', '2024-02-16', '09:19:45', '18:41:20', '09:21:35', '5');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo con ajustes en minutos y segundos.', '2024-03-21', '08:39:30', '17:26:55', '08:47:25', '5');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas con modificaciones en el tiempo.', '2024-04-26', '10:09:15', '18:51:40', '08:42:25', '5');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos con cambios.', '2024-03-01', '09:34:05', '18:21:30', '08:47:25', '5');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo con ajustes en el tiempo.', '2024-03-11', '08:13:45', '17:31:10', '09:17:25', '5');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de trabajo con variaciones.', '2024-04-06', '09:57:00', '18:59:30', '09:02:30', '5');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variación en horas y minutos.', '2024-02-21', '09:43:30', '18:37:20', '08:53:50', '5');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada con cambios en el tiempo.', '2024-03-16', '08:27:15', '17:44:45', '09:17:30', '5');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Ajustes en horas y minutos.', '2024-04-11', '10:01:20', '18:46:00', '08:44:40', '5');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variaciones en horas y segundos.', '2024-02-26', '09:21:15', '18:38:45', '09:17:30', '5');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada laboral con cambios.', '2024-02-16', '09:19:45', '18:41:20', '09:21:35', '5');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo con ajustes en minutos y segundos.', '2024-03-21', '08:39:30', '17:26:55', '08:47:25', '5');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas con modificaciones en el tiempo.', '2024-04-26', '10:09:15', '18:51:40', '08:42:25', '5');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos con cambios.', '2024-03-01', '09:34:05', '18:21:30', '08:47:25', '5');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo con ajustes en el tiempo.', '2024-03-11', '08:13:45', '17:31:10', '09:17:25', '5');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de trabajo con variaciones.', '2024-04-06', '09:57:00', '18:59:30', '09:02:30', '5');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variación en horas y minutos.', '2024-02-21', '09:43:30', '18:37:20', '08:53:50', '5');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada con cambios en el tiempo.', '2024-03-16', '08:27:15', '17:44:45', '09:17:30', '5');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Ajustes en horas y minutos.', '2024-04-11', '10:01:20', '18:46:00', '08:44:40', '5');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variaciones en horas y segundos.', '2024-02-26', '09:21:15', '18:38:45', '09:17:30', '5');
 
 -- Persona 6
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variación en minutos y segundos.', '2024-02-16', '09:35:45', '18:28:30', '08:52:45', '6');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo con pequeños ajustes.', '2024-03-21', '08:50:00', '17:43:15', '08:53:15', '6');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas con cambios.', '2024-04-26', '10:20:30', '18:45:10', '08:24:40', '6');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos con ajustes.', '2024-03-01', '09:45:45', '18:20:50', '08:35:05', '6');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo con cambios.', '2024-03-11', '08:22:15', '17:37:30', '09:15:15', '6');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de trabajo.', '2024-04-06', '09:55:00', '18:50:30', '08:55:30', '6');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variación en horas y minutos.', '2024-02-21', '09:30:30', '18:25:20', '08:54:50', '6');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada con cambios en el tiempo.', '2024-03-16', '08:42:00', '17:54:45', '09:12:45', '6');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Ajustes en horas y minutos.', '2024-04-11', '10:10:20', '18:35:00', '08:24:40', '6');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variaciones en horas y segundos.', '2024-02-26', '09:17:15', '18:28:45', '09:11:30', '6');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variación en minutos y segundos.', '2024-02-16', '09:35:45', '18:28:30', '08:52:45', '6');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día productivo con pequeños ajustes.', '2024-03-21', '08:50:00', '17:43:15', '08:53:15', '6');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones y tareas con cambios.', '2024-04-26', '10:20:30', '18:45:10', '08:24:40', '6');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos con ajustes.', '2024-03-01', '09:45:45', '18:20:50', '08:35:05', '6');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo con cambios.', '2024-03-11', '08:22:15', '17:37:30', '09:15:15', '6');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de trabajo.', '2024-04-06', '09:55:00', '18:50:30', '08:55:30', '6');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variación en horas y minutos.', '2024-02-21', '09:30:30', '18:25:20', '08:54:50', '6');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada con cambios en el tiempo.', '2024-03-16', '08:42:00', '17:54:45', '09:12:45', '6');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Ajustes en horas y minutos.', '2024-04-11', '10:10:20', '18:35:00', '08:24:40', '6');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Variaciones en horas y segundos.', '2024-02-26', '09:17:15', '18:28:45', '09:11:30', '6');
 
 -- Persona 7
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Tareas administrativas y reuniones.', '2024-02-26', '09:50:30', '18:35:50', '08:45:20', '7');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo de desarrollo.', '2024-03-11', '08:30:45', '17:45:10', '09:14:25', '7');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de programación.', '2024-04-06', '10:15:00', '19:15:30', '09:00:30', '7');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Resolución de incidencias y soporte técnico.', '2024-02-21', '09:55:00', '18:20:40', '08:25:40', '7');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Entrenamiento del personal nuevo.', '2024-03-06', '08:40:20', '17:30:55', '08:50:35', '7');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Revisión de proyectos y planificación.', '2024-04-16', '10:10:45', '18:53:15', '08:42:30', '7');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos de marketing.', '2024-03-01', '09:35:15', '18:21:00', '08:45:45', '7');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el departamento de recursos humanos.', '2024-03-21', '08:15:30', '17:45:45', '09:30:15', '7');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de gestión de proyectos.', '2024-04-26', '10:00:00', '19:00:00', '09:00:00', '7');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones con el equipo de ventas.', '2024-02-11', '09:45:20', '18:35:55', '08:50:35', '7');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Tareas administrativas y reuniones.', '2024-02-26', '09:50:30', '18:35:50', '08:45:20', '7');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo de desarrollo.', '2024-03-11', '08:30:45', '17:45:10', '09:14:25', '7');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de programación.', '2024-04-06', '10:15:00', '19:15:30', '09:00:30', '7');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Resolución de incidencias y soporte técnico.', '2024-02-21', '09:55:00', '18:20:40', '08:25:40', '7');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Entrenamiento del personal nuevo.', '2024-03-06', '08:40:20', '17:30:55', '08:50:35', '7');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Revisión de proyectos y planificación.', '2024-04-16', '10:10:45', '18:53:15', '08:42:30', '7');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos de marketing.', '2024-03-01', '09:35:15', '18:21:00', '08:45:45', '7');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el departamento de recursos humanos.', '2024-03-21', '08:15:30', '17:45:45', '09:30:15', '7');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de gestión de proyectos.', '2024-04-26', '10:00:00', '19:00:00', '09:00:00', '7');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones con el equipo de ventas.', '2024-02-11', '09:45:20', '18:35:55', '08:50:35', '7');
 
 -- Persona 8
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Tareas administrativas y reuniones.', '2024-02-26', '09:50:30', '18:35:50', '08:45:20', '8');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo de desarrollo.', '2024-03-11', '08:30:45', '17:45:10', '09:14:25', '8');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de programación.', '2024-04-06', '10:15:00', '19:15:30', '09:00:30', '8');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Resolución de incidencias y soporte técnico.', '2024-02-21', '09:55:00', '18:20:40', '08:25:40', '8');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Entrenamiento del personal nuevo.', '2024-03-06', '08:40:20', '17:30:55', '08:50:35', '8');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Revisión de proyectos y planificación.', '2024-04-16', '10:10:45', '18:53:15', '08:42:30', '8');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos de marketing.', '2024-03-01', '09:35:15', '18:21:00', '08:45:45', '8');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el departamento de recursos humanos.', '2024-03-21', '08:15:30', '17:45:45', '09:30:15', '8');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de gestión de proyectos.', '2024-04-26', '10:00:00', '19:00:00', '09:00:00', '8');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones con el equipo de ventas.', '2024-02-11', '09:45:20', '18:35:55', '08:50:35', '8');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Tareas administrativas y reuniones.', '2024-02-26', '09:50:30', '18:35:50', '08:45:20', '8');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo de desarrollo.', '2024-03-11', '08:30:45', '17:45:10', '09:14:25', '8');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de programación.', '2024-04-06', '10:15:00', '19:15:30', '09:00:30', '8');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Resolución de incidencias y soporte técnico.', '2024-02-21', '09:55:00', '18:20:40', '08:25:40', '8');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Entrenamiento del personal nuevo.', '2024-03-06', '08:40:20', '17:30:55', '08:50:35', '8');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Revisión de proyectos y planificación.', '2024-04-16', '10:10:45', '18:53:15', '08:42:30', '8');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos de marketing.', '2024-03-01', '09:35:15', '18:21:00', '08:45:45', '8');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el departamento de recursos humanos.', '2024-03-21', '08:15:30', '17:45:45', '09:30:15', '8');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de gestión de proyectos.', '2024-04-26', '10:00:00', '19:00:00', '09:00:00', '8');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones con el equipo de ventas.', '2024-02-11', '09:45:20', '18:35:55', '08:50:35', '8');
 
 -- Persona 9
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada productiva con reuniones.', '2024-03-15', '09:30:00', '18:45:30', '09:15:30', '9');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo en equipo y resolución de problemas.', '2024-04-10', '08:45:20', '17:30:45', '08:45:25', '9');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración en proyectos de desarrollo.', '2024-02-20', '10:00:45', '19:15:10', '09:14:25', '9');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Revisión de informes y preparación de presentaciones.', '2024-03-05', '09:20:10', '18:53:45', '09:33:35', '9');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día centrado en proyectos de innovación.', '2024-04-15', '10:40:35', '19:25:00', '08:44:25', '9');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones estratégicas y planificación.', '2024-02-29', '09:55:50', '18:20:15', '08:24:25', '9');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo de recursos humanos.', '2024-03-20', '08:35:15', '17:45:40', '09:10:25', '9');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Gestión de proyectos y evaluación de resultados.', '2024-04-25', '10:10:40', '19:00:05', '08:49:25', '9');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Entrenamiento y desarrollo de habilidades.', '2024-02-10', '09:45:05', '18:35:30', '08:50:25', '9');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada enfocada en proyectos de mejora.', '2024-03-15', '09:30:30', '18:45:55', '09:15:25', '9');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada productiva con reuniones.', '2024-03-15', '09:30:00', '18:45:30', '09:15:30', '9');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo en equipo y resolución de problemas.', '2024-04-10', '08:45:20', '17:30:45', '08:45:25', '9');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración en proyectos de desarrollo.', '2024-02-20', '10:00:45', '19:15:10', '09:14:25', '9');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Revisión de informes y preparación de presentaciones.', '2024-03-05', '09:20:10', '18:53:45', '09:33:35', '9');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día centrado en proyectos de innovación.', '2024-04-15', '10:40:35', '19:25:00', '08:44:25', '9');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones estratégicas y planificación.', '2024-02-29', '09:55:50', '18:20:15', '08:24:25', '9');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo de recursos humanos.', '2024-03-20', '08:35:15', '17:45:40', '09:10:25', '9');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Gestión de proyectos y evaluación de resultados.', '2024-04-25', '10:10:40', '19:00:05', '08:49:25', '9');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Entrenamiento y desarrollo de habilidades.', '2024-02-10', '09:45:05', '18:35:30', '08:50:25', '9');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada enfocada en proyectos de mejora.', '2024-03-15', '09:30:30', '18:45:55', '09:15:25', '9');
 
 -- Persona 10
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Tareas administrativas y reuniones.', '2024-02-25', '09:50:30', '18:35:50', '08:45:20', '10');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo de desarrollo.', '2024-03-10', '08:30:45', '17:45:10', '09:14:25', '10');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de programación.', '2024-04-05', '10:15:00', '19:15:30', '09:00:30', '10');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Resolución de incidencias y soporte técnico.', '2024-02-20', '09:55:00', '18:20:40', '08:25:40', '10');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Entrenamiento del personal nuevo.', '2024-03-05', '08:40:20', '17:30:55', '08:50:35', '10');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Revisión de proyectos y planificación.', '2024-04-15', '10:10:45', '18:53:15', '08:42:30', '10');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos de marketing.', '2024-02-29', '09:35:15', '18:21:00', '08:45:45', '10');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el departamento de recursos humanos.', '2024-03-20', '08:15:30', '17:45:45', '09:30:15', '10');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de gestión de proyectos.', '2024-04-25', '10:00:00', '19:00:00', '09:00:00', '10');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones con el equipo de ventas.', '2024-02-10', '09:45:20', '18:35:55', '08:50:35', '10');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Tareas administrativas y reuniones.', '2024-02-25', '09:50:30', '18:35:50', '08:45:20', '10');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo de desarrollo.', '2024-03-10', '08:30:45', '17:45:10', '09:14:25', '10');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de programación.', '2024-04-05', '10:15:00', '19:15:30', '09:00:30', '10');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Resolución de incidencias y soporte técnico.', '2024-02-20', '09:55:00', '18:20:40', '08:25:40', '10');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Entrenamiento del personal nuevo.', '2024-03-05', '08:40:20', '17:30:55', '08:50:35', '10');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Revisión de proyectos y planificación.', '2024-04-15', '10:10:45', '18:53:15', '08:42:30', '10');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo enfocado en proyectos de marketing.', '2024-02-29', '09:35:15', '18:21:00', '08:45:45', '10');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el departamento de recursos humanos.', '2024-03-20', '08:15:30', '17:45:45', '09:30:15', '10');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día completo de gestión de proyectos.', '2024-04-25', '10:00:00', '19:00:00', '09:00:00', '10');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones con el equipo de ventas.', '2024-02-10', '09:45:20', '18:35:55', '08:50:35', '10');
 
 -- Persona 11
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada productiva con reuniones.', '2024-02-25', '09:30:00', '18:45:30', '09:15:30', '11');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo en equipo y resolución de problemas.', '2024-04-10', '08:45:20', '17:30:45', '08:45:25', '11');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración en proyectos de desarrollo.', '2024-02-20', '10:00:45', '19:15:10', '09:14:25', '11');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Revisión de informes y preparación de presentaciones.', '2024-03-05', '09:20:10', '18:53:45', '09:33:35', '11');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día centrado en proyectos de innovación.', '2024-04-15', '10:40:35', '19:25:00', '08:44:25', '11');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones estratégicas y planificación.', '2024-02-29', '09:55:50', '18:20:15', '08:24:25', '11');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo de recursos humanos.', '2024-03-20', '08:35:15', '17:45:40', '09:10:25', '11');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Gestión de proyectos y evaluación de resultados.', '2024-04-25', '10:10:40', '19:00:05', '08:49:25', '11');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Entrenamiento y desarrollo de habilidades.', '2024-02-10', '09:45:05', '18:35:30', '08:50:25', '11');
-INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada enfocada en proyectos de mejora.', '2024-03-15', '09:30:30', '18:45:55', '09:15:25', '11');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada productiva con reuniones.', '2024-02-25', '09:30:00', '18:45:30', '09:15:30', '11');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Trabajo en equipo y resolución de problemas.', '2024-04-10', '08:45:20', '17:30:45', '08:45:25', '11');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración en proyectos de desarrollo.', '2024-02-20', '10:00:45', '19:15:10', '09:14:25', '11');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Revisión de informes y preparación de presentaciones.', '2024-03-05', '09:20:10', '18:53:45', '09:33:35', '11');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Día centrado en proyectos de innovación.', '2024-04-15', '10:40:35', '19:25:00', '08:44:25', '11');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Reuniones estratégicas y planificación.', '2024-02-29', '09:55:50', '18:20:15', '08:24:25', '11');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Colaboración con el equipo de recursos humanos.', '2024-03-20', '08:35:15', '17:45:40', '09:10:25', '11');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Gestión de proyectos y evaluación de resultados.', '2024-04-25', '10:10:40', '19:00:05', '08:49:25', '11');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Entrenamiento y desarrollo de habilidades.', '2024-02-10', '09:45:05', '18:35:30', '08:50:25', '11');
+INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`observacion`, `fecha`, `hora_entrada`, `hora_salida`, `total_horas_trabajadas`, `id_persona`) VALUES ('Jornada enfocada en proyectos de mejora.', '2024-03-15', '09:30:30', '18:45:55', '09:15:25', '11');
 
 
 
@@ -503,80 +502,80 @@ INSERT INTO `trabajotfgerp`.`asistencias_empleados` (`comentarios`, `fecha`, `ho
 -- ========================================
 -- Persona 1 
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-02-10', '2024-01-10', '800', '1', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-03-10', '2024-02-10', '1200', '1', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-02-10', '2024-01-10', '800', '1', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-03-10', '2024-02-10', '1200', '1', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-04-10', '2024-03-10', '1000', '1', '3', '3', 'Ayuda rechazada para guarderías por exceder el presupuesto asignado.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-05-10', '2024-04-10', '1500', '1', '2', '3', 'Ayuda rechazada para transporte por exceder el presupuesto asignado.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-04-10', '2024-03-10', '1000', '1', '3', '3', 'Ayuda rechazada para guarderías por exceder el presupuesto asignado.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-05-10', '2024-04-10', '1500', '1', '2', '3', 'Ayuda rechazada para transporte por exceder el presupuesto asignado.');
 
 -- Persona 2 
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-02-10', '2024-01-10', '800', '2', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-03-10', '2024-02-10', '1200', '2', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-02-10', '2024-01-10', '800', '2', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-03-10', '2024-02-10', '1200', '2', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-04-10', '2024-03-10', '1000', '2', '3', '3', 'Ayuda rechazada para guarderías por exceder el presupuesto asignado.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-05-10', '2024-04-10', '1500', '2', '2', '3', 'Ayuda rechazada para transporte por exceder el presupuesto asignado.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-04-10', '2024-03-10', '1000', '2', '3', '3', 'Ayuda rechazada para guarderías por exceder el presupuesto asignado.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-05-10', '2024-04-10', '1500', '2', '2', '3', 'Ayuda rechazada para transporte por exceder el presupuesto asignado.');
 
 -- Persona 3 
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-02-10', '2024-01-10', '800', '3', '3', '2', 'Ayuda aceptada para guarderías.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-03-10', '2024-02-10', '1200', '3', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-02-10', '2024-01-10', '800', '3', '3', '2', 'Ayuda aceptada para guarderías.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-03-10', '2024-02-10', '1200', '3', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-04-10', '2024-03-10', '1000', '3', '1', '3', 'Ayuda rechazada para comidas por exceder el presupuesto asignado.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-05-10', '2024-04-10', '1500', '3', '2', '3', 'Ayuda rechazada para transporte por exceder el presupuesto asignado.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-04-10', '2024-03-10', '1000', '3', '1', '3', 'Ayuda rechazada para comidas por exceder el presupuesto asignado.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-05-10', '2024-04-10', '1500', '3', '2', '3', 'Ayuda rechazada para transporte por exceder el presupuesto asignado.');
 
 -- Persona 4 
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-02-15', '2024-01-15', '900', '4', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-03-20', '2024-02-20', '1200', '4', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-04-25', '2024-03-25', '800', '4', '3', '2', 'Ayuda aceptada para cubrir gastos de guarderías.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-02-15', '2024-01-15', '900', '4', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-03-20', '2024-02-20', '1200', '4', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-04-25', '2024-03-25', '800', '4', '3', '2', 'Ayuda aceptada para cubrir gastos de guarderías.');
 
 -- Persona 5 
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-02-20', '2024-01-20', '1000', '5', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-03-25', '2024-02-25', '850', '5', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-04-30', '2024-03-30', '1100', '5', '3', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-02-20', '2024-01-20', '1000', '5', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-03-25', '2024-02-25', '850', '5', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-04-30', '2024-03-30', '1100', '5', '3', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
 
 -- Persona 6 
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-02-25', '2024-01-25', '1200', '6', '3', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-04-01', '2024-03-01', '950', '6', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-05-05', '2024-04-05', '1050', '6', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-02-25', '2024-01-25', '1200', '6', '3', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-04-01', '2024-03-01', '950', '6', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-05-05', '2024-04-05', '1050', '6', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
 
 -- Persona 7 
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-03-01', '2024-02-01', '950', '7', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-04-06', '2024-03-06', '1100', '7', '3', '2', 'Ayuda aceptada para cubrir gastos de guarderías.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-03-01', '2024-02-01', '950', '7', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-04-06', '2024-03-06', '1100', '7', '3', '2', 'Ayuda aceptada para cubrir gastos de guarderías.');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-05-11', '2024-04-11', '1200', '7', '1', '3', 'Ayuda denegada por exceder el presupuesto asignado.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-05-11', '2024-04-11', '1200', '7', '1', '3', 'Ayuda denegada por exceder el presupuesto asignado.');
 
 -- Persona 8 
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-03-06', '2024-02-06', '1050', '8', '3', '2', 'Ayuda aceptada para cubrir gastos de guarderías.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-04-11', '2024-03-11', '1000', '8', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-03-06', '2024-02-06', '1050', '8', '3', '2', 'Ayuda aceptada para cubrir gastos de guarderías.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-04-11', '2024-03-11', '1000', '8', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-05-16', '2024-04-16', '850', '8', '2', '3', 'Ayuda denegada por falta de documentación.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-05-16', '2024-04-16', '850', '8', '2', '3', 'Ayuda denegada por falta de documentación.');
 
 -- Persona 9 
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-03-11', '2024-02-11', '900', '9', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-04-16', '2024-03-16', '950', '9', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-03-11', '2024-02-11', '900', '9', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-04-16', '2024-03-16', '950', '9', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-05-21', '2024-04-21', '1100', '9', '3', '3', 'Ayuda denegada por falta de justificación.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-05-21', '2024-04-21', '1100', '9', '3', '3', 'Ayuda denegada por falta de justificación.');
 
 -- Persona 10 
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-02-01', '2024-01-01', '1000', '10', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-03-06', '2024-02-06', '850', '10', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-02-01', '2024-01-01', '1000', '10', '2', '2', 'Ayuda aceptada para cubrir gastos de transporte.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-03-06', '2024-02-06', '850', '10', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-04-11', '2024-03-11', '1200', '10', '3', '3', 'Ayuda denegada por exceder el presupuesto asignado.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-04-11', '2024-03-11', '1200', '10', '3', '3', 'Ayuda denegada por exceder el presupuesto asignado.');
 
 -- Persona 11 
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-02-06', '2024-01-06', '950', '11', '3', '2', 'Ayuda aceptada para cubrir gastos de guarderías.');
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-03-11', '2024-02-11', '1000', '11', '2', '3', 'Ayuda denegada por falta de documentación.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-02-06', '2024-01-06', '950', '11', '3', '2', 'Ayuda aceptada para cubrir gastos de guarderías.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-03-11', '2024-02-11', '1000', '11', '2', '3', 'Ayuda denegada por falta de documentación.');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `comentarios`) VALUES ('2024-04-16', '2024-03-16', '1100', '11', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
+INSERT INTO `trabajotfgerp`.`ayudas_empleados` (`fecha_fin`, `fecha_inicio`, `valor_asociado`, `id_persona`, `id_tipo_ayuda`, `id_tipo_estado`, `observacion`) VALUES ('2024-04-16', '2024-03-16', '1100', '11', '1', '2', 'Ayuda aceptada para cubrir gastos de comidas.');
 
 
 
@@ -684,81 +683,81 @@ INSERT INTO `trabajotfgerp`.`bajas_laborales_empleados` (`fecha_fin`, `fecha_ini
 -- ========================================
 -- Persona 1
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-05', '2023-05-01', '1', '2');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-05', '2023-06-01', '1', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-05', '2023-05-01', '1', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-05', '2023-06-01', '1', '2');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-05', '2023-07-01', '1', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-05', '2023-07-01', '1', '3');
 
 -- Persona 2
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '2', '2');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '2', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '2', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '2', '2');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '2', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '2', '3');
 
 -- Persona 3
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '3', '2');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '3', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '3', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '3', '2');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '3', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '3', '3');
 
 -- Persona 4
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '4', '2');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '4', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '4', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '4', '2');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '4', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '4', '3');
 
 -- Persona 5
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '5', '2');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '5', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-15', '2023-05-10', '5', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-15', '2023-06-10', '5', '2');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '5', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '10', '20', '0', '5', '2023-07-15', '2023-07-10', '5', '3');
 
 -- Persona 6
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-20', '2023-05-15', '6', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-20', '2023-05-15', '6', '2');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '5', '25', '0', '5', '2023-06-20', '2023-06-15', '6', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '5', '25', '0', '5', '2023-06-20', '2023-06-15', '6', '3');
 
 -- Persona 7
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-20', '2023-05-15', '7', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-20', '2023-05-15', '7', '2');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '5', '25', '0', '5', '2023-06-20', '2023-06-15', '7', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Solicitud de vacaciones denegada.', '5', '25', '0', '5', '2023-06-20', '2023-06-15', '7', '3');
 
 -- Persona 8
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aprobadas.', '5', '25', '0', '5', '2023-06-05', '2023-06-01', '8', '2');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aprobadas.', '9', '21', '0', '4', '2023-06-18', '2023-06-15', '8', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aprobadas.', '5', '25', '0', '5', '2023-06-05', '2023-06-01', '8', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aprobadas.', '9', '21', '0', '4', '2023-06-18', '2023-06-15', '8', '2');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas.', '9', '21', '0', '5', '2023-07-05', '2023-07-01', '8', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas.', '9', '21', '0', '5', '2023-07-05', '2023-07-01', '8', '3');
 
 -- Vacaciones Persona 9
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para julio.', '5', '25', '0', '5', '2023-07-05', '2023-07-01', '9', '2');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para agosto.', '10', '20', '0', '5', '2023-08-14', '2023-08-10', '9', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para julio.', '5', '25', '0', '5', '2023-07-05', '2023-07-01', '9', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para agosto.', '10', '20', '0', '5', '2023-08-14', '2023-08-10', '9', '2');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para septiembre.', '10', '20', '0', '5', '2023-09-05', '2023-09-01', '9', '3');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para octubre.', '10', '20', '0', '5', '2023-10-14', '2023-10-10', '9', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para septiembre.', '10', '20', '0', '5', '2023-09-05', '2023-09-01', '9', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para octubre.', '10', '20', '0', '5', '2023-10-14', '2023-10-10', '9', '3');
 
 -- Persona 10
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-05', '2023-05-01', '10', '2');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-14', '2023-06-10', '10', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-05', '2023-05-01', '10', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-14', '2023-06-10', '10', '2');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para julio.', '10', '20', '0', '5', '2023-07-05', '2023-07-01', '10', '3');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para agosto.', '10', '20', '0', '5', '2023-08-14', '2023-08-10', '10', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para julio.', '10', '20', '0', '5', '2023-07-05', '2023-07-01', '10', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para agosto.', '10', '20', '0', '5', '2023-08-14', '2023-08-10', '10', '3');
 
 -- Vacaciones Persona 11
 -- Aceptadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-05', '2023-05-01', '11', '2');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-19', '2023-06-15', '11', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para mayo.', '5', '25', '0', '5', '2023-05-05', '2023-05-01', '11', '2');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones aceptadas para junio.', '10', '20', '0', '5', '2023-06-19', '2023-06-15', '11', '2');
 -- Denegadas
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para julio.', '10', '20', '0', '5', '2023-07-05', '2023-07-01', '11', '3');
-INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`comentarios`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para agosto.', '10', '20', '0', '5', '2023-08-14', '2023-08-10', '11', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para julio.', '10', '20', '0', '5', '2023-07-05', '2023-07-01', '11', '3');
+INSERT INTO `trabajotfgerp`.`vacaciones_empleados` (`observacion`, `dias_disfrutados`, `dias_disponibles`, `dias_pendientes`, `dias_solicitados`, `fecha_fin`, `fecha_inicio`, `id_persona`, `id_tipo_estado`) VALUES ('Vacaciones denegadas para agosto.', '10', '20', '0', '5', '2023-08-14', '2023-08-10', '11', '3');
 
 
 

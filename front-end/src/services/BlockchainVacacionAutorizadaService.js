@@ -28,7 +28,7 @@ export const saveTransaccionVacacionAutorizada = async (data) => {
     formData["dias_pendientes"] = parseInt(data.dias_pendientes);
     formData["dias_solicitados"] = parseInt(data.dias_solicitados);
     formData["dias_disfrutados"] = parseInt(data.dias_disfrutados);
-    formData["comentarios"] = data.comentarios;
+    formData["observacion"] = data.observacion;
     formData["dni"] = data.dni;
     formData["tipo_estado"] = data.tipo_estado;
     

@@ -146,7 +146,7 @@ public class BajaLaboralEmpleadoService {
 
         bajaLaboralEmpleadoExistente.setFecha_inicio(cambiosBajaLaboralEmpleado.getFecha_inicio());
         bajaLaboralEmpleadoExistente.setFecha_fin(cambiosBajaLaboralEmpleado.getFecha_fin());
-        bajaLaboralEmpleadoExistente.setComentarios(cambiosBajaLaboralEmpleado.getComentarios());
+        bajaLaboralEmpleadoExistente.setObservacion(cambiosBajaLaboralEmpleado.getObservacion());
 
         String dniPersona = cambiosBajaLaboralEmpleado.getPersona().getDni();
 

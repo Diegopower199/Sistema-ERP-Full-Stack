@@ -8,7 +8,7 @@ Ademas es recomendable cambiar a los campos que ponen "comentarios" por "observa
 
 Cambiar en todos lados comentarios por observaciones, esto en el back
 
-En los insert darme cuenta y cambiar donde ponga comentarios por observaciones, ya que si no, no sale
+En los insert darme cuenta y cambiar donde ponga comentarios por observaciones, ya que si no, no sale al igual que los campos que modifique
 
 
 Campos que tengo que añadir en las siguientes tablas:
@@ -16,8 +16,6 @@ Campos que tengo que añadir en las siguientes tablas:
 Tabla AsistenciaEmpleadoModel:
  - total_horas_trabajadas: Cambiar el nombre actual que es "horas_trabajadas_dia" -> Almacenar horas y minutos, segundos ponerlo a 00
  - fecha: Cambiar el nombre actual que es "fecha_asistencia"
- - hora_entrada: por hora_entrada_empleado
- - hora_salida: por hora_salida_empleado
 
 
 Tabla PedidoClienteModel:

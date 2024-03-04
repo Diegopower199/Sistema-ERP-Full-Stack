@@ -28,7 +28,7 @@ export default function FormVacacionesEmpleados({
     dias_pendientes: "0",
     dias_solicitados: "0",
     dias_disfrutados: "0",
-    comentarios: "",
+    observacion: "",
     dni: "",
     id_tipo_estado: "1",
   });
@@ -219,7 +219,7 @@ export default function FormVacacionesEmpleados({
               dias_pendientes: responseUpdateVacacion.data.dias_pendientes,
               dias_solicitados: responseUpdateVacacion.data.dias_solicitados,
               dias_disfrutados: responseUpdateVacacion.data.dias_disfrutados,
-              comentarios: responseUpdateVacacion.data.comentarios,
+              observacion: responseUpdateVacacion.data.observacion,
               dni: responseUpdateVacacion.data.persona.dni,
               tipo_estado: responseUpdateVacacion.data.tipo_estado.tipo_estado,
             };
@@ -350,12 +350,12 @@ export default function FormVacacionesEmpleados({
       <br />
       <br />
       <label>
-        Comentarios:
+      Observacion:
         <input
           type="text"
-          name="comentarios"
-          value={formData.comentarios}
-          placeholder="Comentarios"
+          name="observacion"
+          value={formData.observacion}
+          placeholder="Observacion"
           onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
         />

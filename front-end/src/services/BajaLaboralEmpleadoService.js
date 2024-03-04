@@ -22,7 +22,7 @@ export const saveBajaLaboralEmpleado = async (data) => {
   try {
     let formData = {};
     formData["fecha_solicitud"] = data.fecha_solicitud;
-    formData["comentarios"] = data.comentarios;
+    formData["observacion"] = data.observacion;
     formData["persona"] = {
       dni: data.dni,
     };
@@ -68,7 +68,7 @@ export const updateBajaLaboralEmpleado = async (id, data) => {
   try {
     let formData = {};
     formData["fecha_solicitud"] = data.fecha_solicitud;
-    formData["comentarios"] = data.comentarios;
+    formData["observacion"] = data.observacion;
     formData["persona"] = {
       dni: data.dni,
     };

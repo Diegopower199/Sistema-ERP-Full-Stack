@@ -33,8 +33,8 @@ public class AyudaEmpleadoModel implements Serializable {
     @Column(name = "valor_asociado", nullable = false)
     private float valor_asociado;
 
-    @Column(name = "comentarios", nullable = true)
-    private String comentarios;
+    @Column(name = "observacion", nullable = true)
+    private String observacion;
 
     @ManyToOne
     @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_ayudas_empleados_personas"))
@@ -54,7 +54,7 @@ public class AyudaEmpleadoModel implements Serializable {
         map.put("fecha_inicio", fecha_inicio);
         map.put("fecha_fin", fecha_fin);
         map.put("valor_asociado", valor_asociado);
-        map.put("comentarios", comentarios);
+        map.put("observacion", observacion);
         return map;
     }
 

@@ -27,8 +27,8 @@ public class SolicitudEmpleadoModel implements Serializable {
     @Column(name = "fecha_solicitud", nullable = false)
     private LocalDate fecha_solicitud;
 
-    @Column(name = "comentarios", nullable = true)
-    private String comentarios;
+    @Column(name = "observacion", nullable = true)
+    private String observacion;
 
     @ManyToOne
     @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_solicitudes_empleados_personas"))
@@ -46,7 +46,7 @@ public class SolicitudEmpleadoModel implements Serializable {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("id_solicitud_empleado", id_solicitud_empleado);
         map.put("fecha_solicitud", fecha_solicitud);
-        map.put("comentarios", comentarios);
+        map.put("observacion", observacion);
         return map;
     }
 
@@ -63,5 +63,5 @@ public class SolicitudEmpleadoModel implements Serializable {
  * foránea de tipo_solicitud)
  * - Estado de la Solicitud (pendiente, aprobada, rechazada) -> El campo será
  * "id_tipo_estado" con la tabla tipo_estado
- * - Comentarios
+ * - observacion
  */

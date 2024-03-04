@@ -25,7 +25,7 @@ export default function FormSolicitudesEmpleados({
 
   const [formData, setFormData] = useState({
     fecha_solicitud: "",
-    comentarios: "",
+    observacion: "",
     dni: "",
     id_tipo_solicitud: "1",
     id_tipo_estado: "1",
@@ -241,11 +241,11 @@ export default function FormSolicitudesEmpleados({
       <br />
       <br />
       <label>
-        Comentarios:
+      Observacion:
         <input
           type="text"
-          name="comentarios"
-          value={formData.comentarios}
+          name="observacion"
+          value={formData.observacion}
           onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
         />

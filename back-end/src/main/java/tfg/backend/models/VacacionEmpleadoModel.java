@@ -42,8 +42,8 @@ public class VacacionEmpleadoModel implements Serializable {
     @Column(name = "dias_disfrutados", nullable = false)
     private int dias_disfrutados;
 
-    @Column(name = "comentarios", nullable = true)
-    private String comentarios;
+    @Column(name = "observacion", nullable = true)
+    private String observacion;
 
     @ManyToOne
     @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_vacaciones_empleados_personas"))
@@ -62,7 +62,7 @@ public class VacacionEmpleadoModel implements Serializable {
         map.put("dias_pendientes", dias_pendientes);
         map.put("dias_solicitados", dias_solicitados);
         map.put("dias_disfrutados", dias_disfrutados);
-        map.put("comentarios", comentarios);
+        map.put("observacion", observacion);
         return map;
     }
 

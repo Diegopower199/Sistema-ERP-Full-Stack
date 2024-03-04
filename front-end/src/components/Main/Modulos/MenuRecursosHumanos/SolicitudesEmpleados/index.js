@@ -85,8 +85,8 @@ export default function SolicitudesEmpleados() {
       editable: false,
     },
     {
-      field: "comentarios",
-      headerName: "Comentarios",
+      field: "observacion",
+      headerName: "Observacion",
       width: 180,
       editable: false,
     },
@@ -151,7 +151,7 @@ export default function SolicitudesEmpleados() {
             return {
               id: solicitudEmpleado.id_solicitud_empleado,
               fecha_solicitud: solicitudEmpleado.fecha_solicitud,
-              comentarios: solicitudEmpleado.comentarios,
+              observacion: solicitudEmpleado.observacion,
               id_persona: solicitudEmpleado.persona.id_persona,
               dni: solicitudEmpleado.persona.dni,
               tipo_solicitud: solicitudEmpleado.tipo_solicitud.tipo_solicitud,

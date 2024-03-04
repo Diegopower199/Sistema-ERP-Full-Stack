@@ -18,7 +18,7 @@ public class TransaccionVacacion implements Serializable {
     private int dias_pendientes;
     private int dias_solicitados;
     private int dias_disfrutados;
-    private String comentarios;
+    private String observacion;
     private String dni;
     private String tipo_estado;
     private Long timestamp;
@@ -33,7 +33,7 @@ public class TransaccionVacacion implements Serializable {
         this.dias_pendientes = 0;
         this.dias_solicitados = 0;
         this.dias_disfrutados = 0;
-        this.comentarios = "";
+        this.observacion = "";
         this.dni = "";
         this.tipo_estado = "";
         this.timestamp = System.currentTimeMillis();
@@ -42,7 +42,7 @@ public class TransaccionVacacion implements Serializable {
 
     public TransaccionVacacion(int id_vacacion_empleado, LocalDate fecha_inicio, LocalDate fecha_fin,
             int dias_disponibles, int dias_pendientes,
-            int dias_solicitados, int dias_disfrutados, String comentarios, String dni,
+            int dias_solicitados, int dias_disfrutados, String observacion, String dni,
             String tipo_estado) {
         this.id_vacacion_empleado = id_vacacion_empleado;
         this.fecha_inicio = fecha_inicio;
@@ -51,7 +51,7 @@ public class TransaccionVacacion implements Serializable {
         this.dias_pendientes = dias_pendientes;
         this.dias_solicitados = dias_solicitados;
         this.dias_disfrutados = dias_disfrutados;
-        this.comentarios = comentarios;
+        this.observacion = observacion;
         this.dni = dni;
         this.tipo_estado = tipo_estado;
         this.timestamp = System.currentTimeMillis();
@@ -130,12 +130,12 @@ public class TransaccionVacacion implements Serializable {
         this.dias_disfrutados = dias_disfrutados;
     }
 
-    public String getComentarios() {
-        return comentarios;
+    public String getObservacion() {
+        return observacion;
     }
 
-    public void setComentarios(String comentarios) {
-        this.comentarios = comentarios;
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
 
     public String getDni() {
@@ -158,7 +158,7 @@ public class TransaccionVacacion implements Serializable {
     public String calcularHashTransaccion() {
 
         String text = String.valueOf(id_vacacion_empleado) + String.valueOf(fecha_inicio) + String.valueOf(fecha_fin)
-                + String.valueOf(dias_disponibles) + String.valueOf(dias_pendientes) + String.valueOf(dias_solicitados) + String.valueOf(dias_disfrutados) + String.valueOf(comentarios) + String.valueOf(dni)
+                + String.valueOf(dias_disponibles) + String.valueOf(dias_pendientes) + String.valueOf(dias_solicitados) + String.valueOf(dias_disfrutados) + String.valueOf(observacion) + String.valueOf(dni)
                 + String.valueOf(tipo_estado) + String.valueOf(timestamp);
 
         MessageDigest digest = null;
@@ -187,8 +187,8 @@ public class TransaccionVacacion implements Serializable {
         return "{" +
                 "hash='" + hash + '\'' + "id_vacacion_empleado=" + id_vacacion_empleado + ", fecha_inicio="
                 + fecha_inicio + ", fecha_fin=" + fecha_fin + ", dias_disponibles=" + dias_disponibles + ", dias_pendientes=" + dias_pendientes + ", dias_solicitados=" + dias_solicitados +
-                ", dias_disfrutados=" + dias_disfrutados + ", comentarios='"
-                + comentarios + '\'' + ", dni='" + dni + '\'' + ", tipo_estado='" + tipo_estado + '\'' +
+                ", dias_disfrutados=" + dias_disfrutados + ", observacion='"
+                + observacion + '\'' + ", dni='" + dni + '\'' + ", tipo_estado='" + tipo_estado + '\'' +
                 ", timestamp=" + timestamp + '}';
     }
 
@@ -203,7 +203,7 @@ public class TransaccionVacacion implements Serializable {
         map.put("dias_pendientes", dias_pendientes);
         map.put("dias_solicitados", dias_solicitados);
         map.put("dias_disfrutados", dias_disfrutados);
-        map.put("comentarios", comentarios);
+        map.put("observacion", observacion);
         map.put("dni", dni);
         map.put("tipo_estado", tipo_estado);
         map.put("timestamp", timestamp);
@@ -224,7 +224,7 @@ public class TransaccionVacacion implements Serializable {
         System.out.println("| Dias Pendientes: " + dias_pendientes);
         System.out.println("| Dias Solicitados: " + dias_solicitados);
         System.out.println("| Dias Disfrutados: " + dias_disfrutados);
-        System.out.println("| Comentarios: " + comentarios);
+        System.out.println("| Observacion: " + observacion);
         System.out.println("| DNI: " + dni);
         System.out.println("| Tipo Estado: " + tipo_estado);
         System.out.println("| Timestamp: " + timestamp);

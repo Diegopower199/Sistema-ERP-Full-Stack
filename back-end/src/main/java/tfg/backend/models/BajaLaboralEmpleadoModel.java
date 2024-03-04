@@ -30,8 +30,8 @@ public class BajaLaboralEmpleadoModel implements Serializable {
     @Column(name = "fecha_fin", nullable = false)
     private LocalDate fecha_fin;
 
-    @Column(name = "comentarios", nullable = true)
-    private String comentarios;
+    @Column(name = "observacion", nullable = true)
+    private String observacion;
 
     @ManyToOne
     @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_bajas_laborales_empleados_personas"))
@@ -50,7 +50,7 @@ public class BajaLaboralEmpleadoModel implements Serializable {
         map.put("id_baja_laboral_empleado", id_baja_laboral_empleado);
         map.put("fecha_inicio", fecha_inicio);
         map.put("fecha_fin", fecha_fin);
-        map.put("comentarios", comentarios);
+        map.put("observacion", observacion);
         return map;
     }
 

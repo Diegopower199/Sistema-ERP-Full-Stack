@@ -37,8 +37,8 @@ public class AsistenciaEmpleadoModel implements Serializable {
     @Column(name = "total_horas_trabajadas", nullable = false)
     private LocalTime total_horas_trabajadas;
 
-    @Column(name = "comentarios", nullable = true)
-    private String comentarios;
+    @Column(name = "observacion", nullable = true)
+    private String observacion;
 
     @ManyToOne
     @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_asistencias_empleados_personas"))
@@ -51,7 +51,7 @@ public class AsistenciaEmpleadoModel implements Serializable {
         map.put("hora_entrada", hora_entrada);
         map.put("hora_salida", hora_salida);
         map.put("total_horas_trabajadas", total_horas_trabajadas);
-        map.put("comentarios", comentarios);
+        map.put("observacion", observacion);
         return map;
     }
 

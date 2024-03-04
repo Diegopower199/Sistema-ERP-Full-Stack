@@ -24,7 +24,7 @@ export const saveVacacionEmpleado = async (data) => {
     let formData = {};
     formData["fecha_inicio"] = data.fecha_inicio;
     formData["fecha_fin"] = data.fecha_fin;
-    formData["comentarios"] = data.comentarios;
+    formData["observacion"] = data.observacion;
     formData["persona"] = {
       dni: data.dni,
     };
@@ -70,7 +70,7 @@ export const updateVacacionEmpleado = async (id, data) => {
     let formData = {};
     formData["fecha_inicio"] = data.fecha_inicio;
     formData["fecha_fin"] = data.fecha_fin;
-    formData["comentarios"] = data.comentarios;
+    formData["observacion"] = data.observacion;
     formData["persona"] = {
       dni: data.dni,
     };

@@ -144,7 +144,7 @@ public class SolicitudEmpleadoService {
          * }
          */
 
-        solicitudEmpleadoExistente.setComentarios(cambiosSolicitudEmpleado.getComentarios());
+        solicitudEmpleadoExistente.setObservacion(cambiosSolicitudEmpleado.getObservacion());
 
         String dniPersona = cambiosSolicitudEmpleado.getPersona().getDni();
 

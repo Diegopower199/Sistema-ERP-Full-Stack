@@ -9,11 +9,12 @@ function FormularioVacacionEmpleado() {
   const [formulario, setFormulario] = useState({
     year: "",
     tipo_estado: "",
+    id_tipo_estado: "",
     fecha_inicio: "",
     fecha_finalizacion: "",
     fecha_1_ANTD: "",
     fecha_2_ANTD: "",
-    nombre: "aa",
+    nombre: "",
   });
 
   const fetchTiposEstadosOptions = async () => {
@@ -60,12 +61,13 @@ function FormularioVacacionEmpleado() {
     });
   };
 
-  const handleTipoEstadoChange = (tipoEstado) => {
-    console.log("El tipo estado es: ", tipoEstado);
+  const handleTipoEstadoChange = (value, option) => {
+    console.log("El tipo estado es: ", value, option);
     setFormulario((prevDataState) => {
       return {
         ...prevDataState,
-        ["tipo_estado"]: tipoEstado.toString(),
+        ["tipo_estado"]: option?.children.toString(),
+        ["id_tipo_estado"]: value.toString(),
       };
     });
   };
@@ -113,8 +115,9 @@ function FormularioVacacionEmpleado() {
                 : "Selecciona un tipo de estado"
             }
             onChange={handleTipoEstadoChange}
+            notFoundContent={<span>No hay opciones</span>}
           >
-            {tiposEstadosOptions.map((tipoEstado, index) => (
+            {tiposEstadosOptions.map((tipoEstado) => (
               <Antd.Select.Option
                 key={tipoEstado.value}
                 value={tipoEstado.value}
@@ -127,9 +130,7 @@ function FormularioVacacionEmpleado() {
       </label>
       <br></br>
       DatePicker (fechas) de antd PARA EL YEAR
-      <Antd.DatePicker
-        onChange={(date) => handleDateChange(date, "year")}
-      />
+      <Antd.DatePicker onChange={(date) => handleDateChange(date, "year")} />
       <br></br>
       DatePicker (fechas) de antd PARA EL VALOR FECHA 1
       <Antd.DatePicker

@@ -175,6 +175,7 @@ export default function FormPersonas({
 
   const handleFormChange = (event) => {
     const { name, value, type, checked } = event.target;
+    console.log("Name: ", name, " Value: ", value)
     if (name === "numero_telefono") {
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
 

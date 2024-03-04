@@ -4,46 +4,55 @@ Aclaracón:
     - Para calcular el tiempo_desplazamiento_total es sumar hora_inicio_desplazamiento + hora_fin_desplazamiento
 
 
-Ademas es recomendable cambiar a los campos que ponen comentarios por observaciones, pero eso se cambiará lo ultimo
+Ademas es recomendable cambiar a los campos que ponen "comentarios" por "observacion", pero eso se cambiará lo ultimo y tambien en el front
 
+Cambiar en todos lados comentarios por observaciones, esto en el back
+
+En los insert darme cuenta y cambiar donde ponga comentarios por observaciones, ya que si no, no sale
 
 
 Campos que tengo que añadir en las siguientes tablas:
 
-Tabla PedidoClienteModel:
- - id_persona_encargado (una persona que se encarga) Esto es un id_persona -> nullable = true // Al crear no se pasa nada, es al modificar
- - direccion_entrega -> nullable = false
- - hora_inicio_desplazamiento -> nullable = true
- - hora_fin_desplazamiento -> nullable = true
- - tiempo_desplazamiento_total -> nullable = true // En minutos
- - hora_inicio_servicio -> nullable = true 
- - hora_fin_servicio -> nullable = true 
- - tiempo_servicio_total -> nullable = true // En minutos
- - id_tipo_estado_facturacion (clave foranea de esta tabla: Tipo_Estado_Facturacion) -> 1. pendiente facturar, 2. facturado, 3. cerrado sin facturar -> nullable = false Hasta que esto no este en la opcion 2 no se puede generar factura
- - descripcion -> nullable = true
- - observacion -> nullable = true
+Tabla AsistenciaEmpleadoModel:
+ - total_horas_trabajadas: Cambiar el nombre actual que es "horas_trabajadas_dia" -> Almacenar horas y minutos, segundos ponerlo a 00
+ - fecha: Cambiar el nombre actual que es "fecha_asistencia"
+ - hora_entrada: por hora_entrada_empleado
+ - hora_salida: por hora_salida_empleado
 
+
+Tabla PedidoClienteModel:
+ - id_persona_encargado (una persona que se encarga) Esto es un id_persona -> nullable = true, Tipo: PersonaModel // Al crear no se pasa nada, es al modificar
+ - direccion_entrega -> nullable = false, Tipo: String
+ - hora_inicio_desplazamiento -> nullable = true, Tipo: LocalTime
+ - hora_fin_desplazamiento -> nullable = true, Tipo: LocalTime
+ - tiempo_desplazamiento_total -> nullable = true, Tipo: LocalTime // Horas y minutos, segundos de queda con 00
+ - hora_inicio_servicio -> nullable = true, Tipo: LocalTime
+ - hora_fin_servicio -> nullable = true, Tipo: LocalTime
+ - tiempo_servicio_total -> nullable = true, Tipo: LocalTime // Horas y minutos, segundos de queda con 00
+ - id_tipo_estado_facturacion (clave foranea de esta tabla: Tipo_Estado_Facturacion) -> 1. pendiente facturar, 2. facturado, 3. cerrado sin facturar -> nullable = false, Tipo: Tipo_Estado_Facturacion Hasta que esto no este en la opcion 2 no se puede generar factura
+ - descripcion -> nullable = true, Tipo: String
+ - observacion -> nullable = true, Tipo: String
 
 
 Despues en Facturas clientes voy a poner los campos de detalles facturas, ya que esa tabla por ahora no se va a utilizar ni los servicios ni nada
 
-FacturaClienteModel:
- - descripcion_servicio -> nullable = false
- - direccion_entrega -> nullable = false
- - hora_inicio_desplazamiento -> nullable = true
- - hora_fin_desplazamiento -> nullable = true
- - tiempo_desplazamiento_total -> nullable = true // En minutos
- - hora_inicio_servicio -> nullable = true 
- - hora_fin_servicio -> nullable = true 
- - tiempo_servicio_total -> nullable = true // En minutos
- - fecha_entrega_real_pedido -> nullable = true
- - fecha_factura_emitida -> nullable = true
- - tarifa_hora_desplazamiento -> nullable = true
- - tarifa_hora_servicio -> nullable = true
- - subtotal_factura_sin_iva -> nullable = true
- - iva -> nullable = true
- - total_factura -> nullable = true
- - id_pedido_cliente -> Poner el pedido del cliente a la factura (foreign key) -> nullable = false
+Tabla FacturaClienteModel:
+ - descripcion_servicio -> nullable = false, Tipo: String
+ - direccion_entrega -> nullable = false, Tipo: String
+ - hora_inicio_desplazamiento -> nullable = true, Tipo: LocalTime
+ - hora_fin_desplazamiento -> nullable = true, Tipo: LocalTime
+ - tiempo_desplazamiento_total -> nullable = true, Tipo: LocalTime // Horas y minutos, segundos de queda con 00
+ - hora_inicio_servicio -> nullable = true , Tipo: LocalTime
+ - hora_fin_servicio -> nullable = true , Tipo: LocalTime
+ - tiempo_servicio_total -> nullable = true , Tipo: LocalTime // Horas y minutos, segundos de queda con 00
+ - fecha_entrega_real_pedido -> nullable = true, Tipo: LocalDate
+ - fecha_factura_emitida -> nullable = true, Tipo: LocalDate
+ - tarifa_hora_desplazamiento -> nullable = true, Tipo: float
+ - tarifa_hora_servicio -> nullable = true, Tipo: float
+ - subtotal_factura_sin_iva -> nullable = true, Tipo: float
+ - iva -> nullable = true, Tipo: float
+ - total_factura -> nullable = true, Tipo: float
+ - id_pedido_cliente -> Poner el pedido del cliente a la factura (foreign key) -> nullable = false, Tipo: PedidoClienteModel
 
 
 

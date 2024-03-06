@@ -96,7 +96,7 @@ logging.level.org.hibernate.SQL=debug
 server.port=8080
 ```
 
-Comandos a ejecutar sin tener el archivo tasks.json:
+## Comandos a ejecutar sin tener el archivo tasks.json:
 
     - back-end: ./mvnw clean install spring-boot:run
 

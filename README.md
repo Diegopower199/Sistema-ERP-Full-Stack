@@ -1,5 +1,6 @@
 # Sistema ERP Full Stack
 
+Primero hay que leer e instalar todo lo del siguiente documento word: "Manual-Instalacion-Sistema-ERP-Diego-Gonzalez.docx"
 
 Comandos a ejecutar sin tener el archivo tasks.json:
 

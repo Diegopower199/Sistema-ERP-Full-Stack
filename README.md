@@ -38,21 +38,21 @@ Una vez creada la conexión, sigue los siguientes pasos para configurar la base 
 
 El fichero `application.properties` contiene la configuración de la base de datos MySQL para la aplicación Spring Boot. A continuación se describen las propiedades utilizadas:
 
-Configuración de la base de datos MySQL
+Configuración de la base de datos MySQL:
 
 - **spring.datasource.url**: Establece la URL de conexión JDBC a la base de datos MySQL -> jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_example
 - **spring.datasource.username**: El nombre del usuario para acceder a la base de datos
 - **spring.datasource.password**: La contraseña para el usuario de la base de datos
 - **spring.datasource.driver-class-name**: Define el nombre de la clase del controlador JDBC para la base de datos MySQL.
 
-Configuración de JPA y Hibernate
+Configuración de JPA y Hibernate:
 
 - **spring.jpa.database-platform**: Define la plataforma de la base de datos para Hibernate -> org.hibernate.dialect.MySQL8Dialect
 - **spring.jpa.show-sql**: Especifica si Hibernate debe mostrar las consultas SQL generadas -> true
 - **spring.jpa.hibernate.ddl-auto**: Controla la generación automática del esquema de la base de datos por parte de Hibernate -> update
 - **logging.level.org.hibernate.SQL**: Establece el nivel de registro para las consultas SQL de Hibernate -> debug
 
-Configuración del servidor
+Configuración del servidor:
 
 - **server.port**: Define el puerto en el que se ejecutará el servidor Spring Boot -> 8080
 

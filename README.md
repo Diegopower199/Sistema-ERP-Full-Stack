@@ -4,7 +4,8 @@
 
 2. Cuando tengamos todo instalado tenemos que clonar el repositoria. Lo haremos con este comando "git clone https://github.com/Diegopower199/Sistema-ERP-Full-Stack.git"
 
-Antes de ejecutar ningun comando tenemos que crear o modificar algunos archivos. A continuacion se indicará los pasos que se deben seguir para que funcione todo correctamente.
+> [!WARNING]
+> Antes de ejecutar ningun comando tenemos que crear o modificar algunos archivos. A continuacion se indicará los pasos que se deben seguir para que funcione todo correctamente.
 
 ## Configuracion
 

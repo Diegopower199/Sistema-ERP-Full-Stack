@@ -1,5 +1,23 @@
 # Sistema ERP Full Stack
 
+
+Comandos a ejecutar sin tener el archivo tasks.json:
+
+    - back-end: ./mvnw clean install spring-boot:run 
+
+    - blockchain-authorized-vacations: mvn clean install exec:java
+
+    - common-backend-and-blockchain-classes: mvn clean install exec:java
+
+    - front-end: npm run dev
+
+    - servidor-correo-node-mailer: npm run dev
+
+
+
+
+
+
 En el back si hay problemas se debe hacer lo siguiente en el proyecto (back-end):
 
     - ./mvnw clean
@@ -122,18 +140,3 @@ Limpiar el Caché de Git: A veces, Git puede estar reteniendo información en su
 
 
 https://medium.com/@thearaseng/building-a-full-stack-product-app-with-react-spring-boot-and-docker-compose-64a47f4a1080
-
-
-
-
-Comandos a ejecutar sin tener el archivo tasks.json:
-
-    - back-end: ./mvnw clean install spring-boot:run 
-
-    - blockchain-authorized-vacations: mvn clean install exec:java
-
-    - common-backend-and-blockchain-classes: mvn clean install exec:java
-
-    - front-end: npm run dev
-
-    - servidor-correo-node-mailer: npm run dev

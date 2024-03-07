@@ -127,6 +127,7 @@ Ejemplo de configuración de servidor web y puerto:
 
 > [!IMPORTANT]
 > El valor de **NEXT_PUBLIC_WEB_PORT_BACK_END** debe ser igual al del fichero del Back-End de `application.properties`
+>
 > El valor de **NEXT_PUBLIC_WEB_PORT_EMAIL** debe ser igual al del fichero del servidor-correo-node-mailer de `.env`
 
 ### Servidor correo node mailer

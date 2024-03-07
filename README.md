@@ -1,5 +1,7 @@
 # Sistema ERP Full Stack
 
+## Comenzando 🚀
+
 1. Primero hay que leer e instalar todo lo del siguiente documento word: "Manual-Instalacion-Sistema-ERP-Diego-Gonzalez.docx"
 
 2. Cuando tengamos todo instalado tenemos que clonar el repositoria. Lo haremos con este comando "git clone https://github.com/Diegopower199/Sistema-ERP-Full-Stack.git"
@@ -7,7 +9,7 @@
 > [!WARNING]
 > Antes de ejecutar ningun comando tenemos que crear o modificar algunos archivos. A continuacion se indicará los pasos que se deben seguir para que funcione todo correctamente.
 
-## Configuracion
+## Configuracion 🔧
 
 ### Base de datos
 
@@ -115,9 +117,9 @@ Creamos un fichero llamado `.env` con la plantilla del fichero `.env.sample`
 
 El archivo .env contiene la configuración de variables de entorno para la aplicación. A continuación se describen las variables utilizadas:
 
-- **NEXT_PUBLIC_WEB_SERVER**: Esta variable define la dirección del servidor web utilizado por la aplicación.
-- **NEXT_PUBLIC_WEB_PORT_BACK_END**: Este valor especifica el puerto utilizado para la comunicación con el backend de la aplicación web.
-- **NEXT_PUBLIC_WEB_PORT_EMAIL**: Este valor indica el puerto utilizado para la comunicación con el servidor de correo electrónico de la aplicación web.
+- **NEXT_PUBLIC_WEB_SERVER**: Esta variable define la dirección del servidor web utilizado por la aplicación
+- **NEXT_PUBLIC_WEB_PORT_BACK_END**: Este valor especifica el puerto utilizado para la comunicación con el backend de la aplicación web
+- **NEXT_PUBLIC_WEB_PORT_EMAIL**: Este valor indica el puerto utilizado para la comunicación con el servidor de correo electrónico de la aplicación web
 
 Ejemplo de configuración de servidor web y puerto:
 
@@ -138,13 +140,17 @@ El archivo `.env` contiene la configuración de variables de entorno para la apl
 
 - **TRANSPORTER_USER**: Esta variable especifica el nombre de usuario utilizado para autenticarse en el servidor de correo electrónico
 - **TRANSPORTER_PASSWORD**: Esta variable indica la contraseña asociada al nombre de usuario utilizado para autenticarse en el servidor de correo electrónico
-- **PORT**: Define el puerto en el que se ejecutará el servidor de envio de correo electronico
+- **PORT_EMAIL_SERVER**: Define el puerto en el que se ejecutará el servidor de envio de correo electronico
+- **PORT_FRONT_END**: Define el puerto en el que se ejecutará el servidor de front-end
+- **HOST_FRONT_END**: Esta variable define la dirección del servidor web utilizado por la aplicación.
 
 Ejemplo de configuración de servidor web y puerto:
 
 - **TRANSPORTER_USER**=example@gmail.com
 - **TRANSPORTER_PASSWORD**=password
-- **PORT**=3001
+- **PORT_EMAIL_SERVER**=3001
+- **PORT_FRONT_END**=3000
+- **PORT_EMAIL_SERVER**=localhost
 
 > [!IMPORTANT]
 > El valor de **TRANSPORTER_USER** debe ser igual al del fichero del Back-End de `application.properties`
@@ -156,10 +162,20 @@ Ejemplo de configuración de servidor web y puerto:
 > 2. En la busqueda, buscar "contraseñas de aplicaciones"
 >
 > 3. Nombramos que nombre queremos poner y nos saldra un mensaje emergente de la contraseña, y ya tendriamos todo.
+>
+> El valor **PORT_FRONT_END** debe ser igual al del fichero del Front-End de `.env`
 
-## Comandos a ejecutar sin tener el archivo tasks.json:
+## Ejecutar ⚙️
 
-    - back-end: ./mvnw clean install spring-boot:run
+> [!IMPORTANT]
+> Antes de ejecutar cada proyecto, asegúrate de cambiar al directorio del proyecto correspondiente usando el comando `cd`:
+
+1. **Back-End:**
+
+```
+    cd back-end
+    ./mvnw clean install spring-boot:run
+```
 
     - blockchain-authorized-vacations: mvn clean install exec:java
 

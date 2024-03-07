@@ -56,8 +56,6 @@ export default function UpdatePassword() {
       const requiredFields = ["correo_electronico"];
       const validate = validateRequiredFields(requiredFields);
 
-      console.log("AAAAAAAAAAAA", validate, "\n\n\n\n");
-
       const codigoVerificacion = generateRandomNumber();
       console.log("codigoVerificacion: ", codigoVerificacion);
       setCodigoVerificacion(codigoVerificacion);
@@ -72,7 +70,7 @@ export default function UpdatePassword() {
 
       console.log("responseExistsEmail: ", responseExistsEmail);
 
-      if (responseExistsEmail.data === true) {
+      if (responseExistsEmail.data.resultado === true) {
         const responseSendEmail = await sendEmailNodeMailer(data);
 
         console.log("responseSendEmail: ", responseSendEmail);

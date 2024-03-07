@@ -2,6 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
+const {
+  TRANSPORTER_USER,
+  API_URL_FRONT_END,
+  TRANSPORTER_PASSWORD,
+  PORT_EMAIL_SERVER,
+} = require("./utils/constants");
 require("dotenv").config();
 
 const app = express();
@@ -10,22 +16,26 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
+
 // Configurar CORS
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: API_URL_FRONT_END, // API_URL_FRONT_END
   })
 );
+
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
   auth: {
-    user: process.env.TRANSPORTER_USER,
-    pass: process.env.TRANSPORTER_PASSWORD,
+    user: TRANSPORTER_USER, // TRANSPORTER_USER
+    pass: TRANSPORTER_PASSWORD, // TRANSPORTER_PASSWORD
   },
 });
+
 
 transporter
   .verify()
@@ -64,7 +74,14 @@ app.post("/sendEmail", async (req, res) => {
   }
 });
 
-app.listen(3001, () => console.log("Escuchando desde http://localhost:3001"));
+console.log("ERROR ANTES")
+
+
+app.listen(parseInt(PORT_EMAIL_SERVER), () =>
+  console.log(`Escuchando desde http://localhost:${PORT_EMAIL_SERVER}`)
+);
+
+console.log("ERROR DESPUES")
 
 /*
 PARA ENVIARLO A MAS DE UNA PERSONA

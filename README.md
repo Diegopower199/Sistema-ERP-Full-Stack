@@ -170,20 +170,40 @@ Ejemplo de configuración de servidor web y puerto:
 > [!IMPORTANT]
 > Antes de ejecutar cada proyecto, asegúrate de cambiar al directorio del proyecto correspondiente usando el comando `cd`:
 
-1. **Back-End:**
+1. **common-backend-and-blockchain-classes:**
 
 ```
-    cd back-end
-    ./mvnw clean install spring-boot:run
+cd common-backend-and-blockchain-classes
+mvn clean install exec:java
 ```
 
-    - blockchain-authorized-vacations: mvn clean install exec:java
+2. **Back-End:**
 
-    - common-backend-and-blockchain-classes: mvn clean install exec:java
+```
+cd back-end
+./mvnw clean install spring-boot:run
+```
 
-    - front-end: npm run dev
+3. **blockchain-authorized-vacations:**
 
-    - servidor-correo-node-mailer: npm run dev
+```
+cd blockchain-authorized-vacations
+mvn clean install exec:java
+```
+
+4. **Front-end:**
+
+```
+cd front-end
+npm run dev
+```
+
+5. **servidor-correo-node-mailer:**
+
+```
+cd servidor-correo-node-mailer
+npm run dev
+```
 
 En el back si hay problemas se debe hacer lo siguiente en el proyecto (back-end):
 

@@ -147,12 +147,13 @@ Ejemplo de configuración de servidor web y puerto:
 
 > [!IMPORTANT]
 > El valor de **TRANSPORTER_USER** debe ser igual al del fichero del Back-End de `application.properties`
+>
 > El valor de **TRANSPORTER_PASSWORD** se obtiene de la siguiente manera:
 >
 > 1. Ir a Chrome y pulsar en el perfil (en la parte superior derecha) y hacer click en "Administrar tu cuenta de Google"
-
+>
 > 2. En la busqueda, buscar "contraseñas de aplicaciones"
-
+>
 > 3. Nombramos que nombre queremos poner y nos saldra un mensaje emergente de la contraseña, y ya tendriamos todo.
 
 ## Comandos a ejecutar sin tener el archivo tasks.json:

@@ -22,7 +22,7 @@ public class PermisoUsuarioModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_permiso_usuario", nullable = false, columnDefinition = "boolean default false")
+    @Column(name = "id_permiso_usuario", nullable = false)
     private int id_permiso_usuario;
 
     @Column(name = "crear_usuarios", nullable = false, columnDefinition = "boolean default false")

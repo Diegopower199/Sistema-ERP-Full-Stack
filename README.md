@@ -107,7 +107,7 @@ Ejemplo de configuración del servidor Blockchain
 - **PORT**=12345
 
 > [!IMPORTANT]
-> El valor de PORT de este fichero tiene que ser igual en el fichero de `BlockchainVacacionAutorizadaService.java` ya que si no, no funciona
+> El valor de HOST y PORT de este fichero tiene que ser igual en el fichero de `GlobalConstants.java` ya que si no, no funciona
 
 ### Front-End
 

@@ -31,9 +31,9 @@ Ejemplo de detalles de conexión:
 Una vez creada la conexión, sigue los siguientes pasos para configurar la base de datos:
 
 1. Haz clic en la nueva conexión creada en MySQL Workbench.
-2. Ejecuta el script "Creacion-Usuario-Y-Esquema-Sistema-ERP.sql". Este script creará un nuevo usuario en la base de datos.
-3. Ejecuta el script "Creacion-Tablas-Sistema-ERP.sql". Este script creará las tablas necesarias para el sistema ERP.
-4. Ejecuta el script "Cargar-Datos-Sistema-ERP.sql". Este script insertará datos iniciales en las tablas del sistema ERP.
+2. Ejecuta el script `Creacion-Usuario-Y-Esquema-Sistema-ERP.sql`. Este script creará un nuevo usuario en la base de datos.
+3. Ejecuta el script `Creacion-Tablas-Sistema-ERP.sql`. Este script creará las tablas necesarias para el sistema ERP.
+4. Ejecuta el script `Cargar-Datos-Sistema-ERP.sql`. Este script insertará datos iniciales en las tablas del sistema ERP.
 
 ### Back-End
 
@@ -104,7 +104,7 @@ El fichero `application.properties` contiene la configuración del servidor Bloc
 
 Ejemplo de configuración del servidor Blockchain
 
-- PORT=12345
+- **PORT**=12345
 
 > [!IMPORTANT]
 > El valor de PORT de este fichero tiene que ser igual en el fichero de `BlockchainVacacionAutorizadaService.java` ya que si no, no funciona
@@ -121,19 +121,19 @@ El archivo .env contiene la configuración de variables de entorno para la aplic
 
 Ejemplo de configuración de servidor web y puerto:
 
-- NEXT_PUBLIC_WEB_SERVER=localhost
-- NEXT_PUBLIC_WEB_PORT_BACK_END=8080
-- NEXT_PUBLIC_WEB_PORT_EMAIL=3001
+- **NEXT_PUBLIC_WEB_SERVER**=localhost
+- **NEXT_PUBLIC_WEB_PORT_BACK_END**=8080
+- **NEXT_PUBLIC_WEB_PORT_EMAIL**=3001
 
 > [!IMPORTANT]
-> El valor de NEXT_PUBLIC_WEB_PORT_BACK_END debe ser igual al del fichero del Back-End de `application.properties`
-> El valor de NEXT_PUBLIC_WEB_PORT_EMAIL debe ser igual al del fichero del servidor-correo-node-mailer de `.env`
+> El valor de **NEXT_PUBLIC_WEB_PORT_BACK_END** debe ser igual al del fichero del Back-End de `application.properties`
+> El valor de **NEXT_PUBLIC_WEB_PORT_EMAIL** debe ser igual al del fichero del servidor-correo-node-mailer de `.env`
 
 ### Servidor correo node mailer
 
 Creamos un fichero llamado `.env` con la plantilla del fichero `.env.sample`
 
-El archivo .env contiene la configuración de variables de entorno para la aplicación. A continuación se describen las variables utilizadas:
+El archivo `.env` contiene la configuración de variables de entorno para la aplicación. A continuación se describen las variables utilizadas:
 
 - **TRANSPORTER_USER**: Esta variable especifica el nombre de usuario utilizado para autenticarse en el servidor de correo electrónico
 - **TRANSPORTER_PASSWORD**: Esta variable indica la contraseña asociada al nombre de usuario utilizado para autenticarse en el servidor de correo electrónico
@@ -141,20 +141,19 @@ El archivo .env contiene la configuración de variables de entorno para la aplic
 
 Ejemplo de configuración de servidor web y puerto:
 
-- TRANSPORTER_USER=example@gmail.com
-- TRANSPORTER_PASSWORD=password
-- PORT=3001
+- **TRANSPORTER_USER**=example@gmail.com
+- **TRANSPORTER_PASSWORD**=password
+- **PORT**=3001
 
 > [!IMPORTANT]
-> El valor de TRANSPORTER_USER debe ser igual al del fichero del Back-End de `application.properties`
-> El valor de NEXT_PUBLIC_WEB_PORT_EMAIL se obtiene de la siguiente manera:
+> El valor de **TRANSPORTER_USER** debe ser igual al del fichero del Back-End de `application.properties`
+> El valor de **TRANSPORTER_PASSWORD** se obtiene de la siguiente manera:
 >
 > 1. Ir a Chrome y pulsar en el perfil (en la parte superior derecha) y hacer click en "Administrar tu cuenta de Google"
 
 > 2. En la busqueda, buscar "contraseñas de aplicaciones"
 
 > 3. Nombramos que nombre queremos poner y nos saldra un mensaje emergente de la contraseña, y ya tendriamos todo.
-
 
 ## Comandos a ejecutar sin tener el archivo tasks.json:
 

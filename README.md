@@ -77,7 +77,7 @@ flush privileges;
 USE trabajotfgerp;
 ```
 
-Fichero application.properties
+Ejemplo de detalles del fichero `application.properties`
 
 ```
 # Configuración de la base de datos MySQL
@@ -95,6 +95,66 @@ logging.level.org.hibernate.SQL=debug
 # Configuración del servidor
 server.port=8080
 ```
+
+### Blockchain
+
+El fichero `application.properties` contiene la configuración del servidor Blockchain. A continuación se describen las propiedades utilizadas:
+
+- **PORT**: Define el puerto en el que se ejecutará el servidor Blockchain
+
+Ejemplo de configuración del servidor Blockchain
+
+- PORT=12345
+
+> [!IMPORTANT]
+> El valor de PORT de este fichero tiene que ser igual en el fichero de `BlockchainVacacionAutorizadaService.java` ya que si no, no funciona
+
+### Front-End
+
+Creamos un fichero llamado `.env` con la plantilla del fichero `.env.sample`
+
+El archivo .env contiene la configuración de variables de entorno para la aplicación. A continuación se describen las variables utilizadas:
+
+- **NEXT_PUBLIC_WEB_SERVER**: Esta variable define la dirección del servidor web utilizado por la aplicación.
+- **NEXT_PUBLIC_WEB_PORT_BACK_END**: Este valor especifica el puerto utilizado para la comunicación con el backend de la aplicación web.
+- **NEXT_PUBLIC_WEB_PORT_EMAIL**: Este valor indica el puerto utilizado para la comunicación con el servidor de correo electrónico de la aplicación web.
+
+Ejemplo de configuración de servidor web y puerto:
+
+- NEXT_PUBLIC_WEB_SERVER=localhost
+- NEXT_PUBLIC_WEB_PORT_BACK_END=8080
+- NEXT_PUBLIC_WEB_PORT_EMAIL=3001
+
+> [!IMPORTANT]
+> El valor de NEXT_PUBLIC_WEB_PORT_BACK_END debe ser igual al del fichero del Back-End de `application.properties`
+> El valor de NEXT_PUBLIC_WEB_PORT_EMAIL debe ser igual al del fichero del servidor-correo-node-mailer de `.env`
+
+### Servidor correo node mailer
+
+Creamos un fichero llamado `.env` con la plantilla del fichero `.env.sample`
+
+El archivo .env contiene la configuración de variables de entorno para la aplicación. A continuación se describen las variables utilizadas:
+
+- **TRANSPORTER_USER**: Esta variable especifica el nombre de usuario utilizado para autenticarse en el servidor de correo electrónico
+- **TRANSPORTER_PASSWORD**: Esta variable indica la contraseña asociada al nombre de usuario utilizado para autenticarse en el servidor de correo electrónico
+- **PORT**: Define el puerto en el que se ejecutará el servidor de envio de correo electronico
+
+Ejemplo de configuración de servidor web y puerto:
+
+- TRANSPORTER_USER=example@gmail.com
+- TRANSPORTER_PASSWORD=password
+- PORT=3001
+
+> [!IMPORTANT]
+> El valor de TRANSPORTER_USER debe ser igual al del fichero del Back-End de `application.properties`
+> El valor de NEXT_PUBLIC_WEB_PORT_EMAIL se obtiene de la siguiente manera:
+>
+> 1. Ir a Chrome y pulsar en el perfil (en la parte superior derecha) y hacer click en "Administrar tu cuenta de Google"
+
+> 2. En la busqueda, buscar "contraseñas de aplicaciones"
+
+> 3. Nombramos que nombre queremos poner y nos saldra un mensaje emergente de la contraseña, y ya tendriamos todo.
+
 
 ## Comandos a ejecutar sin tener el archivo tasks.json:
 

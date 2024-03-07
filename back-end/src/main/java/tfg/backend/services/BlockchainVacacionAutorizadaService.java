@@ -18,11 +18,14 @@ import commonclasses.TransaccionVacacion;
 @Service
 public class BlockchainVacacionAutorizadaService {
 
+    private static int PORT = 12345;
+    private static String HOST = "localhost";
+
     public List<Map<String, Object>> getAllTransaccionesVacacionesAutorizadas() {
         List<Block> libroTransaccionesVacacionesAutorizadas = new ArrayList<>();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
-        try (Socket socket = new Socket("localhost", 12345);
+        try (Socket socket = new Socket(HOST, PORT);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())) {
 
@@ -50,7 +53,7 @@ public class BlockchainVacacionAutorizadaService {
     }
 
     public TransaccionVacacion saveTransaccionVacacionAutorizada(TransaccionVacacion transaccionVacacionAutorizada) {
-        try (Socket socket = new Socket("localhost", 12345);
+        try (Socket socket = new Socket(HOST, PORT);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())) {
 

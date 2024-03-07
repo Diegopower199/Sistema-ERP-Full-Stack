@@ -1,5 +1,6 @@
 package blockchain;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,6 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import commonclasses.Block;
 import commonclasses.MensajeClienteServidor;
@@ -20,19 +22,36 @@ public class BlockchainServerMain {
 
     // Ruta del archivo donde se guardarán los usuarios
     private static final String ARCHIVO_LIBRO_VACACIONES = "libroVacaciones.dat";
+    private static final String PROPERTIES_FILE_PATH = "src/main/java/resources/application.properties";
 
     private static Blockchain libroVacaciones = cargarLibroVacaciones(); // Carga el historial existente al iniciar el
-    // servidor
+
 
     public static void main(String[] args) {
 
-        // Puerto en el que el servidor estará escuchando
-        final int puerto = 12345;
+        Properties properties = new Properties();
+
+        int PORT = 0;
+
+        try {
+            properties.load(new FileInputStream(new File(PROPERTIES_FILE_PATH)));
+            String valuePORT = properties.getProperty("PORT");
+            if (valuePORT == null) {
+                PORT = 12345;
+            } else {
+                PORT = Integer.parseInt(valuePORT);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Configurar el servidor para escuchar en el puerto 12345
-        try (ServerSocket serverSocket = new ServerSocket(puerto)) {
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             // Mensaje para indicar que el servidor está en espera en el puerto especificado
-            System.out.println("Servidor en espera en el puerto " + puerto);
+            System.out.println("Servidor en espera en el puerto " + PORT);
 
             // Esperar conexiones continuamente
             while (true) {

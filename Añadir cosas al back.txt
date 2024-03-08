@@ -1,0 +1,79 @@
+Aclaracón: 
+    - Para calcular la hora_inicio_desplazamiento tenemos que restar hora_inicio_servicio - hora_inicio_desplazamiento
+    - Para calcular la hora_fin_desplazamiento tenemos que restar hora_fin_servicio - hora_fin_desplazamiento
+    - Para calcular el tiempo_desplazamiento_total es sumar hora_inicio_desplazamiento + hora_fin_desplazamiento
+
+
+Ademas es recomendable cambiar a los campos que ponen "comentarios" por "observacion", pero eso se cambiará lo ultimo y tambien en el front
+
+Cambiar en todos lados comentarios por observaciones, esto en el back
+
+En los insert darme cuenta y cambiar donde ponga comentarios por observaciones, ya que si no, no sale al igual que los campos que modifique
+
+
+Campos que tengo que añadir en las siguientes tablas:
+
+Tabla AsistenciaEmpleadoModel:
+ - total_horas_trabajadas: Cambiar el nombre actual que es "horas_trabajadas_dia" -> Almacenar horas y minutos, segundos ponerlo a 00
+
+
+Tabla PedidoClienteModel:
+ - id_persona_encargado (una persona que se encarga) Esto es un id_persona -> nullable = true, Tipo: PersonaModel // Al crear no se pasa nada, es al modificar
+ - direccion_entrega -> nullable = false, Tipo: String
+ - hora_inicio_desplazamiento -> nullable = true, Tipo: LocalTime
+ - hora_fin_desplazamiento -> nullable = true, Tipo: LocalTime
+ - tiempo_desplazamiento_total -> nullable = true, Tipo: LocalTime // Horas y minutos, segundos de queda con 00
+ - hora_inicio_servicio -> nullable = true, Tipo: LocalTime
+ - hora_fin_servicio -> nullable = true, Tipo: LocalTime
+ - tiempo_servicio_total -> nullable = true, Tipo: LocalTime // Horas y minutos, segundos de queda con 00
+ - id_tipo_estado_facturacion (clave foranea de esta tabla: Tipo_Estado_Facturacion) -> 1. pendiente facturar, 2. facturado, 3. cerrado sin facturar -> nullable = false, Tipo: Tipo_Estado_Facturacion Hasta que esto no este en la opcion 2 no se puede generar factura
+ - descripcion -> nullable = true, Tipo: String
+ - observacion -> nullable = true, Tipo: String
+
+
+Despues en Facturas clientes voy a poner los campos de detalles facturas, ya que esa tabla por ahora no se va a utilizar ni los servicios ni nada
+
+Tabla FacturaClienteModel:
+ - descripcion_servicio -> nullable = false, Tipo: String
+ - direccion_entrega -> nullable = false, Tipo: String
+ - hora_inicio_desplazamiento -> nullable = true, Tipo: LocalTime
+ - hora_fin_desplazamiento -> nullable = true, Tipo: LocalTime
+ - tiempo_desplazamiento_total -> nullable = true, Tipo: LocalTime // Horas y minutos, segundos de queda con 00
+ - hora_inicio_servicio -> nullable = true , Tipo: LocalTime
+ - hora_fin_servicio -> nullable = true , Tipo: LocalTime
+ - tiempo_servicio_total -> nullable = true , Tipo: LocalTime // Horas y minutos, segundos de queda con 00
+ - fecha_entrega_real_pedido -> nullable = true, Tipo: LocalDate
+ - fecha_factura_emitida -> nullable = true, Tipo: LocalDate
+ - tarifa_hora_desplazamiento -> nullable = true, Tipo: float
+ - tarifa_hora_servicio -> nullable = true, Tipo: float
+ - subtotal_factura_sin_iva -> nullable = true, Tipo: float
+ - iva -> nullable = true, Tipo: float
+ - total_factura -> nullable = true, Tipo: float
+ - id_pedido_cliente -> Poner el pedido del cliente a la factura (foreign key) -> nullable = false, Tipo: PedidoClienteModel
+
+
+
+Crearme una tabla Tipo_Estado_Facturacion (Como tipo estado)
+ - id_tipo_estado_facturacion
+ - tipo_estado_facturacion -> nullable = false
+
+
+esto de abajo es para el codigo
+// Suponiendo que tienes las marcas de tiempo de inicio y fin del desplazamiento y del servicio "LocalTime" mejor poner esto
+LocalDateTime horaInicioDesplazamiento = pedidoCliente.getHoraInicioDesplazamiento();
+LocalDateTime horaFinDesplazamiento = pedidoCliente.getHoraFinDesplazamiento();
+LocalDateTime horaInicioServicio = pedidoCliente.getHoraInicioServicio();
+LocalDateTime horaFinServicio = pedidoCliente.getHoraFinServicio();
+
+// Calcular el tiempo de desplazamiento
+Duration tiempoDesplazamiento = Duration.between(horaInicioDesplazamiento, horaFinDesplazamiento);
+
+
+Hora de Inicio del Desplazamiento (hora_inicio_desplazamiento): Este campo registra la hora en que el técnico o personal comienza el desplazamiento hacia el lugar donde se prestará el servicio.
+Hora de Fin del Desplazamiento (hora_fin_desplazamiento): Este campo registra la hora en que el técnico o personal finaliza el desplazamiento y llega al lugar donde se prestará el servicio.
+Tiempo de Desplazamiento Total (tiempo_desplazamiento_total): Este campo puede calcularse restando la hora de inicio del desplazamiento de la hora de fin del desplazamiento para obtener la duración total del desplazamiento. Luego, este valor se almacena en la base de datos.
+
+
+Hora de Inicio del Servicio (hora_inicio_servicio): Este campo registraría la hora en que comienza el servicio para el pedido.
+Hora de Fin del Servicio (hora_fin_servicio): Este campo registraría la hora en que finaliza el servicio para el pedido.
+Tiempo de Servicio Total (tiempo_servicio_total): Este campo podría calcularse restando la hora de inicio del servicio de la hora de fin del servicio para obtener la duración total del servicio. Luego, este valor se almacenaría en la base de datos.

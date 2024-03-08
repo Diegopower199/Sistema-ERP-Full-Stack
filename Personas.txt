@@ -1,0 +1,300 @@
+
+Tipo persona 1
+
+{
+        "numero_empleado": 1,
+        "nombre": "Admin",
+        "apellidos": "Master",
+        "genero": "Masculino",
+        "fecha_nacimiento": "01-01-1980",
+        "dni": "12345678A",
+        "direccion": "Calle Administrativa 1",
+        "numero_telefono": "34678901234",
+        "correo_electronico": "admin@example.com",
+        "tipo_persona": {
+            "id_tipo_persona": 1
+        }
+}
+
+{
+    "numero_empleado": 2,
+    "nombre": "Diego",
+    "apellidos": "Gonzalez",
+    "genero": "Masculino",
+    "fecha_nacimiento": "12-12-1990",
+    "dni": "12345678H",
+    "direccion": "Calle Principal 123",
+    "numero_telefono": "34671234567",
+    "correo_electronico": "diego.gonzalez@gmail.com",
+    "tipo_persona": {
+        "id_tipo_persona": 1
+    }
+}
+
+{
+    "numero_empleado": 3,
+    "nombre": "Laura",
+    "apellidos": "Martinez",
+    "genero": "Femenino",
+    "fecha_nacimiento": "05-05-1985",
+    "dni": "98765432R",
+    "direccion": "Avenida Central 456",
+    "numero_telefono": "3467890123",
+    "correo_electronico": "laura.martinez@yahoo.com",
+    "tipo_persona": {
+        "id_tipo_persona": 1
+    }
+}
+
+{
+    "numero_empleado": 4,
+    "nombre": "Carlos",
+    "apellidos": "Rodriguez",
+    "genero": "Masculino",
+    "fecha_nacimiento": "20-08-1995",
+    "dni": "13579246S",
+    "direccion": "Calle Secundaria 789",
+    "numero_telefono": "34671234568",
+    "correo_electronico": "carlos.rodriguez@hotmail.com",
+    "tipo_persona": {
+        "id_tipo_persona": 1
+    }
+}
+
+{
+    "numero_empleado": 5,
+    "nombre": "Ana",
+    "apellidos": "Fernandez",
+    "genero": "Femenino",
+    "fecha_nacimiento": "15-03-2000",
+    "dni": "24681357K",
+    "direccion": "Calle Residencial 101",
+    "numero_telefono": "34672345679",
+    "correo_electronico": "ana.fernandez@gmail.com",
+    "tipo_persona": {
+        "id_tipo_persona": 1
+    }
+}
+
+{
+    "numero_empleado": 6,
+    "nombre": "Pablo",
+    "apellidos": "Lopez",
+    "genero": "Masculino",
+    "fecha_nacimiento": "10-11-1987",
+    "dni": "65432109H",
+    "direccion": "Avenida Principal 567",
+    "numero_telefono": "34673456780",
+    "correo_electronico": "pablo.lopez@yahoo.com",
+    "tipo_persona": {
+        "id_tipo_persona": 1
+    }
+}
+
+{
+    "numero_empleado": 7,
+    "nombre": "Marina",
+    "apellidos": "Sanchez",
+    "genero": "Femenino",
+    "fecha_nacimiento": "25-09-1992",
+    "dni": "10987654R",
+    "direccion": "Calle Central 123",
+    "numero_telefono": "34674567891",
+    "correo_electronico": "marina.sanchez@hotmail.com",
+    "tipo_persona": {
+        "id_tipo_persona": 1
+    }
+}
+
+{
+    "numero_empleado": 8,
+    "nombre": "Javier",
+    "apellidos": "Gomez",
+    "genero": "Masculino",
+    "fecha_nacimiento": "18-07-1983",
+    "dni": "32109876S",
+    "direccion": "Avenida Secundaria 456",
+    "numero_telefono": "34675678902",
+    "correo_electronico": "javier.gomez@gmail.com",
+    "tipo_persona": {
+        "id_tipo_persona": 1
+    }
+}
+
+{
+    "numero_empleado": 9,
+    "nombre": "Sara",
+    "apellidos": "Perez",
+    "genero": "Femenino",
+    "fecha_nacimiento": "03-04-1998",
+    "dni": "76543210K",
+    "direccion": "Calle Residencial 789",
+    "numero_telefono": "34676789013",
+    "correo_electronico": "sara.perez@yahoo.com",
+    "tipo_persona": {
+        "id_tipo_persona": 1
+    }
+}
+
+{
+    "numero_empleado": 10,
+    "nombre": "Adrian",
+    "apellidos": "Hernandez",
+    "genero": "Masculino",
+    "fecha_nacimiento": "29-12-1980",
+    "dni": "54321098H",
+    "direccion": "Avenida Principal 101",
+    "numero_telefono": "34677890124",
+    "correo_electronico": "adrian.hernandez@gmail.com",
+    "tipo_persona": {
+        "id_tipo_persona": 1
+    }
+}
+
+
+
+Tipo persona 2
+
+{
+    "numero_empleado": 11,
+    "nombre": "Noemí",
+    "apellidos": "Vega",
+    "genero": "Femenino",
+    "fecha_nacimiento": "08-06-1994",
+    "dni": "87654321J",
+    "direccion": "Calle Secundaria 202",
+    "numero_telefono": "34678901236",
+    "correo_electronico": "noemi.vega@yahoo.com",
+    "tipo_persona": {
+        "id_tipo_persona": 2
+    }
+}
+
+{
+    "numero_empleado": 12,
+    "nombre": "Miguel",
+    "apellidos": "Ruiz",
+    "genero": "Masculino",
+    "fecha_nacimiento": "14-02-1989",
+    "dni": "13579864Q",
+    "direccion": "Avenida Central 303",
+    "numero_telefono": "34671234569",
+    "correo_electronico": "miguel.ruiz@hotmail.com",
+    "tipo_persona": {
+        "id_tipo_persona": 2
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+Tipo persona 3
+
+
+{
+    "numero_empleado": 13,
+    "nombre": "Elena",
+    "apellidos": "Cortes",
+    "genero": "Femenino",
+    "fecha_nacimiento": "21-10-1997",
+    "dni": "24681357P",
+    "direccion": "Calle Residencial 404",
+    "numero_telefono": "34672345670",
+    "correo_electronico": "elena.cortes@gmail.com",
+    "tipo_persona": {
+        "id_tipo_persona": 3
+    }
+}
+
+{
+    "numero_empleado": 14,
+    "nombre": "Alejandro",
+    "apellidos": "Fuentes",
+    "genero": "Masculino",
+    "fecha_nacimiento": "16-05-1991",
+    "dni": "65432109X",
+    "direccion": "Avenida Principal 505",
+    "numero_telefono": "34673456781",
+    "correo_electronico": "alejandro.fuentes@yahoo.com",
+    "tipo_persona": {
+        "id_tipo_persona": 3
+    }
+}
+
+{
+    "numero_empleado": 15,
+    "nombre": "Isabel",
+    "apellidos": "Molina",
+    "genero": "Femenino",
+    "fecha_nacimiento": "05-03-1986",
+    "dni": "10987654Y",
+    "direccion": "Calle Secundaria 606",
+    "numero_telefono": "34674567892",
+    "correo_electronico": "isabel.molina@hotmail.com",
+    "tipo_persona": {
+        "id_tipo_persona": 3
+    }
+}
+
+
+
+
+
+
+
+
+
+Tipo persona 4
+
+{
+    "numero_empleado": 16,
+    "nombre": "Jorge",
+    "apellidos": "Ramos",
+    "genero": "Masculino",
+    "fecha_nacimiento": "12-09-1993",
+    "dni": "32109876M",
+    "direccion": "Avenida Central 707",
+    "numero_telefono": "34675678903",
+    "correo_electronico": "jorge.ramos@gmail.com",
+    "tipo_persona": {
+        "id_tipo_persona": 4
+    }
+}
+
+{
+    "numero_empleado": 17,
+    "nombre": "Carmen",
+    "apellidos": "Lara",
+    "genero": "Femenino",
+    "fecha_nacimiento": "18-07-1981",
+    "dni": "76543210N",
+    "direccion": "Calle Residencial 808",
+    "numero_telefono": "34676789014",
+    "correo_electronico": "carmen.lara@yahoo.com",
+    "tipo_persona": {
+        "id_tipo_persona": 4
+    }
+}
+
+{
+    "numero_empleado": 18,
+    "nombre": "Raul",
+    "apellidos": "Santos",
+    "genero": "Masculino",
+    "fecha_nacimiento": "03-04-1996",
+    "dni": "54321098L",
+    "direccion": "Avenida Principal 909",
+    "numero_telefono": "34677890125",
+    "correo_electronico": "raul.santos@gmail.com",
+    "tipo_persona": {
+        "id_tipo_persona": 4
+    }
+}

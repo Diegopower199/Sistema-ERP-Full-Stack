@@ -1,0 +1,67 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar y Ejecutar Blockchain",
+            "type": "shell",
+            "command": "${workspaceFolder}/blockchain-authorized-vacations/mvn",
+            "args": [
+                "clean",
+                "install",
+                "exec:java"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/blockchain-authorized-vacations"
+            }
+        },
+        {
+            "label": "Compilar y Ejecutar Backend",
+            "type": "shell",
+            "command": "${workspaceFolder}/back-end/mvnw",
+            "args": [
+                "clean",
+                "install",
+                "spring-boot:run"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/back-end"
+            }
+        },
+        {
+            "label": "Ejecutar Frontend",
+            "type": "shell",
+            "command": "${workspaceFolder}/front-end/npm",
+            "args": [
+                "run",
+                "dev"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/front-end"
+            }
+        }
+    ]
+}

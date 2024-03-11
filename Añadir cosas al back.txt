@@ -15,7 +15,7 @@ Campos que tengo que añadir en las siguientes tablas:
 
 Tabla AsistenciaEmpleadoModel:
  - total_horas_trabajadas: Cambiar el nombre actual que es "horas_trabajadas_dia" -> Almacenar horas y minutos, segundos ponerlo a 00
- - fecha: Cambiar el nombre actual que es "fecha_asistencia"
+ - fecha: Cambiar el nombre actual que es "fecha_asistencia" -> CAMBIAR EN REPOSITORY DEL BACK
 
 
 Tabla PedidoClienteModel:

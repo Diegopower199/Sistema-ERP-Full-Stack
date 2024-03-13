@@ -204,3 +204,8 @@ npm run dev
 cd servidor-correo-node-mailer
 npm run dev
 ```
+
+
+Cosas a tener en cuenta:
+
+1. Controlar si el back-end o la BBDD no funciona que en el front-end lo controle, tengo aqui un ejemplo: EjemploControlarBackEndAndBBDDEnFront.txt

@@ -164,6 +164,176 @@ export default function Form(props) {
   );
 }
 
+Para el usuario:
+
+async function verifyLogin() {
+    // Solucionamos el bug de múltiples alertas si pulsamos el botón mas de una vez
+    if (buttonDisabled) {
+      // Si el botón ya está deshabilitado, no hacemos nada
+      return;
+    }
+    setButtonDisabled(true);
+
+    let errorDevueltoBack = false;
+    let errorConexionBackEndOrBBDD = false;
+    let usuarioExiste = false;
+
+    let userVerificado = false;
+    let modify;
+    let personaId;
+    let userId;
+    let token;
+    // Si no hay backend se asume que el usuario es correcto. CAMBIAR ESTO CUANDO SE TENGAN USUARIOS
+
+    if (!CHECK_LOGIN) {
+      console.log("Sin CHECK_LOGIN");
+      const permissionsObject = {
+        permisosID: 3,
+        ausencias: true,
+        dar_alta: true,
+        dar_baja: true,
+        listado_facturacion: true,
+        modificar_equipo: true,
+        modificar_informacion: true,
+        modulo_operaciones: true,
+        subir_csr: true,
+        tls: true,
+        ver_personas_a_cargo: true,
+        verse_a_si_mismo: true,
+        ver_personas: true,
+        ver_config: true,
+        ver_maestros: true,
+        ver_logs: true,
+      };
+      try {
+        let responseLogin = await credentialsOK(
+          process.env.NEXT_PUBLIC_DEVELOPMENT_ACCOUNT,
+          process.env.NEXT_PUBLIC_DEVELOPMENT_PASSWORD
+        );
+
+        console.log("login: ", responseLogin);
+
+        if (responseLogin.status === 409) {
+          setFormError(true);
+          setErrorMessage(responseLogin.errorMessage);
+          setAddClicked(true);
+          errorDevueltoBack = true;
+        } else if (responseLogin.status === 500) {
+          setBackendOrDDBBConnectionError(true);
+          setErrorMessage(responseLogin.errorMessage);
+          setAddClicked(true);
+          errorConexionBackEndOrBBDD = true;
+        } else {
+          errorDevueltoBack = false;
+          errorConexionBackEndOrBBDD = false;
+          usuarioExiste = true;
+        }
+
+        if (
+          !errorDevueltoBack &&
+          !errorConexionBackEndOrBBDD &&
+          usuarioExiste
+        ) {
+          userVerificado = responseLogin.success;
+          modify = responseLogin.modify;
+          personaId = responseLogin.personaID;
+          userId = responseLogin.usuarioID;
+          token = responseLogin.tokenUser;
+
+          localStorage.setItem("token", token);
+          localStorage.setItem("permission", JSON.stringify(permissionsObject));
+          localStorage.setItem("userId", userId);
+          localStorage.setItem("personaId", personaId);
+          localStorage.setItem("user", formData.email);
+
+          console.log("desarrollo");
+          userVerificado = true;
+        }
+      } catch (error) {
+        console.log("Error", error);
+      }
+    } else {
+      console.log("Con CHECK_LOGIN");
+      try {
+        let responseLogin = await credentialsOK(
+          formData.email,
+          formData.password
+        );
+
+        console.log("login: ", responseLogin);
+        if (responseLogin.status === 409) {
+          console.log("ERROR 409");
+          setFormError(true);
+          setErrorMessage(responseLogin.errorMessage);
+          setAddClicked(true);
+          errorDevueltoBack = true;
+        } else if (responseLogin.status === 500) {
+          console.log("ERROR 500", responseLogin);
+          setBackendOrDDBBConnectionError(true);
+          setErrorMessage(responseLogin.errorMessage);
+          setAddClicked(true);
+          errorConexionBackEndOrBBDD = true;
+        } else {
+          errorDevueltoBack = false;
+          errorConexionBackEndOrBBDD = false;
+          usuarioExiste = responseLogin.success;
+        }
+
+        console.log("usuarioExiste: ", usuarioExiste);
+
+        if (
+          usuarioExiste === false &&
+          errorDevueltoBack === false &&
+          errorConexionBackEndOrBBDD === false
+        ) {
+          setErrorMessage("Email o contraseña no son correctos");
+          setAddClicked(true);
+        }
+
+        if (
+          !errorDevueltoBack &&
+          !errorConexionBackEndOrBBDD &&
+          usuarioExiste
+        ) {
+          userVerificado = responseLogin.success;
+          modify = responseLogin.modify;
+          personaId = responseLogin.personaID;
+          userId = responseLogin.usuarioID;
+          token = responseLogin.tokenUser;
+
+          localStorage.setItem("token", token);
+          const permission = await fetchPermissions(formData.email);
+          localStorage.setItem("permission", JSON.stringify(permission));
+          localStorage.setItem("userId", userId);
+          localStorage.setItem("personaId", personaId);
+          localStorage.setItem("user", formData.email);
+        }
+      } catch (error) {
+        console.log("Error", error);
+      }
+    }
+
+    // Si el usuario se verifica se actualiza el contexto y se redirige a la página principal
+    if (userVerificado && !modify) {
+      console.log("Credenciales correctas");
+      //CookiesManagment("delete", 21);   <--- cookies para la gestion de usuario
+
+      // Generar id único
+      const sesionId = uuidv4();
+      // Crear cookies de sesión
+      CookiesManagment("CREATE", sesionId);
+
+      router.push("/");
+    } else if (userVerificado && modify) {
+      setErrorMessage(
+        "No puedes acceder a tu cuenta hasta que cambies tu contraseña. Por favor, actualiza tu contraseña para continuar"
+      );
+    } else {
+      console.log("Credenciales incorrectas");
+    }
+    setButtonDisabled(false); // Habilitar el botón después de mostrar la alerta
+  }
+
 
 Esto es el service:
 

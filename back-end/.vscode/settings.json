@@ -1,8 +1,0 @@
-{
-    "[java]": {
-        "editor.defaultFormatter": "redhat.java",
-        "editor.tabSize": 4,
-        "editor.detectIndentation": false,
-        "editor.insertSpaces": true,
-    }
-}

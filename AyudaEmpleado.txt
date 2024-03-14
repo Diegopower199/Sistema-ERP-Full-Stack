@@ -1,0 +1,814 @@
+PARA LA PERSONA 1
+
+
+{
+    "fecha_inicio": "2024-01-10",
+    "fecha_fin": "2024-02-10",
+    "valor_asociado": 800,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 1
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-02-10",
+    "fecha_fin": "2024-03-10",
+    "valor_asociado": 1200,
+    "comentarios": "Ayuda aceptada para cubrir gastos de transporte.",
+    "persona": {
+        "id_persona": 1
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+
+**Rechazado:**
+```json
+{
+    "fecha_inicio": "2024-03-10",
+    "fecha_fin": "2024-04-10",
+    "valor_asociado": 1000,
+    "comentarios": "Ayuda rechazada para guarderías por exceder el presupuesto asignado.",
+    "persona": {
+        "id_persona": 1
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+{
+    "fecha_inicio": "2024-04-10",
+    "fecha_fin": "2024-05-10",
+    "valor_asociado": 1500,
+    "comentarios": "Ayuda rechazada para transporte por exceder el presupuesto asignado.",
+    "persona": {
+        "id_persona": 1
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+
+
+PARA LA PERSONA 2
+
+
+{
+    "fecha_inicio": "2024-01-10",
+    "fecha_fin": "2024-02-10",
+    "valor_asociado": 800,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 2
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-02-10",
+    "fecha_fin": "2024-03-10",
+    "valor_asociado": 1200,
+    "comentarios": "Ayuda aceptada para cubrir gastos de transporte.",
+    "persona": {
+        "id_persona": 2
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+**Rechazado:**
+```json
+{
+    "fecha_inicio": "2024-03-10",
+    "fecha_fin": "2024-04-10",
+    "valor_asociado": 1000,
+    "comentarios": "Ayuda rechazada para guarderías por exceder el presupuesto asignado.",
+    "persona": {
+        "id_persona": 2
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+{
+    "fecha_inicio": "2024-04-10",
+    "fecha_fin": "2024-05-10",
+    "valor_asociado": 1500,
+    "comentarios": "Ayuda rechazada para transporte por exceder el presupuesto asignado.",
+    "persona": {
+        "id_persona": 2
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+
+
+PARA LA PERSONA 3
+
+
+{
+    "fecha_inicio": "2024-01-10",
+    "fecha_fin": "2024-02-10",
+    "valor_asociado": 800,
+    "comentarios": "Ayuda aceptada para guarderías.",
+    "persona": {
+        "id_persona": 3
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-02-10",
+    "fecha_fin": "2024-03-10",
+    "valor_asociado": 1200,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 3
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+**Rechazado:**
+```json
+{
+    "fecha_inicio": "2024-03-10",
+    "fecha_fin": "2024-04-10",
+    "valor_asociado": 1000,
+    "comentarios": "Ayuda rechazada para comidas por exceder el presupuesto asignado.",
+    "persona": {
+        "id_persona": 3
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+{
+    "fecha_inicio": "2024-04-10",
+    "fecha_fin": "2024-05-10",
+    "valor_asociado": 1500,
+    "comentarios": "Ayuda rechazada para transporte por exceder el presupuesto asignado.",
+    "persona": {
+        "id_persona": 3
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+
+
+
+PARA LA PERSONA 4
+
+
+{
+    "fecha_inicio": "2024-01-15",
+    "fecha_fin": "2024-02-15",
+    "valor_asociado": 900,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 4
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-02-20",
+    "fecha_fin": "2024-03-20",
+    "valor_asociado": 1200,
+    "comentarios": "Ayuda aceptada para cubrir gastos de transporte.",
+    "persona": {
+        "id_persona": 4
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-03-25",
+    "fecha_fin": "2024-04-25",
+    "valor_asociado": 800,
+    "comentarios": "Ayuda aceptada para cubrir gastos de guarderías.",
+    "persona": {
+        "id_persona": 4
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+
+
+PARA LA PERSONA 5
+
+
+{
+    "fecha_inicio": "2024-01-20",
+    "fecha_fin": "2024-02-20",
+    "valor_asociado": 1000,
+    "comentarios": "Ayuda aceptada para cubrir gastos de transporte.",
+    "persona": {
+        "id_persona": 5
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-02-25",
+    "fecha_fin": "2024-03-25",
+    "valor_asociado": 850,
+    "comentarios":  "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 5
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-03-30",
+    "fecha_fin": "2024-04-30",
+    "valor_asociado": 1100,
+    "comentarios": "Ayuda aceptada para cubrir gastos de transporte.",
+    "persona": {
+        "id_persona": 5
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+
+
+
+
+
+
+PARA LA PERSONA 6
+
+
+{
+    "fecha_inicio": "2024-01-25",
+    "fecha_fin": "2024-02-25",
+    "valor_asociado": 1200,
+    "comentarios":  "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 6
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-03-01",
+    "fecha_fin": "2024-04-01",
+    "valor_asociado": 950,
+    "comentarios": "Ayuda aceptada para cubrir gastos de transporte.",
+    "persona": {
+        "id_persona": 6
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-04-05",
+    "fecha_fin": "2024-05-05",
+    "valor_asociado": 1050,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 6
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+
+
+PARA LA PERSONA 7
+
+
+{
+    "fecha_inicio": "2024-02-01",
+    "fecha_fin": "2024-03-01",
+    "valor_asociado": 950,
+    "comentarios": "Ayuda aceptada para cubrir gastos de transporte.",
+    "persona": {
+        "id_persona": 7
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-03-06",
+    "fecha_fin": "2024-04-06",
+    "valor_asociado": 1100,
+    "comentarios": "Ayuda aceptada para cubrir gastos de guarderías.",
+    "persona": {
+        "id_persona": 7
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-04-11",
+    "fecha_fin": "2024-05-11",
+    "valor_asociado": 1200,
+    "comentarios": "Ayuda denegada por exceder el presupuesto asignado.",
+    "persona": {
+        "id_persona": 7
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+
+
+
+PARA LA PERSONA 8
+
+
+
+{
+    "fecha_inicio": "2024-02-06",
+    "fecha_fin": "2024-03-06",
+    "valor_asociado": 1050,
+    "comentarios": "Ayuda aceptada para cubrir gastos de guarderías.",
+    "persona": {
+        "id_persona": 8
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-03-11",
+    "fecha_fin": "2024-04-11",
+    "valor_asociado": 1000,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 8
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-04-16",
+    "fecha_fin": "2024-05-16",
+    "valor_asociado": 850,
+    "comentarios": "Ayuda denegada por falta de documentación.",
+    "persona": {
+        "id_persona": 8
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+
+
+PARA LA PERSONA 9
+
+
+{
+    "fecha_inicio": "2024-02-11",
+    "fecha_fin": "2024-03-11",
+    "valor_asociado": 900,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 9
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-03-16",
+    "fecha_fin": "2024-04-16",
+    "valor_asociado": 950,
+    "comentarios": "Ayuda aceptada para cubrir gastos de transporte.",
+    "persona": {
+        "id_persona": 9
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-04-21",
+    "fecha_fin": "2024-05-21",
+    "valor_asociado": 1100,
+    "comentarios": "Ayuda denegada por falta de justificación.",
+    "persona": {
+        "id_persona": 9
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+
+
+
+
+
+
+PARA LA PERSONA 10
+
+
+{
+    "fecha_inicio": "2024-01-01",
+    "fecha_fin": "2024-02-01",
+    "valor_asociado": 1000,
+    "comentarios": "Ayuda aceptada para cubrir gastos de transporte.",
+    "persona": {
+        "id_persona": 10
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-02-06",
+    "fecha_fin": "2024-03-06",
+    "valor_asociado": 850,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 10
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-03-11",
+    "fecha_fin": "2024-04-11",
+    "valor_asociado": 1200,
+    "comentarios": "Ayuda denegada por exceder el presupuesto asignado.",
+    "persona": {
+        "id_persona": 10
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+
+
+
+
+
+
+
+
+PARA LA PERSONA 11
+
+
+{
+    "fecha_inicio": "2024-01-06",
+    "fecha_fin": "2024-02-06",
+    "valor_asociado": 950,
+    "comentarios": "Ayuda aceptada para cubrir gastos de guarderías.",
+    "persona": {
+        "id_persona": 11
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-02-11",
+    "fecha_fin": "2024-03-11",
+    "valor_asociado": 1000,
+    "comentarios": "Ayuda denegada por falta de documentación.",
+    "persona": {
+        "id_persona": 11
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+{
+    "fecha_inicio": "2024-03-16",
+    "fecha_fin": "2024-04-16",
+    "valor_asociado": 1100,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 11
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+
+
+PARA PERSONAS NUEVAS:
+
+
+PERSONA 12 
+{
+    "fecha_inicio": "2024-01-01",
+    "fecha_fin": "2024-02-01",
+    "valor_asociado": 900,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 4
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-02-06",
+    "fecha_fin": "2024-03-06",
+    "valor_asociado": 1200,
+    "comentarios": "Ayuda denegada por falta de documentación.",
+    "persona": {
+        "id_persona": 4
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+{
+    "fecha_inicio": "2024-03-11",
+    "fecha_fin": "2024-04-11",
+    "valor_asociado": 800,
+    "comentarios": "Ayuda aceptada para cubrir gastos de guarderías.",
+    "persona": {
+        "id_persona": 4
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+
+
+
+
+
+
+PERSONA 13
+
+{
+    "fecha_inicio": "2024-01-06",
+    "fecha_fin": "2024-02-06",
+    "valor_asociado": 1000,
+    "comentarios": "Ayuda denegada por exceder el presupuesto asignado.",
+    "persona": {
+        "id_persona": 5
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+{
+    "fecha_inicio": "2024-02-11",
+    "fecha_fin": "2024-03-11",
+    "valor_asociado": 850,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 5
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-03-16",
+    "fecha_fin": "2024-04-16",
+    "valor_asociado": 1100,
+    "comentarios": "Ayuda denegada por falta de justificación.",
+    "persona": {
+        "id_persona": 5
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+
+
+
+PERSONA 14
+{
+    "fecha_inicio": "2024-01-11",
+    "fecha_fin": "2024-02-11",
+    "valor_asociado": 1200,
+    "comentarios": "Ayuda denegada por falta de documentación.",
+    "persona": {
+        "id_persona": 6
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 3
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 3
+    }
+}
+
+{
+    "fecha_inicio": "2024-02-16",
+    "fecha_fin": "2024-03-16",
+    "valor_asociado": 950,
+    "comentarios": "Ayuda aceptada para cubrir gastos de transporte.",
+    "persona": {
+        "id_persona": 6
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 2
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}
+
+{
+    "fecha_inicio": "2024-03-21",
+    "fecha_fin": "2024-04-21",
+    "valor_asociado": 1050,
+    "comentarios": "Ayuda aceptada para cubrir gastos de comidas.",
+    "persona": {
+        "id_persona": 6
+    },
+    "tipo_ayuda": {
+        "id_tipo_ayuda": 1
+    },
+    "tipo_estado": {
+        "id_tipo_estado": 2
+    }
+}

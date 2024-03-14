@@ -1,0 +1,12 @@
+{
+    "[java]": {
+        "editor.defaultFormatter": "redhat.java",
+        "editor.tabSize": 4,
+        "editor.detectIndentation": false,
+        "editor.insertSpaces": true,
+    },
+    "[javascript]": {
+        "editor.tabSize": 4,
+    },
+    "Prettier-SQL.expressionWidth": 250,
+}

@@ -116,16 +116,12 @@ export default function Login() {
         errorDevueltoBack = false;
         errorConexionBackEndOrBBDD = false;
         usuarioExiste = responseAuthenticateUser.data.resultado;
-        if (usuarioExiste === false) {
+        if (!usuarioExiste) {
           setErrorMessage("Usuario o contraseña no son correctos");
         }
       }
 
-      if (
-        errorDevueltoBack === false &&
-        errorConexionBackEndOrBBDD === false &&
-        usuarioExiste === true
-      ) {
+      if (!errorDevueltoBack && !errorConexionBackEndOrBBDD && usuarioExiste) {
         const responseNombreUsuario = await getUsuarioByNombreUsuario(
           formData.nombre_usuario
         );

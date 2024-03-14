@@ -60,6 +60,15 @@ export default function Login() {
   const validateRequiredFields = () => {
     const errorMissingFields = {};
 
+    /* Asi deberia ser la condiccion para que sea mas clara
+    if (
+      formData.nombre_usuario === null ||
+      formData.nombre_usuario === undefined ||
+      formData.nombre_usuario === ""
+    ) {
+      // Contenido
+    }*/
+
     if (!formData.nombre_usuario) {
       errorMissingFields.nombre_usuario =
         "Por favor, ingresa un nombre de usuario";

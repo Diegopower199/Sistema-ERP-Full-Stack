@@ -80,3 +80,15 @@ p.errorMessage {
   color: red;
   font-weight: 600;
 }
+
+.errorMessage {
+  display: flex;
+  text-align: center;
+  background-color: #f8d7da; /* Color de fondo */
+  color: #721c24; /* Color del texto */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #f5c6cb; /* Borde */
+  border-radius: 5px; /* Bordes redondeados */
+  margin-bottom: 10px; /* Margen inferior */
+  font-size: 14px; /* Tamaño del texto */
+}

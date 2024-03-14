@@ -150,7 +150,7 @@ function FormularioVacacionEmpleado() {
             id="nombre"
             value={formulario.nombre}
             onChange={handleFormChange}
-            required
+            status={formulario.nombre === "" ? "error" : ""}
           ></Antd.Input>
         </Antd.Form.Item>
       </Antd.Form>

@@ -117,11 +117,19 @@ export const authenticateUser = async (nombre_usuario, password) => {
       status: response.status,
     };
   } catch (error) {
-    console.error(error);
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    // console.error("Error: ", error);
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 

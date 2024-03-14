@@ -45,7 +45,6 @@ export default function FormPersonas({
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
-
   const [errorMessage, setErrorMessage] = useState("");
 
   const fetchTiposPersonasOptions = async () => {
@@ -175,7 +174,7 @@ export default function FormPersonas({
 
   const handleFormChange = (event) => {
     const { name, value, type, checked } = event.target;
-    console.log("Name: ", name, " Value: ", value)
+    console.log("Name: ", name, " Value: ", value);
     if (name === "numero_telefono") {
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
 

@@ -205,7 +205,9 @@ cd servidor-correo-node-mailer
 npm run dev
 ```
 
+> [!IMPORTANT]
+> Cosas a tener en cuenta y que tengo que hacer:
 
-Cosas a tener en cuenta:
+-
 
-1. Controlar si el back-end o la BBDD no funciona que en el front-end lo controle, tengo aqui un ejemplo: EjemploControlarBackEndAndBBDDEnFront.txt
+1. Controlar si el back-end o la BBDD no funciona que en el front-end lo controle, tengo aqui un ejemplo: EjemploControlarBackEndAndBBDDEnFront.txt Lo tengo para el login (asi que los demas son iguales), solo me falta poner si no se pone que el input se pongo en rojo (Lo debo cambiar todo a Antd)

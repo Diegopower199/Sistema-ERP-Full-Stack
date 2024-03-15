@@ -193,12 +193,16 @@ mvn clean install exec:java
 
 4. **Front-end:**
 
+Antes de ejecutarlo, asegúrate de tener las dependencias instaladas con el comando `npm install`.
+
 ```
 cd front-end
 npm run dev
 ```
 
 5. **Email:**
+
+Antes de ejecutarlo, asegúrate de tener las dependencias instaladas con el comando `npm install`.
 
 ```
 cd servidor-correo-node-mailer

@@ -6,16 +6,16 @@ Para tener la TRANSPORTER_PASSWORD es necesario hacer lo siguiente:
 
     3. Nombramos que nombre queremos poner y nos saldra un mensaje emergente de la contraseña, y ya tendriamos todo.
 
+Para crear el proyecto desde 0 hay que seguir estos pasos:
 
-Iniciar el proyecto: 
+1. Iniciar el proyecto: `npm init -y`
 
-    - npm init -y
+2. Instalar esto: `npm install express nodemon dotenv nodemailer body-parser cors`
 
-Instalar esto: 
+3. Iniciar el servidor: `npm run dev`
 
-    - npm install express nodemon dotenv nodemailer body-parser cors
+## Ejecutar el proyecto
 
+Antes de ejecutarlo, asegúrate de tener las dependencias instaladas con el comando `npm install`.
 
-Iniciar el servidor:
-
-    - npm run dev
+1. `npm run dev`

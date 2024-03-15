@@ -88,3 +88,10 @@ CREATE TABLE permisos (
     ver_pagos_facturas BOOLEAN DEFAULT FALSE,
     borrar_pagos_facturas BOOLEAN DEFAULT FALSE
 );
+
+
+Puedes generarme 20 json con este formato: { "nif": "12345678A", "nombre_apellidos": "Elena Rodriguez", "razon_social": null, "numero_telefono": "2222222", "correo_electronico": "elena.rodriguez@example.com", "direccion": "Calle Falsa 123", "codigo_postal": "28001", "ciudad": "MADRID", "provincia": "MADRID" }. 
+
+10 json con el nif de personas fisicas con esta expresion regular "^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$" y en este caso poner el campo razon_social null, y otros 10 json con el nif de personas juridicas que cumpla esta expresion regular "^[A-HJNP-SUVW]{1}[0-9]{7}[0-9A-J]$"; y poniendo el valor de nombre_apellidos con null y el campo razon_social que no sea null
+
+asi debo preguntar para que chatgpt me haga script para los que me faltan

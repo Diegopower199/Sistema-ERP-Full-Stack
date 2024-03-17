@@ -1,0 +1,46 @@
+Para diseñar una base de datos que permita almacenar categorías y subcategorías con los parámetros correspondientes, puedes utilizar una estructura de base de datos relacional. A continuación, te muestro cómo podrías configurar las tablas y campos en una base de datos:
+
+1. Tabla de Categorías:
+	- ID de Categoría (Clave Primaria): Un identificador único para cada categoría.
+	- Nombre de Categoría: Un campo de texto que almacena el nombre de la categoría.
+
+
+2. Tabla de Subcategorías:
+	- ID de Subcategoría (Clave Primaria): Un identificador único para cada subcategoría.
+	- Nombre de Subcategoría: Un campo de texto que almacena el nombre de la subcategoría.
+	- ID de Categoría (Clave Externa): Un campo que se relaciona con la tabla de Categorías y que indica a qué categoría pertenece la subcategoría.
+	- Precio Promedio: Indica el precio promedio o de referencia para los elementos en esa subcategoría (NO SÉ SI PONERLO)
+
+Ejemplo de cómo se verían estas tablas:
+
+
+Tabla de Categorías:
+| ID de Categoría | Nombre de Categoría    |
+|------------------|------------------------|
+| 1               | Computadoras           |
+| 2               | Periféricos            |
+| 3               | Software               |
+
+
+
+
+Tabla de Subcategorías:
+| ID de Subcategoría | Nombre de Subcategoría | ID de Categoría |
+|--------------------|--------------------------|-----------------|
+| 1                  | Laptops                  | 1              |
+| 2                  | Escritorios              | 1              |
+| 3                  | Impresora láser          | 2              |
+| 4                  | Impresora de inyección de tinta | 2      |
+| 5                  | Sistemas operativos      | 3              |
+| 6                  | Aplicaciones             | 3              |
+
+
+En este ejemplo, la tabla de Subcategorías utiliza un campo "ID de Categoría" que se relaciona con la tabla de Categorías, lo que indica a qué categoría pertenece cada subcategoría.
+
+Con esta estructura de base de datos, puedes organizar las categorías y subcategorías de manera jerárquica, lo que facilita la clasificación de elementos y servicios. Además, puedes utilizar consultas SQL para recuperar información específica sobre las categorías y subcategorías según sea necesario en tu aplicación o sistema ERP.
+
+
+
+
+
+

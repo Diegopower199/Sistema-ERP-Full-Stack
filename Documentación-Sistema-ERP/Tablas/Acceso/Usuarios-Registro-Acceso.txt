@@ -1,0 +1,27 @@
+Claro, puedo ayudarte a diseñar tablas que podrían ser útiles en una base de datos para un módulo de acceso en un sistema ERP. Aquí te proporciono una propuesta de diseño de tablas que pueden servir para los requisitos que has mencionado:
+
+Tabla "Usuarios":
+	- ID_Usuario (clave primaria)
+	- Nombre de Usuario
+	- Contraseña (puede estar encriptada)
+	- Pregunta de Seguridad
+	- Respuesta de Seguridad
+	- Tipo de Usuario (Admin o Normal)
+
+Tabla "Registro Acceso":
+	- ID_Registro (clave primaria)
+	- ID_Usuario (clave foránea de la tabla Usuarios)
+	- Fecha y Hora de Acceso
+
+Tabla "Tipo Usuario": 
+	- ID_Tipo_usuario
+	- tipo_usuario
+
+
+La tabla "Usuarios" almacena la información principal de los usuarios, incluyendo sus contraseñas encriptadas, preguntas de seguridad y tipo de usuario.
+La tabla "Registro Acceso" registra cada vez que un usuario inicia sesión en el sistema, lo que puede ayudar en el seguimiento de la actividad.
+
+
+Funciones para el back-end:
+- Login (nombre_usuario, password)
+- Cambiar_contraseña(nombre_usuario, passwordAntigua, passwordNueva)

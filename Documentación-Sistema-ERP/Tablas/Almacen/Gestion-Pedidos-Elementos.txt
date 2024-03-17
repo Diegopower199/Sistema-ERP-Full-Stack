@@ -1,0 +1,16 @@
+Si deseas crear una tabla para la gestión de pedidos de elementos, puedes diseñar una estructura que te permita registrar los pedidos, su estado y otra información relevante. A continuación, te proporciono una estructura básica para una tabla de gestión de pedidos de elementos:
+
+Tabla de Gestión de Pedidos:
+
+	- ID de Pedido (Clave Primaria): Un identificador único para cada pedido.
+	- ID de Subcategoría (Clave Externa): Un campo que se relaciona con la tabla de Subcategorías, indicando a qué subcategoría se refiere el pedido.
+	- Fecha de Pedido: Una fecha que registra cuándo se generó el pedido.
+	- Estado del Pedido: Un campo que registra el estado del pedido (pendiente, aprobado, en tránsito, recibido, etc.).
+	- Cantidad Solicitada: Un número que indica la cantidad de elementos solicitados en el pedido.
+	- Fecha de Entrega Esperada: Una fecha que indica cuándo se espera que los elementos del pedido sean entregados.
+	- Proveedor (Clave Externa): Un campo que se relaciona con una tabla de proveedores para registrar el proveedor asociado con el pedido. NO CREO QUE SEA NECESARIA
+	- Notas o Comentarios: Espacio para notas adicionales o comentarios relacionados con el pedido.
+	- Coste total: representa el costo total de los elementos solicitados en el pedido
+
+
+Esta tabla te permitirá gestionar los pedidos de elementos, registrar la cantidad solicitada, el proveedor, el estado del pedido y otra información importante para un seguimiento adecuado. Puedes personalizar y expandir esta estructura según las necesidades específicas de tu empresa, como agregar campos para información de envío, números de seguimiento o cualquier otro detalle que sea relevante para tu proceso de gestión de pedidos.

@@ -153,6 +153,16 @@ function FormularioVacacionEmpleado() {
             status={formulario.nombre === "" ? "error" : ""}
           ></Antd.Input>
         </Antd.Form.Item>
+        <Antd.Form.Item label="Apellidos">
+          <Antd.Input
+            type="text"
+            name="apellidos"
+            id="apellidos"
+            value={formulario.apellidos}
+            onChange={handleFormChange}
+            status={formulario.apellidos === "" ? "error" : ""}
+          ></Antd.Input>
+        </Antd.Form.Item>
       </Antd.Form>
       <br /> <br />
       <button onClick={handleSubmit}>Enviar</button>

@@ -25,36 +25,16 @@ export default function UpdatePassword() {
   const [requiredFields, setRequiredFields] = useState([]);
 
   function generateRandomNumber() {
-    // Generate a random number between 0 and 999999 (inclusive)
     let randomNumber = Math.floor(Math.random() * 1000000);
 
-    // Convert the number to a string and pad with zeros to ensure 6 digits
     let formattedNumber = randomNumber.toString().padStart(6, "0");
 
     return formattedNumber;
   }
 
-  const validateRequiredFields = (requiredFields) => {
-    const formDataHasUndefinedOrEmptyString = requiredFields.some((field) => {
-      console.log("field: ", field);
-      return formData[field] === "" || formData[field] === undefined;
-    });
-
-    if (formDataHasUndefinedOrEmptyString) {
-      console.log("Al menos un campo requerido es undefined o ''.");
-    } else {
-      console.log(
-        "Todos los campos requeridos tienen valores distintos de undefined y ''."
-      );
-    }
-
-    return formDataHasUndefinedOrEmptyString;
-  };
-
   const sendEmail = async () => {
     try {
       const requiredFields = ["correo_electronico"];
-      const validate = validateRequiredFields(requiredFields);
 
       const codigoVerificacion = generateRandomNumber();
       console.log("codigoVerificacion: ", codigoVerificacion);
@@ -134,7 +114,7 @@ export default function UpdatePassword() {
     });
   }
 
-  const handleChange = (event) => {
+  const handleFormChange = (event) => {
     const { name, value } = event.target;
 
     setFormData((prevDataState) => {
@@ -156,7 +136,7 @@ export default function UpdatePassword() {
               type="text"
               name="correo_electronico"
               value={formData.correo_electronico}
-              onChange={handleChange}
+              onChange={handleFormChange}
             />
           </label>
           <br />
@@ -180,7 +160,7 @@ export default function UpdatePassword() {
               type="number"
               name="codigo_verificacion"
               value={formData.codigo_verificacion}
-              onChange={handleChange}
+              onChange={handleFormChange}
             />
           </label>
           <br />
@@ -196,7 +176,7 @@ export default function UpdatePassword() {
               type="text"
               name="new_password"
               value={formData.new_password}
-              onChange={handleChange}
+              onChange={handleFormChange}
             />
           </label>
           <br />
@@ -207,7 +187,7 @@ export default function UpdatePassword() {
               type="text"
               name="confirm_new_password"
               value={formData.confirm_new_password}
-              onChange={handleChange}
+              onChange={handleFormChange}
             />
           </label>
           <br />

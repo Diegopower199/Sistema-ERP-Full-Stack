@@ -46,7 +46,7 @@ export default function Login() {
     }
   }, [authUser]);
 
-  const handleChange = (event) => {
+  const handleFormChange = (event) => {
     const { name, value, type, checked } = event.target;
     // Manejar cambios según el tipo de input
     setFormData((prevDataState) => {
@@ -180,7 +180,7 @@ export default function Login() {
                 type="text"
                 name="nombre_usuario"
                 value={formData.nombre_usuario}
-                onChange={handleChange}
+                onChange={handleFormChange}
               />
             </div>
 
@@ -190,7 +190,7 @@ export default function Login() {
                 type="password"
                 name="password"
                 value={formData.password}
-                onChange={handleChange}
+                onChange={handleFormChange}
               />
             </div>
             {(backendError ||
@@ -215,8 +215,6 @@ export default function Login() {
           </p>
         </div>
       </div>
-      EN LOGIN DEBO QUITAR LO DE VALUE Y PONER EL COMENTADO EN USUARIO Y
-      CONTRASEÑA
     </>
   );
 }

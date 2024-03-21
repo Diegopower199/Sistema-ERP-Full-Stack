@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "550ca08a-f55f-4427-bd86-8d1fd47c8705",
+		"name": "Ayudas-Empleados",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24090192",
+		"_collection_link": "https://www.postman.com/planetary-equinox-783849/workspace/sistema-erp/collection/24090192-550ca08a-f55f-4427-bd86-8d1fd47c8705?action=share&source=collection_link&creator=24090192"
+	},
+	"item": [
+		{
+			"name": "save",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_inicio\": \"2023-12-12\",\r\n    \"fecha_fin\": \"2023-12-13\", \r\n    \"valor_asociado\": 1000,\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"dni\": \"05953694Y\"\r\n    },\r\n    \"tipo_ayuda\": {\r\n        \"id_tipo_ayuda\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/ayudasEmpleados/api/save",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ayudasEmpleados",
+						"api",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/ayudasEmpleados/api/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ayudasEmpleados",
+						"api",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getById/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/ayudasEmpleados/api/getById/11",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ayudasEmpleados",
+						"api",
+						"getById",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update/{id}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_inicio\": \"2023-12-12\",\r\n    \"fecha_fin\": \"2023-12-14\", \r\n    \"valor_asociado\": 1000,\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"dni\": \"05953694Y\"\r\n    },\r\n    \"tipo_ayuda\": {\r\n        \"id_tipo_ayuda\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/ayudasEmpleados/api/update/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ayudasEmpleados",
+						"api",
+						"update",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/ayudasEmpleados/api/delete/5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ayudasEmpleados",
+						"api",
+						"delete",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -34,7 +34,7 @@ public class AsistenciaEmpleadoModel implements Serializable {
     @Column(name = "hora_salida", nullable = true)
     private LocalTime hora_salida;
 
-    @Column(name = "horas_trabajadas_dia", nullable = false)
+    @Column(name = "horas_trabajadas_dia", nullable = true)
     private LocalTime horas_trabajadas_dia;
 
     @Column(name = "observacion", nullable = true)

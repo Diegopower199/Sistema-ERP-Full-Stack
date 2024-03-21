@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "b74c4e04-320b-44cf-9edd-2061038ebe7f",
+		"name": "Motivos-Bajas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24090192",
+		"_collection_link": "https://www.postman.com/planetary-equinox-783849/workspace/sistema-erp/collection/24090192-b74c4e04-320b-44cf-9edd-2061038ebe7f?action=share&source=collection_link&creator=24090192"
+	},
+	"item": [
+		{
+			"name": "save",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"motivo_baja\": \"motivo baja 1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/motivosBajas/api/save",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"motivosBajas",
+						"api",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/motivosBajas/api/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"motivosBajas",
+						"api",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getById/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/motivosBajas/api/getById/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"motivosBajas",
+						"api",
+						"getById",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update/{id}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"motivo_baja\": \"motivo baja 12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/motivosBajas/api/update/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"motivosBajas",
+						"api",
+						"update",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/motivosBajas/api/delete/5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"motivosBajas",
+						"api",
+						"delete",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

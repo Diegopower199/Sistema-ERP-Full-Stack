@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "d403a7cb-1c9e-4867-b52f-f4733eff557d",
+		"name": "Bajas-Laborales-Empleados",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24090192",
+		"_collection_link": "https://www.postman.com/planetary-equinox-783849/workspace/sistema-erp/collection/24090192-d403a7cb-1c9e-4867-b52f-f4733eff557d?action=share&source=collection_link&creator=24090192"
+	},
+	"item": [
+		{
+			"name": "save",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_inicio\": \"2023-12-12\",\r\n    \"fecha_fin\": \"2023-12-13\",\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"dni\": \"05953694Y\"\r\n    },\r\n    \"motivo_baja\": {\r\n        \"id_motivo_baja\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/bajasLaboralesEmpleados/api/save",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bajasLaboralesEmpleados",
+						"api",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/bajasLaboralesEmpleados/api/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bajasLaboralesEmpleados",
+						"api",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getById/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/bajasLaboralesEmpleados/api/getById/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bajasLaboralesEmpleados",
+						"api",
+						"getById",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update/{id}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_inicio\": \"2023-12-12\",\r\n    \"fecha_fin\": \"2023-12-13\",\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"dni\": \"05953694Y\"\r\n    }, \r\n    \"motivo_baja\": {\r\n        \"id_motivo_baja\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/bajasLaboralesEmpleados/api/update/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bajasLaboralesEmpleados",
+						"api",
+						"update",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/bajasLaboralesEmpleados/api/delete/5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bajasLaboralesEmpleados",
+						"api",
+						"delete",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

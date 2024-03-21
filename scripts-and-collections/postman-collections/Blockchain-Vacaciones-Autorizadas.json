@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "e5e04a8d-e960-4842-8e6c-051b8bb2a460",
+		"name": "Blockchain-Vacaciones-Autorizadas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24090192",
+		"_collection_link": "https://www.postman.com/planetary-equinox-783849/workspace/sistema-erp/collection/24090192-e5e04a8d-e960-4842-8e6c-051b8bb2a460?action=share&source=collection_link&creator=24090192"
+	},
+	"item": [
+		{
+			"name": "save",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"id_vacacion_empleado\": 111111,\r\n    \"fecha_inicio\": \"2023-12-15\",\r\n    \"fecha_fin\": \"2023-12-25\",\r\n    \"dias_disponibles\": 0,\r\n    \"dias_pendientes\": 0,\r\n    \"dias_solicitados\": 0,\r\n    \"dias_disfrutados\": 0,\r\n    \"observacion\": null,\r\n    \"dni\": \"05953694Y\",\r\n    \"tipo_estado\": \"Aprobado\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/blockchainVacacionesAutorizadas/api/save",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blockchainVacacionesAutorizadas",
+						"api",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/blockchainVacacionesAutorizadas/api/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blockchainVacacionesAutorizadas",
+						"api",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

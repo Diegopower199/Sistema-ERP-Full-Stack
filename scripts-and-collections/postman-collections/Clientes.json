@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "8be5d5ea-dae3-4313-a03f-8ff80895dd7b",
+		"name": "Clientes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24090192",
+		"_collection_link": "https://www.postman.com/planetary-equinox-783849/workspace/sistema-erp/collection/24090192-8be5d5ea-dae3-4313-a03f-8ff80895dd7b?action=share&source=collection_link&creator=24090192"
+	},
+	"item": [
+		{
+			"name": "save",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nif\": \"12345678A\",\r\n    \"nombre_apellidos\": \"Elena Rodriguez\",\r\n    \"razon_social\": null,\r\n    \"numero_telefono\": \"2222222\",\r\n    \"correo_electronico\": \"elena.rodriguez@example.com\",\r\n    \"direccion\": \"Calle Falsa 123\",\r\n    \"codigo_postal\": \"28001\",\r\n    \"ciudad\": \"MADRID\",\r\n    \"provincia\": \"MADRID\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/clientes/api/save",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"api",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/clientes/api/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"api",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getById/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/clientes/api/getById/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"api",
+						"getById",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update/{id}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nif\": \"NINGUN NIF PERO CON UPDATE\",\r\n    \"nombre_apellidos\": \"Diego Gonzalez\",\r\n    \"razon_social\": \"AAA\",\r\n    \"numero_telefono\": \"1111111\",\r\n    \"correo_electronico\": \"NINGUN COREO\" ,\r\n    \"direccion\": \"SIN DIRECCION\",\r\n    \"codigo_postal\": \"28043\",\r\n    \"ciudad\": \"MADRID\",\r\n    \"provincia\": \"MADRID\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/clientes/api/update/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"api",
+						"update",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/clientes/api/delete/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"api",
+						"delete",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

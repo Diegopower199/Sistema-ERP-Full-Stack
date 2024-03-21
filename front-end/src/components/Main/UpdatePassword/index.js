@@ -21,8 +21,7 @@ export default function UpdatePassword() {
     confirm_new_password: "",
   });
 
-  const [erroresDelFormulario, setErroresDelFormulario] = useState({});
-  const [requiredFields, setRequiredFields] = useState([]);
+  const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
 
   function generateRandomNumber() {
     let randomNumber = Math.floor(Math.random() * 1000000);
@@ -34,31 +33,42 @@ export default function UpdatePassword() {
 
   const sendEmail = async () => {
     try {
-      const requiredFields = ["correo_electronico"];
+      const errorMissingFields = {};
 
-      const codigoVerificacion = generateRandomNumber();
-      console.log("codigoVerificacion: ", codigoVerificacion);
-      setCodigoVerificacion(codigoVerificacion);
-      const data = {
-        correo_electronico: formData.correo_electronico,
-        codigo_verificacion: codigoVerificacion,
-      };
+      if (!formData.correo_electronico) {
+        errorMissingFields.correo_electronico =
+          "Por favor, ingresa un correo electronico";
+      }
 
-      const responseExistsEmail = await existsCorreoElectronico(
-        data.correo_electronico
-      );
+      setRequiredFieldsIncomplete(errorMissingFields);
 
-      console.log("responseExistsEmail: ", responseExistsEmail);
+      console.log("errorMissingFields: ", errorMissingFields);
 
-      if (responseExistsEmail.data.resultado === true) {
-        const responseSendEmail = await sendEmailNodeMailer(data);
+      if (Object.keys(errorMissingFields).length === 0) {
+        const codigoVerificacion = generateRandomNumber();
+        console.log("codigoVerificacion: ", codigoVerificacion);
+        setCodigoVerificacion(codigoVerificacion);
+        const data = {
+          correo_electronico: formData.correo_electronico,
+          codigo_verificacion: codigoVerificacion,
+        };
 
-        console.log("responseSendEmail: ", responseSendEmail);
-        if (responseSendEmail.status === 200) {
-          setCorrectEmail(true);
+        const responseExistsEmail = await existsCorreoElectronico(
+          data.correo_electronico
+        );
+
+        console.log("responseExistsEmail: ", responseExistsEmail);
+
+        if (responseExistsEmail.data.resultado === true) {
+          const responseSendEmail = await sendEmailNodeMailer(data);
+
+          console.log("responseSendEmail: ", responseSendEmail);
+          if (responseSendEmail.status === 200) {
+            setCorrectEmail(true);
+          }
+        } else {
+          console.log("EMAIL NO EXISTE");
         }
-      } else {
-        console.log("EMAIL NO EXISTE");
       }
     } catch (error) {
       console.error("El Error es: ", error.message);
@@ -138,6 +148,11 @@ export default function UpdatePassword() {
               value={formData.correo_electronico}
               onChange={handleFormChange}
             />
+            {requiredFieldsIncomplete.correo_electronico && (
+              <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+                {requiredFieldsIncomplete.correo_electronico}
+              </div>
+            )}
           </label>
           <br />
           <br />

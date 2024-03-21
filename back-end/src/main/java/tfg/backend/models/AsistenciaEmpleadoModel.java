@@ -25,8 +25,8 @@ public class AsistenciaEmpleadoModel implements Serializable {
     @Column(name = "id_asistencia_empleado", nullable = false)
     private int id_asistencia_empleado;
 
-    @Column(name = "fecha", nullable = false)
-    private LocalDate fecha;
+    @Column(name = "fecha_asistencia", nullable = false)
+    private LocalDate fecha_asistencia;
 
     @Column(name = "hora_entrada", nullable = false)
     private LocalTime hora_entrada;
@@ -34,8 +34,8 @@ public class AsistenciaEmpleadoModel implements Serializable {
     @Column(name = "hora_salida", nullable = true)
     private LocalTime hora_salida;
 
-    @Column(name = "total_horas_trabajadas", nullable = false)
-    private LocalTime total_horas_trabajadas;
+    @Column(name = "horas_trabajadas_dia", nullable = false)
+    private LocalTime horas_trabajadas_dia;
 
     @Column(name = "observacion", nullable = true)
     private String observacion;
@@ -47,10 +47,10 @@ public class AsistenciaEmpleadoModel implements Serializable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("id_asistencia_empleado", id_asistencia_empleado);
-        map.put("fecha", fecha);
+        map.put("fecha_asistencia", fecha_asistencia);
         map.put("hora_entrada", hora_entrada);
         map.put("hora_salida", hora_salida);
-        map.put("total_horas_trabajadas", total_horas_trabajadas);
+        map.put("horas_trabajadas_dia", horas_trabajadas_dia);
         map.put("observacion", observacion);
         return map;
     }

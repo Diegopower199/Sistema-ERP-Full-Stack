@@ -17,9 +17,9 @@ public interface AsistenciaEmpleadoRepository extends JpaRepository<AsistenciaEm
     @Query("SELECT c FROM AsistenciaEmpleadoModel c ORDER BY c.id_asistencia_empleado")
     List<AsistenciaEmpleadoModel> findAllOrderedById();
 
-    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM AsistenciaEmpleadoModel c WHERE c.persona = :id_persona AND c.fecha = :fecha")
+    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM AsistenciaEmpleadoModel c WHERE c.persona = :id_persona AND c.fecha_asistencia = :fecha_asistencia")
     boolean existsByPersonaAndFecha_AsistenciaEmpleado(
             @Param("id_persona") PersonaModel id_persona,
-            @Param("fecha") LocalDate fecha);
+            @Param("fecha_asistencia") LocalDate fecha_asistencia);
 
 }

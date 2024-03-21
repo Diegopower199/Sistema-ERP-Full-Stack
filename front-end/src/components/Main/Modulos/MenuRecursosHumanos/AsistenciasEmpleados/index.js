@@ -80,8 +80,8 @@ export default function AsistenciasEmpleados() {
       editable: false,
     },
     {
-      field: "fecha",
-      headerName: "Fecha",
+      field: "fecha_asistencia",
+      headerName: "Fecha asistencia",
       width: 180,
       editable: false,
     },
@@ -98,8 +98,8 @@ export default function AsistenciasEmpleados() {
       editable: false,
     },
     {
-      field: "total_horas_trabajadas",
-      headerName: "Total horas trabajadas",
+      field: "horas_trabajadas_dia",
+      headerName: "Horas trabajadas dia",
       width: 180,
       editable: false,
     },
@@ -157,10 +157,10 @@ export default function AsistenciasEmpleados() {
           (asistenciaEmpleado) => {
             return {
               id: asistenciaEmpleado.id_asistencia_empleado,
-              fecha: asistenciaEmpleado.fecha,
+              fecha_asistencia: asistenciaEmpleado.fecha_asistencia,
               hora_entrada: asistenciaEmpleado.hora_entrada,
               hora_salida: asistenciaEmpleado.hora_salida,
-              total_horas_trabajadas: asistenciaEmpleado.total_horas_trabajadas,
+              horas_trabajadas_dia: asistenciaEmpleado.horas_trabajadas_dia,
               observacion: asistenciaEmpleado.observacion,
               id_persona: asistenciaEmpleado.persona.id_persona,
               dni: asistenciaEmpleado.persona.dni,
@@ -232,7 +232,7 @@ export default function AsistenciasEmpleados() {
     console.log("Boton para borrar: ", filaSeleccionada);
     setIdAsistenciaEmpleadoSelected(id);
     setDniPersonaAsistenciaEmpleadoSelected(filaSeleccionada.dni);
-    setFechaAsistenciaEmpleadoSelected(filaSeleccionada.fecha);
+    setFechaAsistenciaEmpleadoSelected(filaSeleccionada.fecha_asistencia);
     setShowDelete(true);
   };
 

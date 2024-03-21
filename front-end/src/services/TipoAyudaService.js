@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
 
-export async function getAllTiposAyudas() {
+export const getAllTiposAyudas = async () => {
   try {
     const url = API_URL_BACK_END.replace("#", "tiposAyudas");
 
@@ -19,4 +19,4 @@ export async function getAllTiposAyudas() {
     console.error();
     return "Error";
   }
-}
+};

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
 
-export async function getAllTiposPersonas() {
+export const getAllTiposPersonas = async () => {
   const url = API_URL_BACK_END.replace("#", "tiposPersonas");
   try {
     const response = await axios.get(url + "getAll");
@@ -18,4 +18,4 @@ export async function getAllTiposPersonas() {
     console.error();
     return "Error";
   }
-}
+};

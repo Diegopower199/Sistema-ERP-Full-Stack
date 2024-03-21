@@ -19,19 +19,8 @@ export const savePersona = async (data) => {
   const url = API_URL_BACK_END.replace("#", "personas");
   console.log("FORM PERSONA: ", data);
   try {
-    let formData = {};
-    formData["numero_empleado"] = parseInt(data.numero_empleado);
-    formData["nombre"] = data.nombre;
-    formData["apellidos"] = data.apellidos;
-    formData["genero"] = data.genero;
-    formData["fecha_nacimiento"] = data.fecha_nacimiento;
-    formData["dni"] = data.dni;
-    formData["direccion"] = data.direccion;
-    formData["numero_telefono"] = data.numero_telefono;
-    formData["correo_electronico"] = data.correo_electronico;
-    formData["tipo_persona"] = {
-      id_tipo_persona: parseInt(data.id_tipo_persona),
-    };
+    const formData = {};
+
     const response = await axios.post(url + "save", formData);
 
     return {
@@ -66,19 +55,7 @@ export const updatePersona = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "personas");
   console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
-    let formData = {};
-    formData["numero_empleado"] = parseInt(data.numero_empleado);
-    formData["nombre"] = data.nombre;
-    formData["apellidos"] = data.apellidos;
-    formData["genero"] = data.genero;
-    formData["fecha_nacimiento"] = data.fecha_nacimiento;
-    formData["dni"] = data.dni;
-    formData["direccion"] = data.direccion;
-    formData["numero_telefono"] = data.numero_telefono;
-    formData["correo_electronico"] = data.correo_electronico;
-    formData["tipo_persona"] = {
-      id_tipo_persona: parseInt(data.id_tipo_persona),
-    };
+    const formData = {};
 
     const response = await axios.put(url + "update/" + id, formData);
     return {

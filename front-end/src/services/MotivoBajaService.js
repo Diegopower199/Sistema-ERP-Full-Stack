@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
 
-export async function getAllMotivosBajas() {
+export const getAllMotivosBajas = async () => {
   try {
     const url = API_URL_BACK_END.replace("#", "motivosBajas");
 
@@ -19,4 +19,4 @@ export async function getAllMotivosBajas() {
     console.error();
     return "Error";
   }
-}
+};

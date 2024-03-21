@@ -3,7 +3,6 @@ import { API_URL_BACK_END } from "@/utils/constants";
 
 export const getAllAyudasEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
-
   try {
     const response = await axios.get(url + "getAll");
     return {
@@ -20,20 +19,9 @@ export const saveAyudaEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
   console.log("FORM PERSONA: ", data);
   try {
-    let formData = {};
-    formData["fecha_solicitud"] = data.fecha_solicitud;
-    formData["observacion"] = data.observacion;
-    formData["persona"] = {
-      dni: data.dni,
-    };
-    formData["tipo_solicitud"] = {
-      id_tipo_solicitud: parseInt(data.id_tipo_solicitud),
-    };
-    formData["tipo_estado"] = {
-      id_tipo_estado: parseInt(data.id_tipo_estado),
-    };
-    const response = await axios.post(url + "save", formData);
+    const formData = {};
 
+    const response = await axios.post(url + "save", formData);
     return {
       data: response.data,
       status: response.status,
@@ -66,19 +54,7 @@ export const updateAyudaEmpleado = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
   console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
-    let formData = {};
-    formData["fecha_solicitud"] = data.fecha_solicitud;
-    formData["observacion"] = data.observacion;
-    formData["persona"] = {
-      dni: data.dni,
-    };
-    formData["tipo_solicitud"] = {
-      id_tipo_solicitud: parseInt(data.id_tipo_solicitud),
-    };
-    formData["tipo_estado"] = {
-      id_tipo_estado: parseInt(data.id_tipo_estado),
-    };
-    console.log("Form hecho: ", formData, "\nID: ", id);
+    const formData = {};
 
     const response = await axios.put(url + "update/" + id, formData);
     return {

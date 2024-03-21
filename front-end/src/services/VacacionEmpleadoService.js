@@ -21,17 +21,18 @@ export const saveVacacionEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
   console.log("FORM VACACIONES EMPLEADOS: ", data);
   try {
-    let formData = {};
-    formData["fecha_inicio"] = data.fecha_inicio;
-    formData["fecha_fin"] = data.fecha_fin;
-    formData["observacion"] = data.observacion;
-    formData["persona"] = {
-      dni: data.dni,
+    const formData = {
+      fecha_inicio: data.fecha_inicio,
+      fecha_fin: data.fecha_fin,
+      observacion: data.observacion,
+      persona: {
+        dni: data.dni,
+      },
+      tipo_estado: {
+        id_tipo_estado: parseInt(data.id_tipo_estado),
+      },
     };
-    formData["tipo_estado"] = {
-      id_tipo_estado: parseInt(data.id_tipo_estado),
-    };
-    
+
     const response = await axios.post(url + "save", formData);
 
     return {
@@ -67,17 +68,17 @@ export const updateVacacionEmpleado = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
   console.log(`FORM VACACIONES EMPLEADOS CON id ${id}: `, data);
   try {
-    let formData = {};
-    formData["fecha_inicio"] = data.fecha_inicio;
-    formData["fecha_fin"] = data.fecha_fin;
-    formData["observacion"] = data.observacion;
-    formData["persona"] = {
-      dni: data.dni,
+    const formData = {
+      fecha_inicio: data.fecha_inicio,
+      fecha_fin: data.fecha_fin,
+      observacion: data.observacion,
+      persona: {
+        dni: data.dni,
+      },
+      tipo_estado: {
+        id_tipo_estado: parseInt(data.id_tipo_estado),
+      },
     };
-    formData["tipo_estado"] = {
-      id_tipo_estado: parseInt(data.id_tipo_estado),
-    };
-    console.log("FORM DATA: ", formData, "-- ID: ", id);
 
     const response = await axios.put(url + "update/" + id, formData);
     return {

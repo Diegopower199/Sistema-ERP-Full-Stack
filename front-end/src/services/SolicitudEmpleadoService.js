@@ -20,17 +20,18 @@ export const saveSolicitudEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "solicitudesEmpleados");
   console.log("FORM SOLICITUD EMPLEADO: ", data);
   try {
-    let formData = {};
-    formData["fecha_solicitud"] = data.fecha_solicitud;
-    formData["observacion"] = data.observacion;
-    formData["persona"] = {
-      dni: data.dni,
-    };
-    formData["tipo_solicitud"] = {
-      id_tipo_solicitud: parseInt(data.id_tipo_solicitud),
-    };
-    formData["tipo_estado"] = {
-      id_tipo_estado: parseInt(data.id_tipo_estado),
+    const formData = {
+      fecha_solicitud: data.fecha_solicitud,
+      observacion: data.observacion,
+      persona: {
+        dni: data.dni,
+      },
+      tipo_solicitud: {
+        id_tipo_solicitud: parseInt(data.id_tipo_solicitud),
+      },
+      tipo_estado: {
+        id_tipo_estado: parseInt(data.id_tipo_estado),
+      },
     };
 
     const response = await axios.post(url + "save", formData);
@@ -67,19 +68,19 @@ export const updateSolicitudEmpleado = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "solicitudesEmpleados");
   console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
-    let formData = {};
-    formData["fecha_solicitud"] = data.fecha_solicitud;
-    formData["observacion"] = data.observacion;
-    formData["persona"] = {
-      dni: data.dni,
+    const formData = {
+      fecha_solicitud: data.fecha_solicitud,
+      observacion: data.observacion,
+      persona: {
+        dni: data.dni,
+      },
+      tipo_solicitud: {
+        id_tipo_solicitud: parseInt(data.id_tipo_solicitud),
+      },
+      tipo_estado: {
+        id_tipo_estado: parseInt(data.id_tipo_estado),
+      },
     };
-    formData["tipo_solicitud"] = {
-      id_tipo_solicitud: parseInt(data.id_tipo_solicitud),
-    };
-    formData["tipo_estado"] = {
-      id_tipo_estado: parseInt(data.id_tipo_estado),
-    };
-    console.log("Form hecho: ", formData, "\nID: ", id);
 
     const response = await axios.put(url + "update/" + id, formData);
     return {

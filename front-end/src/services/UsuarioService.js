@@ -19,14 +19,17 @@ export const saveUsuario = async (data) => {
   const url = API_URL_BACK_END.replace("#", "usuarios");
   console.log("FORM USUARIO: ", data);
   try {
-    let formData = {};
-    formData["nombre_usuario"] = data.nombre_usuario;
-    formData["password"] = data.password;
-    formData["persona"] = { id_persona: parseInt(data.id_persona) };
-    formData["tipo_usuario"] = {
-      id_tipo_usuario: parseInt(data.id_tipo_usuario),
+    const formData = {
+      nombre_usuario: data.nombre_usuario,
+      password: data.password,
+      persona: {
+        id_persona: parseInt(data.id_persona),
+      },
+      tipo_usuario: {
+        id_tipo_usuario: parseInt(data.id_tipo_usuario),
+      },
     };
-    console.log("Form hecho: ", formData);
+
     const response = await axios.post(url + "save", formData);
 
     return {
@@ -62,14 +65,16 @@ export const updateUsuario = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "usuarios");
   console.log(`FORM USUARIO CON id ${id}: `, data);
   try {
-    let formData = {};
-    formData["nombre_usuario"] = data.nombre_usuario;
-    formData["password"] = data.password;
-    formData["persona"] = { id_persona: parseInt(data.id_persona) };
-    formData["tipo_usuario"] = {
-      id_tipo_usuario: parseInt(data.id_tipo_usuario),
+    const formData = {
+      nombre_usuario: data.nombre_usuario,
+      password: data.password,
+      persona: {
+        id_persona: parseInt(data.id_persona),
+      },
+      tipo_usuario: {
+        id_tipo_usuario: parseInt(data.id_tipo_usuario),
+      },
     };
-    console.log("Form hecho: ", formData, "\nID: ", id);
 
     const response = await axios.put(url + "update/" + id, formData);
     return {
@@ -136,9 +141,10 @@ export const authenticateUser = async (nombre_usuario, password) => {
 export const updatePassword = async (data) => {
   const url = API_URL_BACK_END.replace("#", "usuarios");
   try {
-    let formData = {};
-    formData["correo_electronico"] = data.correo_electronico;
-    formData["new_password"] = data.new_password;
+    const formData = {
+      correo_electronico: data.correo_electronico,
+      new_password: data.new_password,
+    };
 
     const response = await axios.put(url + "updatePassword", formData);
     return {

@@ -47,14 +47,3 @@ public class PagoFacturaClienteModel implements Serializable {
     }
 
 }
-
-/*
- * Tabla: Pagos -> Pagos_Facturas_Clientes
- * ID_Pago (Clave primaria): Identificador único de cada transacción de pago.
- * ID_Factura (Clave foránea que referencia a la tabla de Facturas): Enlace a la
- * factura asociada al pago.
- * Fecha_Pago: Fecha en que se realizó el pago.
- * Importe_Pagado: Importe total pagado por el cliente.
- * Método_Pago: Método utilizado para realizar el pago (efectivo, tarjeta,
- * transferencia, etc.).
- */

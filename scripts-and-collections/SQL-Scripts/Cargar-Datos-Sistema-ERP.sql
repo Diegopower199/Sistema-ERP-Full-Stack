@@ -15,6 +15,15 @@ INSERT INTO `trabajotfgerp`.`permisos_usuarios` (`crear_clientes`, `actualizar_c
 
 
 -- ========================================
+-- Tipos estados facturas
+-- ========================================
+INSERT INTO `trabajotfgerp`.`tipos_estados_facturas` (`tipo_estado_factura`) VALUES ('Pendiente de facturar');
+INSERT INTO `trabajotfgerp`.`tipos_estados_facturas` (`tipo_estado_factura`) VALUES ('Facturado');
+INSERT INTO `trabajotfgerp`.`tipos_estados_facturas` (`tipo_estado_factura`) VALUES ('Cerrado sin facturar');
+
+
+
+-- ========================================
 -- Tipos estados
 -- ========================================
 INSERT INTO `trabajotfgerp`.`tipos_estados` (`tipo_estado`) VALUES ('Pendiente de revisión');

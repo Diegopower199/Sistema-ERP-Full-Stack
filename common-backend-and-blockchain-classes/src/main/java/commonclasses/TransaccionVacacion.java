@@ -158,7 +158,8 @@ public class TransaccionVacacion implements Serializable {
     public String calcularHashTransaccion() {
 
         String text = String.valueOf(id_vacacion_empleado) + String.valueOf(fecha_inicio) + String.valueOf(fecha_fin)
-                + String.valueOf(dias_disponibles) + String.valueOf(dias_pendientes) + String.valueOf(dias_solicitados) + String.valueOf(dias_disfrutados) + String.valueOf(observacion) + String.valueOf(dni)
+                + String.valueOf(dias_disponibles) + String.valueOf(dias_pendientes) + String.valueOf(dias_solicitados)
+                + String.valueOf(dias_disfrutados) + String.valueOf(observacion) + String.valueOf(dni)
                 + String.valueOf(tipo_estado) + String.valueOf(timestamp);
 
         MessageDigest digest = null;
@@ -186,7 +187,8 @@ public class TransaccionVacacion implements Serializable {
     public String toString() {
         return "{" +
                 "hash='" + hash + '\'' + "id_vacacion_empleado=" + id_vacacion_empleado + ", fecha_inicio="
-                + fecha_inicio + ", fecha_fin=" + fecha_fin + ", dias_disponibles=" + dias_disponibles + ", dias_pendientes=" + dias_pendientes + ", dias_solicitados=" + dias_solicitados +
+                + fecha_inicio + ", fecha_fin=" + fecha_fin + ", dias_disponibles=" + dias_disponibles
+                + ", dias_pendientes=" + dias_pendientes + ", dias_solicitados=" + dias_solicitados +
                 ", dias_disfrutados=" + dias_disfrutados + ", observacion='"
                 + observacion + '\'' + ", dni='" + dni + '\'' + ", tipo_estado='" + tipo_estado + '\'' +
                 ", timestamp=" + timestamp + '}';

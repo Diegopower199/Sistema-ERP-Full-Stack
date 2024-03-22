@@ -82,21 +82,3 @@ public class NominaEmpleadoModel implements Serializable {
     }
 
 }
-
-/*
- * Tabla de Nómina Empleados:
- * - ID de nomina(Clave Primaria)
- * - ID de Persona (Clave Externa se relaciona con la tabla de Personas)
- * - Año nomina
- * - Mes nómina
- * - Tipo nómina
- * - Salario base
- * - Deducciones
- * - Bonificaciones
- * - Salario bruto
- * - IRPF -> 14%
- * - Seguridad social
- * - Anticipos
- * - Salario Neto
- * - Cuenta bancaria
- */

@@ -51,7 +51,6 @@ public class PermisoUsuarioController {
 
             return ResponseEntity
                     .ok(permisoUsuarioService.getPermisoUsuarioById(newPermisoUsuario.getId_permiso_usuario()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -82,7 +81,6 @@ public class PermisoUsuarioController {
 
             return ResponseEntity
                     .ok(permisoUsuarioService.getPermisoUsuarioById(updatePermisoUsuario.getId_permiso_usuario()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -100,5 +98,5 @@ public class PermisoUsuarioController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-    
+
 }

@@ -50,7 +50,6 @@ public class TipoAyudaController {
             TipoAyudaModel newTipoAyuda = tipoAyudaService.saveTipoAyuda(tipoAyudaRequest);
 
             return ResponseEntity.ok(tipoAyudaService.getTipoAyudaById(newTipoAyuda.getId_tipo_ayuda()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -79,7 +78,6 @@ public class TipoAyudaController {
             TipoAyudaModel updateTipoAyuda = tipoAyudaService.updateTipoAyuda(tipoAyudaRequest, id);
 
             return ResponseEntity.ok(tipoAyudaService.getTipoAyudaById(updateTipoAyuda.getId_tipo_ayuda()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

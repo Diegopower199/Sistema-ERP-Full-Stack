@@ -51,20 +51,3 @@ public class PedidoClienteModel implements Serializable {
     }
 
 }
-
-/*
- * Tabla: Pedidos -> Pedidos_Clientes
- * ID_Pedido (Clave primaria)
- * ID_Cliente (Clave foránea referenciando a la tabla de Clientes)
- * Fecha_Solicitud_Pedido
- * Fecha_Entrega_Prevista
- * Fecha_Entrega_Real
- * Tipo_Estado_Pedido
- */
-
-/*
- * 1. Pedido:
- * 2. Planificacion
- * 3. Ejecucion
- * 4. Facturacion
- */

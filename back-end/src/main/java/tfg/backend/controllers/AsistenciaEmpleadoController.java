@@ -53,7 +53,6 @@ public class AsistenciaEmpleadoController {
 
             return ResponseEntity.ok(asistenciaEmpleadoService
                     .getAsistenciaEmpleadoById(newAsistenciaEmpleado.getId_asistencia_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -65,14 +64,13 @@ public class AsistenciaEmpleadoController {
     @PostMapping("/api/endOfWorkday/{id}")
     public ResponseEntity<Map<String, Object>> endOfWorkday(
             @RequestBody AsistenciaEmpleadoModel asistenciaEmpleadoRequest, @PathVariable("id") int id) {
-        // mirarme esta funcion y completarla, hacerla en el service
+        // TODO mirarme esta funcion y completarla, hacerla en el service
         try {
             AsistenciaEmpleadoModel updateAsistenciaEmpleado = asistenciaEmpleadoService
                     .endOfWorkdayAsistenciaEmpleado(asistenciaEmpleadoRequest, id);
 
             return ResponseEntity.ok(asistenciaEmpleadoService
                     .getAsistenciaEmpleadoById(updateAsistenciaEmpleado.getId_asistencia_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -103,7 +101,6 @@ public class AsistenciaEmpleadoController {
 
             return ResponseEntity.ok(asistenciaEmpleadoService
                     .getAsistenciaEmpleadoById(updateAsistenciaEmpleado.getId_asistencia_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

@@ -58,11 +58,3 @@ public class FacturaClienteModel implements Serializable {
     }
 
 }
-
-/*
- * ID_Factura (Clave primaria)
- * Fecha_Factura
- * ID_Cliente (Clave foránea que referencia a la tabla de Clientes)
- * Total_Factura
- * Estado_Factura (pendiente, pagada, vencida, etc.)
- */

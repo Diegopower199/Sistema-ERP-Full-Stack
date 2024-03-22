@@ -50,7 +50,6 @@ public class UsuarioController {
             UsuarioModel newUsuario = usuarioService.saveUsuario(usuarioRequest);
 
             return ResponseEntity.ok(usuarioService.getUsuarioById(newUsuario.getId_usuario()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -79,7 +78,6 @@ public class UsuarioController {
             UsuarioModel updateUsuario = usuarioService.updateUsuario(usuarioRequest, id);
 
             return ResponseEntity.ok(usuarioService.getUsuarioById(updateUsuario.getId_usuario()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

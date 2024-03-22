@@ -39,7 +39,6 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-
 IMPORTANTE:
 
 Luego de eliminar estas carpetas, puedes volver a instalar las dependencias ejecutando npm install para recrear la carpeta node_modules. Para el caso de Next.js, al ejecutar npm run dev o el script que uses para iniciar tu aplicación, la carpeta .next se regenerará con los archivos necesarios durante el proceso de construcción.
@@ -55,14 +54,13 @@ Despues ejecutar:
     - npm install
     - npm run dev
 
-
 Tambien si tenemos algun mensaje de advertencia como este "You are loading @emotion/react when it is already loaded" debemos hacer lo siguiente:
 
 1. Actualizar las dependencias (no es necesario): "npm update"
 
 2. Limpia la caché de npm: "npm cache clean --force"
 
-3. Eliminar el directorio node_modules y el archivo package-lock.json: Remove-Item -Path "node_modules" -Recurse -Force y  Remove-Item -Path "package-lock.json" -Recurse -Force
+3. Eliminar el directorio node_modules y el archivo package-lock.json: Remove-Item -Path "node_modules" -Recurse -Force y Remove-Item -Path "package-lock.json" -Recurse -Force
 
 4. Reinstalar todas las dependencias: "npm install"
 
@@ -73,26 +71,12 @@ useContext: https://www.youtube.com/watch?v=2-6K-TMA-nw
 Instalarme esto para variables globales (.env): npm install dotenv
 Instalar axios: npm install axios
 
-
 Para ejecutar solo archivos .js debo poner "node script.js" y tener node instalado
 
 Descargarme esto para ver fallos de javascript: ESLint en extensiones
 
-Bibliotecas instaladas: 
-    - npm install dotenv
-    - npm install axios
-    - npm install @mui/material @emotion/react @emotion/styled
-    - npm install @mui/icons-material
-    - npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
-    - npm install @mui/x-data-grid
-    - npm install moment
-    - npm install antd
-
-
-
+Bibliotecas instaladas: - npm install dotenv - npm install axios - npm install @mui/material @emotion/react @emotion/styled - npm install @mui/icons-material - npm install @mui/icons-material @mui/material @emotion/styled @emotion/react - npm install @mui/x-data-grid - npm install moment - npm install antd
 
 Componentes: https://mui.com/components/
-
-
 
 me puedes decir como crear una tabla de permisos para un sistema erp, donde hay tres modulos, recursos huamnos donde hay asistencia empleado, solicitudes empleados, bajas laborales, etc y puedes crear actualizar ver y borrar una tupla, otro de clientes y pedidos de clientes y por ultimo facturacon, que campos pongo en la tabla, ya que depende del usaurio tiene unos permisos u otros

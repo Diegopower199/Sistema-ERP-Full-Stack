@@ -66,18 +66,3 @@ public class DetalleFacturaClienteModel implements Serializable {
     }
 
 }
-
-/*
- * Tabla: Detalles_Factura (Para los ítems de cada factura) ->
- * Detalles_Facturas_Clientes
- * ID_Detalle (Clave primaria)
- * ID_Factura (Clave foránea que referencia a la tabla de Facturas)
- * Descripción_Servicio
- * Tiempo_Desplazamiento (en horas o minutos)
- * Tiempo_Servicio (en horas o minutos)
- * Tarifa_Hora_Desplazamiento
- * Tarifa_Hora_Servicio
- * Subtotal-Sin_IVA
- * IVA
- * Total
- */

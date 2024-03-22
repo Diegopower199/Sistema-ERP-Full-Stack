@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"to\": \"example12@example.com\",\r\n    \"verificationCode\": \"123456\"\r\n}",
+					"raw": "{\r\n    \"to\": \"diegogs2323@gmail.com\",\r\n    \"verificationCode\": \"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -22,14 +22,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/send-email",
+					"raw": "http://localhost:3001/sendEmail",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3001",
 					"path": [
-						"send-email"
+						"sendEmail"
 					]
 				}
 			},

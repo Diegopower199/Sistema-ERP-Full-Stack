@@ -53,7 +53,6 @@ public class SolicitudEmpleadoController {
 
             return ResponseEntity.ok(solicitudEmpleadoService
                     .getSolicitudEmpleadoById(newSolicitudEmpleado.getId_solicitud_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -84,7 +83,6 @@ public class SolicitudEmpleadoController {
 
             return ResponseEntity.ok(solicitudEmpleadoService
                     .getSolicitudEmpleadoById(updateSolicitudRequest.getId_solicitud_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

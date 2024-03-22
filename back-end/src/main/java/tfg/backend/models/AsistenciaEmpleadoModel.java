@@ -56,13 +56,3 @@ public class AsistenciaEmpleadoModel implements Serializable {
     }
 
 }
-
-/*
- * - ID de Registro (Clave Primaria)
- * - ID de Persona (Clave Externa que se relaciona con la tabla de Gestión de
- * Personas)
- * - Fecha
- * - Hora de Entrada
- * - Hora de Salida
- * - Total de Horas Trabajadas
- */

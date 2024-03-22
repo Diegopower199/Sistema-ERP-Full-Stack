@@ -51,7 +51,6 @@ public class NominaEmpleadoController {
 
             return ResponseEntity
                     .ok(nominaEmpleadoService.getNominaEmpleadoById(newNominaEmpleado.getId_nomina_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -82,7 +81,6 @@ public class NominaEmpleadoController {
 
             return ResponseEntity
                     .ok(nominaEmpleadoService.getNominaEmpleadoById(updateNominaEmpleado.getId_nomina_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

@@ -26,7 +26,6 @@ public class BlockchainServerMain {
 
     private static Blockchain libroVacaciones = cargarLibroVacaciones(); // Carga el historial existente al iniciar el
 
-
     public static void main(String[] args) {
 
         Properties properties = new Properties();

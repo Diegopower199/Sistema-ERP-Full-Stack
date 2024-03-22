@@ -59,15 +59,3 @@ public class AyudaEmpleadoModel implements Serializable {
     }
 
 }
-
-/*
- * - ID de Ayuda (Clave Primaria)
- * - ID de Persona (Clave Externa que se relaciona con la tabla de Gestión de
- * Personas)
- * - ID de Tipo de Ayuda (Clave Externa que se relaciona con la tabla de
- * "Tipos de Ayuda")
- * - Fecha de Inicio
- * - Fecha de Finalización
- * - Monto de la Ayuda (es el valor o cantidad de dinero que se proporciona como
- * ayuda a un empleado)
- */

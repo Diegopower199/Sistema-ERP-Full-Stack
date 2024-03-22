@@ -23,7 +23,7 @@ import tfg.backend.services.PersonaService;
 import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
-    RequestMethod.PUT, RequestMethod.DELETE })
+        RequestMethod.PUT, RequestMethod.DELETE })
 @RestController
 @RequestMapping("/personas")
 public class PersonaController {
@@ -50,7 +50,6 @@ public class PersonaController {
             PersonaModel newPersona = personaService.savePersona(personaRequest);
 
             return ResponseEntity.ok(personaService.getPersonaById(newPersona.getId_persona()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -79,7 +78,6 @@ public class PersonaController {
             PersonaModel updatePersona = personaService.updatePersona(personaRequest, id);
 
             return ResponseEntity.ok(personaService.getPersonaById(updatePersona.getId_persona()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

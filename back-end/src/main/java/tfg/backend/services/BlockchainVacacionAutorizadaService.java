@@ -69,7 +69,6 @@ public class BlockchainVacacionAutorizadaService {
             e.printStackTrace();
         }
         return transaccionVacacionAutorizada;
-        // return transaccionVacacion;
     }
 
 }

@@ -51,7 +51,6 @@ public class TipoSolicitudController {
 
             return ResponseEntity
                     .ok(tipoSolicitudService.getTipoSolicitudById(newTipoSolicitud.getId_tipo_solicitud()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -81,7 +80,6 @@ public class TipoSolicitudController {
 
             return ResponseEntity
                     .ok(tipoSolicitudService.getTipoSolicitudById(updateTipoSolicitud.getId_tipo_solicitud()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

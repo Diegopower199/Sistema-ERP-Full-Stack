@@ -50,7 +50,6 @@ public class TipoEstadoController {
             TipoEstadoModel newTipoEstado = tipoEstadoService.saveTipoEstado(tipoEstadoRequest);
 
             return ResponseEntity.ok(tipoEstadoService.getTipoEstadoById(newTipoEstado.getId_tipo_estado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -79,7 +78,6 @@ public class TipoEstadoController {
             TipoEstadoModel updateTipoEstado = tipoEstadoService.updateTipoEstado(tipoEstadoRequest, id);
 
             return ResponseEntity.ok(tipoEstadoService.getTipoEstadoById(updateTipoEstado.getId_tipo_estado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

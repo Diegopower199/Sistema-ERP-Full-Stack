@@ -82,4 +82,5 @@ public class TipoSolicitudService {
         tipoSolicitudRepository.deleteById(idTipoSolicitud);
 
     }
+
 }

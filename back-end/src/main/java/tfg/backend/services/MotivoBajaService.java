@@ -79,4 +79,5 @@ public class MotivoBajaService {
         motivoBajaRepository.deleteById(idMotivoBaja);
 
     }
+
 }

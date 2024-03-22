@@ -51,7 +51,6 @@ public class ClienteController {
 
             return ResponseEntity
                     .ok(clienteService.getClienteById(newCliente.getId_cliente()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -81,7 +80,6 @@ public class ClienteController {
 
             return ResponseEntity
                     .ok(clienteService.getClienteById(updateCliente.getId_cliente()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

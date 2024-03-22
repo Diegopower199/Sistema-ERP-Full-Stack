@@ -77,17 +77,3 @@ public class ClienteModel implements Serializable {
     }
 
 }
-
-/*
- * Tabla: Clientes
- * ID_Cliente (Clave primaria)
- * NIF -> mirar esto: https://www.generador-de-dni.com/generador-de-dni
- * Nombre y apellidos
- * Empresa (Razon social) -> Nombre de la empresa
- * Teléfono
- * Correo
- * Dirección
- * Código_Postal
- * Ciudad
- * Provincia
- */

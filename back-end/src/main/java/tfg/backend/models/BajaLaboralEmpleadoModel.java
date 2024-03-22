@@ -55,15 +55,3 @@ public class BajaLaboralEmpleadoModel implements Serializable {
     }
 
 }
-
-/*
- * - ID de Baja (Clave Primaria)
- * - ID de Persona (Clave Externa que se relaciona con la tabla de Gestión de
- * Personas)
- * - Fecha de Inicio
- * - Fecha de Finalización
- * - ID de Motivo de la Baja (Clave Externa que se relaciona con la tabla de
- * Motivos de Baja)
- * - Estado de la Baja (pendiente, aprobada, rechazada) -> El campo será
- * "id_tipo_estado" con la tabla tipo_estado
- */

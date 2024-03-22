@@ -109,4 +109,5 @@ public class NominaEmpleadoService {
 
         nominaEmpleadoRepository.deleteById(idNominaEmpleado);
     }
+
 }

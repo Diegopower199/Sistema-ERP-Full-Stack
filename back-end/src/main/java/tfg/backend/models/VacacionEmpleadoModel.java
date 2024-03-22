@@ -67,36 +67,3 @@ public class VacacionEmpleadoModel implements Serializable {
     }
 
 }
-
-/*
- * @Column(name = "fecha_solicitud", nullable = true)
- * private LocalDate fecha_solicitud;
- * 
- * @Column(name = "fecha_ultima_modificacion", nullable = true)
- * private LocalDateTime fecha_ultima_modificacion;
- * 
- * @ManyToOne
- * 
- * @JoinColumn(name = "id_supervisor_solicitudes_vacaciones", nullable = true,
- * foreignKey = @ForeignKey(name =
- * "FK_vacaciones_empleados_supervisores_solicitudes_vacaciones"))
- * private PersonaModel supervisorSolicitudesVacaciones;
- * 
- * 
- */
-
-/*
- * 
- * Controlar que las fechas no se solapen, es decir si esta selecciona el
- * 2-12-2023 hasta el 10-12-2023, que no pueda coger unas vacaciones del
- * 5-12-2023 al 13-12-2023 y salga el error "fechas solapadas"
- * - ID de Vacaciones (Clave Primaria)
- * - ID de Persona (Clave Externa que se relaciona con la tabla de Gestión de
- * Personas)
- * - Año
- * - Fecha de Inicio
- * - Fecha de Finalización
- * - Días Disponibles
- * - Días Disfrutados
- * - Días Restantes
- */

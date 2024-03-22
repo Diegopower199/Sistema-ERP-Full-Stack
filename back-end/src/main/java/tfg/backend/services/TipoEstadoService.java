@@ -79,4 +79,5 @@ public class TipoEstadoService {
         tipoEstadoRepository.deleteById(idTipoEstado);
 
     }
+
 }

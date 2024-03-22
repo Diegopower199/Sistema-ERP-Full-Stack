@@ -1,3 +1,4 @@
+import { getAllTiposEstadosFacturas } from "@/services/TipoEstadoFacturaService";
 import { getAllTiposEstados } from "@/services/TipoEstadoService";
 //import antd, { Button, Select } from "antd";
 import * as Antd from "antd";
@@ -5,6 +6,8 @@ import React, { useEffect, useState } from "react";
 
 function FormularioVacacionEmpleado() {
   const [tiposEstadosOptions, setTiposEstadosOptions] = useState([]);
+  const [tiposEstadosFacturasOptions, setTiposEstadosFacturasOptions] =
+    useState([]);
 
   const [formulario, setFormulario] = useState({
     year: "",
@@ -33,8 +36,19 @@ function FormularioVacacionEmpleado() {
     }
   };
 
+  const fetchTiposEstadosFacturasOptions = async () => {
+    try {
+      const resultado = await getAllTiposEstadosFacturas();
+      console.log("Resultado: ", resultado);
+      setTiposEstadosFacturasOptions(resultado);
+    } catch (error) {
+      console.error("El error es: ", error);
+    }
+  };
+
   useEffect(() => {
     fetchTiposEstadosOptions();
+    fetchTiposEstadosFacturasOptions();
   }, []); // Se ejecuta solo al montar el componente
 
   const handleFormChange = (event) => {
@@ -68,6 +82,17 @@ function FormularioVacacionEmpleado() {
         ...prevDataState,
         ["tipo_estado"]: option?.children.toString(),
         ["id_tipo_estado"]: value.toString(),
+      };
+    });
+  };
+
+  const handleTipoEstadoFacturaChange = (value, option) => {
+    console.log("El tipo estado es: ", value, option);
+    setFormulario((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["tipo_estado_factura"]: option?.children.toString(),
+        ["id_tipo_estado_factura"]: value.toString(),
       };
     });
   };
@@ -123,6 +148,31 @@ function FormularioVacacionEmpleado() {
                 value={tipoEstado.value}
               >
                 {tipoEstado.label}
+              </Antd.Select.Option>
+            ))}
+          </Antd.Select>
+        }
+      </label>
+      <br></br>
+      <label>
+        Selecciona un tipo de estado de factura:
+        {
+          <Antd.Select
+            name="tipo_estado_factura"
+            value={
+              formulario.tipo_estado_factura
+                ? formulario.tipo_estado_factura
+                : "Selecciona un tipo de estado factura"
+            }
+            onChange={handleTipoEstadoFacturaChange}
+            notFoundContent={<span>No hay opciones</span>}
+          >
+            {tiposEstadosFacturasOptions.map((tipoEstadoFactura) => (
+              <Antd.Select.Option
+                key={tipoEstadoFactura.value}
+                value={tipoEstadoFactura.value}
+              >
+                {tipoEstadoFactura.label}
               </Antd.Select.Option>
             ))}
           </Antd.Select>

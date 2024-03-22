@@ -122,4 +122,5 @@ public class TipoUsuarioService {
         tipoUsuarioRepository.deleteById(idTipoUsuario);
 
     }
+
 }

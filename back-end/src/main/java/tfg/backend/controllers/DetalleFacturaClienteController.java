@@ -55,7 +55,6 @@ public class DetalleFacturaClienteController {
             return ResponseEntity
                     .ok(detalleFacturaClienteService.getDetalleFacturaClienteById(
                             newDetalleFacturaCliente.getId_detalle_factura_cliente()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -89,7 +88,6 @@ public class DetalleFacturaClienteController {
             return ResponseEntity
                     .ok(detalleFacturaClienteService.getDetalleFacturaClienteById(
                             updateDetalleFacturaCliente.getId_detalle_factura_cliente()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

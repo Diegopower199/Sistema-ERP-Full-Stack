@@ -19,8 +19,6 @@ import commonclasses.TransaccionVacacion;
 import tfg.backend.services.BlockchainVacacionAutorizadaService;
 import tfg.backend.utils.GlobalConstants;
 
-// Propósito: Controla la interacción con el cliente y maneja las solicitudes HTTP relacionadas con las vacaciones autorizadas.
-
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
 @RestController

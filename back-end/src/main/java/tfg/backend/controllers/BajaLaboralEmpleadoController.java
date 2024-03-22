@@ -53,7 +53,6 @@ public class BajaLaboralEmpleadoController {
 
             return ResponseEntity.ok(bajaLaboralEmpleadoService
                     .getBajaLaboralEmpleadoById(newBajaLaboralEmpleado.getId_baja_laboral_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -84,7 +83,6 @@ public class BajaLaboralEmpleadoController {
 
             return ResponseEntity.ok(bajaLaboralEmpleadoService
                     .getBajaLaboralEmpleadoById(updateBajaLaboralEmpleado.getId_baja_laboral_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

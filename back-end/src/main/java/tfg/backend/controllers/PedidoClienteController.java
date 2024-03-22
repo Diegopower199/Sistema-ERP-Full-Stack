@@ -51,7 +51,6 @@ public class PedidoClienteController {
 
             return ResponseEntity
                     .ok(pedidoClienteService.getPedidoClienteById(newPedidoCliente.getId_pedido_cliente()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -81,7 +80,6 @@ public class PedidoClienteController {
 
             return ResponseEntity
                     .ok(pedidoClienteService.getPedidoClienteById(updatePedidoCliente.getId_pedido_cliente()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

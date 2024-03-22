@@ -16,26 +16,22 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-
 // Configurar CORS
 app.use(
   cors({
-    origin: API_URL_FRONT_END, // API_URL_FRONT_END
+    origin: API_URL_FRONT_END,
   })
 );
-
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
   auth: {
-    user: TRANSPORTER_USER, // TRANSPORTER_USER
-    pass: TRANSPORTER_PASSWORD, // TRANSPORTER_PASSWORD
+    user: TRANSPORTER_USER,
+    pass: TRANSPORTER_PASSWORD,
   },
 });
-
 
 transporter
   .verify()
@@ -74,14 +70,13 @@ app.post("/sendEmail", async (req, res) => {
   }
 });
 
-console.log("ERROR ANTES")
-
+console.log("ERROR ANTES");
 
 app.listen(parseInt(PORT_EMAIL_SERVER), () =>
   console.log(`Escuchando desde http://localhost:${PORT_EMAIL_SERVER}`)
 );
 
-console.log("ERROR DESPUES")
+console.log("ERROR DESPUES");
 
 /*
 PARA ENVIARLO A MAS DE UNA PERSONA

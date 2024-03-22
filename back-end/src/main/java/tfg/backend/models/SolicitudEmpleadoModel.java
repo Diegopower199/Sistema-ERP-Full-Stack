@@ -51,17 +51,3 @@ public class SolicitudEmpleadoModel implements Serializable {
     }
 
 }
-
-/*
- * - ID de Solicitud (Clave Primaria)
- * - ID de Persona (Clave Externa que se relaciona con la tabla de Gestión de
- * Personas)
- * - Fecha de Solicitud
- * - ID de Tipo de Solicitud (Clave Externa que se relaciona con la tabla de
- * "Tipos de Solicitud")
- * - Tipo de Solicitud (permiso, cambio de turno, vacaciones, otros) (clave
- * foránea de tipo_solicitud)
- * - Estado de la Solicitud (pendiente, aprobada, rechazada) -> El campo será
- * "id_tipo_estado" con la tabla tipo_estado
- * - observacion
- */

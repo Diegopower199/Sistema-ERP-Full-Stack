@@ -50,7 +50,6 @@ public class MotivoBajaController {
             MotivoBajaModel newMotivoBaja = motivoBajaService.saveMotivoBaja(motivoBajaRequest);
 
             return ResponseEntity.ok(motivoBajaService.getMotivoBajaById(newMotivoBaja.getId_motivo_baja()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -79,7 +78,6 @@ public class MotivoBajaController {
             MotivoBajaModel updateMotivoBaja = motivoBajaService.updateMotivoBaja(motivoBajaRequest, id);
 
             return ResponseEntity.ok(motivoBajaService.getMotivoBajaById(updateMotivoBaja.getId_motivo_baja()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

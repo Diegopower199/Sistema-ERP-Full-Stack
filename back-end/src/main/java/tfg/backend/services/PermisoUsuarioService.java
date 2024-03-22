@@ -63,4 +63,5 @@ public class PermisoUsuarioService {
         permisoUsuarioRepository.deleteById(idpermisoUsuario);
 
     }
+
 }

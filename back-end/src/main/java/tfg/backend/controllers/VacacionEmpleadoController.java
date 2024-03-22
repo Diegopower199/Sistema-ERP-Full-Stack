@@ -52,7 +52,6 @@ public class VacacionEmpleadoController {
 
             return ResponseEntity.ok(vacacionEmpleadoService
                     .getVacacionEmpleadoById(newVacacionEmpleado.getId_vacacion_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -83,7 +82,6 @@ public class VacacionEmpleadoController {
 
             return ResponseEntity.ok(vacacionEmpleadoService
                     .getVacacionEmpleadoById(updateVacacionEmpleado.getId_vacacion_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

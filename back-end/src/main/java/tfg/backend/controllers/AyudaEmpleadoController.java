@@ -51,7 +51,6 @@ public class AyudaEmpleadoController {
 
             return ResponseEntity
                     .ok(ayudaEmpleadoService.getAyudaEmpleadoById(newAyudaEmpleado.getId_ayuda_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -81,7 +80,6 @@ public class AyudaEmpleadoController {
 
             return ResponseEntity
                     .ok(ayudaEmpleadoService.getAyudaEmpleadoById(updateAyudaEmpleado.getId_ayuda_empleado()));
-
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

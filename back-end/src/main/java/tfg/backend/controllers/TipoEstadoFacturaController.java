@@ -18,41 +18,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tfg.backend.models.PagoFacturaClienteModel;
-import tfg.backend.services.PagoFacturaClienteService;
+import tfg.backend.models.TipoEstadoFacturaModel;
+import tfg.backend.services.TipoEstadoFacturaService;
 import tfg.backend.utils.GlobalConstants;
 
 @CrossOrigin(origins = GlobalConstants.FRONTEND_URL, methods = { RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE })
 @RestController
-@RequestMapping("/pagosFacturasClientes")
-public class PagoFacturaClienteController {
+@RequestMapping("/tiposEstadosFacturas")
+public class TipoEstadoFacturaController {
 
     @Autowired
-    PagoFacturaClienteService pagoFacturaClienteService;
+    TipoEstadoFacturaService tipoEstadoFacturaService;
 
-    // localhost:8080/pagosFacturasClientes/api/getAll
+    // localhost:8080/tiposEstadosFacturas/api/getAll
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
-        List<Map<String, Object>> allPagosFacturasClientes = pagoFacturaClienteService.getAllPagosFacturasClientes();
+        List<Map<String, Object>> allTiposEstadosFacturas = tipoEstadoFacturaService.getAllTiposEstadosFacturas();
 
-        if (allPagosFacturasClientes.isEmpty()) {
+        if (allTiposEstadosFacturas.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.ok(allPagosFacturasClientes);
+            return ResponseEntity.ok(allTiposEstadosFacturas);
         }
     }
 
-    // localhost:8080/pagosFacturasClientes/api/save
+    // localhost:8080/tiposEstadosFacturas/api/save
     @PostMapping("/api/save")
-    public ResponseEntity<Map<String, Object>> save(@RequestBody PagoFacturaClienteModel pagoFacturaClienteRequest) {
+    public ResponseEntity<Map<String, Object>> save(@RequestBody TipoEstadoFacturaModel tipoEstadoFacturaRequest) {
         try {
-            PagoFacturaClienteModel newPagoFacturaCliente = pagoFacturaClienteService
-                    .savePagoFacturaCliente(pagoFacturaClienteRequest);
+            TipoEstadoFacturaModel newTipoEstadoFactura = tipoEstadoFacturaService
+                    .saveTipoEstadoFactura(tipoEstadoFacturaRequest);
 
-            return ResponseEntity
-                    .ok(pagoFacturaClienteService
-                            .getPagoFacturaClienteById(newPagoFacturaCliente.getId_pago_factura_cliente()));
+            return ResponseEntity.ok(tipoEstadoFacturaService
+                    .getTipoEstadoFacturaById(newTipoEstadoFactura.getId_tipo_estado_factura()));
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -60,12 +59,12 @@ public class PagoFacturaClienteController {
         }
     }
 
-    // localhost:8080/pagosFacturasClientes/api/getById/{id}
+    // localhost:8080/tiposEstadosFacturas/api/getById/{id}
     @GetMapping("/api/getById/{id}")
     public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") int id) {
         try {
-            Map<String, Object> selectedPagoFacturaCliente = pagoFacturaClienteService.getPagoFacturaClienteById(id);
-            return ResponseEntity.ok(selectedPagoFacturaCliente);
+            Map<String, Object> selectedTipoEstadoFactura = tipoEstadoFacturaService.getTipoEstadoFacturaById(id);
+            return ResponseEntity.ok(selectedTipoEstadoFactura);
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -73,17 +72,16 @@ public class PagoFacturaClienteController {
         }
     }
 
-    // localhost:8080/pagosFacturasClientes/api/update/{id}
+    // localhost:8080/tiposEstadosFacturas/api/update/{id}
     @PutMapping("/api/update/{id}")
-    public ResponseEntity<Map<String, Object>> update(@RequestBody PagoFacturaClienteModel pagoFacturaClienteRequest,
+    public ResponseEntity<Map<String, Object>> update(@RequestBody TipoEstadoFacturaModel tipoEstadoFacturaRequest,
             @PathVariable("id") int id) {
         try {
-            PagoFacturaClienteModel updatePagoFacturaCliente = pagoFacturaClienteService
-                    .updatePagoFacturaCliente(pagoFacturaClienteRequest, id);
+            TipoEstadoFacturaModel updateTipoEstadoFactura = tipoEstadoFacturaService
+                    .updateTipoEstadoFactura(tipoEstadoFacturaRequest, id);
 
-            return ResponseEntity
-                    .ok(pagoFacturaClienteService
-                            .getPagoFacturaClienteById(updatePagoFacturaCliente.getId_pago_factura_cliente()));
+            return ResponseEntity.ok(tipoEstadoFacturaService
+                    .getTipoEstadoFacturaById(updateTipoEstadoFactura.getId_tipo_estado_factura()));
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -91,11 +89,11 @@ public class PagoFacturaClienteController {
         }
     }
 
-    // localhost:8080/pagosFacturasClientes/api/delete/{id}
+    // localhost:8080/tiposEstadosFacturas/api/delete/{id}
     @DeleteMapping("/api/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") int id) {
         try {
-            pagoFacturaClienteService.deletePagoFacturaCliente(id);
+            tipoEstadoFacturaService.deleteTipoEstadoFactura(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

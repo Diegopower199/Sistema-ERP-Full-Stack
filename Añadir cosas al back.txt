@@ -13,11 +13,6 @@ En los insert darme cuenta y cambiar donde ponga comentarios por observaciones, 
 
 Campos que tengo que añadir en las siguientes tablas:
 
-Tabla AsistenciaEmpleadoModel:
- - total_horas_trabajadas: Cambiar el nombre actual que es "horas_trabajadas_dia" -> Almacenar horas y minutos, segundos ponerlo a 00
- - fecha: Cambiar el nombre actual que es "fecha_asistencia" -> CAMBIAR EN REPOSITORY DEL BACK
-
-
 Tabla PedidoClienteModel:
  - id_persona_encargado (una persona que se encarga) Esto es un id_persona -> nullable = true, Tipo: PersonaModel // Al crear no se pasa nada, es al modificar
  - direccion_entrega -> nullable = false, Tipo: String
@@ -27,7 +22,7 @@ Tabla PedidoClienteModel:
  - hora_inicio_servicio -> nullable = true, Tipo: LocalTime
  - hora_fin_servicio -> nullable = true, Tipo: LocalTime
  - tiempo_servicio_total -> nullable = true, Tipo: LocalTime // Horas y minutos, segundos de queda con 00
- - id_tipo_estado_facturacion (clave foranea de esta tabla: Tipo_Estado_Facturacion) -> 1. pendiente facturar, 2. facturado, 3. cerrado sin facturar -> nullable = false, Tipo: Tipo_Estado_Facturacion Hasta que esto no este en la opcion 2 no se puede generar factura
+ - id_tipo_estado_factura (clave foranea de esta tabla: Tipo_Estado_Factura) -> 1. pendiente facturar, 2. facturado, 3. cerrado sin facturar -> nullable = false, Tipo: Tipo_Estado_Facturacion Hasta que esto no este en la opcion 2 no se puede generar factura
  - descripcion -> nullable = true, Tipo: String
  - observacion -> nullable = true, Tipo: String
 
@@ -53,11 +48,23 @@ Tabla FacturaClienteModel:
  - id_pedido_cliente -> Poner el pedido del cliente a la factura (foreign key) -> nullable = false, Tipo: PedidoClienteModel
 
 
-
-Crearme una tabla Tipo_Estado_Facturacion (Como tipo estado)
- - id_tipo_estado_facturacion
- - tipo_estado_facturacion -> nullable = false
-
+ESTO EN VACACIONES (PERO PARA UN FUTURO)
+/*
+ * @Column(name = "fecha_solicitud", nullable = true)
+ * private LocalDate fecha_solicitud;
+ * 
+ * @Column(name = "fecha_ultima_modificacion", nullable = true)
+ * private LocalDateTime fecha_ultima_modificacion;
+ * 
+ * @ManyToOne
+ * 
+ * @JoinColumn(name = "id_supervisor_solicitudes_vacaciones", nullable = true,
+ * foreignKey = @ForeignKey(name =
+ * "FK_vacaciones_empleados_supervisores_solicitudes_vacaciones"))
+ * private PersonaModel supervisorSolicitudesVacaciones;
+ * 
+ * 
+ */
 
 esto de abajo es para el codigo
 // Suponiendo que tienes las marcas de tiempo de inicio y fin del desplazamiento y del servicio "LocalTime" mejor poner esto

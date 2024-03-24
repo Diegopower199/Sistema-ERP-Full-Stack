@@ -212,13 +212,10 @@ npm run dev
 > [!IMPORTANT]
 > Cosas a tener en cuenta y que tengo que hacer:
 
--
-
 1. Controlar si el back-end o la BBDD no funciona que en el front-end lo controle, tengo aqui un ejemplo: EjemploControlarBackEndAndBBDDEnFront.txt Lo tengo para el login (asi que los demas son iguales), solo me falta poner si no se pone que el input se pongo en rojo (Lo debo cambiar todo a Antd)
 
 > [!WARNING] COSAS QUE HACER EN EL FUTURO
 > ESTO EN VACACIONES (PERO PARA UN FUTURO)
-> /\*
 >
 > - @Column(name = "fecha_solicitud", nullable = true)
 > - private LocalDate fecha_solicitud;

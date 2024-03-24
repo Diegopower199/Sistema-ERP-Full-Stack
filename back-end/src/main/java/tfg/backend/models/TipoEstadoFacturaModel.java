@@ -30,12 +30,9 @@ public class TipoEstadoFacturaModel implements Serializable {
     @Column(name = "tipo_estado_factura", unique = true, nullable = false)
     private String tipo_estado_factura;
 
-    /*
-     * @JsonIgnore
-     * 
-     * @OneToMany(mappedBy = "tipo_estado", cascade = CascadeType.REMOVE)
-     * private List<BajaLaboralEmpleadoModel> bajasLaboralesEmpleados;
-     */
+    @JsonIgnore
+    @OneToMany(mappedBy = "tipo_estado_factura", cascade = CascadeType.REMOVE)
+    private List<PedidoClienteModel> pedidosClientes;
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new LinkedHashMap<>();

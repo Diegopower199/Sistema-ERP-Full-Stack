@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 
 import tfg.backend.models.ClienteModel;
 import tfg.backend.models.PedidoClienteModel;
+import tfg.backend.models.PersonaModel;
+import tfg.backend.models.TipoEstadoFacturaModel;
 import tfg.backend.models.TipoEstadoModel;
 import tfg.backend.repositories.ClienteRepository;
 import tfg.backend.repositories.PedidoClienteRepository;
+import tfg.backend.repositories.PersonaRepository;
+import tfg.backend.repositories.TipoEstadoFacturaRepository;
 import tfg.backend.repositories.TipoEstadoRepository;
 
 @Service
@@ -24,7 +28,13 @@ public class PedidoClienteService {
     private ClienteRepository clienteRepository;
 
     @Autowired
+    private PersonaRepository personaRepository;
+
+    @Autowired
     private TipoEstadoRepository tipoEstadoRepository;
+
+    @Autowired
+    private TipoEstadoFacturaRepository tipoEstadoFacturaRepository;
 
     public List<Map<String, Object>> getAllPedidosClientes() {
         List<PedidoClienteModel> listaPedidosClientes = pedidoClienteRepository.findAllOrderedById();
@@ -36,8 +46,15 @@ public class PedidoClienteService {
             pedidoClienteMap.put("cliente",
                     pedidoCliente.getCliente() != null ? pedidoCliente.getCliente().toMap() : null);
 
+            pedidoClienteMap.put("persona_encargado",
+                    pedidoCliente.getPersona_encargado() != null ? pedidoCliente.getPersona_encargado().toMap() : null);
+
             pedidoClienteMap.put("tipo_estado",
                     pedidoCliente.getTipo_estado() != null ? pedidoCliente.getTipo_estado().toMap() : null);
+
+            pedidoClienteMap.put("tipo_estado_factura",
+                    pedidoCliente.getTipo_estado_factura() != null ? pedidoCliente.getTipo_estado_factura().toMap()
+                            : null);
 
             resultado.add(pedidoClienteMap);
         }
@@ -63,6 +80,15 @@ public class PedidoClienteService {
         nuevoPedidoCliente.setCliente(clienteEncontrado);
         clienteEncontrado.getPedidosClientes().add(nuevoPedidoCliente);
 
+        int id_persona_encargado = nuevoPedidoCliente.getPersona_encargado().getId_persona();
+
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona_encargado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona_encargado + " no encontrado"));
+
+        nuevoPedidoCliente.setPersona_encargado(personaEncontrado);
+        personaEncontrado.getPedidosClientes().add(nuevoPedidoCliente);
+
         int id_tipo_estado = nuevoPedidoCliente.getTipo_estado().getId_tipo_estado();
 
         TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
@@ -70,6 +96,16 @@ public class PedidoClienteService {
 
         nuevoPedidoCliente.setTipo_estado(tipoEstadoEncontrado);
         tipoEstadoEncontrado.getPedidosClientes().add(nuevoPedidoCliente);
+
+        int id_tipo_estado_factura = nuevoPedidoCliente.getTipo_estado_factura().getId_tipo_estado_factura();
+
+        TipoEstadoFacturaModel tipoEstadoFacturaEncontrado = tipoEstadoFacturaRepository
+                .findById(id_tipo_estado_factura)
+                .orElseThrow(() -> new RuntimeException(
+                        "Tipo estado factura con id " + id_tipo_estado_factura + " no encontrado"));
+
+        nuevoPedidoCliente.setTipo_estado_factura(tipoEstadoFacturaEncontrado);
+        tipoEstadoFacturaEncontrado.getPedidosClientes().add(nuevoPedidoCliente);
 
         PedidoClienteModel pedidoClienteGuardado = pedidoClienteRepository
                 .save(nuevoPedidoCliente);
@@ -87,8 +123,18 @@ public class PedidoClienteService {
         pedidoClienteMap.put("cliente",
                 pedidoClienteEncontrado.getCliente() != null ? pedidoClienteEncontrado.getCliente().toMap() : null);
 
+        pedidoClienteMap.put("persona_encargado",
+                pedidoClienteEncontrado.getPersona_encargado() != null
+                        ? pedidoClienteEncontrado.getPersona_encargado().toMap()
+                        : null);
+
         pedidoClienteMap.put("tipo_estado",
                 pedidoClienteEncontrado.getTipo_estado() != null ? pedidoClienteEncontrado.getTipo_estado().toMap()
+                        : null);
+
+        pedidoClienteMap.put("tipo_estado_factura",
+                pedidoClienteEncontrado.getTipo_estado_factura() != null
+                        ? pedidoClienteEncontrado.getTipo_estado_factura().toMap()
                         : null);
 
         return pedidoClienteMap;

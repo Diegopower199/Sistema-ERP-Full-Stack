@@ -215,3 +215,32 @@ npm run dev
 -
 
 1. Controlar si el back-end o la BBDD no funciona que en el front-end lo controle, tengo aqui un ejemplo: EjemploControlarBackEndAndBBDDEnFront.txt Lo tengo para el login (asi que los demas son iguales), solo me falta poner si no se pone que el input se pongo en rojo (Lo debo cambiar todo a Antd)
+
+> [!WARNING] COSAS QUE HACER EN EL FUTURO
+> ESTO EN VACACIONES (PERO PARA UN FUTURO)
+> /\*
+>
+> - @Column(name = "fecha_solicitud", nullable = true)
+> - private LocalDate fecha_solicitud;
+> -
+> - @Column(name = "fecha_ultima_modificacion", nullable = true)
+> - private LocalDateTime fecha_ultima_modificacion;
+> -
+> - @ManyToOne
+> -
+> - @JoinColumn(name = "id_supervisor_modificacion_vacaciones", nullable = true, // Es mejor el nombre supervisor_modificacion_vacaciones asi que tengo que > acomplar a este nombre
+> - foreignKey = @ForeignKey(name =
+> - "FK_vacaciones_empleados_supervisor_modificacion_vacaciones"))
+> - private PersonaModel supervisor_modificacion_vacaciones;
+> -
+> - \*/
+>
+> Ademas en "bajas laborales", "ayudas" y "solicitudes" debo poner lo del supervisor tambien, IMPORTANTE
+>
+> Otra cosa importante es cuando haga claves foraneas, al hacer JoinColumn poner por ejemplo "personaAsignada", ahora solo hay "persona" y asi con todos, no es urgente, pero es para el codigo sea legible. Ademas si se hace este cambio verlo en los ficheros repositories, ya que ahi hago referencia a variables de los models
+> 
+> Como el siguiente ejemplo:
+@ManyToOne
+@JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_ayudas_empleados_personas"))
+private PersonaModel personaAsignada;
+

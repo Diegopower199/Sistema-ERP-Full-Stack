@@ -89,6 +89,10 @@ public class PersonaModel implements Serializable {
     @OneToMany(mappedBy = "persona", cascade = CascadeType.REMOVE)
     private List<NominaEmpleadoModel> nominasEmpleados;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "persona_encargado", cascade = CascadeType.REMOVE)
+    private List<PedidoClienteModel> pedidosClientes;
+
     public Map<String, Object> toMap() {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("id_persona", id_persona);

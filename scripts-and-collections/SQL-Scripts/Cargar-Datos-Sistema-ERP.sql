@@ -815,7 +815,7 @@ INSERT INTO `trabajotfgerp`.`clientes` (`ciudad`, `codigo_postal`, `correo_elect
 INSERT INTO `trabajotfgerp`.`clientes` (`ciudad`, `codigo_postal`, `correo_electronico`, `direccion`, `nif`, `nombre_apellidos`, `numero_telefono`, `provincia`, `razon_social`) VALUES ('SEVILLA', '41006', 'soporte@infrawave-iberica.es', 'Avenida de la Palmera 567', 'T9876543U', null, '34681234570', 'SEVILLA', 'InfraWave Microsystems Ibérica');
 
 
-
+/*
 -- ========================================
 --  Pedidos clientes
 -- ========================================
@@ -1116,3 +1116,5 @@ INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha
 -- Denegadas
 INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-05-10', NULL, '2024-05-05', '37', '3');
 INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-06-15', NULL, '2024-06-10', '37', '3');
+*/
+

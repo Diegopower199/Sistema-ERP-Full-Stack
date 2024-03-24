@@ -238,9 +238,8 @@ npm run dev
 > Ademas en "bajas laborales", "ayudas" y "solicitudes" debo poner lo del supervisor tambien, IMPORTANTE
 >
 > Otra cosa importante es cuando haga claves foraneas, al hacer JoinColumn poner por ejemplo "personaAsignada", ahora solo hay "persona" y asi con todos, no es urgente, pero es para el codigo sea legible. Ademas si se hace este cambio verlo en los ficheros repositories, ya que ahi hago referencia a variables de los models
-> 
+>
 > Como el siguiente ejemplo:
-@ManyToOne
-@JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_ayudas_empleados_personas"))
-private PersonaModel personaAsignada;
-
+> @ManyToOne
+> @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_ayudas_empleados_personas"))
+> private PersonaModel personaAsignada;

@@ -30,6 +30,7 @@ import {
 } from "@/utils/constants";
 import FormClientes from "./FormClientes";
 import styles from "./styles.module.css";
+import { getAllClientes } from "@/services/ClienteService";
 
 export default function Clientes() {
   const {
@@ -81,56 +82,56 @@ export default function Clientes() {
       editable: false,
     },
     {
-      field: "fecha_inicio",
-      headerName: "Fecha inicio",
+      field: "nif",
+      headerName: "NIF",
       width: 180,
       editable: false,
     },
     {
-      field: "fecha_fin",
-      headerName: "Fecha fin",
+      field: "nombre_apellidos",
+      headerName: "Nombre y apellidos",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_disponibles",
-      headerName: "Dias disponibles",
+      field: "razon_social",
+      headerName: "Razon social",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_pendientes",
-      headerName: "Dias pendientes",
+      field: "numero_telefono",
+      headerName: "Numero telefono",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_solicitados",
-      headerName: "Dias solicitados",
+      field: "correo_electronico",
+      headerName: "Correo electronico",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_disfrutados",
-      headerName: "Dias disfrutados",
+      field: "direccion",
+      headerName: "Direccion",
       width: 130,
       editable: false,
     },
     {
-      field: "comentarios",
-      headerName: "Comentarios",
+      field: "codigo_postal",
+      headerName: "Codigo postal",
       width: 180,
       editable: false,
     },
     {
-      field: "dni",
-      headerName: "Dni persona",
+      field: "ciudad",
+      headerName: "Ciudad",
       width: 180,
       editable: false,
     },
     {
-      field: "tipo_estado",
-      headerName: "Tipo estado",
+      field: "provincia",
+      headerName: "Provincia",
       width: 180,
       editable: false,
     },
@@ -166,31 +167,26 @@ export default function Clientes() {
     },
   ];
 
-  const fetchGetAllVacacionesEmpleados = async () => {
+  const fetchGetAllClientes = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllVacacionesEmpleados =
-        await getAllVacacionesEmpleados();
-      if (responseReadAllVacacionesEmpleados.status === 200) {
-        const vacacionesEmpleadosMap = responseReadAllVacacionesEmpleados.data.map(
-          (vacacionEmpleado) => {
-            return {
-              id: vacacionEmpleado.id_vacacion_empleado,
-              fecha_inicio: vacacionEmpleado.fecha_inicio,
-              fecha_fin: vacacionEmpleado.fecha_fin,
-              dias_disponibles: vacacionEmpleado.dias_disponibles,
-              dias_pendientes: vacacionEmpleado.dias_pendientes,
-              dias_solicitados: vacacionEmpleado.dias_solicitados,
-              dias_disfrutados: vacacionEmpleado.dias_disfrutados,
-              comentarios: vacacionEmpleado.comentarios,
-              id_persona: vacacionEmpleado.persona.id_persona,
-              dni: vacacionEmpleado.persona.dni,
-              tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
-              id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
-            };
-          }
-        );
-        setRows(vacacionesEmpleadosMap);
+      const responseReadAllClientes = await getAllClientes();
+      if (responseReadAllClientes.status === 200) {
+        const clientesMap = responseReadAllClientes.data.map((cliente) => {
+          return {
+            id: cliente.id_cliente,
+            nif: cliente.nif,
+            nombre_apellidos: cliente.nombre_apellidos,
+            razon_social: cliente.razon_social,
+            numero_telefono: cliente.numero_telefono,
+            correo_electronico: cliente.correo_electronico,
+            direccion: cliente.direccion,
+            codigo_postal: cliente.codigo_postal,
+            ciudad: cliente.ciudad,
+            provincia: cliente.provincia,
+          };
+        });
+        setRows(clientesMap);
       }
       setTableLoading(false);
     } catch (error) {
@@ -199,54 +195,54 @@ export default function Clientes() {
   };
 
   useEffect(() => {
-    console.log("Pagina de vacaciones empleados: ");
+    console.log("Pagina de clientes: ");
     console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllVacacionesEmpleados();
+      fetchGetAllClientes();
     }
   }, [authUser]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (vacacionEmpleadoFormUpdated === true) {
-        await fetchGetAllVacacionesEmpleados();
+        await fetchGetAllClientes();
         setVacacionEmpleadoFormUpdated(false);
       } else if (vacacionEmpleadoDelete === true) {
-        await fetchGetAllVacacionesEmpleados();
+        await fetchGetAllClientes();
         setVacacionEmpleadoDelete(false);
       }
     };
     fetchData();
   }, [vacacionEmpleadoFormUpdated, vacacionEmpleadoDelete]);
 
-  function vacacionEmpleadoFormUpdatedTrigger() {
+  function clienteFormUpdatedTrigger() {
     setVacacionEmpleadoFormUpdated(!vacacionEmpleadoFormUpdated);
   }
 
-  function toggleCreateVacacionEmpleadoForm() {
+  function toggleCreateClienteForm() {
     setShowFormCreate(!showFormCreate);
   }
 
-  function toggleUpdateVacacionEmpleadoForm() {
+  function toggleUpdateClienteForm() {
     setShowFormUpdate(!showFormUpdate);
   }
 
-  function toggleViewUniqueVacacionEmpleadoForm() {
+  function toggleViewUniqueClienteForm() {
     setShowFormViewUnique(!showFormViewUnique);
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nueva vacacion empleado");
-    toggleCreateVacacionEmpleadoForm();
+    console.log("Añadir un nuevo cliente");
+    toggleCreateClienteForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
     const filaSeleccionada = rows.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleUpdateVacacionEmpleadoForm();
+    toggleUpdateClienteForm();
   };
 
   const handleDeleteClick = (id) => () => {
@@ -266,7 +262,7 @@ export default function Clientes() {
     console.log("Boton para ver una vacacion empleado");
     const filaSeleccionada = rows.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleViewUniqueVacacionEmpleadoForm();
+    toggleViewUniqueClienteForm();
   };
 
   // Handles 'delete' modal ok button
@@ -408,7 +404,7 @@ export default function Clientes() {
             startIcon={<AddIcon />}
             onClick={handleCreateClick}
           >
-            Añadir vacacion empleado
+            Añadir cliente
           </Button>
 
           <DataGrid
@@ -439,9 +435,9 @@ export default function Clientes() {
     return (
       <>
         <FormClientes
-          toggleForm={toggleCreateVacacionEmpleadoForm}
+          toggleForm={toggleCreateClienteForm}
           vacacionEmpleadoDataForm={""}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"create"}
         ></FormClientes>
       </>
@@ -450,9 +446,9 @@ export default function Clientes() {
     return (
       <>
         <FormClientes
-          toggleForm={toggleUpdateVacacionEmpleadoForm}
+          toggleForm={toggleUpdateClienteForm}
           vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"update"}
         ></FormClientes>
       </>
@@ -461,9 +457,9 @@ export default function Clientes() {
     return (
       <>
         <FormClientes
-          toggleForm={toggleViewUniqueVacacionEmpleadoForm}
+          toggleForm={toggleViewUniqueClienteForm}
           vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"view"}
         ></FormClientes>
       </>

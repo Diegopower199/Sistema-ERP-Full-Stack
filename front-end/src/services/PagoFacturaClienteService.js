@@ -1,8 +1,8 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
 
-export const getAllPersonas = async () => {
-  const url = API_URL_BACK_END.replace("#", "personas");
+export const getAllPagosFacturasClientes = async () => {
+  const url = API_URL_BACK_END.replace("#", "pagosFacturasClientes");
   try {
     const response = await axios.get(url + "getAll");
     return {
@@ -15,8 +15,8 @@ export const getAllPersonas = async () => {
   }
 };
 
-export const savePersona = async (data) => {
-  const url = API_URL_BACK_END.replace("#", "personas");
+export const savePagoFacturaCliente = async (data) => {
+  const url = API_URL_BACK_END.replace("#", "pagosFacturasClientes");
   console.log("FORM PERSONA: ", data);
   try {
     const formData = {};
@@ -35,8 +35,8 @@ export const savePersona = async (data) => {
   }
 };
 
-export const getPersonaById = async (id) => {
-  const url = API_URL_BACK_END.replace("#", "personas");
+export const getPagoFacturaClienteById = async (id) => {
+  const url = API_URL_BACK_END.replace("#", "pagosFacturasClientes");
   try {
     const response = await axios.get(url + "getById/" + id);
     return {
@@ -51,8 +51,8 @@ export const getPersonaById = async (id) => {
   }
 };
 
-export const updatePersona = async (id, data) => {
-  const url = API_URL_BACK_END.replace("#", "personas");
+export const updatePagoFacturaCliente = async (id, data) => {
+  const url = API_URL_BACK_END.replace("#", "pagosFacturasClientes");
   console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
     const formData = {};
@@ -70,8 +70,8 @@ export const updatePersona = async (id, data) => {
   }
 };
 
-export const deletePersona = async (id) => {
-  const url = API_URL_BACK_END.replace("#", "personas");
+export const deletePagoFacturaCliente = async (id) => {
+  const url = API_URL_BACK_END.replace("#", "pagosFacturasClientes");
   try {
     const response = await axios.delete(url + "delete/" + id);
     return {

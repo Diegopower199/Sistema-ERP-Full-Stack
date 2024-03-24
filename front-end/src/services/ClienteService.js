@@ -1,8 +1,8 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
 
-export const getAllPersonas = async () => {
-  const url = API_URL_BACK_END.replace("#", "personas");
+export const getAllClientes = async () => {
+  const url = API_URL_BACK_END.replace("#", "clientes");
   try {
     const response = await axios.get(url + "getAll");
     return {
@@ -15,8 +15,8 @@ export const getAllPersonas = async () => {
   }
 };
 
-export const savePersona = async (data) => {
-  const url = API_URL_BACK_END.replace("#", "personas");
+export const saveCliente = async (data) => {
+  const url = API_URL_BACK_END.replace("#", "clientes");
   console.log("FORM PERSONA: ", data);
   try {
     const formData = {};
@@ -34,8 +34,8 @@ export const savePersona = async (data) => {
   }
 };
 
-export const getPersonaById = async (id) => {
-  const url = API_URL_BACK_END.replace("#", "personas");
+export const getClienteById = async (id) => {
+  const url = API_URL_BACK_END.replace("#", "clientes");
   try {
     const response = await axios.get(url + "getById/" + id);
     return {
@@ -50,8 +50,8 @@ export const getPersonaById = async (id) => {
   }
 };
 
-export const updatePersona = async (id, data) => {
-  const url = API_URL_BACK_END.replace("#", "personas");
+export const updateCliente = async (id, data) => {
+  const url = API_URL_BACK_END.replace("#", "clientes");
   console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
     const formData = {};
@@ -69,8 +69,8 @@ export const updatePersona = async (id, data) => {
   }
 };
 
-export const deletePersona = async (id) => {
-  const url = API_URL_BACK_END.replace("#", "personas");
+export const deleteCliente = async (id) => {
+  const url = API_URL_BACK_END.replace("#", "clientes");
   try {
     const response = await axios.delete(url + "delete/" + id);
     return {

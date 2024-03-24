@@ -48,7 +48,6 @@ export default function Login() {
 
   const handleFormChange = (event) => {
     const { name, value, type, checked } = event.target;
-    // Manejar cambios según el tipo de input
     setFormData((prevDataState) => {
       return {
         ...prevDataState,

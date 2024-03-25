@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   DataGrid,
@@ -20,10 +19,6 @@ import {
 import MenuItem from "@mui/material/MenuItem";
 import * as Antd from "antd";
 import Link from "next/link";
-import {
-  deleteVacacionEmpleado,
-  getAllVacacionesEmpleados,
-} from "@/services/VacacionEmpleadoService";
 import {
   LOCALIZED_COLUMN_MENU_TEXTS,
   PAGE_SIZE_OPTIONS,
@@ -47,24 +42,10 @@ export default function Clientes() {
   const [showFormCreate, setShowFormCreate] = useState(false);
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
-  const [idVacacionEmpleadoSelected, setIdVacacionEmpleadoSelected] =
-    useState(0);
-  const [
-    dniPersonaVacacionEmpleadoSelected,
-    setDniPersonaVacacionEmpleadoSelected,
-  ] = useState("");
-  const [
-    fechaInicioAndFinVacacionEmpleadoSelected,
-    setFechaInicioAndFinVacacionEmpleadoSelected,
-  ] = useState([]);
-
-  const [vacacionEmpleadoDelete, setVacacionEmpleadoDelete] = useState(false);
-  const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
-    useState(false);
+  const [clienteFormUpdated, setClienteFormUpdated] = useState(false);
   const [rowSelected, setRowSelected] = useState(null);
 
   const [paginationModel, setPaginationModel] = useState({
@@ -73,7 +54,7 @@ export default function Clientes() {
   });
 
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
-  const [rows, setRows] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
   const columns = [
     {
       field: "id",
@@ -156,12 +137,6 @@ export default function Clientes() {
             onClick={handleUpdateClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
         ];
       },
     },
@@ -186,7 +161,7 @@ export default function Clientes() {
             provincia: cliente.provincia,
           };
         });
-        setRows(clientesMap);
+        setDataSource(clientesMap);
       }
       setTableLoading(false);
     } catch (error) {
@@ -206,19 +181,16 @@ export default function Clientes() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (vacacionEmpleadoFormUpdated === true) {
+      if (clienteFormUpdated === true) {
         await fetchGetAllClientes();
-        setVacacionEmpleadoFormUpdated(false);
-      } else if (vacacionEmpleadoDelete === true) {
-        await fetchGetAllClientes();
-        setVacacionEmpleadoDelete(false);
+        setClienteFormUpdated(false);
       }
     };
     fetchData();
-  }, [vacacionEmpleadoFormUpdated, vacacionEmpleadoDelete]);
+  }, [clienteFormUpdated]);
 
   function clienteFormUpdatedTrigger() {
-    setVacacionEmpleadoFormUpdated(!vacacionEmpleadoFormUpdated);
+    setClienteFormUpdated(!clienteFormUpdated);
   }
 
   function toggleCreateClienteForm() {
@@ -239,56 +211,23 @@ export default function Clientes() {
   };
 
   const handleUpdateClick = (id) => () => {
-    console.log("Boton para actualizar");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    console.log("Boton para actualizar un cliente");
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateClienteForm();
   };
 
-  const handleDeleteClick = (id) => () => {
-    console.log("ID:", id);
-    const filaSeleccionada = rows.find((row) => row.id === id);
-    console.log("Boton para borrar: ", filaSeleccionada);
-    setIdVacacionEmpleadoSelected(id);
-    setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
-    setFechaInicioAndFinVacacionEmpleadoSelected([
-      filaSeleccionada.fecha_inicio,
-      filaSeleccionada.fecha_fin,
-    ]);
-    setShowDelete(true);
-  };
-
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una vacacion empleado");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    console.log("Boton para ver un cliente");
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueClienteForm();
-  };
-
-  // Handles 'delete' modal ok button
-  const handleModalOk = async () => {
-    const responseDeleteVacacionEmpleado = await deleteVacacionEmpleado(
-      idVacacionEmpleadoSelected
-    );
-    if (responseDeleteVacacionEmpleado.status === 200) {
-      setVacacionEmpleadoDelete(true);
-    }
-    // console.log("Response delete: ", response);
-    resetStates();
-  };
-
-  const handleModalClose = () => {
-    resetStates();
   };
 
   function resetStates() {
     setShowFormCreate(false);
     setShowFormUpdate(false);
     setShowFormViewUnique(false);
-    setShowDelete(false);
-    setIdVacacionEmpleadoSelected(0);
-    setDniPersonaVacacionEmpleadoSelected("");
-    setFechaInicioAndFinVacacionEmpleadoSelected([]);
   }
 
   const getJson = (apiRef) => {
@@ -336,7 +275,7 @@ export default function Clientes() {
           const blob = new Blob([jsonString], {
             type: "text/json",
           });
-          exportBlob(blob, "DataGrid_demo.json"); // ESTE ES EL NOMBRE DEL FICHERO
+          exportBlob(blob, "Clientes.json"); // ESTE ES EL NOMBRE DEL FICHERO
 
           // Hide the export menu after the export
           hideMenu?.();
@@ -366,21 +305,7 @@ export default function Clientes() {
     );
   }
 
-  const renderTableVacacionEmpleado = () => {
-    function deleteModal() {
-      return (
-        <Antd.Modal
-          title={`¿Desea eliminar las vacaciones asociadas a la persona con DNI ${dniPersonaVacacionEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
-          open={showDelete}
-          okText="Aceptar"
-          onOk={handleModalOk}
-          cancelText="Cancelar"
-          onCancel={handleModalClose}
-          centered
-        ></Antd.Modal>
-      );
-    }
-
+  const renderTableClientes = () => {
     return (
       <div>
         <h1>Clientes</h1>
@@ -408,7 +333,7 @@ export default function Clientes() {
           </Button>
 
           <DataGrid
-            rows={rows}
+            rows={dataSource}
             columns={columns}
             loading={tableLoading}
             localeText={LOCALIZED_COLUMN_MENU_TEXTS}
@@ -425,7 +350,6 @@ export default function Clientes() {
               toolbar: CustomToolbar,
             }}
           />
-          {showDelete && deleteModal()}
         </Box>
       </div>
     );
@@ -436,7 +360,7 @@ export default function Clientes() {
       <>
         <FormClientes
           toggleForm={toggleCreateClienteForm}
-          vacacionEmpleadoDataForm={""}
+          clienteDataForm={""}
           formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"create"}
         ></FormClientes>
@@ -447,7 +371,7 @@ export default function Clientes() {
       <>
         <FormClientes
           toggleForm={toggleUpdateClienteForm}
-          vacacionEmpleadoDataForm={rowSelected}
+          clienteDataForm={rowSelected}
           formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"update"}
         ></FormClientes>
@@ -458,13 +382,13 @@ export default function Clientes() {
       <>
         <FormClientes
           toggleForm={toggleViewUniqueClienteForm}
-          vacacionEmpleadoDataForm={rowSelected}
+          clienteDataForm={rowSelected}
           formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"view"}
         ></FormClientes>
       </>
     );
   } else {
-    return renderTableVacacionEmpleado();
+    return renderTableClientes();
   }
 }

@@ -138,7 +138,7 @@ public class BlockchainServerMain {
     private static void guardarTransaccionVacacion(TransaccionVacacion newTransaccionVacacion) {
         // Lógica para guardar el historial en un archivo
 
-        System.out.println("HOLA");
+        System.out.println("Guardar transaccion");
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO_LIBRO_VACACIONES))) {
             libroVacaciones.addBlock(newTransaccionVacacion);
             oos.writeObject(libroVacaciones);

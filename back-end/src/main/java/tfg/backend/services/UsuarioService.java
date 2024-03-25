@@ -184,7 +184,7 @@ public class UsuarioService {
     public void deleteUsuario(int idUsuario) { // ESTO NO FUNCIONA, NO LO BORRA
         usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario con id " + idUsuario + " no encontrado"));
-        System.out.println("SE VA A ELIMINAR" + idUsuario);
+
         try {
             usuarioRepository.deleteById(idUsuario);
         } catch (Exception e) {
@@ -204,9 +204,6 @@ public class UsuarioService {
             throw new RuntimeException("Falta completar el campo nombre usuario");
         }
 
-        System.out.println(usuarioRepository.existsByNombre_usuarioAndPassword(credencialesUsuario.getNombre_usuario(),
-                credencialesUsuario.getPassword()));
-
         if (!usuarioRepository.existsByNombre_usuarioAndPassword(credencialesUsuario.getNombre_usuario(),
                 credencialesUsuario.getPassword())) {
             return false;
@@ -216,7 +213,6 @@ public class UsuarioService {
     }
 
     public Boolean updatePassword(String correoElectronico, String newPassword) {
-        System.out.println("Correo electronico: " + correoElectronico + "\nnewPassword: " + newPassword);
 
         if (correoElectronico == null) {
             throw new RuntimeException("El campo 'correo_electronico' no puede ser null");

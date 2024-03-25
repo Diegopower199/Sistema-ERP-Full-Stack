@@ -70,7 +70,7 @@ export default function SolicitudesEmpleados() {
   });
 
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
-  const [rows, setRows] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
   const columns = [
     {
       field: "id",
@@ -146,8 +146,8 @@ export default function SolicitudesEmpleados() {
       const responseReadAllSolicitudesEmpleados =
         await getAllSolicitudesEmpleados();
       if (responseReadAllSolicitudesEmpleados.status === 200) {
-        const solicitudesEmpleadosMap = responseReadAllSolicitudesEmpleados.data.map(
-          (solicitudEmpleado) => {
+        const solicitudesEmpleadosMap =
+          responseReadAllSolicitudesEmpleados.data.map((solicitudEmpleado) => {
             return {
               id: solicitudEmpleado.id_solicitud_empleado,
               fecha_solicitud: solicitudEmpleado.fecha_solicitud,
@@ -160,9 +160,8 @@ export default function SolicitudesEmpleados() {
               tipo_estado: solicitudEmpleado.tipo_estado.tipo_estado,
               id_tipo_estado: solicitudEmpleado.tipo_estado.id_tipo_estado,
             };
-          }
-        );
-        setRows(solicitudesEmpleadosMap);
+          });
+        setDataSource(solicitudesEmpleadosMap);
       }
       setTableLoading(false);
     } catch (error) {
@@ -216,14 +215,14 @@ export default function SolicitudesEmpleados() {
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateSolicitudEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
     console.log("ID:", id);
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
     setIdSolicitudEmpleadoSelected(id);
     setFechaSolicitudEmpleadoSelected(filaSeleccionada.fecha_solicitud);
@@ -233,7 +232,7 @@ export default function SolicitudesEmpleados() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una solicitud empleado");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueSolicitudEmpleadoForm();
   };
@@ -381,7 +380,7 @@ export default function SolicitudesEmpleados() {
           </Button>
 
           <DataGrid
-            rows={rows}
+            rows={dataSource}
             columns={columns}
             loading={tableLoading}
             localeText={LOCALIZED_COLUMN_MENU_TEXTS}

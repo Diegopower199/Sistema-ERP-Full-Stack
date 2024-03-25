@@ -71,7 +71,7 @@ export default function AsistenciasEmpleados() {
   });
 
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
-  const [rows, setRows] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
   const columns = [
     {
       field: "id",
@@ -153,8 +153,8 @@ export default function AsistenciasEmpleados() {
       const responseReadAllAsistenciasEmpleados =
         await getAllAsistenciaEmpleados();
       if (responseReadAllAsistenciasEmpleados.status === 200) {
-        const asistenciasEmpleadosMap = responseReadAllAsistenciasEmpleados.data.map(
-          (asistenciaEmpleado) => {
+        const asistenciasEmpleadosMap =
+          responseReadAllAsistenciasEmpleados.data.map((asistenciaEmpleado) => {
             return {
               id: asistenciaEmpleado.id_asistencia_empleado,
               fecha_asistencia: asistenciaEmpleado.fecha_asistencia,
@@ -165,9 +165,8 @@ export default function AsistenciasEmpleados() {
               id_persona: asistenciaEmpleado.persona.id_persona,
               dni: asistenciaEmpleado.persona.dni,
             };
-          }
-        );
-        setRows(asistenciasEmpleadosMap);
+          });
+        setDataSource(asistenciasEmpleadosMap);
       }
       setTableLoading(false);
     } catch (error) {
@@ -221,14 +220,14 @@ export default function AsistenciasEmpleados() {
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateAsistenciaEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
     console.log("ID:", id);
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
     setIdAsistenciaEmpleadoSelected(id);
     setDniPersonaAsistenciaEmpleadoSelected(filaSeleccionada.dni);
@@ -238,7 +237,7 @@ export default function AsistenciasEmpleados() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una asistencia empleado");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueAsistenciaEmpleadoForm();
   };
@@ -388,7 +387,7 @@ export default function AsistenciasEmpleados() {
           </Button>
 
           <DataGrid
-            rows={rows}
+            rows={dataSource}
             columns={columns}
             loading={tableLoading}
             localeText={LOCALIZED_COLUMN_MENU_TEXTS}

@@ -30,6 +30,7 @@ import {
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
 import styles from "./styles.module.css";
+import HistorialVacacionesAutorizadas from "./HistorialVacacionesAutorizadas";
 
 export default function VacacionesEmpleados() {
   const {
@@ -47,6 +48,10 @@ export default function VacacionesEmpleados() {
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [
+    showHistorialVacacionesAutorizadas,
+    setShowHistorialVacacionesAutorizadas,
+  ] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -64,15 +69,16 @@ export default function VacacionesEmpleados() {
   const [vacacionEmpleadoDelete, setVacacionEmpleadoDelete] = useState(false);
   const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
     useState(false);
-  const [rowSelected, setRowSelected] = useState(null);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
     page: 0,
   });
 
+  const [rowSelected, setRowSelected] = useState(null);
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
-  const [rows, setRows] = useState([]);
+
+  const [dataSource, setDataSource] = useState([]);
   const columns = [
     {
       field: "id",
@@ -172,8 +178,8 @@ export default function VacacionesEmpleados() {
       const responseReadAllVacacionesEmpleados =
         await getAllVacacionesEmpleados();
       if (responseReadAllVacacionesEmpleados.status === 200) {
-        const vacacionesEmpleadosMap = responseReadAllVacacionesEmpleados.data.map(
-          (vacacionEmpleado) => {
+        const vacacionesEmpleadosMap =
+          responseReadAllVacacionesEmpleados.data.map((vacacionEmpleado) => {
             return {
               id: vacacionEmpleado.id_vacacion_empleado,
               fecha_inicio: vacacionEmpleado.fecha_inicio,
@@ -188,9 +194,8 @@ export default function VacacionesEmpleados() {
               tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
               id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
             };
-          }
-        );
-        setRows(vacacionesEmpleadosMap);
+          });
+        setDataSource(vacacionesEmpleadosMap);
       }
       setTableLoading(false);
     } catch (error) {
@@ -237,6 +242,10 @@ export default function VacacionesEmpleados() {
     setShowFormViewUnique(!showFormViewUnique);
   }
 
+  function toggleShowHistorialVacacionesAutorizadas() {
+    setShowHistorialVacacionesAutorizadas(!showHistorialVacacionesAutorizadas);
+  }
+
   const handleCreateClick = () => {
     console.log("Añadir nueva vacacion empleado");
     toggleCreateVacacionEmpleadoForm();
@@ -244,14 +253,14 @@ export default function VacacionesEmpleados() {
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateVacacionEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
     console.log("ID:", id);
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
     setIdVacacionEmpleadoSelected(id);
     setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
@@ -264,9 +273,14 @@ export default function VacacionesEmpleados() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una vacacion empleado");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueVacacionEmpleadoForm();
+  };
+
+  const handleShowHistorialVacacionesAutorizadasClick = () => {
+    console.log("Boton para ver el historial de vacaciones autorizadas");
+    toggleShowHistorialVacacionesAutorizadas();
   };
 
   // Handles 'delete' modal ok button
@@ -370,7 +384,7 @@ export default function VacacionesEmpleados() {
     );
   }
 
-  const renderTableVacacionEmpleado = () => {
+  const renderTableVacacionesEmpleados = () => {
     function deleteModal() {
       return (
         <Antd.Modal
@@ -411,8 +425,13 @@ export default function VacacionesEmpleados() {
             Añadir vacacion empleado
           </Button>
 
+          <button onClick={handleShowHistorialVacacionesAutorizadasClick}>
+            {" "}
+            Historial Vacaciones Autorizadas
+          </button>
+
           <DataGrid
-            rows={rows}
+            rows={dataSource}
             columns={columns}
             loading={tableLoading}
             localeText={LOCALIZED_COLUMN_MENU_TEXTS}
@@ -468,7 +487,15 @@ export default function VacacionesEmpleados() {
         ></FormVacacionesEmpleados>
       </>
     );
+  } else if (showHistorialVacacionesAutorizadas) {
+    return (
+      <>
+        <HistorialVacacionesAutorizadas
+          toggleView={toggleShowHistorialVacacionesAutorizadas}
+        ></HistorialVacacionesAutorizadas>
+      </>
+    );
   } else {
-    return renderTableVacacionEmpleado();
+    return renderTableVacacionesEmpleados();
   }
 }

@@ -350,7 +350,7 @@ export default function FormVacacionesEmpleados({
       <br />
       <br />
       <label>
-      Observacion:
+        Observacion:
         <input
           type="text"
           name="observacion"

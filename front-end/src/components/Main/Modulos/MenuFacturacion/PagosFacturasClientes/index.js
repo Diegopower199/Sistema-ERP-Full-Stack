@@ -72,7 +72,7 @@ export default function PagosFacturasClientes() {
   });
 
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
-  const [rows, setRows] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
   const columns = [
     {
       field: "id",
@@ -172,8 +172,8 @@ export default function PagosFacturasClientes() {
       const responseReadAllVacacionesEmpleados =
         await getAllVacacionesEmpleados();
       if (responseReadAllVacacionesEmpleados.status === 200) {
-        const vacacionesEmpleadosMap = responseReadAllVacacionesEmpleados.data.map(
-          (vacacionEmpleado) => {
+        const vacacionesEmpleadosMap =
+          responseReadAllVacacionesEmpleados.data.map((vacacionEmpleado) => {
             return {
               id: vacacionEmpleado.id_vacacion_empleado,
               fecha_inicio: vacacionEmpleado.fecha_inicio,
@@ -188,9 +188,8 @@ export default function PagosFacturasClientes() {
               tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
               id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
             };
-          }
-        );
-        setRows(vacacionesEmpleadosMap);
+          });
+        setDataSource(vacacionesEmpleadosMap);
       }
       setTableLoading(false);
     } catch (error) {
@@ -244,14 +243,14 @@ export default function PagosFacturasClientes() {
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateVacacionEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
     console.log("ID:", id);
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
     setIdVacacionEmpleadoSelected(id);
     setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
@@ -264,7 +263,7 @@ export default function PagosFacturasClientes() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una vacacion empleado");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueVacacionEmpleadoForm();
   };
@@ -412,7 +411,7 @@ export default function PagosFacturasClientes() {
           </Button>
 
           <DataGrid
-            rows={rows}
+            rows={dataSource}
             columns={columns}
             loading={tableLoading}
             localeText={LOCALIZED_COLUMN_MENU_TEXTS}

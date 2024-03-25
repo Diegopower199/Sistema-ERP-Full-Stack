@@ -68,3 +68,12 @@ Tiempo de Desplazamiento Total (tiempo_desplazamiento_total): Este campo puede c
 Hora de Inicio del Servicio (hora_inicio_servicio): Este campo registraría la hora en que comienza el servicio para el pedido.
 Hora de Fin del Servicio (hora_fin_servicio): Este campo registraría la hora en que finaliza el servicio para el pedido.
 Tiempo de Servicio Total (tiempo_servicio_total): Este campo podría calcularse restando la hora de inicio del servicio de la hora de fin del servicio para obtener la duración total del servicio. Luego, este valor se almacenaría en la base de datos.
+
+
+En el front:
+
+Clientes: Añadir y modificar
+Pedidos: Añadir y modificar
+Facturas y Nominas: Añadir (Se creará un boton para generarlo)
+
+En las nominas, voy a hacer que el 26 de cada mes se podrán generar las nóminas, otros dias el boton estará desactivado

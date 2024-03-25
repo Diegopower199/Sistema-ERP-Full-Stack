@@ -74,7 +74,7 @@ export default function BajasLaboralesEmpleados() {
   });
 
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
-  const [rows, setRows] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
   const columns = [
     {
       field: "id",
@@ -157,21 +157,23 @@ export default function BajasLaboralesEmpleados() {
         await getAllBajasLaboralesEmpleados();
       if (responseReadAllBajasLaboralesEmpleados.status === 200) {
         const bajasLaboralesEmpleadosMap =
-          responseReadAllBajasLaboralesEmpleados.data.map((bajaLaboralEmpleado) => {
-            return {
-              id: bajaLaboralEmpleado.id_baja_laboral_empleado,
-              fecha_inicio: bajaLaboralEmpleado.fecha_inicio,
-              fecha_fin: bajaLaboralEmpleado.fecha_fin,
-              observacion: bajaLaboralEmpleado.observacion,
-              id_persona: bajaLaboralEmpleado.persona.id_persona,
-              dni: bajaLaboralEmpleado.persona.dni,
-              motivo_baja: bajaLaboralEmpleado.motivo_baja.motivo_baja,
-              id_motivo_baja: bajaLaboralEmpleado.motivo_baja.id_motivo_baja,
-              tipo_estado: bajaLaboralEmpleado.tipo_estado.tipo_estado,
-              id_tipo_estado: bajaLaboralEmpleado.tipo_estado.id_tipo_estado,
-            };
-          });
-        setRows(bajasLaboralesEmpleadosMap);
+          responseReadAllBajasLaboralesEmpleados.data.map(
+            (bajaLaboralEmpleado) => {
+              return {
+                id: bajaLaboralEmpleado.id_baja_laboral_empleado,
+                fecha_inicio: bajaLaboralEmpleado.fecha_inicio,
+                fecha_fin: bajaLaboralEmpleado.fecha_fin,
+                observacion: bajaLaboralEmpleado.observacion,
+                id_persona: bajaLaboralEmpleado.persona.id_persona,
+                dni: bajaLaboralEmpleado.persona.dni,
+                motivo_baja: bajaLaboralEmpleado.motivo_baja.motivo_baja,
+                id_motivo_baja: bajaLaboralEmpleado.motivo_baja.id_motivo_baja,
+                tipo_estado: bajaLaboralEmpleado.tipo_estado.tipo_estado,
+                id_tipo_estado: bajaLaboralEmpleado.tipo_estado.id_tipo_estado,
+              };
+            }
+          );
+        setDataSource(bajasLaboralesEmpleadosMap);
       }
       setTableLoading(false);
     } catch (error) {
@@ -225,14 +227,14 @@ export default function BajasLaboralesEmpleados() {
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateBajaLaboralEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
     console.log("ID:", id);
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
     setIdBajaLaboralEmpleadoSelected(id);
     setDniPersonaBajaLaboralEmpleadoSelected(filaSeleccionada.dni);
@@ -246,7 +248,7 @@ export default function BajasLaboralesEmpleados() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una baja laboral empleado");
-    const filaSeleccionada = rows.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueBajaLaboralEmpleadoForm();
   };
@@ -397,7 +399,7 @@ export default function BajasLaboralesEmpleados() {
           </Button>
 
           <DataGrid
-            rows={rows}
+            rows={dataSource}
             columns={columns}
             loading={tableLoading}
             localeText={LOCALIZED_COLUMN_MENU_TEXTS}

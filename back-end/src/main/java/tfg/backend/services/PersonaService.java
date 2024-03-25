@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import tfg.backend.models.PersonaModel;
 import tfg.backend.models.TipoPersonaModel;
-import tfg.backend.models.UsuarioModel;
 import tfg.backend.repositories.PersonaRepository;
 import tfg.backend.repositories.TipoPersonaRepository;
 import tfg.backend.utils.RegexPatterns;

@@ -89,10 +89,6 @@ public class VacacionEmpleadoService {
         int diasSolicitadosCalculado = (int) ChronoUnit.DAYS.between(nuevoVacacionEmpleado.getFecha_inicio(),
                 nuevoVacacionEmpleado.getFecha_fin()) + 1;
 
-        // Imprimir el resultado
-        System.out.println("\n\n\n\n\n\nNúmero de días entre " + nuevoVacacionEmpleado.getFecha_inicio() + " y "
-                + nuevoVacacionEmpleado.getFecha_fin() + ": " + diasSolicitadosCalculado + "\n\n\n\n\n");
-
         if (ultimaVacacionEmpleado.isEmpty()) {
             nuevoVacacionEmpleado.setDias_disponibles(30);
             nuevoVacacionEmpleado.setDias_pendientes(0);
@@ -212,10 +208,6 @@ public class VacacionEmpleadoService {
 
         int diasSolicitadosCalculado = (int) ChronoUnit.DAYS.between(cambiosVacacionEmpleado.getFecha_inicio(),
                 cambiosVacacionEmpleado.getFecha_fin()) + 1;
-
-        // Imprimir el resultado
-        System.out.println("\n\n\n\n\n\nNúmero de días entre " + cambiosVacacionEmpleado.getFecha_inicio() + " y "
-                + cambiosVacacionEmpleado.getFecha_fin() + ": " + diasSolicitadosCalculado + "\n\n\n\n\n");
 
         if (tipoEstadoEncontrado.getTipo_estado().equals("Aprobada")) {
             vacacionEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);

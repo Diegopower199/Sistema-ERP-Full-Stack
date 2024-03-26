@@ -249,6 +249,25 @@ export default function Clientes() {
     return JSON.stringify(data, null, 2);
   };
 
+  function getCsv(apiRef) {
+    // Select rows and columns
+    const filteredSortedRowIds = gridFilteredSortedRowIdsSelector(apiRef);
+    const visibleColumnsField = gridVisibleColumnFieldsSelector(apiRef);
+
+    // Header row
+    let csv = visibleColumnsField.join(";") + "\n";
+
+    // Data rows
+    filteredSortedRowIds.forEach((id) => {
+      const row = visibleColumnsField.map((field) => {
+        return apiRef.current.getCellParams(id, field).value;
+      });
+      csv += row.join(";") + "\n";
+    });
+
+    return csv;
+  }
+
   const exportBlob = (blob, filename) => {
     // Save the blob in a json file
     const url = URL.createObjectURL(blob);
@@ -282,6 +301,29 @@ export default function Clientes() {
         }}
       >
         Export JSON
+      </MenuItem>
+    );
+  }
+
+  function GridCsvExportMenuItem(props) {
+    const apiRef = useGridApiContext();
+
+    const { hideMenu } = props;
+
+    return (
+      <MenuItem
+        onClick={() => {
+          const csvString = getCsv(apiRef);
+          const blob = new Blob([csvString], {
+            type: "text/csv",
+          });
+          exportBlob(blob, "Clientes.csv"); // ESTE ES EL NOMBRE DEL FICHERO
+
+          // Hide the export menu after the export
+          hideMenu?.();
+        }}
+      >
+        Export CSV
       </MenuItem>
     );
   }

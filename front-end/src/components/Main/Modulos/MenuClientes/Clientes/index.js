@@ -290,13 +290,13 @@ export default function Clientes() {
     return (
       <MenuItem
         onClick={() => {
+          const filename = "Clientes.json";
           const jsonString = getJson(apiRef);
           const blob = new Blob([jsonString], {
             type: "text/json",
           });
-          exportBlob(blob, "Clientes.json"); // ESTE ES EL NOMBRE DEL FICHERO
+          exportBlob(blob, filename);
 
-          // Hide the export menu after the export
           hideMenu?.();
         }}
       >
@@ -313,13 +313,13 @@ export default function Clientes() {
     return (
       <MenuItem
         onClick={() => {
+          const filename = "Clientes.csv";
           const csvString = getCsv(apiRef);
           const blob = new Blob([csvString], {
             type: "text/csv",
           });
-          exportBlob(blob, "Clientes.csv"); // ESTE ES EL NOMBRE DEL FICHERO
+          exportBlob(blob, filename);
 
-          // Hide the export menu after the export
           hideMenu?.();
         }}
       >

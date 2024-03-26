@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { savePersona, updatePersona } from "@/services/PersonaService";
-import { getAllTiposPersonas } from "@/services/TipoPersonaService";
-import {
-  REGEX_DNI,
-  REGEX_EMAIL,
-  REGEX_TELEFONO_CON_PREFIJO,
-} from "@/utils/regexPatterns";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
-import {
-  formatearFechaYYYYMMDD,
-  validarFechaYYYYMMDD,
-} from "@/utils/functionsFecha";
+import { saveCliente, updateCliente } from "@/services/ClienteService";
+import * as Antd from "antd";
+import { PROVINCIAS_CON_CIUDADES } from "@/utils/provinciasConCiudades";
 
 export default function FormClientes({
   toggleForm,
@@ -19,81 +11,47 @@ export default function FormClientes({
   formUpdateTrigger,
   operationType,
 }) {
-  const generoOptions = [
-    {
-      value: "Masculino",
-    },
-    {
-      value: "Femenino",
-    },
+  const options = [
+    { id: 1, label: "Persona Física", value: false },
+    { id: 2, label: "Persona Jurídica (Empresa)", value: false },
   ];
 
-  const [tiposPersonasOptions, setTiposPersonasOptions] = useState([]);
-
   const [formData, setFormData] = useState({
-    numero_empleado: "",
-    nombre: "",
-    apellidos: "",
-    genero: "Masculino",
-    fecha_nacimiento: "",
-    dni: "",
-    direccion: "",
+    nif: "",
+    nombre_apellidos: "",
+    razon_social: "",
     numero_telefono: "34",
     correo_electronico: "",
-    id_tipo_persona: "1",
+    direccion: "",
+    codigo_postal: "",
+    provincia: "",
+    ciudad: "",
   });
+
+  const [selectedProvince, setSelectedProvince] = useState({});
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  const fetchTiposPersonasOptions = async () => {
-    try {
-      const responseReadAllTiposPersonas = await getAllTiposPersonas();
-      setTiposPersonasOptions(responseReadAllTiposPersonas);
-      setFormData((prevDataState) => {
-        return {
-          ...prevDataState,
-          ["id_tipo_persona"]: responseReadAllTiposPersonas[0].value.toString(),
-        };
-      });
-    } catch (error) {
-      console.error("El error es: ", error);
-    }
-  };
+  const [selectedOptionRadio, setSelectedOptionRadio] = useState(0);
 
   const validateRequiredFields = () => {
     const errorMissingFields = {};
 
-    if (!formData.numero_empleado) {
-      errorMissingFields.numero_empleado =
-        "Por favor, ingresa un numero empleado";
+    console.log("formdata", formData);
+    if (!formData.nif) {
+      errorMissingFields.nif = "Por favor, ingresa un nif";
     }
 
-    if (!formData.nombre) {
-      errorMissingFields.nombre = "Por favor, ingresa un nombre";
+    if (!formData.nombre_apellidos && selectedOptionRadio === 1) {
+      errorMissingFields.nombre_apellidos =
+        "Por favor, ingresa un nombre y apellido";
     }
 
-    if (!formData.apellidos) {
-      errorMissingFields.apellidos = "Por favor, ingresa un apellido";
-    }
-
-    if (!formData.genero) {
-      errorMissingFields.genero = "Por favor, ingresa un género";
-    }
-
-    if (!formData.fecha_nacimiento) {
-      errorMissingFields.fecha_nacimiento =
-        "Por favor, selecciona una fecha de nacimiento";
-    }
-
-    if (!formData.dni) {
-      errorMissingFields.dni = "Por favor, ingresa un DNI";
-    }
-
-    if (!formData.direccion) {
-      errorMissingFields.direccion = "Por favor, ingresa una direccion";
+    if (!formData.razon_social && selectedOptionRadio === 2) {
+      errorMissingFields.razon_social = "Por favor, ingresa una razon social";
     }
 
     if (!formData.numero_telefono || formData.numero_telefono === "34") {
@@ -106,9 +64,20 @@ export default function FormClientes({
         "Por favor, ingresa un correo electronico";
     }
 
-    if (!formData.id_tipo_persona) {
-      errorMissingFields.id_tipo_persona =
-        "Por favor, ingresa un tipo de persona";
+    if (!formData.direccion) {
+      errorMissingFields.direccion = "Por favor, ingresa una direccion";
+    }
+
+    if (!formData.codigo_postal) {
+      errorMissingFields.codigo_postal = "Por favor, ingresa un codigo postal";
+    }
+
+    if (!formData.provincia) {
+      errorMissingFields.provincia = "Por favor, ingresa una provincia";
+    }
+
+    if (!formData.ciudad) {
+      errorMissingFields.ciudad = "Por favor, ingresa una ciudad";
     }
 
     setRequiredFieldsIncomplete(errorMissingFields);
@@ -121,7 +90,7 @@ export default function FormClientes({
   const validateFormData = () => {
     const errorForm = {};
 
-    if (!formData.dni.match(REGEX_DNI)) {
+    /*if (!formData.dni.match(REGEX_DNI)) {
       errorForm.dni = "Por favor, ingresa un DNI válido";
     }
 
@@ -132,7 +101,7 @@ export default function FormClientes({
 
     if (!formData.correo_electronico.match(REGEX_EMAIL)) {
       errorForm.correo_electronico = "Por favor, ingresa un email válido";
-    }
+    }*/
 
     setFormErrors(errorForm);
     console.log("errorForm", errorForm);
@@ -143,27 +112,10 @@ export default function FormClientes({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchTiposPersonasOptions();
-
-        console.log("operationType: ", operationType);
-
         if (operationType === "update" || operationType === "view") {
-          if (validarFechaYYYYMMDD(clienteDataForm.fecha_nacimiento) === null) {
-            const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
-              clienteDataForm.fecha_nacimiento
-            );
-
-            console.log("fechaFormateada: ", fechaNacimientoFormateada);
-
-            setFormData(() => ({
-              ...clienteDataForm,
-              fecha_nacimiento: fechaNacimientoFormateada,
-            }));
-          } else {
-            setFormData(() => ({
-              ...clienteDataForm,
-            }));
-          }
+          setFormData(() => ({
+            ...clienteDataForm,
+          }));
         }
       } catch (error) {
         console.error("Error en useEffect: ", error);
@@ -192,6 +144,54 @@ export default function FormClientes({
     }
   };
 
+  const handleRadioSelected = (id) => {
+    console.log("ID: ", id);
+    setSelectedOptionRadio(id);
+  };
+
+  const handleSelectProvinciaChange = (value, option) => {
+    console.log(`selected ${value} \noption:${JSON.stringify(option)}`);
+    const infoProvincia = PROVINCIAS_CON_CIUDADES.find((provincia) => {
+      return provincia.provincia.toLowerCase() === value.toLowerCase();
+    });
+    console.log("infoProvincia: ", infoProvincia);
+    setSelectedProvince(infoProvincia);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["provincia"]: value,
+        ["ciudad"]: "",
+      };
+    });
+  };
+
+  const handleSelectProvinciaSearch = (value) => {
+    console.log("search:", value);
+  };
+
+  const handleSelectCiudadChange = (value, option) => {
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["ciudad"]: value,
+      };
+    });
+  };
+
+  const handleSelectCiudadSearch = (value) => {
+    console.log("search:", value);
+  };
+
+  const filterIncrementalSearch = (input, option) => {
+    const optionLabel = option?.children.toLowerCase();
+
+    const userInput = input.toLowerCase();
+
+    const isOptionIncluded = optionLabel.includes(userInput);
+
+    return isOptionIncluded;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -214,14 +214,14 @@ export default function FormClientes({
     let errorDevueltoBack = false;
     try {
       if (operationType === "create") {
-        const responseCreatePersona = await savePersona(formData);
+        const responseCreateCliente = await saveCliente(formData);
         console.log(
           `Resultado en handleSubmit en ${operationType} : `,
-          responseCreatePersona
+          responseCreateCliente
         );
 
-        if (responseCreatePersona.status !== 200) {
-          const mensajeError = responseCreatePersona.errorMessage;
+        if (responseCreateCliente.status === 409) {
+          const mensajeError = responseCreateCliente.errorMessage;
           console.log("El error es: ", mensajeError);
           setErrorMessage(mensajeError);
           errorDevueltoBack = true;
@@ -235,17 +235,17 @@ export default function FormClientes({
           formUpdateTrigger();
         }
       } else if (operationType === "update") {
-        const responseUpdatePersona = await updatePersona(
+        const responseUpdateCliente = await updateCliente(
           formData.id,
           formData
         );
         console.log(
           `Resultado en handleSubmit en ${operationType} : `,
-          responseUpdatePersona
+          responseUpdateCliente
         );
 
-        if (responseUpdatePersona.status !== 200) {
-          const mensajeError = responseUpdatePersona.errorMessage;
+        if (responseUpdateCliente.status === 409) {
+          const mensajeError = responseUpdateCliente.errorMessage;
           console.log("El error es: ", mensajeError);
           setErrorMessage(mensajeError);
           errorDevueltoBack = true;
@@ -264,158 +264,101 @@ export default function FormClientes({
     }
   };
 
-  // https://es.stackoverflow.com/questions/289413/bloquear-n%C3%BAmeros-letras-y-o-caracteres-especiales-en-un-input MIRARME ESTO
-
   return (
     <>
-      <label>
-        Numero empleado:
-        <input
-          type="number"
-          name="numero_empleado"
-          value={formData.numero_empleado}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.numero_empleado ? styles.inputError : ""
-          }
-        />
-        {requiredFieldsIncomplete.numero_empleado && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.numero_empleado}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Nombre:
-        <input
-          type="text"
-          name="nombre"
-          value={formData.nombre}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={requiredFieldsIncomplete.nombre ? styles.inputError : ""}
-        />
-        {requiredFieldsIncomplete.nombre && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.nombre}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Apellidos:
-        <input
-          type="text"
-          name="apellidos"
-          value={formData.apellidos}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.apellidos ? styles.inputError : ""
-          }
-        />
-        {requiredFieldsIncomplete.apellidos && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.apellidos}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Genero:
-        <select
-          name="genero"
-          value={formData.genero}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={requiredFieldsIncomplete.genero ? styles.inputError : ""}
-        >
-          {generoOptions.map((genero) => (
-            <option key={genero.value} value={genero.value}>
-              {genero.value}
-            </option>
+      {operationType === "create" && (
+        <>
+          Seleccione su tipo de cliente {""}
+          {options.map((option) => (
+            <Antd.Radio
+              key={option.id}
+              checked={option.id === selectedOptionRadio}
+              onChange={() => handleRadioSelected(option.id)}
+            >
+              {option.label}
+            </Antd.Radio>
           ))}
-        </select>
-        {requiredFieldsIncomplete.genero && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.genero}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
+          {selectedOptionRadio === 0 &&
+            Object.keys(requiredFieldsIncomplete).length !== 0 && (
+              <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+                {"Error, Selecciona un tipo de cliente"}
+              </div>
+            )}
+          <br /> <br />
+        </>
+      )}
       <label>
-        Fecha nacimiento:
-        <input
-          type="date"
-          name="fecha_nacimiento"
-          value={formData.fecha_nacimiento}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.fecha_nacimiento ? styles.inputError : ""
-          }
-        />
-        {requiredFieldsIncomplete.fecha_nacimiento && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.fecha_nacimiento}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Dni:
+        Nif:
         <input
           type="text"
-          name="dni"
-          value={formData.dni}
+          name="nif"
+          value={formData.nif}
           onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.dni || formErrors.dni
-              ? styles.inputError
-              : ""
-          }
+          className={requiredFieldsIncomplete.nif ? styles.inputError : ""}
         />
-        {requiredFieldsIncomplete.dni && (
+        {requiredFieldsIncomplete.nif && (
           <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.dni}
-          </div>
-        )}
-        {formErrors.dni && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {formErrors.dni}
+            {requiredFieldsIncomplete.nif}
           </div>
         )}
       </label>
       <br />
       <br />
-      <label>
-        Direccion:
-        <input
-          type="text"
-          name="direccion"
-          value={formData.direccion}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.direccion ? styles.inputError : ""
-          }
-        />
-        {requiredFieldsIncomplete.direccion && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.direccion}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
+      {((operationType === "create" && selectedOptionRadio === 1) ||
+        ((operationType === "update" || operationType === "view") &&
+          formData.nombre_apellidos !== null)) && (
+        <>
+          <label>
+            Nombre y apellidos:
+            <input
+              type="text"
+              name="nombre_apellidos"
+              value={formData.nombre_apellidos}
+              onChange={operationType === "view" ? null : handleFormChange}
+              readOnly={operationType === "view" ? true : false}
+              className={
+                requiredFieldsIncomplete.nombre_apellidos
+                  ? styles.inputError
+                  : ""
+              }
+            />
+            {requiredFieldsIncomplete.nombre_apellidos && (
+              <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+                {requiredFieldsIncomplete.nombre_apellidos}
+              </div>
+            )}
+          </label>
+          <br />
+          <br />
+        </>
+      )}
+      {((operationType === "create" && selectedOptionRadio === 2) ||
+        ((operationType === "update" || operationType === "view") &&
+          formData.razon_social !== null)) && (
+        <>
+          <label>
+            Razon social:
+            <input
+              type="text"
+              name="razon_social"
+              value={formData.razon_social}
+              onChange={operationType === "view" ? null : handleFormChange}
+              readOnly={operationType === "view" ? true : false}
+              className={
+                requiredFieldsIncomplete.razon_social ? styles.inputError : ""
+              }
+            />
+            {requiredFieldsIncomplete.razon_social && (
+              <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+                {requiredFieldsIncomplete.razon_social}
+              </div>
+            )}
+          </label>
+          <br />
+          <br />
+        </>
+      )}
       <label>
         Numero telefono:
         <input
@@ -442,8 +385,7 @@ export default function FormClientes({
           </div>
         )}
       </label>
-      <br />
-      <br />
+      <br /> <br />
       <label>
         Correo electronico:
         <input
@@ -470,31 +412,98 @@ export default function FormClientes({
           </div>
         )}
       </label>
-      <br />
-      <br />
+      <br /> <br />
       <label>
-        Selecciona un tipo de persona:
-        <select
-          name="id_tipo_persona"
-          value={formData.id_tipo_persona}
+        Direccion:
+        <input
+          type="text"
+          name="direccion"
+          value={formData.direccion}
           onChange={operationType === "view" ? null : handleFormChange}
           readOnly={operationType === "view" ? true : false}
           className={
-            requiredFieldsIncomplete.id_tipo_persona ? styles.inputError : ""
+            requiredFieldsIncomplete.direccion ? styles.inputError : ""
           }
-        >
-          {tiposPersonasOptions.map((tipoPersona, index) => (
-            <option key={tipoPersona.value} value={tipoPersona.value}>
-              {tipoPersona.label}
-            </option>
-          ))}
-        </select>
-        {requiredFieldsIncomplete.id_tipo_persona && (
+        />
+        {requiredFieldsIncomplete.direccion && (
           <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.id_tipo_persona}
+            {requiredFieldsIncomplete.direccion}
           </div>
         )}
       </label>
+      <br />
+      <br />
+      <label>
+        Codigo postal:
+        <input
+          type="text"
+          name="codigo_postal"
+          value={formData.codigo_postal}
+          onChange={operationType === "view" ? null : handleFormChange}
+          readOnly={operationType === "view" ? true : false}
+          className={
+            requiredFieldsIncomplete.codigo_postal ? styles.inputError : ""
+          }
+        />
+        {requiredFieldsIncomplete.codigo_postal && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.codigo_postal}
+          </div>
+        )}
+      </label>
+      <br />
+      <br />
+      <Antd.Form.Item label="Provincia seleccionada">
+        <Antd.Select
+          name="provincia"
+          value={
+            formData.provincia ? formData.provincia : "Selecciona una provincia"
+          }
+          showSearch={true}
+          style={{ width: "35%" }}
+          status={requiredFieldsIncomplete.provincia ? "error" : ""}
+          onChange={handleSelectProvinciaChange}
+          onSearch={handleSelectProvinciaSearch}
+          filterOption={filterIncrementalSearch}
+          notFoundContent={<span>No hay provincia</span>}
+        >
+          {PROVINCIAS_CON_CIUDADES.map((provincia, index) => (
+            <Antd.Select.Option key={index} value={provincia.provincia}>
+              {provincia.provincia}
+            </Antd.Select.Option>
+          ))}
+        </Antd.Select>
+        {requiredFieldsIncomplete.provincia && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.provincia}
+          </div>
+        )}
+      </Antd.Form.Item>
+      <Antd.Form.Item label="Ciudad seleccionada">
+        <Antd.Select
+          name="ciudad"
+          value={formData.ciudad ? formData.ciudad : "Selecciona una ciudad"}
+          showSearch={true}
+          style={{ width: "35%" }}
+          status={requiredFieldsIncomplete.ciudad ? "error" : ""}
+          onChange={handleSelectCiudadChange}
+          onSearch={handleSelectCiudadSearch}
+          filterOption={filterIncrementalSearch}
+          notFoundContent={<span>No hay ciudades</span>}
+        >
+          {formData.provincia !== "" &&
+            selectedProvince.ciudades.map((provinceData, index) => (
+              <Antd.Select.Option key={index} value={provinceData}>
+                {provinceData}
+              </Antd.Select.Option>
+            ))}
+        </Antd.Select>
+        {requiredFieldsIncomplete.ciudad && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {requiredFieldsIncomplete.ciudad}
+          </div>
+        )}
+      </Antd.Form.Item>
       {errorMessage.length !== 0 && (
         <>
           <br /> <br />

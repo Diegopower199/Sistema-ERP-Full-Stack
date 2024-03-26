@@ -17,9 +17,20 @@ export const getAllClientes = async () => {
 
 export const saveCliente = async (data) => {
   const url = API_URL_BACK_END.replace("#", "clientes");
-  console.log("FORM PERSONA: ", data);
+  console.log("FORM cliente: ", data);
   try {
-    const formData = {};
+    const formData = {
+      nif: data.nif === "" ? null : data.nif,
+      nombre_apellidos:
+        data.nombre_apellidos === "" ? null : data.nombre_apellidos,
+      razon_social: data.razon_social === "" ? null : data.razon_social,
+      numero_telefono: data.numero_telefono,
+      correo_electronico: data.correo_electronico,
+      direccion: data.direccion,
+      codigo_postal: data.codigo_postal,
+      ciudad: data.ciudad,
+      provincia: data.provincia,
+    };
 
     const response = await axios.post(url + "save", formData);
     return {
@@ -54,7 +65,18 @@ export const updateCliente = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "clientes");
   console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
-    const formData = {};
+    const formData = {
+      nif: data.nif === "" ? null : data.nif,
+      nombre_apellidos:
+        data.nombre_apellidos === "" ? null : data.nombre_apellidos,
+      razon_social: data.razon_social === "" ? null : data.razon_social,
+      numero_telefono: data.numero_telefono,
+      correo_electronico: data.correo_electronico,
+      direccion: data.direccion,
+      codigo_postal: data.codigo_postal,
+      ciudad: data.ciudad,
+      provincia: data.provincia,
+    };
 
     const response = await axios.put(url + "update/" + id, formData);
     return {

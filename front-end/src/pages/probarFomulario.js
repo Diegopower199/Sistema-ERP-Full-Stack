@@ -1,26 +1,29 @@
 import { getAllTiposEstados } from "@/services/TipoEstadoService";
 import { PROVINCIAS_CON_CIUDADES } from "@/utils/provinciasConCiudades";
 import React, { useEffect, useState } from "react";
+import * as Antd from "antd";
 
 function MiFormulario() {
   const [tiposEstadosOptions, setTiposEstadosOptions] = useState([]);
 
   // Valor seleccionado en tipo estado
   const [tipoEstadoSelected, setTipoEstadoSelected] = useState(null);
-  const [formulario, setFormulario] = useState({
+  const [formValues, setFormValues] = useState({
     nombre: "",
     tipo_estado: 0,
     fecha_nacimiento: null,
-    provincia: PROVINCIAS_CON_CIUDADES[0].provincia,
+    provincia: "",
     ciudad: "",
   });
+
+  const [selectedProvince, setSelectedProvince] = useState({});
 
   const fetchTiposEstadosOptions = async () => {
     try {
       const resultado = await getAllTiposEstados();
       console.log("Resultado: ", resultado);
       setTiposEstadosOptions(resultado);
-      setFormulario((prevDataState) => {
+      setFormValues((prevDataState) => {
         return {
           ...prevDataState,
           ["tipo_estado"]: resultado[0].value,
@@ -38,8 +41,8 @@ function MiFormulario() {
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     // Manejar cambios según el tipo de input
-    console.log("name", name, "\nvalue", value, "\nformulario", formulario);
-    setFormulario((prevDataState) => {
+    console.log("name", name, "\nvalue", value, "\nformulario", formValues);
+    setFormValues((prevDataState) => {
       return {
         ...prevDataState,
         [name]: type === "checkbox" ? checked : value,
@@ -49,7 +52,7 @@ function MiFormulario() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formulario);
+    console.log(formValues);
     // Realizar acciones adicionales con los datos del formulario
   };
 
@@ -178,6 +181,49 @@ function MiFormulario() {
     }
   }
 
+  const handleSelectProvinciaChange = (value, option) => {
+    console.log(`selected ${value} \noption:${JSON.stringify(option)}`);
+    const infoProvincia = PROVINCIAS_CON_CIUDADES.find((provincia) => {
+      return provincia.provincia.toLowerCase() === value.toLowerCase();
+    });
+    console.log("infoProvincia: ", infoProvincia);
+    setSelectedProvince(infoProvincia);
+    setFormValues((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["provincia"]: value,
+        ["ciudad"]: "",
+      };
+    });
+  };
+
+  const handleSelectProvinciaSearch = (value) => {
+    console.log("search:", value);
+  };
+
+  const handleSelectCiudadChange = (value, option) => {
+    setFormValues((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["ciudad"]: value,
+      };
+    });
+  };
+
+  const handleSelectCiudadSearch = (value) => {
+    console.log("search:", value);
+  };
+
+  const filterIncrementalSearch = (input, option) => {
+    const optionLabel = option?.children.toLowerCase();
+
+    const userInput = input.toLowerCase();
+
+    const isOptionIncluded = optionLabel.includes(userInput);
+
+    return isOptionIncluded;
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <label>
@@ -185,7 +231,7 @@ function MiFormulario() {
         <input
           type="text"
           name="nombre"
-          value={formulario.nombre}
+          value={formValues.nombre}
           onChange={handleChange}
         />
       </label>
@@ -195,7 +241,7 @@ function MiFormulario() {
         Selecciona un tipo de estado:
         <select
           name="tipo_estado"
-          value={formulario.tipo_estado}
+          value={formValues.tipo_estado}
           onChange={handleChange}
         >
           {tiposEstadosOptions.map((tipoEstado, index) => (
@@ -211,7 +257,7 @@ function MiFormulario() {
         <input
           type="date"
           name="fecha_nacimiento"
-          value={formulario.fechaNacimiento}
+          value={formValues.fechaNacimiento}
           onChange={handleChange}
         />
       </label>
@@ -221,7 +267,7 @@ function MiFormulario() {
         Selecciona una provincia:
         <select
           name="provincia"
-          value={formulario.provincia}
+          value={formValues.provincia}
           onChange={handleChange}
         >
           {PROVINCIAS_CON_CIUDADES.map((provincia, index) => (
@@ -235,9 +281,9 @@ function MiFormulario() {
       <br />
       <label>
         Selecciona una ciudad:
-        <select name="ciudad" value={formulario.ciudad} onChange={handleChange}>
+        <select name="ciudad" value={formValues.ciudad} onChange={handleChange}>
           {PROVINCIAS_CON_CIUDADES.find(
-            (provincia) => provincia.provincia === formulario.provincia
+            (provincia) => provincia.provincia === formValues.provincia
           )?.ciudades.map((ciudad, index) => (
             <option key={index} value={ciudad}>
               {ciudad}
@@ -245,6 +291,51 @@ function MiFormulario() {
           ))}
         </select>
       </label>
+      <br /> <br /> <br />
+      <Antd.Form.Item label="Provincia seleccionada">
+        <Antd.Select
+          name="provincia"
+          value={
+            formValues.provincia
+              ? formValues.provincia
+              : "Selecciona una provincia"
+          }
+          showSearch
+          style={{ width: "35%" }}
+          onChange={handleSelectProvinciaChange}
+          onSearch={handleSelectProvinciaSearch}
+          filterOption={filterIncrementalSearch}
+          notFoundContent={<span>No hay provincia</span>}
+        >
+          {PROVINCIAS_CON_CIUDADES.map((provincia, index) => (
+            <Antd.Select.Option key={index} value={provincia.provincia}>
+              {provincia.provincia}
+            </Antd.Select.Option>
+          ))}
+        </Antd.Select>
+      </Antd.Form.Item>
+      <br /> <br /> <br />
+      <Antd.Form.Item label="Ciudad seleccionada">
+        <Antd.Select
+          name="ciudad"
+          value={
+            formValues.ciudad ? formValues.ciudad : "Selecciona una ciudad"
+          }
+          showSearch
+          style={{ width: "35%" }}
+          onChange={handleSelectCiudadChange}
+          onSearch={handleSelectCiudadSearch}
+          filterOption={filterIncrementalSearch}
+          notFoundContent={<span>No hay ciudades</span>}
+        >
+          {formValues.provincia !== "" &&
+            selectedProvince.ciudades.map((provinceData, index) => (
+              <Antd.Select.Option key={index} value={provinceData}>
+                {provinceData}
+              </Antd.Select.Option>
+            ))}
+        </Antd.Select>
+      </Antd.Form.Item>
       <br />
       <button type="submit">Enviar</button>
     </form>

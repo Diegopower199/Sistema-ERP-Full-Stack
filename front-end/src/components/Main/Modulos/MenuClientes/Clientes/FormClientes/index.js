@@ -41,16 +41,18 @@ export default function FormClientes({
     const errorMissingFields = {};
 
     console.log("formdata", formData);
+
     if (!formData.nif) {
       errorMissingFields.nif = "Por favor, ingresa un nif";
     }
 
-    if (!formData.nombre_apellidos && selectedOptionRadio === 1) {
+    if (selectedOptionRadio === 0 && operationType !== "update") {
+      errorMissingFields.selectedOptionRadio =
+        "Por favor, selecciona un tipo de cliente";
+    } else if (!formData.nombre_apellidos && selectedOptionRadio === 1) {
       errorMissingFields.nombre_apellidos =
         "Por favor, ingresa un nombre y apellido";
-    }
-
-    if (!formData.razon_social && selectedOptionRadio === 2) {
+    } else if (!formData.razon_social && selectedOptionRadio === 2) {
       errorMissingFields.razon_social = "Por favor, ingresa una razon social";
     }
 
@@ -113,6 +115,14 @@ export default function FormClientes({
     const fetchData = async () => {
       try {
         if (operationType === "update" || operationType === "view") {
+          console.log("HOLA", clienteDataForm);
+          const infoProvincia = PROVINCIAS_CON_CIUDADES.find((provincia) => {
+            return (
+              provincia.provincia.toLowerCase() ===
+              clienteDataForm.provincia.toLowerCase()
+            );
+          });
+          setSelectedProvince(infoProvincia);
           setFormData(() => ({
             ...clienteDataForm,
           }));
@@ -150,11 +160,9 @@ export default function FormClientes({
   };
 
   const handleSelectProvinciaChange = (value, option) => {
-    console.log(`selected ${value} \noption:${JSON.stringify(option)}`);
     const infoProvincia = PROVINCIAS_CON_CIUDADES.find((provincia) => {
       return provincia.provincia.toLowerCase() === value.toLowerCase();
     });
-    console.log("infoProvincia: ", infoProvincia);
     setSelectedProvince(infoProvincia);
     setFormData((prevDataState) => {
       return {
@@ -163,10 +171,6 @@ export default function FormClientes({
         ["ciudad"]: "",
       };
     });
-  };
-
-  const handleSelectProvinciaSearch = (value) => {
-    console.log("search:", value);
   };
 
   const handleSelectCiudadChange = (value, option) => {
@@ -178,8 +182,12 @@ export default function FormClientes({
     });
   };
 
+  const handleSelectProvinciaSearch = (value) => {
+    console.log("Search provincia:", value);
+  };
+
   const handleSelectCiudadSearch = (value) => {
-    console.log("search:", value);
+    console.log("Search ciudad:", value);
   };
 
   const filterIncrementalSearch = (input, option) => {
@@ -199,7 +207,7 @@ export default function FormClientes({
     if (requiredFieldsError) {
       console.log("Error en campos obligatorios: ", requiredFieldsError);
       setErrorMessage(
-        "No se puede añadir un registro con uno o más campos vacios "
+        "No se puede añadir un registro con uno o más campos vacios"
       );
       return;
     }
@@ -278,12 +286,11 @@ export default function FormClientes({
               {option.label}
             </Antd.Radio>
           ))}
-          {selectedOptionRadio === 0 &&
-            Object.keys(requiredFieldsIncomplete).length !== 0 && (
-              <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-                {"Error, Selecciona un tipo de cliente"}
-              </div>
-            )}
+          {requiredFieldsIncomplete.selectedOptionRadio && (
+            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+              {requiredFieldsIncomplete.selectedOptionRadio}
+            </div>
+          )}
           <br /> <br />
         </>
       )}
@@ -462,16 +469,23 @@ export default function FormClientes({
           showSearch={true}
           style={{ width: "35%" }}
           status={requiredFieldsIncomplete.provincia ? "error" : ""}
-          onChange={handleSelectProvinciaChange}
-          onSearch={handleSelectProvinciaSearch}
-          filterOption={filterIncrementalSearch}
+          onChange={
+            operationType === "view" ? null : handleSelectProvinciaChange
+          }
+          onSearch={
+            operationType === "view" ? null : handleSelectProvinciaSearch
+          }
+          filterOption={
+            operationType === "view" ? null : filterIncrementalSearch
+          }
           notFoundContent={<span>No hay provincia</span>}
         >
-          {PROVINCIAS_CON_CIUDADES.map((provincia, index) => (
-            <Antd.Select.Option key={index} value={provincia.provincia}>
-              {provincia.provincia}
-            </Antd.Select.Option>
-          ))}
+          {operationType !== "view" &&
+            PROVINCIAS_CON_CIUDADES.map((provincia, index) => (
+              <Antd.Select.Option key={index} value={provincia.provincia}>
+                {provincia.provincia}
+              </Antd.Select.Option>
+            ))}
         </Antd.Select>
         {requiredFieldsIncomplete.provincia && (
           <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
@@ -486,12 +500,16 @@ export default function FormClientes({
           showSearch={true}
           style={{ width: "35%" }}
           status={requiredFieldsIncomplete.ciudad ? "error" : ""}
-          onChange={handleSelectCiudadChange}
-          onSearch={handleSelectCiudadSearch}
-          filterOption={filterIncrementalSearch}
+          onChange={operationType === "view" ? null : handleSelectCiudadChange}
+          onSearch={operationType === "view" ? null : handleSelectCiudadSearch}
+          filterOption={
+            operationType === "view" ? null : filterIncrementalSearch
+          }
           notFoundContent={<span>No hay ciudades</span>}
+          disabled={Object.keys(selectedProvince).length > 0 ? false : true}
         >
           {formData.provincia !== "" &&
+            operationType !== "view" &&
             selectedProvince.ciudades.map((provinceData, index) => (
               <Antd.Select.Option key={index} value={provinceData}>
                 {provinceData}

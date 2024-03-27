@@ -20,7 +20,7 @@ export const saveCliente = async (data) => {
   console.log("FORM cliente: ", data);
   try {
     const formData = {
-      nif: data.nif === "" ? null : data.nif,
+      nif: data.nif,
       nombre_apellidos:
         data.nombre_apellidos === "" ? null : data.nombre_apellidos,
       razon_social: data.razon_social === "" ? null : data.razon_social,
@@ -66,7 +66,7 @@ export const updateCliente = async (id, data) => {
   console.log(`FORM PERSONA CON id ${id}: `, data);
   try {
     const formData = {
-      nif: data.nif === "" ? null : data.nif,
+      nif: data.nif,
       nombre_apellidos:
         data.nombre_apellidos === "" ? null : data.nombre_apellidos,
       razon_social: data.razon_social === "" ? null : data.razon_social,

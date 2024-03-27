@@ -105,14 +105,14 @@ export default function Clientes() {
       editable: false,
     },
     {
-      field: "ciudad",
-      headerName: "Ciudad",
+      field: "provincia",
+      headerName: "Provincia",
       width: 180,
       editable: false,
     },
     {
-      field: "provincia",
-      headerName: "Provincia",
+      field: "ciudad",
+      headerName: "Ciudad",
       width: 180,
       editable: false,
     },
@@ -157,8 +157,8 @@ export default function Clientes() {
             correo_electronico: cliente.correo_electronico,
             direccion: cliente.direccion,
             codigo_postal: cliente.codigo_postal,
-            ciudad: cliente.ciudad,
             provincia: cliente.provincia,
+            ciudad: cliente.ciudad,
           };
         });
         setDataSource(clientesMap);

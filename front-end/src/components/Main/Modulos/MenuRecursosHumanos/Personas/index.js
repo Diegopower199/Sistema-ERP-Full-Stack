@@ -163,9 +163,9 @@ export default function Personas() {
   const fetchGetAllPersonas = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllPersonas = await getAllPersonas();
-      if (responseReadAllPersonas.status === 200) {
-        const personasMap = responseReadAllPersonas.data.map((persona) => {
+      const responseGetAllPersonas = await getAllPersonas();
+      if (responseGetAllPersonas.status === 200) {
+        const personasMap = responseGetAllPersonas.data.map((persona) => {
           return {
             id: persona.id_persona,
             numero_empleado: persona.numero_empleado,

@@ -40,12 +40,12 @@ export default function FormVacacionesEmpleados({
 
   const fetchTiposEstadosOptions = async () => {
     try {
-      const responseReadAllTiposEstados = await getAllTiposEstados();
-      setTiposEstadosOptions(responseReadAllTiposEstados);
+      const responseGetAllTiposEstados = await getAllTiposEstados();
+      setTiposEstadosOptions(responseGetAllTiposEstados);
       setFormData((prevDataState) => {
         return {
           ...prevDataState,
-          ["id_tipo_estado"]: responseReadAllTiposEstados[0].value.toString(),
+          ["id_tipo_estado"]: responseGetAllTiposEstados[0].value.toString(),
         };
       });
     } catch (error) {

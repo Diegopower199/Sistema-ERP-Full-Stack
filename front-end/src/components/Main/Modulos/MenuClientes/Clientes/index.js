@@ -145,9 +145,9 @@ export default function Clientes() {
   const fetchGetAllClientes = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllClientes = await getAllClientes();
-      if (responseReadAllClientes.status === 200) {
-        const clientesMap = responseReadAllClientes.data.map((cliente) => {
+      const responseGetAllClientes = await getAllClientes();
+      if (responseGetAllClientes.status === 200) {
+        const clientesMap = responseGetAllClientes.data.map((cliente) => {
           return {
             id: cliente.id_cliente,
             nif: cliente.nif,

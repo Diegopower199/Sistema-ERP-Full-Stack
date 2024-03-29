@@ -50,12 +50,12 @@ export default function FormPagosFacturasClientes({
 
   const fetchTiposPersonasOptions = async () => {
     try {
-      const responseReadAllTiposPersonas = await getAllTiposPersonas();
-      setTiposPersonasOptions(responseReadAllTiposPersonas);
+      const responseGetAllTiposPersonas = await getAllTiposPersonas();
+      setTiposPersonasOptions(responseGetAllTiposPersonas);
       setFormData((prevDataState) => {
         return {
           ...prevDataState,
-          ["id_tipo_persona"]: responseReadAllTiposPersonas[0].value.toString(),
+          ["id_tipo_persona"]: responseGetAllTiposPersonas[0].value.toString(),
         };
       });
     } catch (error) {

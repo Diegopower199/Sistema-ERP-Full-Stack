@@ -155,9 +155,9 @@ export default function AyudasEmpleados() {
   const fetchGetAllAyudasEmpleados = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllAyudasEmpleados = await getAllAyudasEmpleados();
-      if (responseReadAllAyudasEmpleados.status === 200) {
-        const ayudasEmpleadosMap = responseReadAllAyudasEmpleados.data.map(
+      const responseGetAllAyudasEmpleados = await getAllAyudasEmpleados();
+      if (responseGetAllAyudasEmpleados.status === 200) {
+        const ayudasEmpleadosMap = responseGetAllAyudasEmpleados.data.map(
           (ayudaEmpleado) => {
             return {
               id: ayudaEmpleado.id_ayuda_empleado,

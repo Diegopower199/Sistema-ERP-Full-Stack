@@ -125,16 +125,16 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
   const fetchGetAllTransaccionesVacacionesAutorizadas = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllTransaccionesVacacionesAutorizadas =
+      const responseGetAllTransaccionesVacacionesAutorizadas =
         await getAllTransaccionesVacacionesAutorizadas();
 
       console.log(
         "responseReadAllTransaccionesVacacionesAutorizadas: ",
-        responseReadAllTransaccionesVacacionesAutorizadas
+        responseGetAllTransaccionesVacacionesAutorizadas
       );
-      if (responseReadAllTransaccionesVacacionesAutorizadas.status === 200) {
+      if (responseGetAllTransaccionesVacacionesAutorizadas.status === 200) {
         const vacacionesEmpleadosMap =
-          responseReadAllTransaccionesVacacionesAutorizadas.data.map(
+          responseGetAllTransaccionesVacacionesAutorizadas.data.map(
             (transaccionVacacionAutorizada) => {
               return {
                 id: transaccionVacacionAutorizada.index,

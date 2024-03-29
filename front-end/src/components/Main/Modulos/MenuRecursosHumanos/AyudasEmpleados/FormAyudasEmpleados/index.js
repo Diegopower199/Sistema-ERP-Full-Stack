@@ -50,12 +50,12 @@ export default function FormAyudasEmpleados({
 
   const fetchTiposPersonasOptions = async () => {
     try {
-      const responseReadAllTiposPersonas = await getAllTiposPersonas();
-      setTiposPersonasOptions(responseReadAllTiposPersonas);
+      const responsGetAllTiposPersonas = await getAllTiposPersonas();
+      setTiposPersonasOptions(responsGetAllTiposPersonas);
       setFormData((prevDataState) => {
         return {
           ...prevDataState,
-          ["id_tipo_persona"]: responseReadAllTiposPersonas[0].value.toString(),
+          ["id_tipo_persona"]: responsGetAllTiposPersonas[0].value.toString(),
         };
       });
     } catch (error) {

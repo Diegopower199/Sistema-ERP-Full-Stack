@@ -89,6 +89,16 @@ public class ClienteService {
                 .orElseThrow(() -> new RuntimeException(
                         "Cliente con id " + idCliente + " no encontrado"));
 
+        clienteExistente.setNif(cambiosCliente.getNif());
+        clienteExistente.setNombre_apellidos(cambiosCliente.getNombre_apellidos());
+        clienteExistente.setRazon_social(cambiosCliente.getRazon_social());
+        clienteExistente.setNumero_telefono(cambiosCliente.getNumero_telefono());
+        clienteExistente.setCorreo_electronico(cambiosCliente.getCorreo_electronico());
+        clienteExistente.setDireccion(cambiosCliente.getDireccion());
+        clienteExistente.setCodigo_postal(cambiosCliente.getCodigo_postal());
+        clienteExistente.setCiudad(cambiosCliente.getCiudad());
+        clienteExistente.setProvincia(cambiosCliente.getProvincia());
+
         // Comprobacion de campos correctos -> Ejemplo:
         /*
          * if (cambiosUsuario.getNombre_usuario() == null) {

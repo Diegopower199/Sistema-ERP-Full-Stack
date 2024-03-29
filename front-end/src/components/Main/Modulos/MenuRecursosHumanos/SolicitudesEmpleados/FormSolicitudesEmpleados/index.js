@@ -38,13 +38,13 @@ export default function FormSolicitudesEmpleados({
 
   const fetchTiposSolicitudesOptions = async () => {
     try {
-      const responseReadAllTiposSolicitudes = await getAllTiposSolicitudes();
-      setTiposSolicitudesOptions(responseReadAllTiposSolicitudes);
+      const responseGetAllTiposSolicitudes = await getAllTiposSolicitudes();
+      setTiposSolicitudesOptions(responseGetAllTiposSolicitudes);
       setFormData((prevDataState) => {
         return {
           ...prevDataState,
           ["id_tipo_solicitud"]:
-            responseReadAllTiposSolicitudes[0].value.toString(),
+            responseGetAllTiposSolicitudes[0].value.toString(),
         };
       });
     } catch (error) {
@@ -54,12 +54,12 @@ export default function FormSolicitudesEmpleados({
 
   const fetchTiposEstadosOptions = async () => {
     try {
-      const responseReadAllTiposEstados = await getAllTiposEstados();
-      setTiposEstadosOptions(responseReadAllTiposEstados);
+      const responseGetAllTiposEstados = await getAllTiposEstados();
+      setTiposEstadosOptions(responseGetAllTiposEstados);
       setFormData((prevDataState) => {
         return {
           ...prevDataState,
-          ["id_tipo_estado"]: responseReadAllTiposEstados[0].value.toString(),
+          ["id_tipo_estado"]: responseGetAllTiposEstados[0].value.toString(),
         };
       });
     } catch (error) {

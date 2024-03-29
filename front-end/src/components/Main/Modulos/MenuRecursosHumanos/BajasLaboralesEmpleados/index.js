@@ -153,11 +153,11 @@ export default function BajasLaboralesEmpleados() {
   const fetchGetAllBajasLaboralesEmpleados = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllBajasLaboralesEmpleados =
+      const responseGetAllBajasLaboralesEmpleados =
         await getAllBajasLaboralesEmpleados();
-      if (responseReadAllBajasLaboralesEmpleados.status === 200) {
+      if (responseGetAllBajasLaboralesEmpleados.status === 200) {
         const bajasLaboralesEmpleadosMap =
-          responseReadAllBajasLaboralesEmpleados.data.map(
+          responseGetAllBajasLaboralesEmpleados.data.map(
             (bajaLaboralEmpleado) => {
               return {
                 id: bajaLaboralEmpleado.id_baja_laboral_empleado,

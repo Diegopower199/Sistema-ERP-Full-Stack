@@ -190,9 +190,9 @@ export default function NominasEmpleados() {
   const fetchGetAllNominasEmpleados = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllNominasEmpleados = await getAllNominasEmpleados();
-      if (responseReadAllNominasEmpleados.status === 200) {
-        const nominasEmpleadosMap = responseReadAllNominasEmpleados.data.map(
+      const responseGetAllNominasEmpleados = await getAllNominasEmpleados();
+      if (responseGetAllNominasEmpleados.status === 200) {
+        const nominasEmpleadosMap = responseGetAllNominasEmpleados.data.map(
           (nominasEmpleado) => {
             return {
               id: nominasEmpleado.id_nomina_empleado,

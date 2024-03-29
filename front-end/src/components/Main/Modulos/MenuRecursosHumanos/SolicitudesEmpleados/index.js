@@ -143,11 +143,11 @@ export default function SolicitudesEmpleados() {
   const fetchGetAllSolicitudesEmpleados = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllSolicitudesEmpleados =
+      const responseGetAllSolicitudesEmpleados =
         await getAllSolicitudesEmpleados();
-      if (responseReadAllSolicitudesEmpleados.status === 200) {
+      if (responseGetAllSolicitudesEmpleados.status === 200) {
         const solicitudesEmpleadosMap =
-          responseReadAllSolicitudesEmpleados.data.map((solicitudEmpleado) => {
+          responseGetAllSolicitudesEmpleados.data.map((solicitudEmpleado) => {
             return {
               id: solicitudEmpleado.id_solicitud_empleado,
               fecha_solicitud: solicitudEmpleado.fecha_solicitud,

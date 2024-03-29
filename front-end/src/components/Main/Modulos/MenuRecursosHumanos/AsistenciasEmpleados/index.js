@@ -150,11 +150,11 @@ export default function AsistenciasEmpleados() {
   const fetchGetAllAsistenciasEmpleados = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllAsistenciasEmpleados =
+      const responseGetAllAsistenciasEmpleados =
         await getAllAsistenciaEmpleados();
-      if (responseReadAllAsistenciasEmpleados.status === 200) {
+      if (responseGetAllAsistenciasEmpleados.status === 200) {
         const asistenciasEmpleadosMap =
-          responseReadAllAsistenciasEmpleados.data.map((asistenciaEmpleado) => {
+          responseGetAllAsistenciasEmpleados.data.map((asistenciaEmpleado) => {
             return {
               id: asistenciaEmpleado.id_asistencia_empleado,
               fecha_asistencia: asistenciaEmpleado.fecha_asistencia,

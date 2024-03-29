@@ -169,11 +169,11 @@ export default function FacturasClientes() {
   const fetchGetAllVacacionesEmpleados = async () => {
     try {
       setTableLoading(true);
-      const responseReadAllVacacionesEmpleados =
+      const responseGetAllVacacionesEmpleados =
         await getAllVacacionesEmpleados();
-      if (responseReadAllVacacionesEmpleados.status === 200) {
+      if (responseGetAllVacacionesEmpleados.status === 200) {
         const vacacionesEmpleadosMap =
-          responseReadAllVacacionesEmpleados.data.map((vacacionEmpleado) => {
+          responseGetAllVacacionesEmpleados.data.map((vacacionEmpleado) => {
             return {
               id: vacacionEmpleado.id_vacacion_empleado,
               fecha_inicio: vacacionEmpleado.fecha_inicio,

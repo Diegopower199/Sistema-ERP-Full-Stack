@@ -4,15 +4,12 @@ import { useAuth } from "@/context/UserContext";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   DataGrid,
   GridToolbarContainer,
   GridActionsCellItem,
   GridToolbarExportContainer,
-  GridCsvExportMenuItem,
   useGridApiContext,
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
@@ -21,15 +18,12 @@ import MenuItem from "@mui/material/MenuItem";
 import * as Antd from "antd";
 import Link from "next/link";
 import {
-  deleteVacacionEmpleado,
-  getAllVacacionesEmpleados,
-} from "@/services/VacacionEmpleadoService";
-import {
   LOCALIZED_COLUMN_MENU_TEXTS,
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
 import FormFacturasClientes from "./FormFacturasClientes";
 import styles from "./styles.module.css";
+import { getAllFacturasClientes } from "@/services/FacturaClienteService";
 
 export default function FacturasClientes() {
   const {
@@ -43,27 +37,14 @@ export default function FacturasClientes() {
 
   const router = useRouter();
 
-  const [showFormCreate, setShowFormCreate] = useState(false);
-  const [showFormUpdate, setShowFormUpdate] = useState(false);
+  const [showModalGenerate, setShowModalGenerate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
-  const [idVacacionEmpleadoSelected, setIdVacacionEmpleadoSelected] =
-    useState(0);
-  const [
-    dniPersonaVacacionEmpleadoSelected,
-    setDniPersonaVacacionEmpleadoSelected,
-  ] = useState("");
-  const [
-    fechaInicioAndFinVacacionEmpleadoSelected,
-    setFechaInicioAndFinVacacionEmpleadoSelected,
-  ] = useState([]);
-
-  const [vacacionEmpleadoDelete, setVacacionEmpleadoDelete] = useState(false);
-  const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
+  const [facturaClienteFormUpdated, setFacturaClienteFormUpdated] =
     useState(false);
+
   const [rowSelected, setRowSelected] = useState(null);
 
   const [paginationModel, setPaginationModel] = useState({
@@ -81,50 +62,111 @@ export default function FacturasClientes() {
       editable: false,
     },
     {
-      field: "fecha_inicio",
-      headerName: "Fecha inicio",
+      field: "descripcion_servicio",
+      headerName: "Descripcion servicio",
       width: 180,
       editable: false,
     },
     {
-      field: "fecha_fin",
-      headerName: "Fecha fin",
+      field: "direccion_entrega",
+      headerName: "Direccion entrega",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_disponibles",
-      headerName: "Dias disponibles",
+      field: "hora_inicio_desplazamiento",
+      headerName: "Hora inicio desplazamiento",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_pendientes",
-      headerName: "Dias pendientes",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "dias_solicitados",
-      headerName: "Dias solicitados",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "dias_disfrutados",
-      headerName: "Dias disfrutados",
+      field: "hora_fin_desplazamiento",
+      headerName: "Hora fin desplazamiento",
       width: 130,
       editable: false,
     },
     {
-      field: "comentarios",
-      headerName: "Comentarios",
+      field: "tiempo_desplazamiento_total",
+      headerName: "Tiempo desplazamiento total",
       width: 180,
       editable: false,
     },
     {
-      field: "dni",
-      headerName: "Dni persona",
+      field: "hora_inicio_servicio",
+      headerName: "Hora inicio servicio",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "hora_fin_servicio",
+      headerName: "Hora fin servicio",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "tiempo_servicio_total",
+      headerName: "Tiempo servicio total",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "observacion",
+      headerName: "Observacion",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "fecha_entrega_real_pedido",
+      headerName: "Fecha entrega real pedido",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "fecha_factura_emitida",
+      headerName: "Fecha factura emitida",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "tarifa_hora_desplazamiento",
+      headerName: "Tarifa hora desplazamiento",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "tarifa_hora_servicio",
+      headerName: "Tarifa hora servicio",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "subtotal_factura_sin_iva",
+      headerName: "Subtotal factura sin iva",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "iva",
+      headerName: "IVA",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "total_factura",
+      headerName: "Total factura",
+      width: 180,
+      editable: false,
+    },
+
+    {
+      field: "nif_cliente",
+      headerName: "Nif cliente",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "pedido_cliente",
+      headerName: "Pedido cliente",
       width: 180,
       editable: false,
     },
@@ -148,48 +190,51 @@ export default function FacturasClientes() {
             onClick={handleViewUniqueClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleUpdateClick(id)}
-            color="inherit"
-          />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
         ];
       },
     },
   ];
 
-  const fetchGetAllVacacionesEmpleados = async () => {
+  const fetchGetAllFacturasClientes = async () => {
     try {
       setTableLoading(true);
-      const responseGetAllVacacionesEmpleados =
-        await getAllVacacionesEmpleados();
-      if (responseGetAllVacacionesEmpleados.status === 200) {
-        const vacacionesEmpleadosMap =
-          responseGetAllVacacionesEmpleados.data.map((vacacionEmpleado) => {
+      const responseGetAllFacturasClientes = await getAllFacturasClientes();
+      if (responseGetAllFacturasClientes.status === 200) {
+        const facturasClientesMap = responseGetAllFacturasClientes.data.map(
+          (facturaCliente) => {
             return {
-              id: vacacionEmpleado.id_vacacion_empleado,
-              fecha_inicio: vacacionEmpleado.fecha_inicio,
-              fecha_fin: vacacionEmpleado.fecha_fin,
-              dias_disponibles: vacacionEmpleado.dias_disponibles,
-              dias_pendientes: vacacionEmpleado.dias_pendientes,
-              dias_solicitados: vacacionEmpleado.dias_solicitados,
-              dias_disfrutados: vacacionEmpleado.dias_disfrutados,
-              comentarios: vacacionEmpleado.comentarios,
-              id_persona: vacacionEmpleado.persona.id_persona,
-              dni: vacacionEmpleado.persona.dni,
-              tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
-              id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
+              id: facturaCliente.id_factura_cliente,
+              descripcion_servicio: facturaCliente.descripcion_servicio,
+              direccion_entrega: facturaCliente.direccion_entrega,
+              hora_inicio_desplazamiento:
+                facturaCliente.hora_inicio_desplazamiento,
+              hora_fin_desplazamiento: facturaCliente.hora_fin_desplazamiento,
+              tiempo_desplazamiento_total:
+                facturaCliente.tiempo_desplazamiento_total,
+              hora_inicio_servicio: facturaCliente.hora_inicio_servicio,
+              hora_fin_servicio: facturaCliente.hora_fin_servicio,
+              tiempo_servicio_total: facturaCliente.tiempo_servicio_total,
+              observacion: facturaCliente.observacion,
+              fecha_entrega_real_pedido:
+                facturaCliente.fecha_entrega_real_pedido,
+              fecha_factura_emitida: facturaCliente.fecha_factura_emitida,
+              tarifa_hora_desplazamiento:
+                facturaCliente.tarifa_hora_desplazamiento,
+              tarifa_hora_servicio: facturaCliente.tarifa_hora_servicio,
+              subtotal_factura_sin_iva: facturaCliente.subtotal_factura_sin_iva,
+              iva: facturaCliente.iva,
+              total_factura: facturaCliente.total_factura,
+              id_cliente: facturaCliente.cliente.id_cliente,
+              nif_cliente: facturaCliente.cliente.nif,
+              pedido_cliente: "NO SE QUE PONER", // facturaCliente.pedido_cliente.pedido_cliente,
+              id_pedido_cliente:
+                facturaCliente.pedido_cliente.id_pedido_cliente,
+              tipo_estado: facturaCliente.tipo_estado.tipo_estado,
+              id_tipo_estado: facturaCliente.tipo_estado.id_tipo_estado,
             };
-          });
-        setDataSource(vacacionesEmpleadosMap);
+          }
+        );
+        setDataSource(facturasClientesMap);
       }
       setTableLoading(false);
     } catch (error) {
@@ -198,100 +243,65 @@ export default function FacturasClientes() {
   };
 
   useEffect(() => {
-    console.log("Pagina de vacaciones empleados: ");
+    console.log("Pagina de facturas clientes: ");
     console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllVacacionesEmpleados();
+      fetchGetAllFacturasClientes();
     }
   }, [authUser]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (vacacionEmpleadoFormUpdated === true) {
-        await fetchGetAllVacacionesEmpleados();
-        setVacacionEmpleadoFormUpdated(false);
-      } else if (vacacionEmpleadoDelete === true) {
-        await fetchGetAllVacacionesEmpleados();
-        setVacacionEmpleadoDelete(false);
+      if (facturaClienteFormUpdated === true) {
+        await fetchGetAllFacturasClientes();
+        setFacturaClienteFormUpdated(false);
       }
     };
     fetchData();
-  }, [vacacionEmpleadoFormUpdated, vacacionEmpleadoDelete]);
+  }, [facturaClienteFormUpdated]);
 
-  function vacacionEmpleadoFormUpdatedTrigger() {
-    setVacacionEmpleadoFormUpdated(!vacacionEmpleadoFormUpdated);
+  function facturaClienteFormUpdatedTrigger() {
+    setFacturaClienteFormUpdated(!facturaClienteFormUpdated);
   }
 
-  function toggleCreateVacacionEmpleadoForm() {
-    setShowFormCreate(!showFormCreate);
+  function toggleGenerateFacturasClientesForm() {
+    setShowModalGenerate(!showModalGenerate);
   }
 
-  function toggleUpdateVacacionEmpleadoForm() {
-    setShowFormUpdate(!showFormUpdate);
-  }
-
-  function toggleViewUniqueVacacionEmpleadoForm() {
+  function toggleViewUniqueFacturaClienteForm() {
     setShowFormViewUnique(!showFormViewUnique);
   }
 
-  const handleCreateClick = () => {
-    console.log("Añadir nueva vacacion empleado");
-    toggleCreateVacacionEmpleadoForm();
-  };
-
-  const handleUpdateClick = (id) => () => {
-    console.log("Boton para actualizar");
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
-    setRowSelected(filaSeleccionada);
-    toggleUpdateVacacionEmpleadoForm();
-  };
-
-  const handleDeleteClick = (id) => () => {
-    console.log("ID:", id);
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
-    console.log("Boton para borrar: ", filaSeleccionada);
-    setIdVacacionEmpleadoSelected(id);
-    setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
-    setFechaInicioAndFinVacacionEmpleadoSelected([
-      filaSeleccionada.fecha_inicio,
-      filaSeleccionada.fecha_fin,
-    ]);
-    setShowDelete(true);
+  const handleGenerateClick = () => {
+    console.log("Generar nuevas facturas clientes");
+    toggleGenerateFacturasClientesForm();
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una vacacion empleado");
+    console.log("Boton para ver una factura cliente");
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleViewUniqueVacacionEmpleadoForm();
+    toggleViewUniqueFacturaClienteForm();
   };
 
   // Handles 'delete' modal ok button
-  const handleModalOk = async () => {
-    const responseDeleteVacacionEmpleado = await deleteVacacionEmpleado(
-      idVacacionEmpleadoSelected
-    );
-    if (responseDeleteVacacionEmpleado.status === 200) {
-      setVacacionEmpleadoDelete(true);
-    }
-    // console.log("Response delete: ", response);
+  const handleModalGenerateFacturasClientesOk = async () => {
+    /*const responseDeletePersona = await deletePersona(idPersonaSelected);
+    if (responseDeletePersona.status === 200) {
+      setPersonaDelete(true);
+    }*/
     resetStates();
   };
 
-  const handleModalClose = () => {
+  const handleModalGenerateFacturasClientesClose = () => {
     resetStates();
   };
 
   function resetStates() {
-    setShowFormCreate(false);
-    setShowFormUpdate(false);
+    setShowModalGenerate(false);
     setShowFormViewUnique(false);
-    setShowDelete(false);
-    setIdVacacionEmpleadoSelected(0);
-    setDniPersonaVacacionEmpleadoSelected("");
-    setFechaInicioAndFinVacacionEmpleadoSelected([]);
   }
 
   const getJson = (apiRef) => {
@@ -411,18 +421,21 @@ export default function FacturasClientes() {
     );
   }
 
-  const renderTableVacacionEmpleado = () => {
-    function deleteModal() {
+  const renderTableFacturaCliente = () => {
+    function generateModal() {
       return (
         <Antd.Modal
-          title={`¿Desea eliminar las vacaciones asociadas a la persona con DNI ${dniPersonaVacacionEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
-          open={showDelete}
+          title={`Generando facturas`}
+          open={showModalGenerate}
           okText="Aceptar"
-          onOk={handleModalOk}
+          onOk={handleModalGenerateFacturasClientesOk}
           cancelText="Cancelar"
-          onCancel={handleModalClose}
+          onCancel={handleModalGenerateFacturasClientesClose}
           centered
-        ></Antd.Modal>
+        >
+          AQUI ME FALTA PONER CUANTAS FACTURAS SE HAN GENERADO EN EL MODAL, ESO
+          LO TENGO EN EL TRABAJO EN EL HISTORICO CSR EN LO DEL EXCEL
+        </Antd.Modal>
       );
     }
 
@@ -447,9 +460,9 @@ export default function FacturasClientes() {
           <Button
             color="primary"
             startIcon={<AddIcon />}
-            onClick={handleCreateClick}
+            onClick={handleGenerateClick}
           >
-            Añadir vacacion empleado
+            Generar facturas
           </Button>
 
           <DataGrid
@@ -470,46 +483,25 @@ export default function FacturasClientes() {
               toolbar: CustomToolbar,
             }}
           />
-          {showDelete && deleteModal()}
+
+          {showModalGenerate && generateModal()}
         </Box>
       </div>
     );
   };
 
-  if (showFormCreate) {
+  if (showFormViewUnique) {
     return (
       <>
         <FormFacturasClientes
-          toggleForm={toggleCreateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={""}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
-          operationType={"create"}
-        ></FormFacturasClientes>
-      </>
-    );
-  } else if (showFormUpdate) {
-    return (
-      <>
-        <FormFacturasClientes
-          toggleForm={toggleUpdateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
-          operationType={"update"}
-        ></FormFacturasClientes>
-      </>
-    );
-  } else if (showFormViewUnique) {
-    return (
-      <>
-        <FormFacturasClientes
-          toggleForm={toggleViewUniqueVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          toggleForm={toggleViewUniqueFacturaClienteForm}
+          facturaClienteDataForm={rowSelected}
+          formUpdateTrigger={facturaClienteFormUpdatedTrigger}
           operationType={"view"}
         ></FormFacturasClientes>
       </>
     );
   } else {
-    return renderTableVacacionEmpleado();
+    return renderTableFacturaCliente();
   }
 }

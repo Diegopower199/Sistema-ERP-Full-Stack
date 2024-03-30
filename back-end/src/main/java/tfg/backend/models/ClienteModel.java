@@ -47,11 +47,11 @@ public class ClienteModel implements Serializable {
     @Column(name = "codigo_postal", nullable = false)
     private String codigo_postal;
 
-    @Column(name = "ciudad", nullable = false)
-    private String ciudad;
-
     @Column(name = "provincia", nullable = false)
     private String provincia;
+
+    @Column(name = "ciudad", nullable = false)
+    private String ciudad;
 
     @JsonIgnore
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
@@ -71,8 +71,8 @@ public class ClienteModel implements Serializable {
         map.put("correo_electronico", correo_electronico);
         map.put("direccion", direccion);
         map.put("codigo_postal", codigo_postal);
-        map.put("ciudad", ciudad);
         map.put("provincia", provincia);
+        map.put("ciudad", ciudad);
         return map;
     }
 

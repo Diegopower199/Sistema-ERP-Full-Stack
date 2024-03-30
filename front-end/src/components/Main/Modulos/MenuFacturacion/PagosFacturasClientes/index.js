@@ -12,7 +12,6 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
   GridToolbarExportContainer,
-  GridCsvExportMenuItem,
   useGridApiContext,
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
@@ -30,6 +29,7 @@ import {
 } from "@/utils/constants";
 import FormPagosFacturasClientes from "./FormPagosFacturasClientes";
 import styles from "./styles.module.css";
+import { getAllPagosFacturasClientes } from "@/services/PagoFacturaClienteService";
 
 export default function PagosFacturasClientes() {
   const {
@@ -81,56 +81,26 @@ export default function PagosFacturasClientes() {
       editable: false,
     },
     {
-      field: "fecha_inicio",
-      headerName: "Fecha inicio",
+      field: "fecha_pago_realizada",
+      headerName: "Fecha pago realizada",
       width: 180,
       editable: false,
     },
     {
-      field: "fecha_fin",
-      headerName: "Fecha fin",
+      field: "importe_pagado",
+      headerName: "Importe pagado",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_disponibles",
-      headerName: "Dias disponibles",
+      field: "metodo_pago",
+      headerName: "Metodo pago",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_pendientes",
-      headerName: "Dias pendientes",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "dias_solicitados",
-      headerName: "Dias solicitados",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "dias_disfrutados",
-      headerName: "Dias disfrutados",
-      width: 130,
-      editable: false,
-    },
-    {
-      field: "comentarios",
-      headerName: "Comentarios",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "dni",
-      headerName: "Dni persona",
-      width: 180,
-      editable: false,
-    },
-    {
-      field: "tipo_estado",
-      headerName: "Tipo estado",
+      field: "id_factura_cliente",
+      headerName: "ID factura cliente",
       width: 180,
       editable: false,
     },
@@ -166,30 +136,24 @@ export default function PagosFacturasClientes() {
     },
   ];
 
-  const fetchGetAllVacacionesEmpleados = async () => {
+  const fetchGetAllPagosFacturasClientes = async () => {
     try {
       setTableLoading(true);
-      const responseGetAllVacacionesEmpleados =
-        await getAllVacacionesEmpleados();
-      if (responseGetAllVacacionesEmpleados.status === 200) {
-        const vacacionesEmpleadosMap =
-          responseGetAllVacacionesEmpleados.data.map((vacacionEmpleado) => {
+      const responseGetAllPagosFacturasClientes =
+        await getAllPagosFacturasClientes();
+      if (responseGetAllPagosFacturasClientes.status === 200) {
+        const pagosFacturasClientesMap =
+          responseGetAllPagosFacturasClientes.data.map((pagoFacturaCliente) => {
             return {
-              id: vacacionEmpleado.id_vacacion_empleado,
-              fecha_inicio: vacacionEmpleado.fecha_inicio,
-              fecha_fin: vacacionEmpleado.fecha_fin,
-              dias_disponibles: vacacionEmpleado.dias_disponibles,
-              dias_pendientes: vacacionEmpleado.dias_pendientes,
-              dias_solicitados: vacacionEmpleado.dias_solicitados,
-              dias_disfrutados: vacacionEmpleado.dias_disfrutados,
-              comentarios: vacacionEmpleado.comentarios,
-              id_persona: vacacionEmpleado.persona.id_persona,
-              dni: vacacionEmpleado.persona.dni,
-              tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
-              id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
+              id: pagoFacturaCliente.id_pago_factura_cliente,
+              fecha_pago_realizada: pagoFacturaCliente.fecha_pago_realizada,
+              importe_pagado: pagoFacturaCliente.importe_pagado,
+              metodo_pago: pagoFacturaCliente.metodo_pago,
+              id_factura_cliente:
+                pagoFacturaCliente.factura_cliente.id_factura_cliente,
             };
           });
-        setDataSource(vacacionesEmpleadosMap);
+        setDataSource(pagosFacturasClientesMap);
       }
       setTableLoading(false);
     } catch (error) {
@@ -198,22 +162,22 @@ export default function PagosFacturasClientes() {
   };
 
   useEffect(() => {
-    console.log("Pagina de vacaciones empleados: ");
+    console.log("Pagina de pagos facturas clientes: ");
     console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllVacacionesEmpleados();
+      fetchGetAllPagosFacturasClientes();
     }
   }, [authUser]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (vacacionEmpleadoFormUpdated === true) {
-        await fetchGetAllVacacionesEmpleados();
+        await fetchGetAllPagosFacturasClientes();
         setVacacionEmpleadoFormUpdated(false);
       } else if (vacacionEmpleadoDelete === true) {
-        await fetchGetAllVacacionesEmpleados();
+        await fetchGetAllPagosFacturasClientes();
         setVacacionEmpleadoDelete(false);
       }
     };

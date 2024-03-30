@@ -5,14 +5,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   DataGrid,
   GridToolbarContainer,
   GridActionsCellItem,
   GridToolbarExportContainer,
-  GridCsvExportMenuItem,
   useGridApiContext,
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
@@ -21,15 +19,12 @@ import MenuItem from "@mui/material/MenuItem";
 import * as Antd from "antd";
 import Link from "next/link";
 import {
-  deleteVacacionEmpleado,
-  getAllVacacionesEmpleados,
-} from "@/services/VacacionEmpleadoService";
-import {
   LOCALIZED_COLUMN_MENU_TEXTS,
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
 import FormPedidosClientes from "./FormPedidosClientes";
 import styles from "./styles.module.css";
+import { getAllPedidosClientes } from "@/services/PedidoClienteService";
 
 export default function PedidosClientes() {
   const {
@@ -46,23 +41,10 @@ export default function PedidosClientes() {
   const [showFormCreate, setShowFormCreate] = useState(false);
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
-  const [idVacacionEmpleadoSelected, setIdVacacionEmpleadoSelected] =
-    useState(0);
-  const [
-    dniPersonaVacacionEmpleadoSelected,
-    setDniPersonaVacacionEmpleadoSelected,
-  ] = useState("");
-  const [
-    fechaInicioAndFinVacacionEmpleadoSelected,
-    setFechaInicioAndFinVacacionEmpleadoSelected,
-  ] = useState([]);
-
-  const [vacacionEmpleadoDelete, setVacacionEmpleadoDelete] = useState(false);
-  const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
+  const [pedidoClienteFormUpdated, setPedidoClienteFormUpdated] =
     useState(false);
   const [rowSelected, setRowSelected] = useState(null);
 
@@ -81,49 +63,85 @@ export default function PedidosClientes() {
       editable: false,
     },
     {
-      field: "fecha_inicio",
-      headerName: "Fecha inicio",
+      field: "direccion_entrega",
+      headerName: "Direccion entrega",
       width: 180,
       editable: false,
     },
     {
-      field: "fecha_fin",
-      headerName: "Fecha fin",
+      field: "fecha_solicitud_pedido",
+      headerName: "Fecha solicitud pedido",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_disponibles",
-      headerName: "Dias disponibles",
+      field: "fecha_entrega_prevista",
+      headerName: "Fecha entrega prevista",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_pendientes",
-      headerName: "Dias pendientes",
+      field: "fecha_entrega_real",
+      headerName: "Fecha entrega real",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_solicitados",
-      headerName: "Dias solicitados",
+      field: "hora_inicio_desplazamiento",
+      headerName: "Hora inicio desplazamiento",
       width: 180,
       editable: false,
     },
     {
-      field: "dias_disfrutados",
-      headerName: "Dias disfrutados",
+      field: "hora_fin_desplazamiento",
+      headerName: "Hora fin desplazamiento",
       width: 130,
       editable: false,
     },
     {
-      field: "comentarios",
-      headerName: "Comentarios",
+      field: "tiempo_desplazamiento_total",
+      headerName: "Tiempo desplazamiento total",
       width: 180,
       editable: false,
     },
     {
-      field: "dni",
+      field: "hora_inicio_servicio",
+      headerName: "Hora inicio servicio",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "hora_fin_servicio",
+      headerName: "Hora fin servicio",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "tiempo_servicio_total",
+      headerName: "Tiempo servicio total",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "descripcion",
+      headerName: "Descripcion",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "observacion",
+      headerName: "Observacion",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "nif_cliente",
+      headerName: "Nif cliente",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "dni_persona",
       headerName: "Dni persona",
       width: 180,
       editable: false,
@@ -131,6 +149,12 @@ export default function PedidosClientes() {
     {
       field: "tipo_estado",
       headerName: "Tipo estado",
+      width: 180,
+      editable: false,
+    },
+    {
+      field: "tipo_estado_factura",
+      headerName: "Tipo estado factura",
       width: 180,
       editable: false,
     },
@@ -155,41 +179,52 @@ export default function PedidosClientes() {
             onClick={handleUpdateClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
         ];
       },
     },
   ];
 
-  const fetchGetAllVacacionesEmpleados = async () => {
+  const fetchGetAllPedidosClientes = async () => {
     try {
       setTableLoading(true);
-      const responseGetAllVacacionesEmpleados =
-        await getAllVacacionesEmpleados();
-      if (responseGetAllVacacionesEmpleados.status === 200) {
-        const vacacionesEmpleadosMap =
-          responseGetAllVacacionesEmpleados.data.map((vacacionEmpleado) => {
+      const responseGetAllPedidosClientes = await getAllPedidosClientes();
+      console.log(
+        "responseGetAllPedidosClientes: ",
+        responseGetAllPedidosClientes
+      );
+      if (responseGetAllPedidosClientes.status === 200) {
+        const pedidosClientesMap = responseGetAllPedidosClientes.data.map(
+          (pedidoCliente) => {
             return {
-              id: vacacionEmpleado.id_vacacion_empleado,
-              fecha_inicio: vacacionEmpleado.fecha_inicio,
-              fecha_fin: vacacionEmpleado.fecha_fin,
-              dias_disponibles: vacacionEmpleado.dias_disponibles,
-              dias_pendientes: vacacionEmpleado.dias_pendientes,
-              dias_solicitados: vacacionEmpleado.dias_solicitados,
-              dias_disfrutados: vacacionEmpleado.dias_disfrutados,
-              comentarios: vacacionEmpleado.comentarios,
-              id_persona: vacacionEmpleado.persona.id_persona,
-              dni: vacacionEmpleado.persona.dni,
-              tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
-              id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
+              id: pedidoCliente.id_pedido_cliente,
+              direccion_entrega: pedidoCliente.direccion_entrega,
+              fecha_solicitud_pedido: pedidoCliente.fecha_solicitud_pedido,
+              fecha_entrega_prevista: pedidoCliente.fecha_entrega_prevista,
+              fecha_entrega_real: pedidoCliente.fecha_entrega_real,
+              hora_inicio_desplazamiento:
+                pedidoCliente.hora_inicio_desplazamiento,
+              hora_fin_desplazamiento: pedidoCliente.hora_fin_desplazamiento,
+              tiempo_desplazamiento_total:
+                pedidoCliente.tiempo_desplazamiento_total,
+              hora_inicio_servicio: pedidoCliente.hora_inicio_servicio,
+              hora_fin_servicio: pedidoCliente.hora_fin_servicio,
+              tiempo_servicio_total: pedidoCliente.tiempo_servicio_total,
+              descripcion: pedidoCliente.descripcion,
+              observacion: pedidoCliente.observacion,
+              id_cliente: pedidoCliente.cliente.id_cliente,
+              nif_cliente: pedidoCliente.cliente.nif,
+              id_persona: pedidoCliente.persona_encargado.id_persona,
+              dni_persona: pedidoCliente.persona_encargado.dni,
+              tipo_estado: pedidoCliente.tipo_estado.tipo_estado,
+              id_tipo_estado: pedidoCliente.tipo_estado.id_tipo_estado,
+              tipo_estado_factura:
+                pedidoCliente.tipo_estado_factura.tipo_estado_factura,
+              id_tipo_estado_factura:
+                pedidoCliente.tipo_estado_factura.id_tipo_estado_factura,
             };
-          });
-        setDataSource(vacacionesEmpleadosMap);
+          }
+        );
+        setDataSource(pedidosClientesMap);
       }
       setTableLoading(false);
     } catch (error) {
@@ -198,100 +233,64 @@ export default function PedidosClientes() {
   };
 
   useEffect(() => {
-    console.log("Pagina de vacaciones empleados: ");
+    console.log("Pagina de pedidos clientes: ");
     console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllVacacionesEmpleados();
+      fetchGetAllPedidosClientes();
     }
   }, [authUser]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (vacacionEmpleadoFormUpdated === true) {
-        await fetchGetAllVacacionesEmpleados();
-        setVacacionEmpleadoFormUpdated(false);
-      } else if (vacacionEmpleadoDelete === true) {
-        await fetchGetAllVacacionesEmpleados();
-        setVacacionEmpleadoDelete(false);
+      if (pedidoClienteFormUpdated === true) {
+        await fetchGetAllPedidosClientes();
+        setPedidoClienteFormUpdated(false);
       }
     };
     fetchData();
-  }, [vacacionEmpleadoFormUpdated, vacacionEmpleadoDelete]);
+  }, [pedidoClienteFormUpdated]);
 
-  function vacacionEmpleadoFormUpdatedTrigger() {
-    setVacacionEmpleadoFormUpdated(!vacacionEmpleadoFormUpdated);
+  function pedidoClienteFormUpdatedTrigger() {
+    setPedidoClienteFormUpdated(!pedidoClienteFormUpdated);
   }
 
-  function toggleCreateVacacionEmpleadoForm() {
+  function toggleCreatePedidoClienteForm() {
     setShowFormCreate(!showFormCreate);
   }
 
-  function toggleUpdateVacacionEmpleadoForm() {
+  function toggleUpdatePedidoClienteForm() {
     setShowFormUpdate(!showFormUpdate);
   }
 
-  function toggleViewUniqueVacacionEmpleadoForm() {
+  function toggleViewUniquePedidoClienteForm() {
     setShowFormViewUnique(!showFormViewUnique);
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nueva vacacion empleado");
-    toggleCreateVacacionEmpleadoForm();
+    console.log("Añadir nuevo pedido cliente");
+    toggleCreatePedidoClienteForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleUpdateVacacionEmpleadoForm();
-  };
-
-  const handleDeleteClick = (id) => () => {
-    console.log("ID:", id);
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
-    console.log("Boton para borrar: ", filaSeleccionada);
-    setIdVacacionEmpleadoSelected(id);
-    setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
-    setFechaInicioAndFinVacacionEmpleadoSelected([
-      filaSeleccionada.fecha_inicio,
-      filaSeleccionada.fecha_fin,
-    ]);
-    setShowDelete(true);
+    toggleUpdatePedidoClienteForm();
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una vacacion empleado");
+    console.log("Boton para ver un pedido cliente");
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleViewUniqueVacacionEmpleadoForm();
-  };
-
-  // Handles 'delete' modal ok button
-  const handleModalOk = async () => {
-    const responseDeleteVacacionEmpleado = await deleteVacacionEmpleado(
-      idVacacionEmpleadoSelected
-    );
-    if (responseDeleteVacacionEmpleado.status === 200) {
-      setVacacionEmpleadoDelete(true);
-    }
-    // console.log("Response delete: ", response);
-    resetStates();
-  };
-
-  const handleModalClose = () => {
-    resetStates();
+    toggleViewUniquePedidoClienteForm();
   };
 
   function resetStates() {
     setShowFormCreate(false);
     setShowFormUpdate(false);
     setShowFormViewUnique(false);
-    setShowDelete(false);
-    setIdVacacionEmpleadoSelected(0);
-    setDniPersonaVacacionEmpleadoSelected("");
-    setFechaInicioAndFinVacacionEmpleadoSelected([]);
   }
 
   const getJson = (apiRef) => {
@@ -412,20 +411,6 @@ export default function PedidosClientes() {
   }
 
   const renderTableVacacionEmpleado = () => {
-    function deleteModal() {
-      return (
-        <Antd.Modal
-          title={`¿Desea eliminar las vacaciones asociadas a la persona con DNI ${dniPersonaVacacionEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
-          open={showDelete}
-          okText="Aceptar"
-          onOk={handleModalOk}
-          cancelText="Cancelar"
-          onCancel={handleModalClose}
-          centered
-        ></Antd.Modal>
-      );
-    }
-
     return (
       <div>
         <h1>Pedidos Clientes</h1>
@@ -449,7 +434,7 @@ export default function PedidosClientes() {
             startIcon={<AddIcon />}
             onClick={handleCreateClick}
           >
-            Añadir vacacion empleado
+            Añadir pedido cliente
           </Button>
 
           <DataGrid
@@ -470,7 +455,6 @@ export default function PedidosClientes() {
               toolbar: CustomToolbar,
             }}
           />
-          {showDelete && deleteModal()}
         </Box>
       </div>
     );
@@ -480,9 +464,9 @@ export default function PedidosClientes() {
     return (
       <>
         <FormPedidosClientes
-          toggleForm={toggleCreateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={""}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          toggleForm={toggleCreatePedidoClienteForm}
+          pedidoClienteDataForm={""}
+          formUpdateTrigger={pedidoClienteFormUpdatedTrigger}
           operationType={"create"}
         ></FormPedidosClientes>
       </>
@@ -491,9 +475,9 @@ export default function PedidosClientes() {
     return (
       <>
         <FormPedidosClientes
-          toggleForm={toggleUpdateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          toggleForm={toggleUpdatePedidoClienteForm}
+          pedidoClienteDataForm={rowSelected}
+          formUpdateTrigger={pedidoClienteFormUpdatedTrigger}
           operationType={"update"}
         ></FormPedidosClientes>
       </>
@@ -502,9 +486,9 @@ export default function PedidosClientes() {
     return (
       <>
         <FormPedidosClientes
-          toggleForm={toggleViewUniqueVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          toggleForm={toggleViewUniquePedidoClienteForm}
+          pedidoClienteDataForm={rowSelected}
+          formUpdateTrigger={pedidoClienteFormUpdatedTrigger}
           operationType={"view"}
         ></FormPedidosClientes>
       </>

@@ -62,7 +62,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/ayudasEmpleados/api/getById/11",
+					"raw": "localhost:8080/ayudasEmpleados/api/getById/1",
 					"host": [
 						"localhost"
 					],
@@ -71,7 +71,7 @@
 						"ayudasEmpleados",
 						"api",
 						"getById",
-						"11"
+						"1"
 					]
 				}
 			},

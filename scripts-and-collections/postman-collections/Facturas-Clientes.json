@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \r\n}",
+					"raw": "{\r\n    \"descripcion_servicio\": \"ninguna\",\r\n    \"direccion_entrega\": \"sin direccion\",\r\n    \"hora_inicio_desplazamiento\": null,\r\n    \"hora_fin_desplazamiento\": null,\r\n    \"tiempo_desplazamiento_total\": null,\r\n    \"hora_inicio_servicio\": null,\r\n    \"hora_fin_servicio\": null,\r\n    \"tiempo_servicio_total\": null,\r\n    \"observacion\": \"sin observacion\",\r\n    \"fecha_entrega_real_pedido\": \"2024-10-10\",\r\n    \"fecha_factura_emitida\": \"2024-10-10\",\r\n    \"tarifa_hora_desplazamiento\": 0,\r\n    \"tarifa_hora_servicio\": 0,\r\n    \"subtotal_factura_sin_iva\": 0,\r\n    \"iva\": 0,\r\n    \"total_factura\": 0,\r\n    \"cliente\": {\r\n        \"id_cliente\": 1\r\n    },\"pedido_cliente\": {\r\n        \"id_pedido_cliente\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -84,7 +84,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \r\n}",
+					"raw": "{\r\n    \"descripcion_servicio\": \"ninguna\",\r\n    \"direccion_entrega\": \"sin direccion\",\r\n    \"hora_inicio_desplazamiento\": null,\r\n    \"hora_fin_desplazamiento\": null,\r\n    \"tiempo_desplazamiento_total\": null,\r\n    \"hora_inicio_servicio\": null,\r\n    \"hora_fin_servicio\": null,\r\n    \"tiempo_servicio_total\": null,\r\n    \"observacion\": \"sin observacion\",\r\n    \"fecha_entrega_real_pedido\": \"2024-10-10\",\r\n    \"fecha_factura_emitida\": \"2024-10-10\",\r\n    \"tarifa_hora_desplazamiento\": 0,\r\n    \"tarifa_hora_servicio\": 0,\r\n    \"subtotal_factura_sin_iva\": 0,\r\n    \"iva\": 0,\r\n    \"total_factura\": 0,\r\n    \"cliente\": {\r\n        \"id_cliente\": 1\r\n    },\"pedido_cliente\": {\r\n        \"id_pedido_cliente\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

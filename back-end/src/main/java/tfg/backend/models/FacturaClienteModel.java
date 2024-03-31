@@ -28,28 +28,28 @@ public class FacturaClienteModel implements Serializable {
     @Column(name = "id_factura_cliente", nullable = false)
     private int id_factura_cliente;
 
-    @Column(name = "descripcion_servicio", nullable = true)
+    @Column(name = "descripcion_servicio", nullable = false)
     private String descripcion_servicio;
 
-    @Column(name = "direccion_entrega", nullable = true)
+    @Column(name = "direccion_entrega", nullable = false)
     private String direccion_entrega;
 
-    @Column(name = "hora_inicio_desplazamiento", nullable = true)
+    @Column(name = "hora_inicio_desplazamiento", nullable = false)
     private LocalTime hora_inicio_desplazamiento;
 
-    @Column(name = "hora_fin_desplazamiento", nullable = true)
+    @Column(name = "hora_fin_desplazamiento", nullable = false)
     private LocalTime hora_fin_desplazamiento;
 
-    @Column(name = "tiempo_desplazamiento_total", nullable = true)
+    @Column(name = "tiempo_desplazamiento_total", nullable = false)
     private LocalTime tiempo_desplazamiento_total;
 
-    @Column(name = "hora_inicio_servicio", nullable = true)
+    @Column(name = "hora_inicio_servicio", nullable = false)
     private LocalTime hora_inicio_servicio;
 
-    @Column(name = "hora_fin_servicio", nullable = true)
+    @Column(name = "hora_fin_servicio", nullable = false)
     private LocalTime hora_fin_servicio;
 
-    @Column(name = "tiempo_servicio_total", nullable = true)
+    @Column(name = "tiempo_servicio_total", nullable = false)
     private LocalTime tiempo_servicio_total;
 
     @Column(name = "observacion", nullable = true)

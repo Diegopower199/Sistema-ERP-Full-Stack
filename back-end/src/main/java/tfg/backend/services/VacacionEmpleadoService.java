@@ -120,8 +120,6 @@ public class VacacionEmpleadoService {
         VacacionEmpleadoModel vacacionEmpleadoGuardado = vacacionEmpleadoRepository.save(nuevoVacacionEmpleado);
 
         return vacacionEmpleadoGuardado;
-
-        // return nuevoVacacionEmpleado;
     }
 
     public Map<String, Object> getVacacionEmpleadoById(int idVacacionEmpleado) {

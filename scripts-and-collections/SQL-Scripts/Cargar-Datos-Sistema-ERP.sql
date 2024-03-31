@@ -815,6 +815,24 @@ INSERT INTO `trabajotfgerp`.`clientes` (`ciudad`, `codigo_postal`, `correo_elect
 INSERT INTO `trabajotfgerp`.`clientes` (`ciudad`, `codigo_postal`, `correo_electronico`, `direccion`, `nif`, `nombre_apellidos`, `numero_telefono`, `provincia`, `razon_social`) VALUES ('SEVILLA', '41006', 'soporte@infrawave-iberica.es', 'Avenida de la Palmera 567', 'T9876543U', null, '34681234570', 'SEVILLA', 'InfraWave Microsystems Ibérica');
 
 
+-- ========================================
+--  Pedidos clientes
+-- ========================================
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `observacion`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('descripcion', '2023-12-16', '2023-12-12', '2023-12-12', 'ninguna observacion', '1', '1', '1', '1');
+
+
+
+-- ========================================
+--  Facturas clientes
+-- ========================================
+
+
+
+-- ========================================
+--  Pagos facturas clientes
+-- ========================================
+
+
 /*
 -- ========================================
 --  Pedidos clientes

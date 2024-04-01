@@ -4,6 +4,12 @@ import ErrorIcon from "@mui/icons-material/Error";
 import { saveCliente, updateCliente } from "@/services/ClienteService";
 import * as Antd from "antd";
 import { PROVINCIAS_CON_CIUDADES } from "@/utils/provinciasConCiudades";
+import {
+  REGEX_EMAIL,
+  REGEX_NIF_PERSONAS_FISICAS,
+  REGEX_NIF_PERSONAS_JURIDICAS,
+  REGEX_TELEFONO_CON_PREFIJO,
+} from "@/utils/regexPatterns";
 
 export default function FormClientes({
   toggleForm,
@@ -92,8 +98,18 @@ export default function FormClientes({
   const validateFormData = () => {
     const errorForm = {};
 
-    /*if (!formData.dni.match(REGEX_DNI)) {
-      errorForm.dni = "Por favor, ingresa un DNI válido";
+    if (
+      selectedOptionRadio === 1 &&
+      !formData.nif.match(REGEX_NIF_PERSONAS_FISICAS)
+    ) {
+      errorForm.nif =
+        "Por favor, ingresa un nif valido para una persona fisica";
+    } else if (
+      selectedOptionRadio === 2 &&
+      !formData.nif.match(REGEX_NIF_PERSONAS_JURIDICAS)
+    ) {
+      errorForm.nif =
+        "Por favor, ingresa un nif valido para una persona jurídica";
     }
 
     if (!formData.numero_telefono.match(REGEX_TELEFONO_CON_PREFIJO)) {
@@ -103,7 +119,7 @@ export default function FormClientes({
 
     if (!formData.correo_electronico.match(REGEX_EMAIL)) {
       errorForm.correo_electronico = "Por favor, ingresa un email válido";
-    }*/
+    }
 
     setFormErrors(errorForm);
     console.log("errorForm", errorForm);
@@ -157,6 +173,13 @@ export default function FormClientes({
   const handleRadioSelected = (id) => {
     console.log("ID: ", id);
     setSelectedOptionRadio(id);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["nombre_apellidos"]: "",
+        ["razon_social"]: "",
+      };
+    });
   };
 
   const handleSelectProvinciaChange = (value, option) => {
@@ -274,257 +297,244 @@ export default function FormClientes({
 
   return (
     <>
-      {operationType === "create" && (
-        <>
-          Seleccione su tipo de cliente {""}
-          {options.map((option) => (
-            <Antd.Radio
-              key={option.id}
-              checked={option.id === selectedOptionRadio}
-              onChange={() => handleRadioSelected(option.id)}
-            >
-              {option.label}
-            </Antd.Radio>
-          ))}
-          {requiredFieldsIncomplete.selectedOptionRadio && (
+      <Antd.Form>
+        {operationType === "create" && (
+          <>
+            <Antd.Form.Item label="Seleccione su tipo de cliente">
+              {options.map((option) => (
+                <Antd.Radio
+                  key={option.id}
+                  checked={option.id === selectedOptionRadio}
+                  onChange={() => handleRadioSelected(option.id)}
+                >
+                  {option.label}
+                </Antd.Radio>
+              ))}
+              {requiredFieldsIncomplete.selectedOptionRadio && (
+                <div
+                  style={{ color: "red", fontSize: "12px", marginTop: "5px" }}
+                >
+                  {requiredFieldsIncomplete.selectedOptionRadio}
+                </div>
+              )}
+              
+            </Antd.Form.Item>
+          </>
+        )}
+        <Antd.Form.Item label="NIF">
+          <Antd.Input
+            type="text"
+            name="nif"
+            value={formData.nif}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={
+              requiredFieldsIncomplete.nif || formErrors.nif ? "error" : ""
+            }
+          />
+          {(requiredFieldsIncomplete.nif || formErrors.nif) && (
             <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-              {requiredFieldsIncomplete.selectedOptionRadio}
+              {requiredFieldsIncomplete.nif || formErrors.nif}
             </div>
           )}
-          <br /> <br />
-        </>
-      )}
-      <label>
-        Nif:
-        <input
-          type="text"
-          name="nif"
-          value={formData.nif}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={requiredFieldsIncomplete.nif ? styles.inputError : ""}
-        />
-        {requiredFieldsIncomplete.nif && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.nif}
-          </div>
+        </Antd.Form.Item>
+        {((operationType === "create" && selectedOptionRadio === 1) ||
+          ((operationType === "update" || operationType === "view") &&
+            formData.nombre_apellidos !== null)) && (
+          <>
+            <Antd.Form.Item label="Nombre y apellidos">
+              <Antd.Input
+                type="text"
+                name="nombre_apellidos"
+                value={formData.nombre_apellidos}
+                onChange={operationType === "view" ? null : handleFormChange}
+                readOnly={operationType === "view" ? true : false}
+                status={
+                  requiredFieldsIncomplete.nombre_apellidos ? "error" : ""
+                }
+              />
+              {requiredFieldsIncomplete.nombre_apellidos && (
+                <div
+                  style={{ color: "red", fontSize: "12px", marginTop: "5px" }}
+                >
+                  {requiredFieldsIncomplete.nombre_apellidos}
+                </div>
+              )}
+            </Antd.Form.Item>
+          </>
         )}
-      </label>
-      <br />
-      <br />
-      {((operationType === "create" && selectedOptionRadio === 1) ||
-        ((operationType === "update" || operationType === "view") &&
-          formData.nombre_apellidos !== null)) && (
-        <>
-          <label>
-            Nombre y apellidos:
-            <input
-              type="text"
-              name="nombre_apellidos"
-              value={formData.nombre_apellidos}
-              onChange={operationType === "view" ? null : handleFormChange}
-              readOnly={operationType === "view" ? true : false}
-              className={
-                requiredFieldsIncomplete.nombre_apellidos
-                  ? styles.inputError
-                  : ""
-              }
-            />
-            {requiredFieldsIncomplete.nombre_apellidos && (
-              <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-                {requiredFieldsIncomplete.nombre_apellidos}
-              </div>
-            )}
-          </label>
-          <br />
-          <br />
-        </>
-      )}
-      {((operationType === "create" && selectedOptionRadio === 2) ||
-        ((operationType === "update" || operationType === "view") &&
-          formData.razon_social !== null)) && (
-        <>
-          <label>
-            Razon social:
-            <input
-              type="text"
-              name="razon_social"
-              value={formData.razon_social}
-              onChange={operationType === "view" ? null : handleFormChange}
-              readOnly={operationType === "view" ? true : false}
-              className={
-                requiredFieldsIncomplete.razon_social ? styles.inputError : ""
-              }
-            />
-            {requiredFieldsIncomplete.razon_social && (
-              <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-                {requiredFieldsIncomplete.razon_social}
-              </div>
-            )}
-          </label>
-          <br />
-          <br />
-        </>
-      )}
-      <label>
-        Numero telefono:
-        <input
-          type="text"
-          name="numero_telefono"
-          value={formData.numero_telefono}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.numero_telefono ||
-            formErrors.numero_telefono
-              ? styles.inputError
-              : ""
-          }
-        />
-        {requiredFieldsIncomplete.numero_telefono && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.numero_telefono}
-          </div>
+        {((operationType === "create" && selectedOptionRadio === 2) ||
+          ((operationType === "update" || operationType === "view") &&
+            formData.razon_social !== null)) && (
+          <>
+            <Antd.Form.Item label="Razon social:">
+              <Antd.Input
+                type="text"
+                name="razon_social"
+                value={formData.razon_social}
+                onChange={operationType === "view" ? null : handleFormChange}
+                readOnly={operationType === "view" ? true : false}
+                status={requiredFieldsIncomplete.razon_social ? "error" : ""}
+              />
+              {requiredFieldsIncomplete.razon_social && (
+                <div
+                  style={{ color: "red", fontSize: "12px", marginTop: "5px" }}
+                >
+                  {requiredFieldsIncomplete.razon_social}
+                </div>
+              )}
+            </Antd.Form.Item>
+          </>
         )}
-        {formErrors.numero_telefono && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {formErrors.numero_telefono}
-          </div>
-        )}
-      </label>
-      <br /> <br />
-      <label>
-        Correo electronico:
-        <input
-          type="text"
-          name="correo_electronico"
-          value={formData.correo_electronico}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.correo_electronico ||
-            formErrors.correo_electronico
-              ? styles.inputError
-              : ""
-          }
-        />
-        {requiredFieldsIncomplete.correo_electronico && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.correo_electronico}
-          </div>
-        )}
-        {formErrors.correo_electronico && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {formErrors.correo_electronico}
-          </div>
-        )}
-      </label>
-      <br /> <br />
-      <label>
-        Direccion:
-        <input
-          type="text"
-          name="direccion"
-          value={formData.direccion}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.direccion ? styles.inputError : ""
-          }
-        />
-        {requiredFieldsIncomplete.direccion && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.direccion}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Codigo postal:
-        <input
-          type="text"
-          name="codigo_postal"
-          value={formData.codigo_postal}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.codigo_postal ? styles.inputError : ""
-          }
-        />
-        {requiredFieldsIncomplete.codigo_postal && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.codigo_postal}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <Antd.Form.Item label="Provincia seleccionada">
-        <Antd.Select
-          name="provincia"
-          value={
-            formData.provincia ? formData.provincia : "Selecciona una provincia"
-          }
-          showSearch={true}
-          style={{ width: "35%" }}
-          status={requiredFieldsIncomplete.provincia ? "error" : ""}
-          onChange={
-            operationType === "view" ? null : handleSelectProvinciaChange
-          }
-          onSearch={
-            operationType === "view" ? null : handleSelectProvinciaSearch
-          }
-          filterOption={
-            operationType === "view" ? null : filterIncrementalSearch
-          }
-          notFoundContent={<span>No hay provincia</span>}
-        >
-          {operationType !== "view" &&
-            PROVINCIAS_CON_CIUDADES.map((provincia, index) => (
-              <Antd.Select.Option key={index} value={provincia.provincia}>
-                {provincia.provincia}
-              </Antd.Select.Option>
-            ))}
-        </Antd.Select>
-        {requiredFieldsIncomplete.provincia && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.provincia}
-          </div>
-        )}
-      </Antd.Form.Item>
-      <Antd.Form.Item label="Ciudad seleccionada">
-        <Antd.Select
-          name="ciudad"
-          value={formData.ciudad ? formData.ciudad : "Selecciona una ciudad"}
-          showSearch={true}
-          style={{ width: "35%" }}
-          status={requiredFieldsIncomplete.ciudad ? "error" : ""}
-          onChange={operationType === "view" ? null : handleSelectCiudadChange}
-          onSearch={operationType === "view" ? null : handleSelectCiudadSearch}
-          filterOption={
-            operationType === "view" ? null : filterIncrementalSearch
-          }
-          notFoundContent={<span>No hay ciudades</span>}
-          disabled={Object.keys(selectedProvince).length > 0 ? false : true}
-        >
-          {formData.provincia !== "" &&
-            operationType !== "view" &&
-            selectedProvince.ciudades.map((provinceData, index) => (
-              <Antd.Select.Option key={index} value={provinceData}>
-                {provinceData}
-              </Antd.Select.Option>
-            ))}
-        </Antd.Select>
-        {requiredFieldsIncomplete.ciudad && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.ciudad}
-          </div>
-        )}
-      </Antd.Form.Item>
+        <Antd.Form.Item label="Numero telefono:">
+          <Antd.Input
+            type="text"
+            name="numero_telefono"
+            value={formData.numero_telefono}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={
+              requiredFieldsIncomplete.numero_telefono ||
+              formErrors.numero_telefono
+                ? "error"
+                : ""
+            }
+          />
+          {(requiredFieldsIncomplete.numero_telefono ||
+            formErrors.numero_telefono) && (
+            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+              {requiredFieldsIncomplete.numero_telefono ||
+                formErrors.numero_telefono}
+            </div>
+          )}
+        </Antd.Form.Item>
+
+        <Antd.Form.Item label="Correo electronico:">
+          <Antd.Input
+            type="text"
+            name="correo_electronico"
+            value={formData.correo_electronico}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={
+              requiredFieldsIncomplete.correo_electronico ||
+              formErrors.correo_electronico
+                ? "error"
+                : ""
+            }
+          />
+          {(requiredFieldsIncomplete.correo_electronico ||
+            formErrors.correo_electronico) && (
+            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+              {requiredFieldsIncomplete.correo_electronico ||
+                formErrors.correo_electronico}
+            </div>
+          )}
+        </Antd.Form.Item>
+
+        <Antd.Form.Item label="Direccion:">
+          <Antd.Input
+            type="text"
+            name="direccion"
+            value={formData.direccion}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.direccion ? "error" : ""}
+          />
+          {requiredFieldsIncomplete.direccion && (
+            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+              {requiredFieldsIncomplete.direccion}
+            </div>
+          )}
+        </Antd.Form.Item>
+
+        <Antd.Form.Item label="Codigo postal:">
+          <Antd.Input
+            type="text"
+            name="codigo_postal"
+            value={formData.codigo_postal}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.codigo_postal ? "error" : ""}
+          />
+          {requiredFieldsIncomplete.codigo_postal && (
+            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+              {requiredFieldsIncomplete.codigo_postal}
+            </div>
+          )}
+        </Antd.Form.Item>
+
+        <Antd.Form.Item label="Provincia seleccionada">
+          <Antd.Select
+            name="provincia"
+            value={
+              formData.provincia
+                ? formData.provincia
+                : "Selecciona una provincia"
+            }
+            showSearch={true}
+            style={{ width: "35%" }}
+            status={requiredFieldsIncomplete.provincia ? "error" : ""}
+            onChange={
+              operationType === "view" ? null : handleSelectProvinciaChange
+            }
+            onSearch={
+              operationType === "view" ? null : handleSelectProvinciaSearch
+            }
+            filterOption={
+              operationType === "view" ? null : filterIncrementalSearch
+            }
+            notFoundContent={<span>No hay provincia</span>}
+          >
+            {operationType !== "view" &&
+              PROVINCIAS_CON_CIUDADES.map((provincia, index) => (
+                <Antd.Select.Option key={index} value={provincia.provincia}>
+                  {provincia.provincia}
+                </Antd.Select.Option>
+              ))}
+          </Antd.Select>
+          {requiredFieldsIncomplete.provincia && (
+            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+              {requiredFieldsIncomplete.provincia}
+            </div>
+          )}
+        </Antd.Form.Item>
+        <Antd.Form.Item label="Ciudad seleccionada">
+          <Antd.Select
+            name="ciudad"
+            value={formData.ciudad ? formData.ciudad : "Selecciona una ciudad"}
+            showSearch={true}
+            style={{ width: "35%" }}
+            status={requiredFieldsIncomplete.ciudad ? "error" : ""}
+            onChange={
+              operationType === "view" ? null : handleSelectCiudadChange
+            }
+            onSearch={
+              operationType === "view" ? null : handleSelectCiudadSearch
+            }
+            filterOption={
+              operationType === "view" ? null : filterIncrementalSearch
+            }
+            notFoundContent={<span>No hay ciudades</span>}
+            disabled={Object.keys(selectedProvince).length > 0 ? false : true}
+          >
+            {formData.provincia !== "" &&
+              operationType !== "view" &&
+              selectedProvince.ciudades.map((provinceData, index) => (
+                <Antd.Select.Option key={index} value={provinceData}>
+                  {provinceData}
+                </Antd.Select.Option>
+              ))}
+          </Antd.Select>
+          {requiredFieldsIncomplete.ciudad && (
+            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+              {requiredFieldsIncomplete.ciudad}
+            </div>
+          )}
+        </Antd.Form.Item>
+      </Antd.Form>
       {errorMessage.length !== 0 && (
         <>
-          <br /> <br />
           <p className={styles.errorMessage}>
             <ErrorIcon fontSize="medium" color="red" />
             Error: {errorMessage}
@@ -533,14 +543,12 @@ export default function FormClientes({
       )}
       {(operationType === "create" || operationType === "update") && (
         <>
-          <br /> <br />
           <button onClick={toggleForm}>Cancelar</button>{" "}
           <button onClick={handleSubmit}>Guardar</button>
         </>
       )}
       {operationType === "view" && (
         <>
-          <br /> <br />
           <button onClick={toggleForm}>Salir</button>
         </>
       )}

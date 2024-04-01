@@ -35,6 +35,23 @@ export const saveNominaEmpleado = async (data) => {
   }
 };
 
+export const generateNominasEmpleados = async () => {
+  const url = API_URL_BACK_END.replace("#", "nominasEmpleados");
+  try {
+    const response = await axios.post(url + "generate");
+
+    return {
+      data: response.data.resultado,
+      status: response.status,
+    };
+  } catch (error) {
+    return {
+      errorMessage: error.response.data.message,
+      status: error.response.status,
+    };
+  }
+};
+
 export const getNominaEmpleadoById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "nominasEmpleados");
   try {

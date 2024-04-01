@@ -2,6 +2,7 @@ package tfg.backend.services;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -97,7 +98,7 @@ public class FacturaClienteService {
         return facturaClienteGuardado;
     }
 
-    public int generateFacturasClientes() {
+    public Map<String, Object> generateFacturasClientes() {
         TipoEstadoFacturaModel tipoEstadoPendienteFacturar = new TipoEstadoFacturaModel();
         tipoEstadoPendienteFacturar.setId_tipo_estado_factura(1);
 
@@ -116,7 +117,7 @@ public class FacturaClienteService {
 
         for (PedidoClienteModel pedidoCliente : listaPedidosClientesParaFacturar) {
             FacturaClienteModel newFacturaClienteFacturado = new FacturaClienteModel();
-            
+
             newFacturaClienteFacturado.setDescripcion_servicio(pedidoCliente.getDescripcion());
             newFacturaClienteFacturado.setDireccion_entrega(pedidoCliente.getDireccion_entrega());
             newFacturaClienteFacturado.setHora_inicio_desplazamiento(pedidoCliente.getHora_inicio_desplazamiento());
@@ -149,14 +150,15 @@ public class FacturaClienteService {
         facturaClienteRepository.saveAll(listaFacturaClientesGuardarBBDD);
         pedidoClienteRepository.saveAll(listaPedidosClientesActualizarBBDD);
 
-        return listaFacturaClientesGuardarBBDD.size();
+        Map<String, Object> mostrarFacturasGeneradas = new HashMap<>();
+        mostrarFacturasGeneradas.put("resultado", listaFacturaClientesGuardarBBDD.size());
+
+        return mostrarFacturasGeneradas;
     }
 
     public Map<String, Object> getFacturaClienteById(int idFacturaCliente) {
-        FacturaClienteModel facturaClienteEncontrado = facturaClienteRepository.findById(idFacturaCliente)
-                .orElseThrow(
-                        () -> new RuntimeException("Factura cliente con id " + idFacturaCliente
-                                + " no encontrado"));
+        FacturaClienteModel facturaClienteEncontrado = facturaClienteRepository.findById(idFacturaCliente).orElseThrow(
+                () -> new RuntimeException("Factura cliente con id " + idFacturaCliente + " no encontrado"));
 
         Map<String, Object> facturaClienteMap = facturaClienteEncontrado.toMap();
 

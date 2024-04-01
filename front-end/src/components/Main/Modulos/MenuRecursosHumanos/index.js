@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useAuth } from "@/context/UserContext";
 import styles from "./styles.module.css";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function MenuRecursosHumanos() {
   const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn, permisosUser, setPermisosUser } = useAuth();
@@ -19,6 +21,7 @@ export default function MenuRecursosHumanos() {
 
   return (
     <>
+    <Header />
       <h1>Recursos Humanos</h1>
       <p>
         <Link href={"/menu-principal"}>Menu Principal</Link>
@@ -61,6 +64,7 @@ export default function MenuRecursosHumanos() {
           Vacaciones Empleados
         </Link>
       </p>
+      <Footer />
     </>
   );
 }

@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useAuth } from "@/context/UserContext";
 import styles from "./styles.module.css";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function MenuFacturacion() {
   const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn, permisosUser, setPermisosUser } = useAuth();
@@ -11,6 +13,7 @@ export default function MenuFacturacion() {
 
   return (
     <>
+    <Header />
       <h1>Facturacion</h1>
       <p>
         <Link href={"/menu-principal"}>Menu Principal</Link>
@@ -25,6 +28,7 @@ export default function MenuFacturacion() {
         <Link href={"menu-facturacion/pagos-facturas-clientes"}>Pagos facturas clientes</Link>
       </p>
       <br />
+      <Footer />
     </>
   );
 }

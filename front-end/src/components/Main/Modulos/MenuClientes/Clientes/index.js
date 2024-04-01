@@ -25,6 +25,8 @@ import {
 import FormClientes from "./FormClientes";
 import styles from "./styles.module.css";
 import { getAllClientes } from "@/services/ClienteService";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function Clientes() {
   const {
@@ -349,6 +351,7 @@ export default function Clientes() {
   const renderTableClientes = () => {
     return (
       <div>
+        <Header />
         <h1>Clientes</h1>
         <h2>
           <Link href={"/menu-clientes"}>Menu Clientes</Link>
@@ -392,6 +395,7 @@ export default function Clientes() {
             }}
           />
         </Box>
+        <Footer />
       </div>
     );
   };

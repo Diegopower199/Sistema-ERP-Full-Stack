@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useAuth } from "@/context/UserContext";
 import styles from "./styles.module.css";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function MenuClientes() {
   const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn, permisosUser, setPermisosUser } = useAuth();
@@ -11,6 +13,7 @@ export default function MenuClientes() {
 
   return (
     <>
+    <Header />
       <h1>Clientes</h1>
       <p>
         <Link href={"/menu-principal"}>Menu Principal</Link>
@@ -26,6 +29,7 @@ export default function MenuClientes() {
         </Link>
       </p>
       <br />
+      <Footer />
     </>
   );
 }

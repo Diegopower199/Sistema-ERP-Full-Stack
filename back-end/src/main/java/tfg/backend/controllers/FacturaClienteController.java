@@ -62,11 +62,9 @@ public class FacturaClienteController {
     @PostMapping("/api/generate")
     public ResponseEntity<Map<String, Object>> generate() {
         try {
-            int allFacturasClientes = facturaClienteService.generateFacturasClientes();
-            Map<String, Object> mostrarFacturasGeneradas = new HashMap<>();
-            mostrarFacturasGeneradas.put("resultado", allFacturasClientes);
+            Map<String, Object> facturasClientesGeneradas = facturaClienteService.generateFacturasClientes();
 
-            return ResponseEntity.ok().body(mostrarFacturasGeneradas);
+            return ResponseEntity.ok().body(facturasClientesGeneradas);
         } catch (Exception e) {
             Map<String, Object> mostrarMensajeError = new HashMap<>();
             mostrarMensajeError.put("message", e.getMessage());

@@ -1,0 +1,20 @@
+.PosicionHeader {
+  display: flex;
+  justify-content: space-between;
+  background-color: #add8e6;
+  margin-bottom: 10px;
+}
+
+.DivNombreEmpresa {
+  display: flex;
+  align-items: center;
+}
+
+.DivCerrarSesion {
+  display: flex;
+  align-items: center;
+}
+
+.ButtonCerrarSesion {
+  margin-left: 10px;
+}

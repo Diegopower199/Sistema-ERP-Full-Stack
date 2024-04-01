@@ -30,6 +30,8 @@ import {
 import FormPagosFacturasClientes from "./FormPagosFacturasClientes";
 import styles from "./styles.module.css";
 import { getAllPagosFacturasClientes } from "@/services/PagoFacturaClienteService";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function PagosFacturasClientes() {
   const {
@@ -392,6 +394,7 @@ export default function PagosFacturasClientes() {
 
     return (
       <div>
+        <Header />
         <h1>Pagos Facturas Clientes</h1>
         <h2>
           <Link href={"/menu-facturacion"}>Menu Facturacion</Link>
@@ -436,6 +439,7 @@ export default function PagosFacturasClientes() {
           />
           {showDelete && deleteModal()}
         </Box>
+        <Footer />
       </div>
     );
   };

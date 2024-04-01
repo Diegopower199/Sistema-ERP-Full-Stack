@@ -3,7 +3,14 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/context/UserContext";
 
 const PaginaInicio = () => {
-  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn, permisosUser, setPermisosUser } = useAuth();
+  const {
+    authUser,
+    setAuthUser,
+    isLoggedIn,
+    setIsLoggedIn,
+    permisosUser,
+    setPermisosUser,
+  } = useAuth();
 
   const router = useRouter();
 
@@ -15,7 +22,7 @@ const PaginaInicio = () => {
     }
   }, [authUser]);
 
-  return <></>;
+  return <div></div>;
 };
 
 export default PaginaInicio;

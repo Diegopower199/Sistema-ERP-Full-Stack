@@ -10,6 +10,8 @@ import {
   REGEX_NIF_PERSONAS_JURIDICAS,
   REGEX_TELEFONO_CON_PREFIJO,
 } from "@/utils/regexPatterns";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function FormClientes({
   toggleForm,
@@ -297,6 +299,7 @@ export default function FormClientes({
 
   return (
     <>
+      <Header />
       <Antd.Form>
         {operationType === "create" && (
           <>
@@ -317,7 +320,6 @@ export default function FormClientes({
                   {requiredFieldsIncomplete.selectedOptionRadio}
                 </div>
               )}
-              
             </Antd.Form.Item>
           </>
         )}
@@ -552,6 +554,7 @@ export default function FormClientes({
           <button onClick={toggleForm}>Salir</button>
         </>
       )}
+      <Footer />
     </>
   );
 }

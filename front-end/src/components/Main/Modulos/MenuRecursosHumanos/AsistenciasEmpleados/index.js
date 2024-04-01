@@ -30,6 +30,8 @@ import {
 } from "@/services/AsistenciaEmpleadoService";
 import FormAsistenciasEmpleados from "./FormAsistenciasEmpleados";
 import styles from "./styles.module.css";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function AsistenciasEmpleados() {
   const {
@@ -404,6 +406,7 @@ export default function AsistenciasEmpleados() {
 
     return (
       <div>
+        <Header />
         <h1>Asistencia Empleados</h1>
         <h2>
           <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
@@ -448,6 +451,7 @@ export default function AsistenciasEmpleados() {
           />
           {showDelete && deleteModal()}
         </Box>
+        <Footer />
       </div>
     );
   };

@@ -3,9 +3,18 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useAuth } from "@/context/UserContext";
 import styles from "./styles.module.css";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function MenuPrincipal() {
-  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn, permisosUser, setPermisosUser } = useAuth();
+  const {
+    authUser,
+    setAuthUser,
+    isLoggedIn,
+    setIsLoggedIn,
+    permisosUser,
+    setPermisosUser,
+  } = useAuth();
 
   const router = useRouter();
 
@@ -24,12 +33,13 @@ export default function MenuPrincipal() {
   function cerrarSesion() {
     setIsLoggedIn(false);
     setAuthUser(null);
-    setPermisosUser(null)
+    setPermisosUser(null);
     console.log("Cerramos sesion: ", isLoggedIn);
   }
 
   return (
-    <>
+    <div>
+      <Header />
       <h1>MENU PRINCIPAL</h1>
       <button onClick={handleCerrarSesion}>Cerrar sesion</button>
       <br /> <br />
@@ -56,6 +66,7 @@ export default function MenuPrincipal() {
           Menu Facturacion
         </Link>
       </p>
-    </>
+      <Footer />
+    </div>
   );
 }

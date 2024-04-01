@@ -27,6 +27,8 @@ import {
 import { getAllNominasEmpleados } from "@/services/NominaEmpleadoService";
 import FormNominasEmpleados from "./FormNominasEmpleados";
 import styles from "./styles.module.css";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function NominasEmpleados() {
   const {
@@ -454,6 +456,7 @@ export default function NominasEmpleados() {
 
     return (
       <div>
+        <Header />
         <h1>Nominas Empleados</h1>
         <h2>
           <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
@@ -498,6 +501,7 @@ export default function NominasEmpleados() {
           />
           {showDelete && deleteModal()}
         </Box>
+        <Footer />
       </div>
     );
   };

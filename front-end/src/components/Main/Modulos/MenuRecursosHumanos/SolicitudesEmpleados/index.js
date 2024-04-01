@@ -30,6 +30,8 @@ import {
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
 import styles from "./styles.module.css";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function SolicitudesEmpleados() {
   const {
@@ -397,6 +399,7 @@ export default function SolicitudesEmpleados() {
 
     return (
       <div>
+        <Header />
         <h1>Solicitudes Empleados</h1>
         <h2>
           <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
@@ -441,6 +444,7 @@ export default function SolicitudesEmpleados() {
           />
           {showDelete && deleteModal()}
         </Box>
+        <Footer />
       </div>
     );
   };

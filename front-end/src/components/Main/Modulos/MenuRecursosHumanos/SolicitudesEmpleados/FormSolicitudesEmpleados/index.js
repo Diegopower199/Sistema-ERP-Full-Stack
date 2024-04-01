@@ -13,6 +13,8 @@ import {
   saveSolicitudEmpleado,
   updateSolicitudEmpleado,
 } from "@/services/SolicitudEmpleadoService";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function FormSolicitudesEmpleados({
   toggleForm,
@@ -220,6 +222,7 @@ export default function FormSolicitudesEmpleados({
 
   return (
     <>
+    <Header />
       <label>
         Fecha de solicitud:
         <input
@@ -353,6 +356,7 @@ export default function FormSolicitudesEmpleados({
           <button onClick={toggleForm}>Salir</button>
         </>
       )}
+      <Footer />
     </>
   );
 }

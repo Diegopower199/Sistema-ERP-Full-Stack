@@ -25,6 +25,8 @@ import {
 import FormPedidosClientes from "./FormPedidosClientes";
 import styles from "./styles.module.css";
 import { getAllPedidosClientes } from "@/services/PedidoClienteService";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function PedidosClientes() {
   const {
@@ -413,6 +415,7 @@ export default function PedidosClientes() {
   const renderTableVacacionEmpleado = () => {
     return (
       <div>
+        <Header />
         <h1>Pedidos Clientes</h1>
         <h2>
           <Link href={"/menu-clientes"}>Menu Clientes</Link>
@@ -456,6 +459,7 @@ export default function PedidosClientes() {
             }}
           />
         </Box>
+        <Footer />
       </div>
     );
   };

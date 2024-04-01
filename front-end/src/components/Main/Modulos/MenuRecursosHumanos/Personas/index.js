@@ -27,6 +27,8 @@ import {
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
 import styles from "./styles.module.css";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function Personas() {
   const {
@@ -415,6 +417,7 @@ export default function Personas() {
 
     return (
       <div>
+        <Header />
         <h1>Personas</h1>
         <h2>
           <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
@@ -459,6 +462,7 @@ export default function Personas() {
           />
           {showDelete && deleteModal()}
         </Box>
+        <Footer />
       </div>
     );
   };

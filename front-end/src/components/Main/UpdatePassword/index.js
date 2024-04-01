@@ -136,7 +136,7 @@ export default function UpdatePassword() {
   };
 
   return (
-    <>
+    <div>
       {correctEmail === false && correctVerificationCode === false && (
         <>
           <h1>Recuperacion de cuenta</h1>
@@ -228,6 +228,6 @@ export default function UpdatePassword() {
           <button onClick={changePassword}>Cambiar la contraseña</button>
         </>
       )}
-    </>
+    </div>
   );
 }

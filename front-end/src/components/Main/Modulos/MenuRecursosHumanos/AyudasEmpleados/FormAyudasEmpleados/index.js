@@ -12,6 +12,8 @@ import {
   formatearFechaYYYYMMDD,
   validarFechaYYYYMMDD,
 } from "@/utils/functionsFecha";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function FormAyudasEmpleados({
   toggleForm,
@@ -268,6 +270,7 @@ export default function FormAyudasEmpleados({
 
   return (
     <>
+    <Header />
       <label>
         Numero empleado:
         <input
@@ -517,6 +520,7 @@ export default function FormAyudasEmpleados({
           <button onClick={toggleForm}>Salir</button>
         </>
       )}
+      <Footer />
     </>
   );
 }

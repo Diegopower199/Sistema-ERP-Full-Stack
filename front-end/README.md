@@ -75,7 +75,17 @@ Para ejecutar solo archivos .js debo poner "node script.js" y tener node instala
 
 Descargarme esto para ver fallos de javascript: ESLint en extensiones
 
-Bibliotecas instaladas: - npm install dotenv - npm install axios - npm install @mui/material @emotion/react @emotion/styled - npm install @mui/icons-material - npm install @mui/icons-material @mui/material @emotion/styled @emotion/react - npm install @mui/x-data-grid - npm install moment - npm install antd
+Bibliotecas instaladas:
+
+- npm install dotenv
+- npm install axios
+- npm install @mui/material @emotion/react @emotion/styled
+- npm install @mui/icons-material
+- npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
+- npm install @mui/x-data-grid
+- npm install moment
+- npm install antd
+- npm install @ant-design/icons --save
 
 Componentes: https://mui.com/components/
 

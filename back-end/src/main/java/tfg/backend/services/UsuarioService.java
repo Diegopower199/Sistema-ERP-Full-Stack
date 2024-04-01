@@ -44,7 +44,7 @@ public class UsuarioService {
         return resultado;
     }
 
-    public UsuarioModel saveUsuario(UsuarioModel nuevoPersona) { // La devuelta no sé si es la correcta (CREO QUE SÍ)
+    public UsuarioModel saveUsuario(UsuarioModel nuevoPersona) {
 
         String nombre_usuario = nuevoPersona.getNombre_usuario();
 

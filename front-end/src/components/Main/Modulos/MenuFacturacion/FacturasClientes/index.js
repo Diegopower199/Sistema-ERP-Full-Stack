@@ -27,6 +27,8 @@ import {
   generateFacturasClientes,
   getAllFacturasClientes,
 } from "@/services/FacturaClienteService";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function FacturasClientes() {
   const {
@@ -509,6 +511,7 @@ export default function FacturasClientes() {
 
     return (
       <div>
+        <Header />
         <h1>Facturas Clientes</h1>
         <h2>
           <Link href={"/menu-facturacion"}>Menu Facturacion</Link>
@@ -554,6 +557,7 @@ export default function FacturasClientes() {
 
           {showModalGenerate && generateFacturasClientesModal()}
         </Box>
+        <Footer />
       </div>
     );
   };

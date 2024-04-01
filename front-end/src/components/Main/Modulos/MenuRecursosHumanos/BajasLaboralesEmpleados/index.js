@@ -30,6 +30,8 @@ import {
   getAllBajasLaboralesEmpleados,
 } from "@/services/BajaLaboralEmpleadoService";
 import styles from "./styles.module.css";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function BajasLaboralesEmpleados() {
   const {
@@ -416,6 +418,7 @@ export default function BajasLaboralesEmpleados() {
 
     return (
       <div>
+        <Header />
         <h1>Bajas Laborales Empleados</h1>
         <h2>
           <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
@@ -460,6 +463,7 @@ export default function BajasLaboralesEmpleados() {
           />
           {showDelete && deleteModal()}
         </Box>
+        <Footer />
       </div>
     );
   };

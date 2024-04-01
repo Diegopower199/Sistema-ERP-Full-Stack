@@ -167,7 +167,7 @@ export default function Login() {
   };
 
   return (
-    <>
+    <div>
       <h1>LOGIN</h1>
       <div className={styles.formulario}>
         <h1 className={styles.tituloH1}>Login</h1>
@@ -214,6 +214,6 @@ export default function Login() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }

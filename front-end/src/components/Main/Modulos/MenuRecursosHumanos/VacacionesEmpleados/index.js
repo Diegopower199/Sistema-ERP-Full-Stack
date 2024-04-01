@@ -31,6 +31,8 @@ import {
 } from "@/utils/constants";
 import styles from "./styles.module.css";
 import HistorialVacacionesAutorizadas from "./HistorialVacacionesAutorizadas";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function VacacionesEmpleados() {
   const {
@@ -443,6 +445,7 @@ export default function VacacionesEmpleados() {
 
     return (
       <div>
+        <Header />
         <h1>Vacaciones Empleados</h1>
         <h2>
           <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
@@ -492,6 +495,7 @@ export default function VacacionesEmpleados() {
           />
           {showDelete && deleteModal()}
         </Box>
+        <Footer />
       </div>
     );
   };

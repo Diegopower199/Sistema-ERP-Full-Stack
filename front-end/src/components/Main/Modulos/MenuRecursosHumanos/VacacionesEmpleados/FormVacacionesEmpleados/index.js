@@ -12,6 +12,8 @@ import {
   formatearFechaYYYYMMDD,
   validarFechaYYYYMMDD,
 } from "@/utils/functionsFecha";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function FormVacacionesEmpleados({
   toggleForm,
@@ -259,6 +261,7 @@ export default function FormVacacionesEmpleados({
 
   return (
     <>
+    <Header />
       <label>
         Fecha inicio:
         <input
@@ -435,6 +438,7 @@ export default function FormVacacionesEmpleados({
           <button onClick={toggleForm}>Salir</button>
         </>
       )}
+      <Footer />
     </>
   );
 }

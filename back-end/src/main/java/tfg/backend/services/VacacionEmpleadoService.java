@@ -73,8 +73,7 @@ public class VacacionEmpleadoService {
             throw new RuntimeException("El campo 'id_tipo_estado' no puede ser 0");
         }
 
-        // En el front estas variables no las tiene que poner el usuario:
-        // dias_disponibles, dias_disfrutados, dias_restantes
+      
         String dniPersona = nuevoVacacionEmpleado.getPersona().getDni();
 
         PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
@@ -207,7 +206,7 @@ public class VacacionEmpleadoService {
         int diasSolicitadosCalculado = (int) ChronoUnit.DAYS.between(cambiosVacacionEmpleado.getFecha_inicio(),
                 cambiosVacacionEmpleado.getFecha_fin()) + 1;
 
-        if (tipoEstadoEncontrado.getTipo_estado().equals("Aprobada")) {
+        if (tipoEstadoEncontrado.getTipo_estado().equals("Aprobado")) {
             vacacionEmpleadoExistente.setTipo_estado(tipoEstadoEncontrado);
 
             if (ultimaVacacionEmpleado.isEmpty()) {

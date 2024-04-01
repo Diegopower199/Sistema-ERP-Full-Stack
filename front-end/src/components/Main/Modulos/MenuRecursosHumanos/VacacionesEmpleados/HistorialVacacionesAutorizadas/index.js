@@ -19,6 +19,8 @@ import {
 } from "@/utils/constants";
 import styles from "./styles.module.css";
 import { getAllTransaccionesVacacionesAutorizadas } from "@/services/BlockchainVacacionAutorizadaService";
+import Header from "@/components/UtilsComponents/Header";
+import Footer from "@/components/UtilsComponents/Footer";
 
 export default function HistorialVacacionesAutorizadas({ toggleView }) {
   const {
@@ -308,6 +310,7 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
   const renderTableHistorialVacacionAutorizada = () => {
     return (
       <div>
+        <Header />
         <h1>Historial Vacaciones Autorizadas</h1>
 
         <button onClick={toggleView}>Salir</button>
@@ -342,6 +345,7 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
             }}
           />
         </Box>
+        <Footer />
       </div>
     );
   };

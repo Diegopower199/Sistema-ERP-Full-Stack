@@ -15,11 +15,6 @@ export default function MenuFacturacion() {
       <p>
         <Link href={"/menu-principal"}>Menu Principal</Link>
       </p>
-      <br />
-      <p>
-        <Link href={"menu-facturacion/detalles-facturas-clientes"}>Detalles facturas clientes</Link>
-      </p>
-      <br />
       <p>
         <Link href={"menu-facturacion/facturas-clientes"}>
         Facturas clientes

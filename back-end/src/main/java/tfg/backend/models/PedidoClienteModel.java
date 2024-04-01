@@ -84,6 +84,10 @@ public class PedidoClienteModel implements Serializable {
     @OneToMany(mappedBy = "pedido_cliente", cascade = CascadeType.REMOVE)
     private List<FacturaClienteModel> facturasClientes;
 
+    public PedidoClienteModel(TipoEstadoFacturaModel tipo_estado_factura) {
+        this.tipo_estado_factura = tipo_estado_factura;
+    }
+
     public Map<String, Object> toMap() {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("id_pedido_cliente", id_pedido_cliente);

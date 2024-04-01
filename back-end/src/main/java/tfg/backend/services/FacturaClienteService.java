@@ -1,5 +1,6 @@
 package tfg.backend.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,11 +11,13 @@ import org.springframework.stereotype.Service;
 import tfg.backend.models.ClienteModel;
 import tfg.backend.models.FacturaClienteModel;
 import tfg.backend.models.PedidoClienteModel;
+import tfg.backend.models.TipoEstadoFacturaModel;
 import tfg.backend.models.TipoEstadoModel;
 import tfg.backend.repositories.ClienteRepository;
 import tfg.backend.repositories.FacturaClienteRepository;
 import tfg.backend.repositories.PedidoClienteRepository;
 import tfg.backend.repositories.TipoEstadoRepository;
+import tfg.backend.utils.GlobalConstants;
 
 @Service
 public class FacturaClienteService {
@@ -92,6 +95,61 @@ public class FacturaClienteService {
                 .save(nuevoFacturaCliente);
 
         return facturaClienteGuardado;
+    }
+
+    public int generateFacturasClientes() {
+        TipoEstadoFacturaModel tipoEstadoPendienteFacturar = new TipoEstadoFacturaModel();
+        tipoEstadoPendienteFacturar.setId_tipo_estado_factura(1);
+
+        TipoEstadoFacturaModel tipoEstadoFacturado = new TipoEstadoFacturaModel();
+        tipoEstadoFacturado.setId_tipo_estado_factura(2);
+
+        TipoEstadoModel tipoEstadoPendienteDePago = new TipoEstadoModel();
+        tipoEstadoPendienteDePago.setId_tipo_estado(4);
+
+        List<FacturaClienteModel> listaFacturaClientesGuardarBBDD = new ArrayList<>();
+        List<PedidoClienteModel> listaPedidosClientesActualizarBBDD = new ArrayList<>();
+        List<PedidoClienteModel> listaPedidosClientesParaFacturar = pedidoClienteRepository
+                .findByTipoEstadoFacturaIdOrderByPedidoClienteId(tipoEstadoPendienteFacturar);
+
+        LocalDate fechaActual = LocalDate.now();
+
+        for (PedidoClienteModel pedidoCliente : listaPedidosClientesParaFacturar) {
+            FacturaClienteModel newFacturaClienteFacturado = new FacturaClienteModel();
+            
+            newFacturaClienteFacturado.setDescripcion_servicio(pedidoCliente.getDescripcion());
+            newFacturaClienteFacturado.setDireccion_entrega(pedidoCliente.getDireccion_entrega());
+            newFacturaClienteFacturado.setHora_inicio_desplazamiento(pedidoCliente.getHora_inicio_desplazamiento());
+            newFacturaClienteFacturado.setHora_fin_desplazamiento(pedidoCliente.getHora_fin_desplazamiento());
+            newFacturaClienteFacturado.setTiempo_desplazamiento_total(pedidoCliente.getTiempo_desplazamiento_total());
+            newFacturaClienteFacturado.setHora_inicio_servicio(pedidoCliente.getHora_inicio_servicio());
+            newFacturaClienteFacturado.setHora_fin_servicio(pedidoCliente.getHora_fin_servicio());
+            newFacturaClienteFacturado.setTiempo_servicio_total(pedidoCliente.getTiempo_servicio_total());
+            newFacturaClienteFacturado.setObservacion(pedidoCliente.getObservacion());
+            newFacturaClienteFacturado.setFecha_entrega_real_pedido(pedidoCliente.getFecha_entrega_real());
+            newFacturaClienteFacturado.setFecha_factura_emitida(fechaActual);
+            newFacturaClienteFacturado.setTarifa_hora_desplazamiento(GlobalConstants.TARIFA_HORA_TRANSPORTE);
+            newFacturaClienteFacturado.setTarifa_hora_servicio(GlobalConstants.TARIFA_HORA_SERVICIO);
+            newFacturaClienteFacturado.setSubtotal_factura_sin_iva(1000);
+            newFacturaClienteFacturado.setIva(GlobalConstants.IVA);
+            newFacturaClienteFacturado.setTotal_factura(0);
+
+            newFacturaClienteFacturado.setCliente(pedidoCliente.getCliente());
+            newFacturaClienteFacturado.setPedido_cliente(pedidoCliente);
+            newFacturaClienteFacturado.setTipo_estado(tipoEstadoPendienteDePago);
+
+            listaFacturaClientesGuardarBBDD.add(newFacturaClienteFacturado);
+
+            pedidoCliente.setTipo_estado_factura(tipoEstadoFacturado);
+            pedidoCliente.setTipo_estado(tipoEstadoPendienteDePago);
+            listaPedidosClientesActualizarBBDD.add(pedidoCliente);
+
+        }
+
+        facturaClienteRepository.saveAll(listaFacturaClientesGuardarBBDD);
+        pedidoClienteRepository.saveAll(listaPedidosClientesActualizarBBDD);
+
+        return listaFacturaClientesGuardarBBDD.size();
     }
 
     public Map<String, Object> getFacturaClienteById(int idFacturaCliente) {

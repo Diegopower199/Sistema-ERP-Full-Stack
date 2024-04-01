@@ -35,6 +35,23 @@ export const saveFacturaCliente = async (data) => {
   }
 };
 
+export const generateFacturasClientes = async () => {
+  const url = API_URL_BACK_END.replace("#", "facturasClientes");
+  try {
+    const response = await axios.post(url + "generate");
+
+    return {
+      data: response.data.resultado,
+      status: response.status,
+    };
+  } catch (error) {
+    return {
+      errorMessage: error.response.data.message,
+      status: error.response.status,
+    };
+  }
+};
+
 export const getFacturaClienteById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "facturasClientes");
   try {

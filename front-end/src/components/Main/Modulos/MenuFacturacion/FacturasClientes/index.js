@@ -23,7 +23,10 @@ import {
 } from "@/utils/constants";
 import FormFacturasClientes from "./FormFacturasClientes";
 import styles from "./styles.module.css";
-import { getAllFacturasClientes } from "@/services/FacturaClienteService";
+import {
+  generateFacturasClientes,
+  getAllFacturasClientes,
+} from "@/services/FacturaClienteService";
 
 export default function FacturasClientes() {
   const {
@@ -60,6 +63,10 @@ export default function FacturasClientes() {
     aceptarBotonParaVerResultadosFacturasClientes,
     setAceptarBotonParaVerResultadosFacturasClientes,
   ] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
+    useState(false);
 
   const [rowSelected, setRowSelected] = useState(null);
 
@@ -296,19 +303,25 @@ export default function FacturasClientes() {
     setShowFormViewUnique(!showFormViewUnique);
   }
 
-  const handleGenerateClick = () => {
+  const handleGenerateClick = async () => {
     console.log("Generar nuevas facturas clientes");
     toggleGenerateFacturasClientesModal();
     setCargandoInformacionFacturasClientes(true);
 
-    console.log("SIMULACION INICIADA");
+    try {
+      const responseGenerateFacturasClientes = await generateFacturasClientes();
 
-    // AQUI VA LA LLAMADA QUE GENERA LAS FACTURAS
-    setTimeout(() => {
-      console.log("Simulando generando facturas clientes.");
-      console.log("SIMULACION ACABADA");
+      console.log(
+        "responseGenerateFacturasClientes: ",
+        responseGenerateFacturasClientes
+      );
+      setContadorFacturasClientesGeneradas(
+        responseGenerateFacturasClientes.data
+      );
       setCargandoInformacionFacturasClientes(false);
-    }, "3000");
+    } catch (error) {
+      console.error("El error es: ", error);
+    }
   };
 
   const handleViewUniqueClick = (id) => () => {
@@ -318,7 +331,7 @@ export default function FacturasClientes() {
     toggleViewUniqueFacturaClienteForm();
   };
 
-  const handleModalGenerateFacturasClientesOk = async () => {
+  const handleModalGenerateFacturasClientesOk = () => {
     resetStates();
     facturaClienteGenerateUpdatedTrigger();
   };
@@ -327,7 +340,7 @@ export default function FacturasClientes() {
     setShowModalGenerate(false);
     setShowFormViewUnique(false);
 
-    setContadorFacturasClientesGeneradas(false);
+    setContadorFacturasClientesGeneradas(0);
     setCargandoInformacionFacturasClientes(false);
     setAceptarBotonParaVerResultadosFacturasClientes(false);
   }

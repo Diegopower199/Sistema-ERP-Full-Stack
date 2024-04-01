@@ -58,6 +58,24 @@ public class FacturaClienteController {
         }
     }
 
+    // localhost:8080/facturasClientes/api/generate
+    @PostMapping("/api/generate")
+    public ResponseEntity<Map<String, Object>> generate() {
+        try {
+            int allFacturasClientes = facturaClienteService.generateFacturasClientes();
+            Map<String, Object> mostrarFacturasGeneradas = new HashMap<>();
+            mostrarFacturasGeneradas.put("resultado", allFacturasClientes);
+
+            return ResponseEntity.ok().body(mostrarFacturasGeneradas);
+        } catch (Exception e) {
+            Map<String, Object> mostrarMensajeError = new HashMap<>();
+            mostrarMensajeError.put("message", e.getMessage());
+
+            return ResponseEntity.badRequest().body(mostrarMensajeError);
+
+        }
+    }
+
     // localhost:8080/facturasClientes/api/getById/{id}
     @GetMapping("/api/getById/{id}")
     public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") int id) {

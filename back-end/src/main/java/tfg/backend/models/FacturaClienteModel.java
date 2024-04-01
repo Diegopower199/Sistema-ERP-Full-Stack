@@ -28,7 +28,7 @@ public class FacturaClienteModel implements Serializable {
     @Column(name = "id_factura_cliente", nullable = false)
     private int id_factura_cliente;
 
-    @Column(name = "descripcion_servicio", nullable = false)
+    @Column(name = "descripcion_servicio", nullable = true)
     private String descripcion_servicio;
 
     @Column(name = "direccion_entrega", nullable = false)

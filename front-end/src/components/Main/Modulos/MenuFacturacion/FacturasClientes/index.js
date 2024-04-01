@@ -45,6 +45,22 @@ export default function FacturasClientes() {
   const [facturaClienteFormUpdated, setFacturaClienteFormUpdated] =
     useState(false);
 
+  const [facturaClienteGenerateUpdated, setFacturaClienteGenerateUpdated] =
+    useState(false);
+
+  const [
+    contadorFacturasClientesGeneradas,
+    setContadorFacturasClientesGeneradas,
+  ] = useState(0);
+  const [
+    cargandoInformacionFacturasClientes,
+    setCargandoInformacionFacturasClientes,
+  ] = useState(false);
+  const [
+    aceptarBotonParaVerResultadosFacturasClientes,
+    setAceptarBotonParaVerResultadosFacturasClientes,
+  ] = useState(false);
+
   const [rowSelected, setRowSelected] = useState(null);
 
   const [paginationModel, setPaginationModel] = useState({
@@ -254,19 +270,25 @@ export default function FacturasClientes() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (facturaClienteFormUpdated === true) {
+      if (facturaClienteFormUpdated || facturaClienteGenerateUpdated) {
         await fetchGetAllFacturasClientes();
         setFacturaClienteFormUpdated(false);
+        setFacturaClienteGenerateUpdated(false);
+        console.log("CARGANDO LA TABLA");
       }
     };
     fetchData();
-  }, [facturaClienteFormUpdated]);
+  }, [facturaClienteFormUpdated, facturaClienteGenerateUpdated]);
+
+  function facturaClienteGenerateUpdatedTrigger() {
+    setFacturaClienteGenerateUpdated(!facturaClienteGenerateUpdated);
+  }
 
   function facturaClienteFormUpdatedTrigger() {
     setFacturaClienteFormUpdated(!facturaClienteFormUpdated);
   }
 
-  function toggleGenerateFacturasClientesForm() {
+  function toggleGenerateFacturasClientesModal() {
     setShowModalGenerate(!showModalGenerate);
   }
 
@@ -276,7 +298,17 @@ export default function FacturasClientes() {
 
   const handleGenerateClick = () => {
     console.log("Generar nuevas facturas clientes");
-    toggleGenerateFacturasClientesForm();
+    toggleGenerateFacturasClientesModal();
+    setCargandoInformacionFacturasClientes(true);
+
+    console.log("SIMULACION INICIADA");
+
+    // AQUI VA LA LLAMADA QUE GENERA LAS FACTURAS
+    setTimeout(() => {
+      console.log("Simulando generando facturas clientes.");
+      console.log("SIMULACION ACABADA");
+      setCargandoInformacionFacturasClientes(false);
+    }, "3000");
   };
 
   const handleViewUniqueClick = (id) => () => {
@@ -286,22 +318,18 @@ export default function FacturasClientes() {
     toggleViewUniqueFacturaClienteForm();
   };
 
-  // Handles 'delete' modal ok button
   const handleModalGenerateFacturasClientesOk = async () => {
-    /*const responseDeletePersona = await deletePersona(idPersonaSelected);
-    if (responseDeletePersona.status === 200) {
-      setPersonaDelete(true);
-    }*/
     resetStates();
-  };
-
-  const handleModalGenerateFacturasClientesClose = () => {
-    resetStates();
+    facturaClienteGenerateUpdatedTrigger();
   };
 
   function resetStates() {
     setShowModalGenerate(false);
     setShowFormViewUnique(false);
+
+    setContadorFacturasClientesGeneradas(false);
+    setCargandoInformacionFacturasClientes(false);
+    setAceptarBotonParaVerResultadosFacturasClientes(false);
   }
 
   const getJson = (apiRef) => {
@@ -318,8 +346,6 @@ export default function FacturasClientes() {
       return row;
     });
 
-    // Stringify with some indentation
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters
     return JSON.stringify(data, null, 2);
   };
 
@@ -422,21 +448,50 @@ export default function FacturasClientes() {
   }
 
   const renderTableFacturaCliente = () => {
-    function generateModal() {
-      return (
-        <Antd.Modal
-          title={`Generando facturas`}
-          open={showModalGenerate}
-          okText="Aceptar"
-          onOk={handleModalGenerateFacturasClientesOk}
-          cancelText="Cancelar"
-          onCancel={handleModalGenerateFacturasClientesClose}
-          centered
-        >
-          AQUI ME FALTA PONER CUANTAS FACTURAS SE HAN GENERADO EN EL MODAL, ESO
-          LO TENGO EN EL TRABAJO EN EL HISTORICO CSR EN LO DEL EXCEL
-        </Antd.Modal>
-      );
+    function generateFacturasClientesModal() {
+      if (!aceptarBotonParaVerResultadosFacturasClientes) {
+        return (
+          <Antd.Modal
+            title={`Generando facturas...`}
+            open={showModalGenerate}
+            okButtonProps={{ style: { display: "none" } }}
+            cancelButtonProps={{ style: { display: "none" } }}
+            centered
+          >
+            <Antd.Form style={{ marginTop: "5%" }}>
+              {!cargandoInformacionFacturasClientes && (
+                <>
+                  <Antd.Button
+                    onClick={() =>
+                      setAceptarBotonParaVerResultadosFacturasClientes(true)
+                    }
+                  >
+                    {"Ver los resultados"}
+                  </Antd.Button>
+                </>
+              )}
+            </Antd.Form>
+          </Antd.Modal>
+        );
+      } else if (aceptarBotonParaVerResultadosFacturasClientes) {
+        return (
+          <Antd.Modal
+            title={`Resultados facturas clientes generadas`}
+            open={showModalGenerate}
+            okText="Aceptar"
+            onOk={handleModalGenerateFacturasClientesOk}
+            cancelText="Cancelar"
+            cancelButtonProps={{ style: { display: "none" } }}
+            centered
+          >
+            <Antd.Form style={{ marginTop: "5%" }}>
+              <p>
+                FACTURAS TOTALES GENERADAS: {contadorFacturasClientesGeneradas}
+              </p>
+            </Antd.Form>
+          </Antd.Modal>
+        );
+      }
     }
 
     return (
@@ -484,7 +539,7 @@ export default function FacturasClientes() {
             }}
           />
 
-          {showModalGenerate && generateModal()}
+          {showModalGenerate && generateFacturasClientesModal()}
         </Box>
       </div>
     );

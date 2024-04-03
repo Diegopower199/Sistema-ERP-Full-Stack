@@ -10,8 +10,18 @@ export const getAllFacturasClientes = async () => {
       status: response.status,
     };
   } catch (error) {
-    console.error();
-    return "Error";
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -28,10 +38,18 @@ export const saveFacturaCliente = async (data) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -45,10 +63,18 @@ export const generateFacturasClientes = async () => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -61,10 +87,18 @@ export const getFacturaClienteById = async (id) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -80,10 +114,18 @@ export const updateFacturaCliente = async (id, data) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -96,9 +138,17 @@ export const deleteFacturaCliente = async (id) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };

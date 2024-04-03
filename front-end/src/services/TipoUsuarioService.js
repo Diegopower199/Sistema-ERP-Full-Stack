@@ -15,8 +15,18 @@ export const getAllTiposUsuarios = async () => {
     console.log("Promises de getAllTiposUsuarios son: ", promises);
     return promises;
   } catch (error) {
-    console.error();
-    return "Error";
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -30,9 +40,17 @@ export const getTipoUsuarioById = async (id) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };

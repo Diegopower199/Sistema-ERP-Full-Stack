@@ -10,8 +10,18 @@ export const getAllNominasEmpleados = async () => {
       status: response.status,
     };
   } catch (error) {
-    console.error();
-    return "Error";
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -28,10 +38,18 @@ export const saveNominaEmpleado = async (data) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -45,10 +63,18 @@ export const generateNominasEmpleados = async () => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -61,10 +87,18 @@ export const getNominaEmpleadoById = async (id) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -80,10 +114,18 @@ export const updateNominaEmpleado = async (id, data) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -96,9 +138,17 @@ export const deleteNominaEmpleado = async (id) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };

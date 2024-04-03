@@ -10,8 +10,18 @@ export const getAllAsistenciaEmpleados = async () => {
       status: response.status,
     };
   } catch (error) {
-    console.error();
-    return "Error";
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -28,10 +38,18 @@ export const startOfWorkdayAsistenciaEmpleado = async (data) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -48,10 +66,18 @@ export const endOfWorkdayAsistenciaEmpleado = async (data) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -64,10 +90,18 @@ export const getAsistenciaEmpleadoById = async (id) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -83,10 +117,18 @@ export const updateAsistenciaEmpleado = async (id, data) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 
@@ -99,9 +141,17 @@ export const deleteAsistenciaEmpleado = async (id) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };

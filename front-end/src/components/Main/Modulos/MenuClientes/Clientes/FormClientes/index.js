@@ -133,7 +133,12 @@ export default function FormClientes({
     const fetchData = async () => {
       try {
         if (operationType === "update" || operationType === "view") {
-          console.log("HOLA", clienteDataForm);
+          if (clienteDataForm.nombre_apellidos !== null) {
+            setSelectedOptionRadio(1);
+          } else {
+            setSelectedOptionRadio(2);
+          }
+
           const infoProvincia = PROVINCIAS_CON_CIUDADES.find((provincia) => {
             return (
               provincia.provincia.toLowerCase() ===
@@ -141,6 +146,7 @@ export default function FormClientes({
             );
           });
           setSelectedProvince(infoProvincia);
+
           setFormData(() => ({
             ...clienteDataForm,
           }));
@@ -173,7 +179,6 @@ export default function FormClientes({
   };
 
   const handleRadioSelected = (id) => {
-    console.log("ID: ", id);
     setSelectedOptionRadio(id);
     setFormData((prevDataState) => {
       return {
@@ -298,7 +303,7 @@ export default function FormClientes({
   };
 
   return (
-    <>
+    <div>
       <Header />
       <Antd.Form>
         {operationType === "create" && (
@@ -343,7 +348,7 @@ export default function FormClientes({
         {((operationType === "create" && selectedOptionRadio === 1) ||
           ((operationType === "update" || operationType === "view") &&
             formData.nombre_apellidos !== null)) && (
-          <>
+          <div>
             <Antd.Form.Item label="Nombre y apellidos">
               <Antd.Input
                 type="text"
@@ -363,12 +368,12 @@ export default function FormClientes({
                 </div>
               )}
             </Antd.Form.Item>
-          </>
+          </div>
         )}
         {((operationType === "create" && selectedOptionRadio === 2) ||
           ((operationType === "update" || operationType === "view") &&
             formData.razon_social !== null)) && (
-          <>
+          <div>
             <Antd.Form.Item label="Razon social:">
               <Antd.Input
                 type="text"
@@ -386,7 +391,7 @@ export default function FormClientes({
                 </div>
               )}
             </Antd.Form.Item>
-          </>
+          </div>
         )}
         <Antd.Form.Item label="Numero telefono:">
           <Antd.Input
@@ -536,25 +541,25 @@ export default function FormClientes({
         </Antd.Form.Item>
       </Antd.Form>
       {errorMessage.length !== 0 && (
-        <>
+        <div>
           <p className={styles.errorMessage}>
             <ErrorIcon fontSize="medium" color="red" />
             Error: {errorMessage}
           </p>
-        </>
+        </div>
       )}
       {(operationType === "create" || operationType === "update") && (
-        <>
+        <div>
           <button onClick={toggleForm}>Cancelar</button>{" "}
           <button onClick={handleSubmit}>Guardar</button>
-        </>
+        </div>
       )}
       {operationType === "view" && (
-        <>
+        <div>
           <button onClick={toggleForm}>Salir</button>
-        </>
+        </div>
       )}
       <Footer />
-    </>
+    </div>
   );
 }

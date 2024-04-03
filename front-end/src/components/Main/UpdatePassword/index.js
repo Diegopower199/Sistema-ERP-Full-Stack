@@ -13,6 +13,7 @@ export default function UpdatePassword() {
   const [correctVerificationCode, setCorrectVerificationCode] = useState(false);
   const [userAttempts, setUserAttempts] = useState(0);
   const [codigoVerificacion, setCodigoVerificacion] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [formData, setFormData] = useState({
     correo_electronico: "",
@@ -64,10 +65,11 @@ export default function UpdatePassword() {
 
           console.log("responseSendEmail: ", responseSendEmail);
           if (responseSendEmail.status === 200) {
+            setErrorMessage("");
             setCorrectEmail(true);
           }
         } else {
-          console.log("EMAIL NO EXISTE");
+          setErrorMessage("Error, El correo no existe");
         }
       }
     } catch (error) {
@@ -78,6 +80,16 @@ export default function UpdatePassword() {
   const verifyCode = () => {
     console.log("formData.codigo_verificacion: ", formData.codigo_verificacion);
     console.log("codigoVerificacion: ", codigoVerificacion);
+
+    if (
+      formData.codigo_verificacion === "" ||
+      formData.codigo_verificacion === null
+    ) {
+      setErrorMessage("Error, debes ingresar un código");
+      return;
+    } else {
+      setErrorMessage("");
+    }
     if (
       parseInt(formData.codigo_verificacion) !== parseInt(codigoVerificacion)
     ) {
@@ -148,9 +160,10 @@ export default function UpdatePassword() {
               value={formData.correo_electronico}
               onChange={handleFormChange}
             />
-            {requiredFieldsIncomplete.correo_electronico && (
+            {(requiredFieldsIncomplete.correo_electronico ||
+              errorMessage.length !== 0) && (
               <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-                {requiredFieldsIncomplete.correo_electronico}
+                {requiredFieldsIncomplete.correo_electronico || errorMessage}
               </div>
             )}
           </label>
@@ -158,6 +171,13 @@ export default function UpdatePassword() {
           <br />
         </>
       )}
+      {correctEmail === false && correctVerificationCode === false && (
+        <>
+          <button onClick={redirectToLogin}>Cancelar</button>{" "}
+          <button onClick={sendEmail}>Continuar</button>
+        </>
+      )}
+
       {correctEmail === true && correctVerificationCode === false && (
         <>
           <h1>Introduce el codigo</h1>
@@ -177,11 +197,32 @@ export default function UpdatePassword() {
               value={formData.codigo_verificacion}
               onChange={handleFormChange}
             />
+            {errorMessage.length !== 0 && (
+              <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+                {errorMessage}
+              </div>
+            )}
           </label>
           <br />
           <br />
         </>
       )}
+      {correctEmail === true && correctVerificationCode === false && (
+        <>
+          <button onClick={resetStates}>Anterior</button>{" "}
+          <button
+            onClick={verifyCode}
+            disabled={
+              userAttempts >= 5 && correctVerificationCode === false
+                ? true
+                : false
+            }
+          >
+            Verificar
+          </button>
+        </>
+      )}
+
       {correctEmail === true && correctVerificationCode === true && (
         <>
           <h1>Cambiar la contraseña</h1>
@@ -207,19 +248,6 @@ export default function UpdatePassword() {
           </label>
           <br />
           <br />
-        </>
-      )}
-
-      {correctEmail === false && correctVerificationCode === false && (
-        <>
-          <button onClick={redirectToLogin}>Cancelar</button>{" "}
-          <button onClick={sendEmail}>Continuar</button>
-        </>
-      )}
-      {correctEmail === true && correctVerificationCode === false && (
-        <>
-          <button onClick={resetStates}>Anterior</button>{" "}
-          <button onClick={verifyCode}>Verificar</button>
         </>
       )}
       {correctEmail === true && correctVerificationCode === true && (

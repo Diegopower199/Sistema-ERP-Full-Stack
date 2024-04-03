@@ -402,36 +402,36 @@ export default function Clientes() {
 
   if (showFormCreate) {
     return (
-      <>
+      <div>
         <FormClientes
           toggleForm={toggleCreateClienteForm}
           clienteDataForm={""}
           formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"create"}
         ></FormClientes>
-      </>
+      </div>
     );
   } else if (showFormUpdate) {
     return (
-      <>
+      <div>
         <FormClientes
           toggleForm={toggleUpdateClienteForm}
           clienteDataForm={rowSelected}
           formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"update"}
         ></FormClientes>
-      </>
+      </div>
     );
   } else if (showFormViewUnique) {
     return (
-      <>
+      <div>
         <FormClientes
           toggleForm={toggleViewUniqueClienteForm}
           clienteDataForm={rowSelected}
           formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"view"}
         ></FormClientes>
-      </>
+      </div>
     );
   } else {
     return renderTableClientes();

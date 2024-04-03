@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import HistoryIcon from "@mui/icons-material/History";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -462,18 +463,24 @@ export default function VacacionesEmpleados() {
             },
           }}
         >
-          <Button
-            color="primary"
-            startIcon={<AddIcon />}
-            onClick={handleCreateClick}
-          >
-            Añadir vacacion empleado
-          </Button>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Button
+              color="primary"
+              startIcon={<AddIcon />}
+              onClick={handleCreateClick}
+            >
+              Añadir vacacion empleado
+            </Button>
 
-          <button onClick={handleShowHistorialVacacionesAutorizadasClick}>
-            {" "}
-            Historial Vacaciones Autorizadas
-          </button>
+            <Button
+              color="primary"
+              startIcon={<HistoryIcon />}
+              onClick={handleShowHistorialVacacionesAutorizadasClick}
+            >
+              {" "}
+              Historial Vacaciones Autorizadas
+            </Button>
+          </div>
 
           <DataGrid
             rows={dataSource}

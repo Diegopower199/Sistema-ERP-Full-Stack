@@ -242,3 +242,12 @@ npm run dev
 > @ManyToOne
 > @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_ayudas_empleados_personas"))
 > private PersonaModel personaAsignada;
+>
+>
+> Ademas tengo que cambiar y controlar si el back no esta conectado, el ejemplo esta en el fichero de personas, en components ahi esta todo y cambiar el nombre de las funciones como este "fetchTiposPersonasOptionsAndHandleErrors"
+>
+>
+>
+>
+>
+>

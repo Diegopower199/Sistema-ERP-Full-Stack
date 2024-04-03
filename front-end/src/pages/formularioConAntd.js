@@ -104,7 +104,7 @@ function FormularioVacacionEmpleado() {
   };
 
   return (
-    <>
+    <div>
       <label>
         Fecha de inicio:
         <input
@@ -216,7 +216,7 @@ function FormularioVacacionEmpleado() {
       </Antd.Form>
       <br /> <br />
       <button onClick={handleSubmit}>Enviar</button>
-    </>
+    </div>
   );
 }
 

@@ -85,7 +85,6 @@ Bibliotecas instaladas:
 - npm install @mui/x-data-grid
 - npm install moment
 - npm install antd
-- npm install @ant-design/icons --save
 
 Componentes: https://mui.com/components/
 

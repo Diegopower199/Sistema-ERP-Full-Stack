@@ -99,7 +99,7 @@ function FormularioSolicitud() {
   };
 
   return (
-    <>
+    <div>
       <label>
         Selecciona un tipo de solicitud:
         <select
@@ -143,7 +143,7 @@ function FormularioSolicitud() {
       <br />
       <button onClick={handleSubmit}>Enviar</button> <br></br>
       <button onClick={handleFecha}>FECHA CON AÑO MES Y DIA, HORA MINUTO SEGUNDO</button>
-    </>
+    </div>
   );
 }
 

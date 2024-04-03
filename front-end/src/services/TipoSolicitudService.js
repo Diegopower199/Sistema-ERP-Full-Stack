@@ -15,7 +15,17 @@ export const getAllTiposSolicitudes = async () => {
     console.log("Promises de getAllTiposSolicitudes son: ", promises);
     return promises;
   } catch (error) {
-    console.error();
-    return "Error";
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };

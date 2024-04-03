@@ -68,51 +68,6 @@ export default function FormPedidosClientes({
   const validateRequiredFields = () => {
     const errorMissingFields = {};
 
-    if (!formData.numero_empleado) {
-      errorMissingFields.numero_empleado =
-        "Por favor, ingresa un numero empleado";
-    }
-
-    if (!formData.nombre) {
-      errorMissingFields.nombre = "Por favor, ingresa un nombre";
-    }
-
-    if (!formData.apellidos) {
-      errorMissingFields.apellidos = "Por favor, ingresa un apellido";
-    }
-
-    if (!formData.genero) {
-      errorMissingFields.genero = "Por favor, ingresa un género";
-    }
-
-    if (!formData.fecha_nacimiento) {
-      errorMissingFields.fecha_nacimiento =
-        "Por favor, selecciona una fecha de nacimiento";
-    }
-
-    if (!formData.dni) {
-      errorMissingFields.dni = "Por favor, ingresa un DNI";
-    }
-
-    if (!formData.direccion) {
-      errorMissingFields.direccion = "Por favor, ingresa una direccion";
-    }
-
-    if (!formData.numero_telefono || formData.numero_telefono === "34") {
-      errorMissingFields.numero_telefono =
-        "Por favor, ingresa un numero de telefono";
-    }
-
-    if (!formData.correo_electronico) {
-      errorMissingFields.correo_electronico =
-        "Por favor, ingresa un correo electronico";
-    }
-
-    if (!formData.id_tipo_persona) {
-      errorMissingFields.id_tipo_persona =
-        "Por favor, ingresa un tipo de persona";
-    }
-
     setRequiredFieldsIncomplete(errorMissingFields);
 
     console.log("errorMissingFields: ", errorMissingFields);
@@ -122,19 +77,6 @@ export default function FormPedidosClientes({
 
   const validateFormData = () => {
     const errorForm = {};
-
-    if (!formData.dni.match(REGEX_DNI)) {
-      errorForm.dni = "Por favor, ingresa un DNI válido";
-    }
-
-    if (!formData.numero_telefono.match(REGEX_TELEFONO_CON_PREFIJO)) {
-      errorForm.numero_telefono =
-        "Por favor, ingresa un numero de telefono válido";
-    }
-
-    if (!formData.correo_electronico.match(REGEX_EMAIL)) {
-      errorForm.correo_electronico = "Por favor, ingresa un email válido";
-    }
 
     setFormErrors(errorForm);
     console.log("errorForm", errorForm);
@@ -150,7 +92,10 @@ export default function FormPedidosClientes({
         console.log("operationType: ", operationType);
 
         if (operationType === "update" || operationType === "view") {
-          if (validarFechaYYYYMMDD(pedidoClienteDataForm.fecha_nacimiento) === null) {
+          if (
+            validarFechaYYYYMMDD(pedidoClienteDataForm.fecha_nacimiento) ===
+            null
+          ) {
             const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
               pedidoClienteDataForm.fecha_nacimiento
             );
@@ -177,21 +122,13 @@ export default function FormPedidosClientes({
 
   const handleFormChange = (event) => {
     const { name, value, type, checked } = event.target;
-    if (name === "numero_telefono") {
-      const nuevoValor = value.startsWith("34") ? value : "34" + value;
 
-      setFormData((prevFormValue) => ({
-        ...prevFormValue,
-        [name]: nuevoValor,
-      }));
-    } else {
-      setFormData((prevDataState) => {
-        return {
-          ...prevDataState,
-          [name]: type === "checkbox" ? checked : value,
-        };
-      });
-    }
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        [name]: type === "checkbox" ? checked : value,
+      };
+    });
   };
 
   const handleSubmit = async (event) => {
@@ -270,7 +207,7 @@ export default function FormPedidosClientes({
 
   return (
     <>
-    <Header />
+      <Header />
       <label>
         Numero empleado:
         <input

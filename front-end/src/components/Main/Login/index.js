@@ -110,7 +110,7 @@ export default function Login() {
         formData.nombre_usuario,
         formData.password
       );
-      console.log("Respuesta de back-end: ", responseAuthenticateUser);
+      console.log("Respuesta de back-end: ", responseAuthenticateUser); // EL CONTROL DE ERRORES ESTA EN LA CARPETA PAGES Y EL FICHERO ES Control-Errores-Response
 
       if (responseAuthenticateUser.status === 409) {
         setBackendError(true);

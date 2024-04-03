@@ -12,7 +12,7 @@ export default function MenuClientes() {
   const router = useRouter();
 
   return (
-    <>
+    <div>
     <Header />
       <h1>Clientes</h1>
       <p>
@@ -30,6 +30,6 @@ export default function MenuClientes() {
       </p>
       <br />
       <Footer />
-    </>
+    </div>
   );
 }

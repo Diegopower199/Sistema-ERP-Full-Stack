@@ -1,7 +1,7 @@
 export const REGEX_DATE_YYYYMMDD =
   /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
-export const REGEX_DNI = /\d{8}[A-HJ-NP-TV-Z]/;
+export const REGEX_DNI = /^\d{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/;
 
 export const REGEX_EMAIL =
   /^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/;

@@ -12,7 +12,6 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
   GridToolbarExportContainer,
-  GridCsvExportMenuItem,
   useGridApiContext,
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
@@ -32,6 +31,15 @@ import {
 import styles from "./styles.module.css";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import ErrorIcon from "@mui/icons-material/Error";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,
+};
 
 export default function SolicitudesEmpleados() {
   const {
@@ -65,6 +73,11 @@ export default function SolicitudesEmpleados() {
   const [solicitudEmpleadoFormUpdated, setSolicitudEmpleadoFormUpdated] =
     useState(false);
   const [rowSelected, setRowSelected] = useState(null);
+
+  const [backendError, setBackendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
+    useState(false);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -142,32 +155,55 @@ export default function SolicitudesEmpleados() {
     },
   ];
 
-  const fetchGetAllSolicitudesEmpleados = async () => {
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  const fetchGetAllSolicitudesEmpleadosAndHandleErrors = async () => {
     try {
       setTableLoading(true);
       const responseGetAllSolicitudesEmpleados =
         await getAllSolicitudesEmpleados();
-      if (responseGetAllSolicitudesEmpleados.status === 200) {
-        const solicitudesEmpleadosMap =
-          responseGetAllSolicitudesEmpleados.data.map((solicitudEmpleado) => {
-            return {
-              id: solicitudEmpleado.id_solicitud_empleado,
-              fecha_solicitud: solicitudEmpleado.fecha_solicitud,
-              observacion: solicitudEmpleado.observacion,
-              id_persona: solicitudEmpleado.persona.id_persona,
-              dni: solicitudEmpleado.persona.dni,
-              tipo_solicitud: solicitudEmpleado.tipo_solicitud.tipo_solicitud,
-              id_tipo_solicitud:
-                solicitudEmpleado.tipo_solicitud.id_tipo_solicitud,
-              tipo_estado: solicitudEmpleado.tipo_estado.tipo_estado,
-              id_tipo_estado: solicitudEmpleado.tipo_estado.id_tipo_estado,
-            };
-          });
-        setDataSource(solicitudesEmpleadosMap);
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllSolicitudesEmpleados
+      );
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGetAllSolicitudesEmpleados.errorMessage
+        );
+        return false;
       }
+
+      const solicitudesEmpleadosMap =
+        responseGetAllSolicitudesEmpleados.data.map((solicitudEmpleado) => {
+          return {
+            id: solicitudEmpleado.id_solicitud_empleado,
+            fecha_solicitud: solicitudEmpleado.fecha_solicitud,
+            observacion: solicitudEmpleado.observacion,
+            id_persona: solicitudEmpleado.persona.id_persona,
+            dni: solicitudEmpleado.persona.dni,
+            tipo_solicitud: solicitudEmpleado.tipo_solicitud.tipo_solicitud,
+            id_tipo_solicitud:
+              solicitudEmpleado.tipo_solicitud.id_tipo_solicitud,
+            tipo_estado: solicitudEmpleado.tipo_estado.tipo_estado,
+            id_tipo_estado: solicitudEmpleado.tipo_estado.id_tipo_estado,
+          };
+        });
+
+      setDataSource(solicitudesEmpleadosMap);
       setTableLoading(false);
+
+      return true;
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado");
     }
   };
 
@@ -177,21 +213,18 @@ export default function SolicitudesEmpleados() {
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllSolicitudesEmpleados();
+      fetchGetAllSolicitudesEmpleadosAndHandleErrors();
     }
   }, [authUser]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (solicitudEmpleadoFormUpdated === true) {
-        await fetchGetAllSolicitudesEmpleados();
-        setSolicitudEmpleadoFormUpdated(false);
-      } else if (solicitudEmpleadoDelete === true) {
-        await fetchGetAllSolicitudesEmpleados();
-        setSolicitudEmpleadoDelete(false);
-      }
-    };
-    fetchData();
+    if (solicitudEmpleadoFormUpdated === true) {
+      fetchGetAllSolicitudesEmpleadosAndHandleErrors();
+      setSolicitudEmpleadoFormUpdated(false);
+    } else if (solicitudEmpleadoDelete === true) {
+      fetchGetAllSolicitudesEmpleadosAndHandleErrors();
+      setSolicitudEmpleadoDelete(false);
+    }
   }, [solicitudEmpleadoFormUpdated, solicitudEmpleadoDelete]);
 
   function solicitudEmpleadoFormUpdatedTrigger() {
@@ -212,11 +245,13 @@ export default function SolicitudesEmpleados() {
 
   const handleCreateClick = () => {
     console.log("Añadir nueva solicitud empleado");
+
     toggleCreateSolicitudEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateSolicitudEmpleadoForm();
@@ -226,6 +261,7 @@ export default function SolicitudesEmpleados() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+
     setIdSolicitudEmpleadoSelected(id);
     setFechaSolicitudEmpleadoSelected(filaSeleccionada.fecha_solicitud);
     setDniPersonaSolicitudEmpleadoSelected(filaSeleccionada.dni);
@@ -234,21 +270,37 @@ export default function SolicitudesEmpleados() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una solicitud empleado");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueSolicitudEmpleadoForm();
   };
 
-  // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeleteSolicitudEmpleado = await deleteSolicitudEmpleado(
-      idSolicitudEmpleadoSelected
-    );
-    if (responseDeleteSolicitudEmpleado.status === 200) {
+    try {
+      const responseDeleteSolicitudEmpleado = await deleteSolicitudEmpleado(
+        idSolicitudEmpleadoSelected
+      );
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseDeleteSolicitudEmpleado
+      );
+
+      if (errorHandlingInfo.backendError) {
+        handleBackendError(responseDeleteSolicitudEmpleado.errorMessage);
+        return;
+      } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseDeleteSolicitudEmpleado.errorMessage
+        );
+        return;
+      }
+
       setSolicitudEmpleadoDelete(true);
+      resetStates();
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado");
     }
-    // console.log("Resultado delete: ", resultado);
-    resetStates();
   };
 
   const handleModalClose = () => {
@@ -393,7 +445,16 @@ export default function SolicitudesEmpleados() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Antd.Modal>
+        >
+          {errorMessage.length !== 0 && backendError === true && (
+            <div>
+              <p className={styles.BackendError}>
+                <ErrorIcon fontSize="medium" color="red" />
+                Error: {errorMessage}
+              </p>
+            </div>
+          )}
+        </Antd.Modal>
       );
     }
 
@@ -449,38 +510,50 @@ export default function SolicitudesEmpleados() {
     );
   };
 
-  if (showFormCreate) {
+  if (backendOrDDBBConnectionError === true) {
     return (
-      <>
+      <div>
+        <ServerConnectionError message={errorMessage} />
+      </div>
+    );
+  } else if (showFormCreate) {
+    return (
+      <div>
         <FormSolicitudesEmpleados
           toggleForm={toggleCreateSolicitudEmpleadoForm}
           solicitudEmpleadoDataForm={""}
           formUpdateTrigger={solicitudEmpleadoFormUpdatedTrigger}
           operationType={"create"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormSolicitudesEmpleados>
-      </>
+      </div>
     );
   } else if (showFormUpdate) {
     return (
-      <>
+      <div>
         <FormSolicitudesEmpleados
           toggleForm={toggleUpdateSolicitudEmpleadoForm}
           solicitudEmpleadoDataForm={rowSelected}
           formUpdateTrigger={solicitudEmpleadoFormUpdatedTrigger}
           operationType={"update"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormSolicitudesEmpleados>
-      </>
+      </div>
     );
   } else if (showFormViewUnique) {
     return (
-      <>
+      <div>
         <FormSolicitudesEmpleados
           toggleForm={toggleViewUniqueSolicitudEmpleadoForm}
           solicitudEmpleadoDataForm={rowSelected}
           formUpdateTrigger={solicitudEmpleadoFormUpdatedTrigger}
           operationType={"view"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormSolicitudesEmpleados>
-      </>
+      </div>
     );
   } else {
     return renderTableSolicitudEmpleado();

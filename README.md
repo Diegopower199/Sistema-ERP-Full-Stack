@@ -247,7 +247,7 @@ npm run dev
 > Ademas tengo que cambiar y controlar si el back no esta conectado, el ejemplo esta en el fichero de personas, en components ahi esta todo y cambiar el nombre de las funciones como este "fetchTiposPersonasOptionsAndHandleErrors"
 >
 >
->
+> Separar en dos tablas los estados: tipos_estados_pago para los estados relacionados con el proceso de pago y tipos_estados_recursos_humanos
 >
 >
 >

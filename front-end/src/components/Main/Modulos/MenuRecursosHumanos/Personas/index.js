@@ -260,11 +260,13 @@ export default function Personas() {
 
   const handleCreateClick = () => {
     console.log("Añadir nueva persona");
+    
     toggleCreatePersonaForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdatePersonaForm();
@@ -274,6 +276,7 @@ export default function Personas() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+
     setIdPersonaSelected(id);
     setNamePersonaSelected(filaSeleccionada.nombre);
     setShowDelete(true);
@@ -286,7 +289,6 @@ export default function Personas() {
     toggleViewUniquePersonaForm();
   };
 
-  // Handles 'delete' modal ok button
   const handleModalOk = async () => {
     try {
       const responseDeletePersona = await deletePersona(idPersonaSelected);
@@ -452,7 +454,7 @@ export default function Personas() {
         >
           {errorMessage.length !== 0 && backendError === true && (
             <div>
-              <p className={styles.errorMessage}>
+              <p className={styles.BackendError}>
                 <ErrorIcon fontSize="medium" color="red" />
                 Error: {errorMessage}
               </p>

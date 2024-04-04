@@ -7,7 +7,14 @@ import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 
 export default function MenuRecursosHumanos() {
-  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn, permisosUser, setPermisosUser } = useAuth();
+  const {
+    authUser,
+    setAuthUser,
+    isLoggedIn,
+    setIsLoggedIn,
+    permisosUser,
+    setPermisosUser,
+  } = useAuth();
 
   const router = useRouter();
 
@@ -21,7 +28,7 @@ export default function MenuRecursosHumanos() {
 
   return (
     <>
-    <Header />
+      <Header />
       <h1>Recursos Humanos</h1>
       <p>
         <Link href={"/menu-principal"}>Menu Principal</Link>
@@ -29,28 +36,6 @@ export default function MenuRecursosHumanos() {
       <br />
       <p>
         <Link href={"menu-recursos-humanos/personas"}>Personas</Link>
-      </p>
-      <br />
-      <p>
-        <Link href={"menu-recursos-humanos/asistencias-empleados"}>
-          Asistencias Empleados
-        </Link>
-      </p>
-      <br />
-      <p>
-        <Link href={"menu-recursos-humanos/ayudas-empleados"}>Ayudas Empleados</Link>
-      </p>
-      <br />
-      <p>
-        <Link href={"menu-recursos-humanos/bajas-laborales-empleados"}>
-          Bajas Laborales Empleados
-        </Link>
-      </p>
-      <br />
-      <p>
-        <Link href={"menu-recursos-humanos/nominas-empleados"}>
-          Nominas Empleados
-        </Link>
       </p>
       <br />
       <p>
@@ -62,6 +47,30 @@ export default function MenuRecursosHumanos() {
       <p>
         <Link href={"menu-recursos-humanos/vacaciones-empleados"}>
           Vacaciones Empleados
+        </Link>
+      </p>
+      <br />
+      <p>
+        <Link href={"menu-recursos-humanos/asistencias-empleados"}>
+          Asistencias Empleados
+        </Link>
+      </p>
+      <br />
+      <p>
+        <Link href={"menu-recursos-humanos/ayudas-empleados"}>
+          Ayudas Empleados
+        </Link>
+      </p>
+      <br />
+      <p>
+        <Link href={"menu-recursos-humanos/bajas-laborales-empleados"}>
+          Bajas Laborales Empleados
+        </Link>
+      </p>
+      <br />
+      <p>
+        <Link href={"menu-recursos-humanos/nominas-empleados"}>
+          Nominas Empleados
         </Link>
       </p>
       <Footer />

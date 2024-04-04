@@ -61,7 +61,6 @@ export default function FormPersonas({
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
-
   const [backendError, setBackendError] = useState(false);
 
   function handleBackendError(errorMessage) {
@@ -84,7 +83,7 @@ export default function FormPersonas({
         handleBackendAndDBConnectionError(
           responseGetAllTiposPersonas.errorMessage
         );
-        return;
+        return false;
       }
 
       setTiposPersonasOptions(responseGetAllTiposPersonas);
@@ -112,7 +111,7 @@ export default function FormPersonas({
     }
 
     if (!formData.genero) {
-      errorMissingFields.genero = "Por favor, ingresa un género";
+      errorMissingFields.genero = "Por favor, selecciona un género";
     }
 
     if (!formData.fecha_nacimiento) {
@@ -140,7 +139,7 @@ export default function FormPersonas({
 
     if (!formData.id_tipo_persona) {
       errorMissingFields.id_tipo_persona =
-        "Por favor, ingresa un tipo de persona";
+        "Por favor, selecciona un tipo de persona";
     }
 
     setRequiredFieldsIncomplete(errorMissingFields);
@@ -184,7 +183,7 @@ export default function FormPersonas({
       setFormData((prevDataState) => {
         return {
           ...prevDataState,
-          [name]: type === "checkbox" ? checked : value,
+          [name]: value,
         };
       });
     }
@@ -219,6 +218,7 @@ export default function FormPersonas({
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
       console.log("Error en campos obligatorios: ", requiredFieldsError);
+
       setErrorMessage(
         "No se puede añadir un registro con uno o más campos vacios "
       );
@@ -228,6 +228,7 @@ export default function FormPersonas({
     const formDataError = validateFormData();
     if (formDataError) {
       console.log("Error en datos correctos: ", formDataError);
+
       setErrorMessage("");
       return;
     }

@@ -2,7 +2,7 @@ package tfg.backend.utils;
 
 public class RegexPatterns {
 
-    public static final String REGEX_DNI = "\\d{8}[A-HJ-NP-TV-Z]";
+    public static final String REGEX_DNI = "\\d{8}[TRWAGMYFPDXBNJZSQVHLCKE]";
     public static final String REGEX_EMAIL = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     public static final String REGEX_TELEFONO_CON_PREFIJO = "^34[6-9]\\d{8}$";
     public static final String REGEX_NIF_PERSONAS_FISICAS = "^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$";

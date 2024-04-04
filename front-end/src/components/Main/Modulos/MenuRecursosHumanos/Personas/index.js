@@ -12,7 +12,6 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
   GridToolbarExportContainer,
-  GridCsvExportMenuItem,
   useGridApiContext,
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
@@ -29,6 +28,8 @@ import {
 import styles from "./styles.module.css";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import ErrorIcon from "@mui/icons-material/Error";
 
 export default function Personas() {
   const {
@@ -55,6 +56,11 @@ export default function Personas() {
   const [personaDelete, setPersonaDelete] = useState(false);
   const [personaFormUpdated, setPersonaFormUpdated] = useState(false);
   const [rowSelected, setRowSelected] = useState(null);
+
+  const [backendError, setBackendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
+    useState(false);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -162,32 +168,39 @@ export default function Personas() {
     },
   ];
 
-  const fetchGetAllPersonas = async () => {
+  const fetchGetAllPersonasAndHandleErrors = async () => {
     try {
       setTableLoading(true);
       const responseGetAllPersonas = await getAllPersonas();
-      if (responseGetAllPersonas.status === 200) {
-        const personasMap = responseGetAllPersonas.data.map((persona) => {
-          return {
-            id: persona.id_persona,
-            numero_empleado: persona.numero_empleado,
-            nombre: persona.nombre,
-            apellidos: persona.apellidos,
-            genero: persona.genero,
-            fecha_nacimiento: persona.fecha_nacimiento,
-            dni: persona.dni,
-            direccion: persona.direccion,
-            numero_telefono: persona.numero_telefono,
-            correo_electronico: persona.correo_electronico,
-            tipo_persona: persona.tipo_persona.tipo_persona,
-            id_tipo_persona: persona.tipo_persona.id_tipo_persona,
-          };
-        });
-        setDataSource(personasMap);
+
+      if (responseGetAllPersonas.status === 500) {
+        setBackendOrDDBBConnectionError(true);
+        setErrorMessage(responseGetAllPersonas.errorMessage);
+        return false;
       }
+
+      const personasMap = responseGetAllPersonas.data.map((persona) => {
+        return {
+          id: persona.id_persona,
+          numero_empleado: persona.numero_empleado,
+          nombre: persona.nombre,
+          apellidos: persona.apellidos,
+          genero: persona.genero,
+          fecha_nacimiento: persona.fecha_nacimiento,
+          dni: persona.dni,
+          direccion: persona.direccion,
+          numero_telefono: persona.numero_telefono,
+          correo_electronico: persona.correo_electronico,
+          tipo_persona: persona.tipo_persona.tipo_persona,
+          id_tipo_persona: persona.tipo_persona.id_tipo_persona,
+        };
+      });
+      setDataSource(personasMap);
       setTableLoading(false);
+
+      return true;
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado");
     }
   };
 
@@ -197,21 +210,18 @@ export default function Personas() {
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllPersonas();
+      fetchGetAllPersonasAndHandleErrors();
     }
   }, [authUser]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (personaFormUpdated === true) {
-        await fetchGetAllPersonas();
-        setPersonaFormUpdated(false);
-      } else if (personaDelete === true) {
-        await fetchGetAllPersonas();
-        setPersonaDelete(false);
-      }
-    };
-    fetchData();
+    if (personaFormUpdated === true) {
+      fetchGetAllPersonasAndHandleErrors();
+      setPersonaFormUpdated(false);
+    } else if (personaDelete === true) {
+      fetchGetAllPersonasAndHandleErrors();
+      setPersonaDelete(false);
+    }
   }, [personaFormUpdated, personaDelete]);
 
   function personaFormUpdatedTrigger() {
@@ -260,12 +270,25 @@ export default function Personas() {
 
   // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeletePersona = await deletePersona(idPersonaSelected);
-    if (responseDeletePersona.status === 200) {
+    try {
+      const responseDeletePersona = await deletePersona(idPersonaSelected);
+
+      if (responseDeletePersona.status === 409) {
+        setBackendError(true);
+        setErrorMessage(responseDeletePersona.errorMessage);
+        return;
+      }
+      if (responseDeletePersona.status === 500) {
+        setBackendOrDDBBConnectionError(true);
+        setErrorMessage(responseDeletePersona.errorMessage);
+        return;
+      }
+
       setPersonaDelete(true);
+      resetStates();
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado");
     }
-    // console.log("Resultado delete: ", resultado);
-    resetStates();
   };
 
   const handleModalClose = () => {
@@ -399,8 +422,6 @@ export default function Personas() {
   }
 
   const renderTablePersona = () => {
-    // Hacer aqui el deleteModal
-
     function deleteModal() {
       return (
         <Antd.Modal
@@ -411,7 +432,16 @@ export default function Personas() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Antd.Modal>
+        >
+          {errorMessage.length !== 0 && backendError === true && (
+            <div>
+              <p className={styles.errorMessage}>
+                <ErrorIcon fontSize="medium" color="red" />
+                Error: {errorMessage}
+              </p>
+            </div>
+          )}
+        </Antd.Modal>
       );
     }
 
@@ -467,7 +497,13 @@ export default function Personas() {
     );
   };
 
-  if (showFormCreate) {
+  if (backendOrDDBBConnectionError === true) {
+    return (
+      <div>
+        <ServerConnectionError message={errorMessage} />
+      </div>
+    );
+  } else if (showFormCreate) {
     return (
       <>
         <FormPersonas
@@ -475,6 +511,8 @@ export default function Personas() {
           personaDataForm={""}
           formUpdateTrigger={personaFormUpdatedTrigger}
           operationType={"create"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormPersonas>
       </>
     );
@@ -486,6 +524,8 @@ export default function Personas() {
           personaDataForm={rowSelected}
           formUpdateTrigger={personaFormUpdatedTrigger}
           operationType={"update"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormPersonas>
       </>
     );
@@ -497,6 +537,8 @@ export default function Personas() {
           personaDataForm={rowSelected}
           formUpdateTrigger={personaFormUpdatedTrigger}
           operationType={"view"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormPersonas>
       </>
     );

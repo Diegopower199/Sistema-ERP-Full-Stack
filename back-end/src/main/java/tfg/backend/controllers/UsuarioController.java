@@ -53,7 +53,7 @@ public class UsuarioController {
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
     }
 
@@ -66,7 +66,7 @@ public class UsuarioController {
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
     }
 
@@ -81,7 +81,7 @@ public class UsuarioController {
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
     }
 
@@ -92,7 +92,7 @@ public class UsuarioController {
             usuarioService.deleteUsuario(id);
             return ResponseEntity.ok("Se ha eliminado correctamente");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
 
@@ -108,7 +108,7 @@ public class UsuarioController {
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
     }
 
@@ -131,7 +131,7 @@ public class UsuarioController {
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
     }
 
@@ -145,7 +145,7 @@ public class UsuarioController {
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
     }
 

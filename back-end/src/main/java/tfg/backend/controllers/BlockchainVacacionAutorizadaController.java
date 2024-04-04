@@ -49,14 +49,14 @@ public class BlockchainVacacionAutorizadaController {
                     .saveTransaccionVacacionAutorizada(vacacionEmpleadoRequest);
 
             if (newVacacionAutorizada == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
             } else {
                 return ResponseEntity.ok(newVacacionAutorizada.toMap());
             }
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
     }
 

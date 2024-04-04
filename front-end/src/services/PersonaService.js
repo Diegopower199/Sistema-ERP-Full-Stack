@@ -115,10 +115,18 @@ export const updatePersona = async (id, data) => {
       status: response.status,
     };
   } catch (error) {
-    return {
-      errorMessage: error.response.data.message,
-      status: error.response.status,
-    };
+    if (error.response) {
+      return {
+        errorMessage: error.response.data,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
   }
 };
 

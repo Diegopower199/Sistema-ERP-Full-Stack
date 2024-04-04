@@ -1,0 +1,28 @@
+.DivCentrado {
+  display: flex;
+  justify-content: center;
+}
+
+.Message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin-top: 8vh;
+  margin-right: 2vh;
+  margin-left: 4vh;
+
+  width: 80vh;
+  height: 80vh;
+  color: blue;
+  font-size: 3rem;
+}
+
+.Button {
+  margin-top: 5vh;
+  font-size: 1rem;
+  padding: 1rem;
+  width: auto;
+  height: auto;
+}

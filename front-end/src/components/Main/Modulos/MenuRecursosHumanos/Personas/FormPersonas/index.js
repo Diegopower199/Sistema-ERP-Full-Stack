@@ -15,6 +15,13 @@ import {
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,
+};
 
 export default function FormPersonas({
   toggleForm,
@@ -57,21 +64,34 @@ export default function FormPersonas({
 
   const [backendError, setBackendError] = useState(false);
 
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    triggerBackendOrDDBBConnectionError(true);
+    triggerErrorMessage(errorMessage);
+  }
+
   const fetchTiposPersonasOptionsAndHandleErrors = async () => {
     try {
       const responseGetAllTiposPersonas = await getAllTiposPersonas();
 
-      if (responseGetAllTiposPersonas.status === 500) {
-        triggerBackendOrDDBBConnectionError(true);
-        triggerErrorMessage(responseGetAllTiposPersonas.errorMessage);
-        return false;
+      errorHandlingInfo = checkResponseForErrors(responseGetAllTiposPersonas);
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGetAllTiposPersonas.errorMessage
+        );
+        return;
       }
 
       setTiposPersonasOptions(responseGetAllTiposPersonas);
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado");
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -150,45 +170,6 @@ export default function FormPersonas({
     return Object.keys(errorForm).length !== 0;
   };
 
-  useEffect(() => {
-    let noCallErrorsDetected = false;
-
-    const fetchData = async () => {
-      try {
-        noCallErrorsDetected = await fetchTiposPersonasOptionsAndHandleErrors();
-
-        if (noCallErrorsDetected === false) {
-          return;
-        }
-
-        console.log("operationType: ", operationType);
-
-        if (operationType === "update" || operationType === "view") {
-          if (validarFechaYYYYMMDD(personaDataForm.fecha_nacimiento) === null) {
-            const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
-              personaDataForm.fecha_nacimiento
-            );
-
-            console.log("fechaFormateada: ", fechaNacimientoFormateada);
-
-            setFormData(() => ({
-              ...personaDataForm,
-              fecha_nacimiento: fechaNacimientoFormateada,
-            }));
-          } else {
-            setFormData(() => ({
-              ...personaDataForm,
-            }));
-          }
-        }
-      } catch (error) {
-        console.error("Ha ocurrido algo inesperado");
-      }
-    };
-
-    fetchData();
-  }, []);
-
   const handleFormChange = (event) => {
     const { name, value, type, checked } = event.target;
     console.log("Name: ", name, " Value: ", value);
@@ -255,13 +236,13 @@ export default function FormPersonas({
       if (operationType === "create") {
         const responseCreatePersona = await savePersona(formData);
 
-        if (responseCreatePersona.status === 409) {
-          setBackendError(true);
-          setErrorMessage(responseCreatePersona.errorMessage);
+        errorHandlingInfo = checkResponseForErrors(responseCreatePersona);
+
+        if (errorHandlingInfo.backendError) {
+          handleBackendError(responseCreatePersona.errorMessage);
           return;
-        } else if (responseCreatePersona.status === 500) {
-          triggerBackendOrDDBBConnectionError(true);
-          triggerErrorMessage(responseCreatePersona.errorMessage);
+        } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+          handleBackendAndDBConnectionError(responseCreatePersona.errorMessage);
           return;
         }
 
@@ -274,13 +255,13 @@ export default function FormPersonas({
           formData
         );
 
-        if (responseUpdatePersona.status === 409) {
-          setBackendError(true);
-          setErrorMessage(responseUpdatePersona.errorMessage);
+        errorHandlingInfo = checkResponseForErrors(responseUpdatePersona);
+
+        if (errorHandlingInfo.backendError) {
+          handleBackendError(responseUpdatePersona.errorMessage);
           return;
-        } else if (responseUpdatePersona.status === 500) {
-          triggerBackendOrDDBBConnectionError(true);
-          triggerErrorMessage(responseUpdatePersona.errorMessage);
+        } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+          handleBackendAndDBConnectionError(responseUpdatePersona.errorMessage);
           return;
         }
 
@@ -289,9 +270,48 @@ export default function FormPersonas({
         formUpdateTrigger();
       }
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado");
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
+
+  useEffect(() => {
+    let noCallErrorsDetected = false;
+
+    const fetchData = async () => {
+      try {
+        noCallErrorsDetected = await fetchTiposPersonasOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
+        console.log("operationType: ", operationType);
+
+        if (operationType === "update" || operationType === "view") {
+          if (validarFechaYYYYMMDD(personaDataForm.fecha_nacimiento) === null) {
+            const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
+              personaDataForm.fecha_nacimiento
+            );
+
+            console.log("fechaFormateada: ", fechaNacimientoFormateada);
+
+            setFormData(() => ({
+              ...personaDataForm,
+              fecha_nacimiento: fechaNacimientoFormateada,
+            }));
+          } else {
+            setFormData(() => ({
+              ...personaDataForm,
+            }));
+          }
+        }
+      } catch (error) {
+        console.error("Ha ocurrido algo inesperado");
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -304,11 +324,7 @@ export default function FormPersonas({
             value={formData.numero_empleado}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={
-              requiredFieldsIncomplete.numero_empleado
-                ? "error"
-                : ""
-            }
+            status={requiredFieldsIncomplete.numero_empleado ? "error" : ""}
             className={styles.StyleInput}
           />
           {requiredFieldsIncomplete.numero_empleado && (

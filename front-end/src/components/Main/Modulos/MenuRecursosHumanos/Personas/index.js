@@ -30,6 +30,13 @@ import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
 import ErrorIcon from "@mui/icons-material/Error";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,
+};
 
 export default function Personas() {
   const {
@@ -168,14 +175,25 @@ export default function Personas() {
     },
   ];
 
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
   const fetchGetAllPersonasAndHandleErrors = async () => {
     try {
       setTableLoading(true);
       const responseGetAllPersonas = await getAllPersonas();
 
-      if (responseGetAllPersonas.status === 500) {
-        setBackendOrDDBBConnectionError(true);
-        setErrorMessage(responseGetAllPersonas.errorMessage);
+      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
         return false;
       }
 
@@ -273,14 +291,13 @@ export default function Personas() {
     try {
       const responseDeletePersona = await deletePersona(idPersonaSelected);
 
-      if (responseDeletePersona.status === 409) {
-        setBackendError(true);
-        setErrorMessage(responseDeletePersona.errorMessage);
+      errorHandlingInfo = checkResponseForErrors(responseDeletePersona);
+
+      if (errorHandlingInfo.backendError) {
+        handleBackendError(responseDeletePersona.errorMessage);
         return;
-      }
-      if (responseDeletePersona.status === 500) {
-        setBackendOrDDBBConnectionError(true);
-        setErrorMessage(responseDeletePersona.errorMessage);
+      } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(responseDeletePersona.errorMessage);
         return;
       }
 
@@ -505,7 +522,7 @@ export default function Personas() {
     );
   } else if (showFormCreate) {
     return (
-      <>
+      <div>
         <FormPersonas
           toggleForm={toggleCreatePersonaForm}
           personaDataForm={""}
@@ -514,11 +531,11 @@ export default function Personas() {
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormPersonas>
-      </>
+      </div>
     );
   } else if (showFormUpdate) {
     return (
-      <>
+      <div>
         <FormPersonas
           toggleForm={toggleUpdatePersonaForm}
           personaDataForm={rowSelected}
@@ -527,11 +544,11 @@ export default function Personas() {
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormPersonas>
-      </>
+      </div>
     );
   } else if (showFormViewUnique) {
     return (
-      <>
+      <div>
         <FormPersonas
           toggleForm={toggleViewUniquePersonaForm}
           personaDataForm={rowSelected}
@@ -540,7 +557,7 @@ export default function Personas() {
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormPersonas>
-      </>
+      </div>
     );
   } else {
     return renderTablePersona();

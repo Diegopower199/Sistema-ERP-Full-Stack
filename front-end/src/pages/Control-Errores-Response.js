@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getAllClientes, saveCliente } from "@/services/ClienteService";
-import { handleResponse } from "@/utils/responseHandler";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 import { getAllAsistenciaEmpleados } from "@/services/AsistenciaEmpleadoService";
 
 // OptimizedResponseErrorHandlingComponent SE VA A LLAMAR ASI AL PROGRAMA
@@ -13,6 +13,16 @@ function OptimizedErrorHandling() {
     useState(false);
 
   const [addUpdateDeleteCorrect, setAddUpdateDeleteCorrect] = useState(false);
+
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
 
   // Función manejadora para simular la respuesta y manejarla
   async function handleResponseAndError() {
@@ -27,36 +37,34 @@ function OptimizedErrorHandling() {
 
       console.log("responseGetAllClientes: ", responseGetAllClientes);
 
-      errorHandlingInfo = handleResponse(responseGetAllClientes);
+      errorHandlingInfo = checkResponseForErrors(responseGetAllClientes);
 
       console.log("errorHandlingInfo", errorHandlingInfo);
 
-      if (
-        errorHandlingInfo.backendError ||
-        errorHandlingInfo.backendOrDDBBConnectionError
-      ) {
-        setBackendError(errorHandlingInfo.backendError);
-        setErrorMessage(errorHandlingInfo.errorMessage);
-        setBackendOrDDBBConnectionError(
-          errorHandlingInfo.backendOrDDBBConnectionError
-        );
+      if (errorHandlingInfo.backendError) {
+        handleBackendError(errorHandlingInfo.errorMessage);
+        return;
+      }
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(errorHandlingInfo.errorMessage);
         return;
       }
 
       const responsGetAllAsistencias = await getAllAsistenciaEmpleados();
-      errorHandlingInfo = handleResponse(responsGetAllAsistencias);
+      errorHandlingInfo = checkResponseForErrors(responsGetAllAsistencias);
 
       console.log("hola", errorHandlingInfo);
 
-      if (
-        errorHandlingInfo.backendError ||
-        errorHandlingInfo.backendOrDDBBConnectionError
-      ) {
-        setBackendError(errorHandlingInfo.backendError);
-        setErrorMessage(errorHandlingInfo.errorMessage);
-        setBackendOrDDBBConnectionError(
-          errorHandlingInfo.backendOrDDBBConnectionError
-        );
+      if (errorHandlingInfo.backendError) {
+        console.log("errorHandlingInfo.backendError");
+        handleBackendError(errorHandlingInfo.errorMessage);
+        return;
+      }
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("errorHandlingInfo.backendOrDDBBConnectionError");
+        handleBackendAndDBConnectionError(errorHandlingInfo.errorMessage);
         return;
       }
     } catch (error) {
@@ -76,25 +84,23 @@ function OptimizedErrorHandling() {
 
       console.log("responseSaveCliente: ", responseSaveCliente);
 
-      errorHandlingInfo = handleResponse(responseSaveCliente);
+      errorHandlingInfo = checkResponseForErrors(responseSaveCliente);
 
       console.log("errorHandlingInfo", errorHandlingInfo);
 
-      if (
-        errorHandlingInfo.backendError ||
-        errorHandlingInfo.backendOrDDBBConnectionError
-      ) {
-        setBackendError(errorHandlingInfo.backendError);
-        setErrorMessage(errorHandlingInfo.errorMessage);
-        setBackendOrDDBBConnectionError(
-          errorHandlingInfo.backendOrDDBBConnectionError
-        );
+      if (errorHandlingInfo.backendError) {
+        console.log("errorHandlingInfo.backendError");
+        handleBackendError(errorHandlingInfo.errorMessage);
         return;
       }
 
-      setAddUpdateDeleteCorrect(true)
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("errorHandlingInfo.backendOrDDBBConnectionError");
+        handleBackendAndDBConnectionError(errorHandlingInfo.errorMessage);
+        return;
+      }
 
-
+      setAddUpdateDeleteCorrect(true);
     } catch (error) {
       console.error("Ha ocurrido algo inesperado");
     }
@@ -103,10 +109,12 @@ function OptimizedErrorHandling() {
   return (
     <div>
       <button onClick={handleResponseAndError}>Simular Respuesta</button>
-      <button onClick={handleResponseAndErrorParaSaveUpdateOrDelete}>Añadir Respuesta</button>
+      <button onClick={handleResponseAndErrorParaSaveUpdateOrDelete}>
+        Añadir Respuesta
+      </button>
       {addUpdateDeleteCorrect && (
         <>
-         <h1>FUNCIONA BIEN ESTO</h1>
+          <h1>FUNCIONA BIEN ESTO</h1>
         </>
       )}
       {backendOrDDBBConnectionError && <p>{errorMessage}</p>}
@@ -116,4 +124,3 @@ function OptimizedErrorHandling() {
 }
 
 export default OptimizedErrorHandling;
-

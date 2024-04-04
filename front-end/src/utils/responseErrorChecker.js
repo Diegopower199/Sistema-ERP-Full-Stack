@@ -1,4 +1,4 @@
-export function handleResponse(response) {
+export function checkResponseForErrors(response) {
   let backendError = false;
   let errorMessage = "";
   let backendOrDDBBConnectionError = false;

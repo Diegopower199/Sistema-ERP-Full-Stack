@@ -72,7 +72,6 @@ export default function SolicitudesEmpleados() {
   const [solicitudEmpleadoDelete, setSolicitudEmpleadoDelete] = useState(false);
   const [solicitudEmpleadoFormUpdated, setSolicitudEmpleadoFormUpdated] =
     useState(false);
-  const [rowSelected, setRowSelected] = useState(null);
 
   const [backendError, setBackendError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -84,7 +83,9 @@ export default function SolicitudesEmpleados() {
     page: 0,
   });
 
+  const [rowSelected, setRowSelected] = useState(null);
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
+
   const [dataSource, setDataSource] = useState([]);
   const columns = [
     {
@@ -203,7 +204,7 @@ export default function SolicitudesEmpleados() {
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado");
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -299,7 +300,7 @@ export default function SolicitudesEmpleados() {
       setSolicitudEmpleadoDelete(true);
       resetStates();
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado");
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

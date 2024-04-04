@@ -341,14 +341,8 @@ export default function FormSolicitudesEmpleados({
             value={formData.observacion}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.observacion ? "error" : ""}
             className={styles.StyleInput}
           />
-          {requiredFieldsIncomplete.observacion && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.observacion}
-            </div>
-          )}
         </Antd.Form.Item>
 
         <Antd.Form.Item label="Dni persona">

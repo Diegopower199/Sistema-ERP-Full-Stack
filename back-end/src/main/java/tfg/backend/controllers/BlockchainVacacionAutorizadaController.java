@@ -1,5 +1,6 @@
 package tfg.backend.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import commonclasses.TransaccionVacacion;
+import tfg.backend.ExcepcionControlada.ConexionServidoresException;
 import tfg.backend.services.BlockchainVacacionAutorizadaService;
 import tfg.backend.utils.GlobalConstants;
 
@@ -31,13 +33,27 @@ public class BlockchainVacacionAutorizadaController {
     // localhost:8080/blockchainVacacionesAutorizadas/api/getAll
     @GetMapping("/api/getAll")
     public ResponseEntity<List<Map<String, Object>>> getAll() {
-        List<Map<String, Object>> allVacacionesEmpleados = blockchainVacacionAutorizadaService
-                .getAllTransaccionesVacacionesAutorizadas();
+        try {
+            List<Map<String, Object>> allVacacionesEmpleados = blockchainVacacionAutorizadaService
+                    .getAllTransaccionesVacacionesAutorizadas();
 
-        if (allVacacionesEmpleados.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.ok(allVacacionesEmpleados);
+            if (allVacacionesEmpleados.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.ok(allVacacionesEmpleados);
+            }
+        } catch (ConexionServidoresException e) {
+            List<Map<String, Object>> resultado = new ArrayList<>();
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            resultado.add(response);
+            return ResponseEntity.status(e.getStatus()).body(resultado);
+        } catch (Exception e) {
+            List<Map<String, Object>> resultado = new ArrayList<>();
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            resultado.add(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(resultado);
         }
     }
 
@@ -53,6 +69,12 @@ public class BlockchainVacacionAutorizadaController {
             } else {
                 return ResponseEntity.ok(newVacacionAutorizada.toMap());
             }
+        } catch (ConexionServidoresException e) {
+            
+            System.out.println("EL ERROR EN CONTROLLER" + e.getMessage());
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(e.getStatus()).body(response);
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

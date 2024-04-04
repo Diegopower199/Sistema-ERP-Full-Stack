@@ -13,7 +13,6 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
   GridToolbarExportContainer,
-  GridCsvExportMenuItem,
   useGridApiContext,
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
@@ -34,6 +33,15 @@ import styles from "./styles.module.css";
 import HistorialVacacionesAutorizadas from "./HistorialVacacionesAutorizadas";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import ErrorIcon from "@mui/icons-material/Error";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,
+};
 
 export default function VacacionesEmpleados() {
   const {
@@ -71,6 +79,11 @@ export default function VacacionesEmpleados() {
 
   const [vacacionEmpleadoDelete, setVacacionEmpleadoDelete] = useState(false);
   const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
+    useState(false);
+
+  const [backendError, setBackendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
     useState(false);
 
   const [paginationModel, setPaginationModel] = useState({
@@ -175,34 +188,58 @@ export default function VacacionesEmpleados() {
     },
   ];
 
-  const fetchGetAllVacacionesEmpleados = async () => {
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  const fetchGetAllVacacionesEmpleadosAndHandleErrors = async () => {
     try {
       setTableLoading(true);
       const responseGetAllVacacionesEmpleados =
         await getAllVacacionesEmpleados();
-      if (responseGetAllVacacionesEmpleados.status === 200) {
-        const vacacionesEmpleadosMap =
-          responseGetAllVacacionesEmpleados.data.map((vacacionEmpleado) => {
-            return {
-              id: vacacionEmpleado.id_vacacion_empleado,
-              fecha_inicio: vacacionEmpleado.fecha_inicio,
-              fecha_fin: vacacionEmpleado.fecha_fin,
-              dias_disponibles: vacacionEmpleado.dias_disponibles,
-              dias_pendientes: vacacionEmpleado.dias_pendientes,
-              dias_solicitados: vacacionEmpleado.dias_solicitados,
-              dias_disfrutados: vacacionEmpleado.dias_disfrutados,
-              observacion: vacacionEmpleado.observacion,
-              id_persona: vacacionEmpleado.persona.id_persona,
-              dni: vacacionEmpleado.persona.dni,
-              tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
-              id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
-            };
-          });
-        setDataSource(vacacionesEmpleadosMap);
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllVacacionesEmpleados
+      );
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGetAllVacacionesEmpleados.errorMessage
+        );
+        return false;
       }
+
+      const vacacionesEmpleadosMap = responseGetAllVacacionesEmpleados.data.map(
+        (vacacionEmpleado) => {
+          return {
+            id: vacacionEmpleado.id_vacacion_empleado,
+            fecha_inicio: vacacionEmpleado.fecha_inicio,
+            fecha_fin: vacacionEmpleado.fecha_fin,
+            dias_disponibles: vacacionEmpleado.dias_disponibles,
+            dias_pendientes: vacacionEmpleado.dias_pendientes,
+            dias_solicitados: vacacionEmpleado.dias_solicitados,
+            dias_disfrutados: vacacionEmpleado.dias_disfrutados,
+            observacion: vacacionEmpleado.observacion,
+            id_persona: vacacionEmpleado.persona.id_persona,
+            dni: vacacionEmpleado.persona.dni,
+            tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
+            id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
+          };
+        }
+      );
+
+      setDataSource(vacacionesEmpleadosMap);
       setTableLoading(false);
+
+      return true;
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -212,21 +249,18 @@ export default function VacacionesEmpleados() {
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllVacacionesEmpleados();
+      fetchGetAllVacacionesEmpleadosAndHandleErrors();
     }
   }, [authUser]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (vacacionEmpleadoFormUpdated === true) {
-        await fetchGetAllVacacionesEmpleados();
-        setVacacionEmpleadoFormUpdated(false);
-      } else if (vacacionEmpleadoDelete === true) {
-        await fetchGetAllVacacionesEmpleados();
-        setVacacionEmpleadoDelete(false);
-      }
-    };
-    fetchData();
+    if (vacacionEmpleadoFormUpdated === true) {
+      fetchGetAllVacacionesEmpleadosAndHandleErrors();
+      setVacacionEmpleadoFormUpdated(false);
+    } else if (vacacionEmpleadoDelete === true) {
+      fetchGetAllVacacionesEmpleadosAndHandleErrors();
+      setVacacionEmpleadoDelete(false);
+    }
   }, [vacacionEmpleadoFormUpdated, vacacionEmpleadoDelete]);
 
   function vacacionEmpleadoFormUpdatedTrigger() {
@@ -251,11 +285,13 @@ export default function VacacionesEmpleados() {
 
   const handleCreateClick = () => {
     console.log("Añadir nueva vacacion empleado");
+
     toggleCreateVacacionEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateVacacionEmpleadoForm();
@@ -265,6 +301,7 @@ export default function VacacionesEmpleados() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+
     setIdVacacionEmpleadoSelected(id);
     setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
     setFechaInicioAndFinVacacionEmpleadoSelected([
@@ -276,6 +313,7 @@ export default function VacacionesEmpleados() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una vacacion empleado");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueVacacionEmpleadoForm();
@@ -283,19 +321,35 @@ export default function VacacionesEmpleados() {
 
   const handleShowHistorialVacacionesAutorizadasClick = () => {
     console.log("Boton para ver el historial de vacaciones autorizadas");
+
     toggleShowHistorialVacacionesAutorizadas();
   };
 
-  // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeleteVacacionEmpleado = await deleteVacacionEmpleado(
-      idVacacionEmpleadoSelected
-    );
-    if (responseDeleteVacacionEmpleado.status === 200) {
+    try {
+      const responseDeleteVacacionEmpleado = await deleteVacacionEmpleado(
+        idVacacionEmpleadoSelected
+      );
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseDeleteVacacionEmpleado
+      );
+
+      if (errorHandlingInfo.backendError) {
+        handleBackendError(responseDeleteVacacionEmpleado.errorMessage);
+        return;
+      } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseDeleteVacacionEmpleado.errorMessage
+        );
+        return;
+      }
+
       setVacacionEmpleadoDelete(true);
+      resetStates();
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
     }
-    // console.log("Response delete: ", response);
-    resetStates();
   };
 
   const handleModalClose = () => {
@@ -440,7 +494,16 @@ export default function VacacionesEmpleados() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Antd.Modal>
+        >
+          {errorMessage.length !== 0 && backendError === true && (
+            <div>
+              <p className={styles.BackendError}>
+                <ErrorIcon fontSize="medium" color="red" />
+                Error: {errorMessage}
+              </p>
+            </div>
+          )}
+        </Antd.Modal>
       );
     }
 
@@ -507,46 +570,60 @@ export default function VacacionesEmpleados() {
     );
   };
 
-  if (showFormCreate) {
+  if (backendOrDDBBConnectionError === true) {
     return (
-      <>
+      <div>
+        <ServerConnectionError message={errorMessage} />
+      </div>
+    );
+  } else if (showFormCreate) {
+    return (
+      <div>
         <FormVacacionesEmpleados
           toggleForm={toggleCreateVacacionEmpleadoForm}
           vacacionEmpleadoDataForm={""}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
           operationType={"create"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormVacacionesEmpleados>
-      </>
+      </div>
     );
   } else if (showFormUpdate) {
     return (
-      <>
+      <div>
         <FormVacacionesEmpleados
           toggleForm={toggleUpdateVacacionEmpleadoForm}
           vacacionEmpleadoDataForm={rowSelected}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
           operationType={"update"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormVacacionesEmpleados>
-      </>
+      </div>
     );
   } else if (showFormViewUnique) {
     return (
-      <>
+      <div>
         <FormVacacionesEmpleados
           toggleForm={toggleViewUniqueVacacionEmpleadoForm}
           vacacionEmpleadoDataForm={rowSelected}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
           operationType={"view"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormVacacionesEmpleados>
-      </>
+      </div>
     );
   } else if (showHistorialVacacionesAutorizadas) {
     return (
-      <>
+      <div>
         <HistorialVacacionesAutorizadas
           toggleView={toggleShowHistorialVacacionesAutorizadas}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></HistorialVacacionesAutorizadas>
-      </>
+      </div>
     );
   } else {
     return renderTableVacacionesEmpleados();

@@ -176,7 +176,7 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
       }
       setTableLoading(false);
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

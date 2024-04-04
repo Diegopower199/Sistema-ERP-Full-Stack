@@ -2,6 +2,9 @@ import { getAllTiposEstadosFacturas } from "@/services/TipoEstadoFacturaService"
 import { getAllTiposEstados } from "@/services/TipoEstadoService";
 //import antd, { Button, Select } from "antd";
 import * as Antd from "antd";
+import moment from "moment";
+import dayjs from "dayjs";
+
 import React, { useEffect, useState } from "react";
 
 function FormularioVacacionEmpleado() {
@@ -65,14 +68,19 @@ function FormularioVacacionEmpleado() {
   };
 
   const handleDateChange = (date, name) => {
-    const dateSelected = date.format("YYYY-MM-DD");
-    console.log("Dia seleccionado: ", dateSelected, " y el nombre es: ", name);
-    setFormulario((prevDataState) => {
-      return {
-        ...prevDataState,
-        [name]: dateSelected,
-      };
-    });
+    try {
+      console.log("Fecha seleccionada (antes de formato):", date);
+      const formattedDate = moment(date).format("YYYY-MM-DD");
+      console.log("Fecha seleccionada (después de formato):", formattedDate);
+      setFormulario((prevDataState) => {
+        return {
+          ...prevDataState,
+          [name]: formattedDate,
+        };
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleTipoEstadoChange = (value, option) => {
@@ -180,7 +188,10 @@ function FormularioVacacionEmpleado() {
       </label>
       <br></br>
       DatePicker (fechas) de antd PARA EL YEAR
-      <Antd.DatePicker onChange={(date) => handleDateChange(date, "year")} />
+      <Antd.DatePicker
+        name="year"
+        onChange={(date) => handleDateChange(date, "year")}
+      />
       <br></br>
       DatePicker (fechas) de antd PARA EL VALOR FECHA 1
       <Antd.DatePicker

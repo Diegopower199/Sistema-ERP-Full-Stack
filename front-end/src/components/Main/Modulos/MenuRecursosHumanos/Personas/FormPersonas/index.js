@@ -14,6 +14,7 @@ import {
 } from "@/utils/functionsFecha";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import * as Antd from "antd";
 
 export default function FormPersonas({
   toggleForm,
@@ -25,10 +26,12 @@ export default function FormPersonas({
 }) {
   const generoOptions = [
     {
-      value: "Masculino",
+      value: 1,
+      label: "Masculino",
     },
     {
-      value: "Femenino",
+      value: 2,
+      label: "Femenino",
     },
   ];
 
@@ -38,13 +41,14 @@ export default function FormPersonas({
     numero_empleado: "",
     nombre: "",
     apellidos: "",
-    genero: "Masculino",
+    genero: "",
     fecha_nacimiento: "",
     dni: "",
     direccion: "",
     numero_telefono: "34",
     correo_electronico: "",
-    id_tipo_persona: "1",
+    id_tipo_persona: "",
+    tipo_persona: "",
   });
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
@@ -64,12 +68,6 @@ export default function FormPersonas({
       }
 
       setTiposPersonasOptions(responseGetAllTiposPersonas);
-      setFormData((prevDataState) => {
-        return {
-          ...prevDataState,
-          ["id_tipo_persona"]: responseGetAllTiposPersonas[0].value.toString(),
-        };
-      });
 
       return true;
     } catch (error) {
@@ -127,8 +125,6 @@ export default function FormPersonas({
 
     setRequiredFieldsIncomplete(errorMissingFields);
 
-    console.log("errorMissingFields: ", errorMissingFields);
-
     return Object.keys(errorMissingFields).length !== 0;
   };
 
@@ -149,7 +145,7 @@ export default function FormPersonas({
     }
 
     setFormErrors(errorForm);
-    console.log("errorForm", errorForm);
+    console.log("errorForm: ", errorForm);
 
     return Object.keys(errorForm).length !== 0;
   };
@@ -162,7 +158,6 @@ export default function FormPersonas({
         noCallErrorsDetected = await fetchTiposPersonasOptionsAndHandleErrors();
 
         if (noCallErrorsDetected === false) {
-          console.log("HAY UN ERROR porque no hay conexion con el back");
           return;
         }
 
@@ -214,8 +209,31 @@ export default function FormPersonas({
     }
   };
 
+  const handleSelectGeneroChange = (value, option) => {
+    console.log("El genero es: ", value, option);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["genero"]: option?.children.toString(),
+      };
+    });
+  };
+
+  const handleTipoPersonaChange = (value, option) => {
+    console.log("El tipo persona es: ", value, option);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["tipo_persona"]: option?.children.toString(),
+        ["id_tipo_persona"]: value.toString(),
+      };
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    console.log("formData: ", formData);
 
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
@@ -275,260 +293,235 @@ export default function FormPersonas({
     }
   };
 
-  // https://es.stackoverflow.com/questions/289413/bloquear-n%C3%BAmeros-letras-y-o-caracteres-especiales-en-un-input MIRARME ESTO
-
   return (
     <>
       <Header />
-      <label>
-        Numero empleado:
-        <input
-          type="number"
-          name="numero_empleado"
-          value={formData.numero_empleado}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.numero_empleado ? styles.inputError : ""
-          }
-        />
-        {requiredFieldsIncomplete.numero_empleado && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.numero_empleado}
+      <Antd.Form>
+        <Antd.Form.Item label="Numero empleado">
+          <Antd.Input
+            type="number"
+            name="numero_empleado"
+            value={formData.numero_empleado}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={
+              requiredFieldsIncomplete.numero_empleado
+                ? "error"
+                : ""
+            }
+            className={styles.StyleInput}
+          />
+          {requiredFieldsIncomplete.numero_empleado && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.numero_empleado}
+            </div>
+          )}
+        </Antd.Form.Item>
+        <Antd.Form.Item label="Nombre">
+          <Antd.Input
+            type="text"
+            name="nombre"
+            value={formData.nombre}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.nombre ? "error" : ""}
+            className={styles.StyleInput}
+          />
+          {requiredFieldsIncomplete.nombre && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.nombre}
+            </div>
+          )}
+        </Antd.Form.Item>
+        <Antd.Form.Item label="Apellidos">
+          <Antd.Input
+            type="text"
+            name="apellidos"
+            value={formData.apellidos}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.apellidos ? "error" : ""}
+            className={styles.StyleInput}
+          />
+          {requiredFieldsIncomplete.apellidos && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.apellidos}
+            </div>
+          )}
+        </Antd.Form.Item>
+        <Antd.Form.Item label="Genero">
+          <Antd.Select
+            name="genero"
+            value={formData.genero ? formData.genero : "Selecciona un género"}
+            onChange={
+              operationType === "view" ? null : handleSelectGeneroChange
+            }
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.genero ? "error" : ""}
+            className={styles.StyleInput}
+            notFoundContent={<span>No hay géneros</span>}
+          >
+            {operationType !== "view" &&
+              generoOptions.map((genero) => (
+                <Antd.Select.Option key={genero.value} value={genero.value}>
+                  {genero.label}
+                </Antd.Select.Option>
+              ))}
+          </Antd.Select>
+          {requiredFieldsIncomplete.genero && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.genero}
+            </div>
+          )}
+        </Antd.Form.Item>
+
+        <Antd.Form.Item label=" Fecha nacimiento">
+          <Antd.Input
+            type="date"
+            name="fecha_nacimiento"
+            value={formData.fecha_nacimiento}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.fecha_nacimiento ? "error" : ""}
+            className={styles.StyleInput}
+          />
+          {requiredFieldsIncomplete.fecha_nacimiento && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.fecha_nacimiento}
+            </div>
+          )}
+        </Antd.Form.Item>
+
+        <Antd.Form.Item label="Dni">
+          <Antd.Input
+            type="text"
+            name="dni"
+            value={formData.dni}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={
+              requiredFieldsIncomplete.dni || formErrors.dni ? "error" : ""
+            }
+            className={styles.StyleInput}
+          />
+          {(requiredFieldsIncomplete.dni || formErrors.dni) && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.dni || formErrors.dni}
+            </div>
+          )}
+        </Antd.Form.Item>
+        <Antd.Form.Item label="Direccion">
+          <Antd.Input
+            type="text"
+            name="direccion"
+            value={formData.direccion}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.direccion ? "error" : ""}
+            className={styles.StyleInput}
+          />
+          {requiredFieldsIncomplete.direccion && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.direccion}
+            </div>
+          )}
+        </Antd.Form.Item>
+        <Antd.Form.Item label="Numero telefono">
+          <Antd.Input
+            type="text"
+            name="numero_telefono"
+            value={formData.numero_telefono}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={
+              requiredFieldsIncomplete.numero_telefono ||
+              formErrors.numero_telefono
+                ? "error"
+                : ""
+            }
+            className={styles.StyleInput}
+          />
+          {(requiredFieldsIncomplete.numero_telefono ||
+            formErrors.numero_telefono) && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.numero_telefono ||
+                formErrors.numero_telefono}
+            </div>
+          )}
+        </Antd.Form.Item>
+        <Antd.Form.Item label="Correo electronico">
+          <Antd.Input
+            type="text"
+            name="correo_electronico"
+            value={formData.correo_electronico}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={
+              requiredFieldsIncomplete.correo_electronico ||
+              formErrors.correo_electronico
+                ? "error"
+                : ""
+            }
+            className={styles.StyleInput}
+          />
+          {(requiredFieldsIncomplete.correo_electronico ||
+            formErrors.correo_electronico) && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.correo_electronico ||
+                formErrors.correo_electronico}
+            </div>
+          )}
+        </Antd.Form.Item>
+        <Antd.Form.Item label="Selecciona un tipo de persona">
+          <Antd.Select
+            name="tipo_persona"
+            value={
+              formData.tipo_persona
+                ? formData.tipo_persona
+                : "Selecciona un tipo de persona"
+            }
+            onChange={operationType === "view" ? null : handleTipoPersonaChange}
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.id_tipo_persona ? "error" : ""}
+            className={styles.StyleInput}
+            notFoundContent={<span>No hay opciones</span>}
+          >
+            {operationType !== "view" &&
+              tiposPersonasOptions.map((tipoPersona) => (
+                <Antd.Select.Option
+                  key={tipoPersona.value}
+                  value={tipoPersona.value}
+                >
+                  {tipoPersona.label}
+                </Antd.Select.Option>
+              ))}
+          </Antd.Select>
+          {requiredFieldsIncomplete.id_tipo_persona && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.id_tipo_persona}
+            </div>
+          )}
+        </Antd.Form.Item>
+        {errorMessage.length !== 0 && backendError && (
+          <div>
+            <p className={styles.BackendError}>
+              <ErrorIcon fontSize="medium" color="red" />
+              Error: {errorMessage}
+            </p>
           </div>
         )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Nombre:
-        <input
-          type="text"
-          name="nombre"
-          value={formData.nombre}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={requiredFieldsIncomplete.nombre ? styles.inputError : ""}
-        />
-        {requiredFieldsIncomplete.nombre && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.nombre}
+        {(operationType === "create" || operationType === "update") && (
+          <div>
+            <Antd.Button onClick={toggleForm}>Cancelar</Antd.Button>{" "}
+            <Antd.Button onClick={handleSubmit}>Guardar</Antd.Button>
           </div>
         )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Apellidos:
-        <input
-          type="text"
-          name="apellidos"
-          value={formData.apellidos}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.apellidos ? styles.inputError : ""
-          }
-        />
-        {requiredFieldsIncomplete.apellidos && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.apellidos}
+        {operationType === "view" && (
+          <div>
+            <Antd.Button onClick={toggleForm}>Salir</Antd.Button>
           </div>
         )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Genero:
-        <select
-          name="genero"
-          value={formData.genero}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={requiredFieldsIncomplete.genero ? styles.inputError : ""}
-        >
-          {generoOptions.map((genero) => (
-            <option key={genero.value} value={genero.value}>
-              {genero.value}
-            </option>
-          ))}
-        </select>
-        {requiredFieldsIncomplete.genero && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.genero}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Fecha nacimiento:
-        <input
-          type="date"
-          name="fecha_nacimiento"
-          value={formData.fecha_nacimiento}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.fecha_nacimiento ? styles.inputError : ""
-          }
-        />
-        {requiredFieldsIncomplete.fecha_nacimiento && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.fecha_nacimiento}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Dni:
-        <input
-          type="text"
-          name="dni"
-          value={formData.dni}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.dni || formErrors.dni
-              ? styles.inputError
-              : ""
-          }
-        />
-        {requiredFieldsIncomplete.dni && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.dni}
-          </div>
-        )}
-        {formErrors.dni && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {formErrors.dni}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Direccion:
-        <input
-          type="text"
-          name="direccion"
-          value={formData.direccion}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.direccion ? styles.inputError : ""
-          }
-        />
-        {requiredFieldsIncomplete.direccion && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.direccion}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Numero telefono:
-        <input
-          type="text"
-          name="numero_telefono"
-          value={formData.numero_telefono}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.numero_telefono ||
-            formErrors.numero_telefono
-              ? styles.inputError
-              : ""
-          }
-        />
-        {requiredFieldsIncomplete.numero_telefono && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.numero_telefono}
-          </div>
-        )}
-        {formErrors.numero_telefono && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {formErrors.numero_telefono}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Correo electronico:
-        <input
-          type="text"
-          name="correo_electronico"
-          value={formData.correo_electronico}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.correo_electronico ||
-            formErrors.correo_electronico
-              ? styles.inputError
-              : ""
-          }
-        />
-        {requiredFieldsIncomplete.correo_electronico && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.correo_electronico}
-          </div>
-        )}
-        {formErrors.correo_electronico && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {formErrors.correo_electronico}
-          </div>
-        )}
-      </label>
-      <br />
-      <br />
-      <label>
-        Selecciona un tipo de persona:
-        <select
-          name="id_tipo_persona"
-          value={formData.id_tipo_persona}
-          onChange={operationType === "view" ? null : handleFormChange}
-          readOnly={operationType === "view" ? true : false}
-          className={
-            requiredFieldsIncomplete.id_tipo_persona ? styles.inputError : ""
-          }
-        >
-          {tiposPersonasOptions.map((tipoPersona, index) => (
-            <option key={tipoPersona.value} value={tipoPersona.value}>
-              {tipoPersona.label}
-            </option>
-          ))}
-        </select>
-        {requiredFieldsIncomplete.id_tipo_persona && (
-          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-            {requiredFieldsIncomplete.id_tipo_persona}
-          </div>
-        )}
-      </label>
-      {errorMessage.length !== 0 && backendError && (
-        <>
-          <br /> <br />
-          <p className={styles.errorMessage}>
-            <ErrorIcon fontSize="medium" color="red" />
-            Error: {errorMessage}
-          </p>
-        </>
-      )}
-      {(operationType === "create" || operationType === "update") && (
-        <>
-          <br /> <br />
-          <button onClick={toggleForm}>Cancelar</button>{" "}
-          <button onClick={handleSubmit}>Guardar</button>
-        </>
-      )}
-      {operationType === "view" && (
-        <>
-          <br /> <br />
-          <button onClick={toggleForm}>Salir</button>
-        </>
-      )}
+      </Antd.Form>
       <Footer />
     </>
   );

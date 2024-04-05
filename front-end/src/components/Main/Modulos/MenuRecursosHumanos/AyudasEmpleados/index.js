@@ -32,6 +32,15 @@ import FormAyudasEmpleados from "./FormAyudasEmpleados";
 import styles from "./styles.module.css";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import ErrorIcon from "@mui/icons-material/Error";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,noContent: false,
+};
 
 export default function AyudasEmpleados() {
   const {
@@ -59,12 +68,16 @@ export default function AyudasEmpleados() {
     fechaInicioAndFinAyudaEmpleadoSelected,
     setFechaInicioAndFinAyudaEmpleadoSelected,
   ] = useState([]);
-  const [tipoAyudaSelected, setTipoAyudaSelected] = useState("");
 
   const [ayudaEmpleadoDelete, setAyudaEmpleadoDelete] = useState(false);
   const [ayudaEmpleadoFormUpdated, setAyudaEmpleadoFormUpdated] =
     useState(false);
   const [rowSelected, setRowSelected] = useState(null);
+
+  const [backendError, setBackendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
+    useState(false);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -154,33 +167,54 @@ export default function AyudasEmpleados() {
     },
   ];
 
-  const fetchGetAllAyudasEmpleados = async () => {
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  const fetchGetAllAyudasEmpleadosAndHandleErrors = async () => {
     try {
       setTableLoading(true);
       const responseGetAllAyudasEmpleados = await getAllAyudasEmpleados();
-      if (responseGetAllAyudasEmpleados.status === 200) {
-        const ayudasEmpleadosMap = responseGetAllAyudasEmpleados.data.map(
-          (ayudaEmpleado) => {
-            return {
-              id: ayudaEmpleado.id_ayuda_empleado,
-              fecha_inicio: ayudaEmpleado.fecha_inicio,
-              fecha_fin: ayudaEmpleado.fecha_fin,
-              valor_asociado: ayudaEmpleado.valor_asociado,
-              observacion: ayudaEmpleado.observacion,
-              id_persona: ayudaEmpleado.persona.id_persona,
-              dni: ayudaEmpleado.persona.dni,
-              tipo_ayuda: ayudaEmpleado.tipo_ayuda.tipo_ayuda,
-              id_tipo_ayuda: ayudaEmpleado.tipo_ayuda.id_tipo_ayuda,
-              tipo_estado: ayudaEmpleado.tipo_estado.tipo_estado,
-              id_tipo_estado: ayudaEmpleado.tipo_estado.id_tipo_estado,
-            };
-          }
+
+      errorHandlingInfo = checkResponseForErrors(responseGetAllAyudasEmpleados);
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGetAllAyudasEmpleados.errorMessage
         );
-        setDataSource(ayudasEmpleadosMap);
+        return false;
       }
+
+      const ayudasEmpleadosMap = responseGetAllAyudasEmpleados.data.map(
+        (ayudaEmpleado) => {
+          return {
+            id: ayudaEmpleado.id_ayuda_empleado,
+            fecha_inicio: ayudaEmpleado.fecha_inicio,
+            fecha_fin: ayudaEmpleado.fecha_fin,
+            valor_asociado: ayudaEmpleado.valor_asociado,
+            observacion: ayudaEmpleado.observacion,
+            id_persona: ayudaEmpleado.persona.id_persona,
+            dni: ayudaEmpleado.persona.dni,
+            tipo_ayuda: ayudaEmpleado.tipo_ayuda.tipo_ayuda,
+            id_tipo_ayuda: ayudaEmpleado.tipo_ayuda.id_tipo_ayuda,
+            tipo_estado: ayudaEmpleado.tipo_estado.tipo_estado,
+            id_tipo_estado: ayudaEmpleado.tipo_estado.id_tipo_estado,
+          };
+        }
+      );
+      setDataSource(ayudasEmpleadosMap);
+
       setTableLoading(false);
+
+      return true;
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -190,21 +224,18 @@ export default function AyudasEmpleados() {
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllAyudasEmpleados();
+      fetchGetAllAyudasEmpleadosAndHandleErrors();
     }
   }, [authUser]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (ayudaEmpleadoFormUpdated === true) {
-        await fetchGetAllAyudasEmpleados();
-        setAyudaEmpleadoFormUpdated(false);
-      } else if (ayudaEmpleadoDelete === true) {
-        await fetchGetAllAyudasEmpleados();
-        setAyudaEmpleadoDelete(false);
-      }
-    };
-    fetchData();
+    if (ayudaEmpleadoFormUpdated === true) {
+      fetchGetAllAyudasEmpleadosAndHandleErrors();
+      setAyudaEmpleadoFormUpdated(false);
+    } else if (ayudaEmpleadoDelete === true) {
+      fetchGetAllAyudasEmpleadosAndHandleErrors();
+      setAyudaEmpleadoDelete(false);
+    }
   }, [ayudaEmpleadoFormUpdated, ayudaEmpleadoDelete]);
 
   function ayudaEmpleadoFormUpdatedTrigger() {
@@ -225,11 +256,13 @@ export default function AyudasEmpleados() {
 
   const handleCreateClick = () => {
     console.log("Añadir nueva ayuda empleado");
+
     toggleCreateAyudaEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateAyudaEmpleadoForm();
@@ -239,33 +272,47 @@ export default function AyudasEmpleados() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+
     setIdAyudaEmpleadoSelected(id);
     setDniPersonaAyudaEmpleadoSelected(filaSeleccionada.dni);
     setFechaInicioAndFinAyudaEmpleadoSelected([
       filaSeleccionada.fecha_inicio,
       filaSeleccionada.fecha_fin,
     ]);
-    setTipoAyudaSelected(filaSeleccionada.tipo_ayuda);
     setShowDelete(true);
   };
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una ayuda empleado");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueAyudaEmpleadoForm();
   };
 
-  // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeleteAyudaEmpleado = await deleteAyudaEmpleado(
-      idAyudaEmpleadoSelected
-    );
-    if (responseDeleteAyudaEmpleado.status === 200) {
+    try {
+      const responseDeleteAyudaEmpleado = await deleteAyudaEmpleado(
+        idAyudaEmpleadoSelected
+      );
+
+      errorHandlingInfo = checkResponseForErrors(responseDeleteAyudaEmpleado);
+
+      if (errorHandlingInfo.backendError) {
+        handleBackendError(responseDeleteAyudaEmpleado.errorMessage);
+        return;
+      } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseDeleteAyudaEmpleado.errorMessage
+        );
+        return;
+      }
+
       setAyudaEmpleadoDelete(true);
+      resetStates();
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
     }
-    // console.log("Response delete: ", response);
-    resetStates();
   };
 
   const handleModalClose = () => {
@@ -280,7 +327,6 @@ export default function AyudasEmpleados() {
     setIdAyudaEmpleadoSelected(0);
     setDniPersonaAyudaEmpleadoSelected("");
     setFechaInicioAndFinAyudaEmpleadoSelected([]);
-    setTipoAyudaSelected("");
   }
 
   const getJson = (apiRef) => {
@@ -413,7 +459,16 @@ export default function AyudasEmpleados() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Antd.Modal>
+        >
+          {errorMessage.length !== 0 && backendError === true && (
+            <div>
+              <p className={styles.BackendError}>
+                <ErrorIcon fontSize="medium" color="red" />
+                Error: {errorMessage}
+              </p>
+            </div>
+          )}
+        </Antd.Modal>
       );
     }
 
@@ -469,38 +524,50 @@ export default function AyudasEmpleados() {
     );
   };
 
-  if (showFormCreate) {
+  if (backendOrDDBBConnectionError === true) {
     return (
-      <>
+      <div>
+        <ServerConnectionError message={errorMessage} />
+      </div>
+    );
+  } else if (showFormCreate) {
+    return (
+      <div>
         <FormAyudasEmpleados
           toggleForm={toggleCreateAyudaEmpleadoForm}
           ayudaEmpleadoDataForm={""}
           formUpdateTrigger={ayudaEmpleadoFormUpdatedTrigger}
           operationType={"create"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormAyudasEmpleados>
-      </>
+      </div>
     );
   } else if (showFormUpdate) {
     return (
-      <>
+      <div>
         <FormAyudasEmpleados
           toggleForm={toggleUpdateAyudaEmpleadoForm}
           ayudaEmpleadoDataForm={rowSelected}
           formUpdateTrigger={ayudaEmpleadoFormUpdatedTrigger}
           operationType={"update"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormAyudasEmpleados>
-      </>
+      </div>
     );
   } else if (showFormViewUnique) {
     return (
-      <>
+      <div>
         <FormAyudasEmpleados
           toggleForm={toggleViewUniqueAyudaEmpleadoForm}
           ayudaEmpleadoDataForm={rowSelected}
           formUpdateTrigger={ayudaEmpleadoFormUpdatedTrigger}
           operationType={"view"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormAyudasEmpleados>
-      </>
+      </div>
     );
   } else {
     return renderTableAyudaEmpleado();

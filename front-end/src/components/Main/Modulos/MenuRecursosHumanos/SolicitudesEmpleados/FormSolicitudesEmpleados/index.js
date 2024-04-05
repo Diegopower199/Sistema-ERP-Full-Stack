@@ -20,7 +20,7 @@ import { REGEX_DNI } from "@/utils/regexPatterns";
 let errorHandlingInfo = {
   errorMessage: "",
   backendOrDDBBConnectionError: false,
-  backendError: false,
+  backendError: false,noContent: false,
 };
 
 export default function FormSolicitudesEmpleados({
@@ -112,6 +112,55 @@ export default function FormSolicitudesEmpleados({
       console.error("Ha ocurrido algo inesperado", error);
     }
   };
+
+  useEffect(() => {
+    let noCallErrorsDetected = false;
+
+    const fetchData = async () => {
+      try {
+        noCallErrorsDetected =
+          await fetchTiposSolicitudesOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
+        noCallErrorsDetected = await fetchTiposEstadosOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
+        console.log("operationType: ", operationType);
+
+        if (operationType === "update" || operationType === "view") {
+          if (
+            validarFechaYYYYMMDD(solicitudEmpleadoDataForm.fecha_solicitud) ===
+            null
+          ) {
+            const fechaSolicitudFormateada = formatearFechaYYYYMMDD(
+              solicitudEmpleadoDataForm.fecha_solicitud
+            );
+
+            console.log("fechaSolicitudFormateada: ", fechaSolicitudFormateada);
+
+            setFormData(() => ({
+              ...solicitudEmpleadoDataForm,
+              fecha_solicitud: fechaSolicitudFormateada,
+            }));
+          } else {
+            setFormData(() => ({
+              ...solicitudEmpleadoDataForm,
+            }));
+          }
+        }
+      } catch (error) {
+        console.error("Ha ocurrido algo inesperado", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const validateRequiredFields = () => {
     const errorMissingFields = {};
@@ -263,55 +312,6 @@ export default function FormSolicitudesEmpleados({
       console.error("Ha ocurrido algo inesperado", error);
     }
   };
-
-  useEffect(() => {
-    let noCallErrorsDetected = false;
-
-    const fetchData = async () => {
-      try {
-        noCallErrorsDetected =
-          await fetchTiposSolicitudesOptionsAndHandleErrors();
-
-        if (noCallErrorsDetected === false) {
-          return;
-        }
-
-        noCallErrorsDetected = await fetchTiposEstadosOptionsAndHandleErrors();
-
-        if (noCallErrorsDetected === false) {
-          return;
-        }
-
-        console.log("operationType: ", operationType);
-
-        if (operationType === "update" || operationType === "view") {
-          if (
-            validarFechaYYYYMMDD(solicitudEmpleadoDataForm.fecha_solicitud) ===
-            null
-          ) {
-            const fechaSolicitudFormateada = formatearFechaYYYYMMDD(
-              solicitudEmpleadoDataForm.fecha_solicitud
-            );
-
-            console.log("fechaSolicitudFormateada: ", fechaSolicitudFormateada);
-
-            setFormData(() => ({
-              ...solicitudEmpleadoDataForm,
-              fecha_solicitud: fechaSolicitudFormateada,
-            }));
-          } else {
-            setFormData(() => ({
-              ...solicitudEmpleadoDataForm,
-            }));
-          }
-        }
-      } catch (error) {
-        console.error("Ha ocurrido algo inesperado", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <>

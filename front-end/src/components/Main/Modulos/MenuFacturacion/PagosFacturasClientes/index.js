@@ -32,6 +32,15 @@ import styles from "./styles.module.css";
 import { getAllPagosFacturasClientes } from "@/services/PagoFacturaClienteService";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import ErrorIcon from "@mui/icons-material/Error";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,noContent: false,
+};
 
 export default function PagosFacturasClientes() {
   const {
@@ -67,6 +76,11 @@ export default function PagosFacturasClientes() {
   const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
     useState(false);
   const [rowSelected, setRowSelected] = useState(null);
+
+  const [backendError, setBackendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
+    useState(false);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -138,28 +152,51 @@ export default function PagosFacturasClientes() {
     },
   ];
 
-  const fetchGetAllPagosFacturasClientes = async () => {
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  const fetchGetAllPagosFacturasClientesAndHandleErrors = async () => {
     try {
       setTableLoading(true);
       const responseGetAllPagosFacturasClientes =
         await getAllPagosFacturasClientes();
-      if (responseGetAllPagosFacturasClientes.status === 200) {
-        const pagosFacturasClientesMap =
-          responseGetAllPagosFacturasClientes.data.map((pagoFacturaCliente) => {
-            return {
-              id: pagoFacturaCliente.id_pago_factura_cliente,
-              fecha_pago_realizada: pagoFacturaCliente.fecha_pago_realizada,
-              importe_pagado: pagoFacturaCliente.importe_pagado,
-              metodo_pago: pagoFacturaCliente.metodo_pago,
-              id_factura_cliente:
-                pagoFacturaCliente.factura_cliente.id_factura_cliente,
-            };
-          });
-        setDataSource(pagosFacturasClientesMap);
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllPagosFacturasClientes
+      );
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGetAllPagosFacturasClientes.errorMessage
+        );
+        return false;
       }
+
+      const pagosFacturasClientesMap =
+        responseGetAllPagosFacturasClientes.data.map((pagoFacturaCliente) => {
+          return {
+            id: pagoFacturaCliente.id_pago_factura_cliente,
+            fecha_pago_realizada: pagoFacturaCliente.fecha_pago_realizada,
+            importe_pagado: pagoFacturaCliente.importe_pagado,
+            metodo_pago: pagoFacturaCliente.metodo_pago,
+            id_factura_cliente:
+              pagoFacturaCliente.factura_cliente.id_factura_cliente,
+          };
+        });
+
+      setDataSource(pagosFacturasClientesMap);
       setTableLoading(false);
+
+      return true;
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -169,21 +206,18 @@ export default function PagosFacturasClientes() {
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllPagosFacturasClientes();
+      fetchGetAllPagosFacturasClientesAndHandleErrors();
     }
   }, [authUser]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (vacacionEmpleadoFormUpdated === true) {
-        await fetchGetAllPagosFacturasClientes();
-        setVacacionEmpleadoFormUpdated(false);
-      } else if (vacacionEmpleadoDelete === true) {
-        await fetchGetAllPagosFacturasClientes();
-        setVacacionEmpleadoDelete(false);
-      }
-    };
-    fetchData();
+    if (vacacionEmpleadoFormUpdated === true) {
+      fetchGetAllPagosFacturasClientesAndHandleErrors();
+      setVacacionEmpleadoFormUpdated(false);
+    } else if (vacacionEmpleadoDelete === true) {
+      fetchGetAllPagosFacturasClientesAndHandleErrors();
+      setVacacionEmpleadoDelete(false);
+    }
   }, [vacacionEmpleadoFormUpdated, vacacionEmpleadoDelete]);
 
   function vacacionEmpleadoFormUpdatedTrigger() {
@@ -204,11 +238,13 @@ export default function PagosFacturasClientes() {
 
   const handleCreateClick = () => {
     console.log("Añadir nueva vacacion empleado");
+
     toggleCreateVacacionEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateVacacionEmpleadoForm();
@@ -218,6 +254,7 @@ export default function PagosFacturasClientes() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+
     setIdVacacionEmpleadoSelected(id);
     setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
     setFechaInicioAndFinVacacionEmpleadoSelected([
@@ -229,21 +266,37 @@ export default function PagosFacturasClientes() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una vacacion empleado");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueVacacionEmpleadoForm();
   };
 
-  // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeleteVacacionEmpleado = await deleteVacacionEmpleado(
-      idVacacionEmpleadoSelected
-    );
-    if (responseDeleteVacacionEmpleado.status === 200) {
+    try {
+      const responseDeleteVacacionEmpleado = await deleteVacacionEmpleado(
+        idVacacionEmpleadoSelected
+      );
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseDeleteVacacionEmpleado
+      );
+
+      if (errorHandlingInfo.backendError) {
+        handleBackendError(responseDeleteVacacionEmpleado.errorMessage);
+        return;
+      } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseDeleteVacacionEmpleado.errorMessage
+        );
+        return;
+      }
+
       setVacacionEmpleadoDelete(true);
+      resetStates();
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
     }
-    // console.log("Response delete: ", response);
-    resetStates();
   };
 
   const handleModalClose = () => {
@@ -388,7 +441,16 @@ export default function PagosFacturasClientes() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Antd.Modal>
+        >
+          {errorMessage.length !== 0 && backendError === true && (
+            <div>
+              <p className={styles.BackendError}>
+                <ErrorIcon fontSize="medium" color="red" />
+                Error: {errorMessage}
+              </p>
+            </div>
+          )}
+        </Antd.Modal>
       );
     }
 
@@ -444,38 +506,50 @@ export default function PagosFacturasClientes() {
     );
   };
 
-  if (showFormCreate) {
+  if (backendOrDDBBConnectionError === true) {
     return (
-      <>
+      <div>
+        <ServerConnectionError message={errorMessage} />
+      </div>
+    );
+  } else if (showFormCreate) {
+    return (
+      <div>
         <FormPagosFacturasClientes
           toggleForm={toggleCreateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={""}
+          pagoFacturaClienteDataForm={""}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
           operationType={"create"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormPagosFacturasClientes>
-      </>
+      </div>
     );
   } else if (showFormUpdate) {
     return (
-      <>
+      <div>
         <FormPagosFacturasClientes
           toggleForm={toggleUpdateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
+          pagoFacturaClienteDataForm={rowSelected}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
           operationType={"update"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormPagosFacturasClientes>
-      </>
+      </div>
     );
   } else if (showFormViewUnique) {
     return (
-      <>
+      <div>
         <FormPagosFacturasClientes
           toggleForm={toggleViewUniqueVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
+          pagoFacturaClienteDataForm={rowSelected}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
           operationType={"view"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormPagosFacturasClientes>
-      </>
+      </div>
     );
   } else {
     return renderTableVacacionEmpleado();

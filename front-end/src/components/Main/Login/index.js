@@ -145,6 +145,7 @@ export default function Login() {
 
         setIsLoggedIn(true);
         setAuthUser({
+          id_usuario: responseNombreUsuario.data.id_usuario,
           nombre_usuario: formData.nombre_usuario,
           password: formData.password,
           persona: {

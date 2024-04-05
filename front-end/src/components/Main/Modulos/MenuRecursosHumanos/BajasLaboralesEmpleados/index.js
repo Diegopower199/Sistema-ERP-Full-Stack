@@ -32,6 +32,15 @@ import {
 import styles from "./styles.module.css";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import ErrorIcon from "@mui/icons-material/Error";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,noContent: false,
+};
 
 export default function BajasLaboralesEmpleados() {
   const {
@@ -62,13 +71,17 @@ export default function BajasLaboralesEmpleados() {
     fechaInicioAndFinBajaLaboralEmpleadoSelected,
     setFechaInicioAndFinBajaLaboralEmpleadoSelected,
   ] = useState([]);
-  const [motivoBajaSelected, setMotivoBajaSelected] = useState("");
 
   const [bajaLaboralEmpleadoDelete, setBajaLaboralEmpleadoDelete] =
     useState(false);
   const [bajaLaboralEmpleadoFormUpdated, setBajaLaboralEmpleadoFormUpdated] =
     useState(false);
   const [rowSelected, setRowSelected] = useState(null);
+
+  const [backendError, setBackendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
+    useState(false);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -152,34 +165,57 @@ export default function BajasLaboralesEmpleados() {
     },
   ];
 
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
   const fetchGetAllBajasLaboralesEmpleados = async () => {
     try {
       setTableLoading(true);
       const responseGetAllBajasLaboralesEmpleados =
         await getAllBajasLaboralesEmpleados();
-      if (responseGetAllBajasLaboralesEmpleados.status === 200) {
-        const bajasLaboralesEmpleadosMap =
-          responseGetAllBajasLaboralesEmpleados.data.map(
-            (bajaLaboralEmpleado) => {
-              return {
-                id: bajaLaboralEmpleado.id_baja_laboral_empleado,
-                fecha_inicio: bajaLaboralEmpleado.fecha_inicio,
-                fecha_fin: bajaLaboralEmpleado.fecha_fin,
-                observacion: bajaLaboralEmpleado.observacion,
-                id_persona: bajaLaboralEmpleado.persona.id_persona,
-                dni: bajaLaboralEmpleado.persona.dni,
-                motivo_baja: bajaLaboralEmpleado.motivo_baja.motivo_baja,
-                id_motivo_baja: bajaLaboralEmpleado.motivo_baja.id_motivo_baja,
-                tipo_estado: bajaLaboralEmpleado.tipo_estado.tipo_estado,
-                id_tipo_estado: bajaLaboralEmpleado.tipo_estado.id_tipo_estado,
-              };
-            }
-          );
-        setDataSource(bajasLaboralesEmpleadosMap);
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllBajasLaboralesEmpleados
+      );
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGetAllBajasLaboralesEmpleados.errorMessage
+        );
+        return false;
       }
+
+      const bajasLaboralesEmpleadosMap =
+        responseGetAllBajasLaboralesEmpleados.data.map(
+          (bajaLaboralEmpleado) => {
+            return {
+              id: bajaLaboralEmpleado.id_baja_laboral_empleado,
+              fecha_inicio: bajaLaboralEmpleado.fecha_inicio,
+              fecha_fin: bajaLaboralEmpleado.fecha_fin,
+              observacion: bajaLaboralEmpleado.observacion,
+              id_persona: bajaLaboralEmpleado.persona.id_persona,
+              dni: bajaLaboralEmpleado.persona.dni,
+              motivo_baja: bajaLaboralEmpleado.motivo_baja.motivo_baja,
+              id_motivo_baja: bajaLaboralEmpleado.motivo_baja.id_motivo_baja,
+              tipo_estado: bajaLaboralEmpleado.tipo_estado.tipo_estado,
+              id_tipo_estado: bajaLaboralEmpleado.tipo_estado.id_tipo_estado,
+            };
+          }
+        );
+
+      setDataSource(bajasLaboralesEmpleadosMap);
       setTableLoading(false);
+
+      return true;
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -194,16 +230,13 @@ export default function BajasLaboralesEmpleados() {
   }, [authUser]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (bajaLaboralEmpleadoFormUpdated === true) {
-        await fetchGetAllBajasLaboralesEmpleados();
-        setBajaLaboralEmpleadoFormUpdated(false);
-      } else if (bajaLaboralEmpleadoDelete === true) {
-        await fetchGetAllBajasLaboralesEmpleados();
-        setBajaLaboralEmpleadoDelete(false);
-      }
-    };
-    fetchData();
+    if (bajaLaboralEmpleadoFormUpdated === true) {
+      fetchGetAllBajasLaboralesEmpleados();
+      setBajaLaboralEmpleadoFormUpdated(false);
+    } else if (bajaLaboralEmpleadoDelete === true) {
+      fetchGetAllBajasLaboralesEmpleados();
+      setBajaLaboralEmpleadoDelete(false);
+    }
   }, [bajaLaboralEmpleadoFormUpdated, bajaLaboralEmpleadoDelete]);
 
   function bajaLaboralEmpleadoFormUpdatedTrigger() {
@@ -224,11 +257,13 @@ export default function BajasLaboralesEmpleados() {
 
   const handleCreateClick = () => {
     console.log("Añadir nueva baja laboral empleado");
+
     toggleCreateBajaLaboralEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateBajaLaboralEmpleadoForm();
@@ -238,33 +273,49 @@ export default function BajasLaboralesEmpleados() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+
     setIdBajaLaboralEmpleadoSelected(id);
     setDniPersonaBajaLaboralEmpleadoSelected(filaSeleccionada.dni);
     setFechaInicioAndFinBajaLaboralEmpleadoSelected([
       filaSeleccionada.fecha_inicio,
       filaSeleccionada.fecha_fin,
     ]);
-    setMotivoBajaSelected(filaSeleccionada.motivo_baja);
     setShowDelete(true);
   };
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una baja laboral empleado");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueBajaLaboralEmpleadoForm();
   };
 
-  // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeleteBajaLaboralEmpleado = await deleteBajaLaboralEmpleado(
-      idBajaLaboralEmpleadoSelected
-    );
-    if (responseDeleteBajaLaboralEmpleado.status === 200) {
+    try {
+      const responseDeleteBajaLaboralEmpleado = await deleteBajaLaboralEmpleado(
+        idBajaLaboralEmpleadoSelected
+      );
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseDeleteBajaLaboralEmpleado
+      );
+
+      if (errorHandlingInfo.backendError) {
+        handleBackendError(responseDeleteBajaLaboralEmpleado.errorMessage);
+        return;
+      } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseDeleteBajaLaboralEmpleado.errorMessage
+        );
+        return;
+      }
+
       setBajaLaboralEmpleadoDelete(true);
+      resetStates();
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
     }
-    // console.log("Response delete: ", response);
-    resetStates();
   };
 
   const handleModalClose = () => {
@@ -279,7 +330,6 @@ export default function BajasLaboralesEmpleados() {
     setIdBajaLaboralEmpleadoSelected(0);
     setDniPersonaBajaLaboralEmpleadoSelected("");
     setFechaInicioAndFinBajaLaboralEmpleadoSelected([]);
-    setMotivoBajaSelected("");
   }
 
   const getJson = (apiRef) => {
@@ -412,7 +462,16 @@ export default function BajasLaboralesEmpleados() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Antd.Modal>
+        >
+          {errorMessage.length !== 0 && backendError === true && (
+            <div>
+              <p className={styles.BackendError}>
+                <ErrorIcon fontSize="medium" color="red" />
+                Error: {errorMessage}
+              </p>
+            </div>
+          )}
+        </Antd.Modal>
       );
     }
 
@@ -468,38 +527,50 @@ export default function BajasLaboralesEmpleados() {
     );
   };
 
-  if (showFormCreate) {
+  if (backendOrDDBBConnectionError === true) {
     return (
-      <>
+      <div>
+        <ServerConnectionError message={errorMessage} />
+      </div>
+    );
+  } else if (showFormCreate) {
+    return (
+      <div>
         <FormBajasLaboralesEmpleados
           toggleForm={toggleCreateBajaLaboralEmpleadoForm}
           bajaLaboralEmpleadoDataForm={""}
           formUpdateTrigger={bajaLaboralEmpleadoFormUpdatedTrigger}
           operationType={"create"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormBajasLaboralesEmpleados>
-      </>
+      </div>
     );
   } else if (showFormUpdate) {
     return (
-      <>
+      <div>
         <FormBajasLaboralesEmpleados
           toggleForm={toggleUpdateBajaLaboralEmpleadoForm}
           bajaLaboralEmpleadoDataForm={rowSelected}
           formUpdateTrigger={bajaLaboralEmpleadoFormUpdatedTrigger}
           operationType={"update"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormBajasLaboralesEmpleados>
-      </>
+      </div>
     );
   } else if (showFormViewUnique) {
     return (
-      <>
+      <div>
         <FormBajasLaboralesEmpleados
           toggleForm={toggleViewUniqueBajaLaboralEmpleadoForm}
           bajaLaboralEmpleadoDataForm={rowSelected}
           formUpdateTrigger={bajaLaboralEmpleadoFormUpdatedTrigger}
           operationType={"view"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormBajasLaboralesEmpleados>
-      </>
+      </div>
     );
   } else {
     return renderTableBajaLaboralEmpleado();

@@ -29,6 +29,15 @@ import {
 } from "@/services/FacturaClienteService";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import ErrorIcon from "@mui/icons-material/Error";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,noContent: false,
+};
 
 export default function FacturasClientes() {
   const {
@@ -66,6 +75,7 @@ export default function FacturasClientes() {
     setAceptarBotonParaVerResultadosFacturasClientes,
   ] = useState(false);
 
+  const [backendError, setBackendError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
     useState(false);
@@ -220,50 +230,71 @@ export default function FacturasClientes() {
     },
   ];
 
-  const fetchGetAllFacturasClientes = async () => {
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  const fetchGetAllFacturasClientesAndHandleErrors = async () => {
     try {
       setTableLoading(true);
       const responseGetAllFacturasClientes = await getAllFacturasClientes();
-      if (responseGetAllFacturasClientes.status === 200) {
-        const facturasClientesMap = responseGetAllFacturasClientes.data.map(
-          (facturaCliente) => {
-            return {
-              id: facturaCliente.id_factura_cliente,
-              descripcion_servicio: facturaCliente.descripcion_servicio,
-              direccion_entrega: facturaCliente.direccion_entrega,
-              hora_inicio_desplazamiento:
-                facturaCliente.hora_inicio_desplazamiento,
-              hora_fin_desplazamiento: facturaCliente.hora_fin_desplazamiento,
-              tiempo_desplazamiento_total:
-                facturaCliente.tiempo_desplazamiento_total,
-              hora_inicio_servicio: facturaCliente.hora_inicio_servicio,
-              hora_fin_servicio: facturaCliente.hora_fin_servicio,
-              tiempo_servicio_total: facturaCliente.tiempo_servicio_total,
-              observacion: facturaCliente.observacion,
-              fecha_entrega_real_pedido:
-                facturaCliente.fecha_entrega_real_pedido,
-              fecha_factura_emitida: facturaCliente.fecha_factura_emitida,
-              tarifa_hora_desplazamiento:
-                facturaCliente.tarifa_hora_desplazamiento,
-              tarifa_hora_servicio: facturaCliente.tarifa_hora_servicio,
-              subtotal_factura_sin_iva: facturaCliente.subtotal_factura_sin_iva,
-              iva: facturaCliente.iva,
-              total_factura: facturaCliente.total_factura,
-              id_cliente: facturaCliente.cliente.id_cliente,
-              nif_cliente: facturaCliente.cliente.nif,
-              pedido_cliente: "NO SE QUE PONER", // facturaCliente.pedido_cliente.pedido_cliente,
-              id_pedido_cliente:
-                facturaCliente.pedido_cliente.id_pedido_cliente,
-              tipo_estado: facturaCliente.tipo_estado.tipo_estado,
-              id_tipo_estado: facturaCliente.tipo_estado.id_tipo_estado,
-            };
-          }
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllFacturasClientes
+      );
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGetAllFacturasClientes.errorMessage
         );
-        setDataSource(facturasClientesMap);
+        return false;
       }
+
+      const facturasClientesMap = responseGetAllFacturasClientes.data.map(
+        (facturaCliente) => {
+          return {
+            id: facturaCliente.id_factura_cliente,
+            descripcion_servicio: facturaCliente.descripcion_servicio,
+            direccion_entrega: facturaCliente.direccion_entrega,
+            hora_inicio_desplazamiento:
+              facturaCliente.hora_inicio_desplazamiento,
+            hora_fin_desplazamiento: facturaCliente.hora_fin_desplazamiento,
+            tiempo_desplazamiento_total:
+              facturaCliente.tiempo_desplazamiento_total,
+            hora_inicio_servicio: facturaCliente.hora_inicio_servicio,
+            hora_fin_servicio: facturaCliente.hora_fin_servicio,
+            tiempo_servicio_total: facturaCliente.tiempo_servicio_total,
+            observacion: facturaCliente.observacion,
+            fecha_entrega_real_pedido: facturaCliente.fecha_entrega_real_pedido,
+            fecha_factura_emitida: facturaCliente.fecha_factura_emitida,
+            tarifa_hora_desplazamiento:
+              facturaCliente.tarifa_hora_desplazamiento,
+            tarifa_hora_servicio: facturaCliente.tarifa_hora_servicio,
+            subtotal_factura_sin_iva: facturaCliente.subtotal_factura_sin_iva,
+            iva: facturaCliente.iva,
+            total_factura: facturaCliente.total_factura,
+            id_cliente: facturaCliente.cliente.id_cliente,
+            nif_cliente: facturaCliente.cliente.nif,
+            pedido_cliente: "NO SE QUE PONER", // facturaCliente.pedido_cliente.pedido_cliente,
+            id_pedido_cliente: facturaCliente.pedido_cliente.id_pedido_cliente,
+            tipo_estado: facturaCliente.tipo_estado.tipo_estado,
+            id_tipo_estado: facturaCliente.tipo_estado.id_tipo_estado,
+          };
+        }
+      );
+
+      setDataSource(facturasClientesMap);
       setTableLoading(false);
+
+      return true;
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -273,20 +304,17 @@ export default function FacturasClientes() {
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllFacturasClientes();
+      fetchGetAllFacturasClientesAndHandleErrors();
     }
   }, [authUser]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (facturaClienteFormUpdated || facturaClienteGenerateUpdated) {
-        await fetchGetAllFacturasClientes();
-        setFacturaClienteFormUpdated(false);
-        setFacturaClienteGenerateUpdated(false);
-        console.log("CARGANDO LA TABLA");
-      }
-    };
-    fetchData();
+    if (facturaClienteFormUpdated || facturaClienteGenerateUpdated) {
+      fetchGetAllFacturasClientesAndHandleErrors();
+      setFacturaClienteFormUpdated(false);
+      setFacturaClienteGenerateUpdated(false);
+      console.log("CARGANDO LA TABLA");
+    }
   }, [facturaClienteFormUpdated, facturaClienteGenerateUpdated]);
 
   function facturaClienteGenerateUpdatedTrigger() {
@@ -307,27 +335,36 @@ export default function FacturasClientes() {
 
   const handleGenerateClick = async () => {
     console.log("Generar nuevas facturas clientes");
+
     toggleGenerateFacturasClientesModal();
     setCargandoInformacionFacturasClientes(true);
 
     try {
       const responseGenerateFacturasClientes = await generateFacturasClientes();
 
-      console.log(
-        "responseGenerateFacturasClientes: ",
+      errorHandlingInfo = checkResponseForErrors(
         responseGenerateFacturasClientes
       );
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGenerateFacturasClientes.errorMessage
+        );
+        return;
+      }
+
       setContadorFacturasClientesGeneradas(
         responseGenerateFacturasClientes.data
       );
       setCargandoInformacionFacturasClientes(false);
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una factura cliente");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueFacturaClienteForm();
@@ -475,7 +512,7 @@ export default function FacturasClientes() {
           >
             <Antd.Form style={{ marginTop: "5%" }}>
               {!cargandoInformacionFacturasClientes && (
-                <>
+                <div>
                   <Antd.Button
                     onClick={() =>
                       setAceptarBotonParaVerResultadosFacturasClientes(true)
@@ -483,7 +520,7 @@ export default function FacturasClientes() {
                   >
                     {"Ver los resultados"}
                   </Antd.Button>
-                </>
+                </div>
               )}
             </Antd.Form>
           </Antd.Modal>
@@ -499,11 +536,14 @@ export default function FacturasClientes() {
             cancelButtonProps={{ style: { display: "none" } }}
             centered
           >
-            <Antd.Form style={{ marginTop: "5%" }}>
-              <p>
-                FACTURAS TOTALES GENERADAS: {contadorFacturasClientesGeneradas}
-              </p>
-            </Antd.Form>
+            <div>
+              <Antd.Form style={{ marginTop: "5%" }}>
+                <p>
+                  FACTURAS TOTALES GENERADAS:{" "}
+                  {contadorFacturasClientesGeneradas}
+                </p>
+              </Antd.Form>
+            </div>
           </Antd.Modal>
         );
       }
@@ -562,16 +602,24 @@ export default function FacturasClientes() {
     );
   };
 
-  if (showFormViewUnique) {
+  if (backendOrDDBBConnectionError === true) {
     return (
-      <>
+      <div>
+        <ServerConnectionError message={errorMessage} />
+      </div>
+    );
+  } else if (showFormViewUnique) {
+    return (
+      <div>
         <FormFacturasClientes
           toggleForm={toggleViewUniqueFacturaClienteForm}
           facturaClienteDataForm={rowSelected}
           formUpdateTrigger={facturaClienteFormUpdatedTrigger}
           operationType={"view"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormFacturasClientes>
-      </>
+      </div>
     );
   } else {
     return renderTableFacturaCliente();

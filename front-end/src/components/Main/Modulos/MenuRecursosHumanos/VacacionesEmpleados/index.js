@@ -41,6 +41,7 @@ let errorHandlingInfo = {
   errorMessage: "",
   backendOrDDBBConnectionError: false,
   backendError: false,
+  noContent: false,
 };
 
 export default function VacacionesEmpleados() {

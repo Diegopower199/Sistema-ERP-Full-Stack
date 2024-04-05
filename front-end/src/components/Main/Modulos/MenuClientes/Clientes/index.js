@@ -27,6 +27,17 @@ import styles from "./styles.module.css";
 import { getAllClientes } from "@/services/ClienteService";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,noContent: false,
+};
+
+// Tengo que hacerlo para clientes, pedidos clientes, facturas y pagos de facturas, y tambien el formulario, 
+// y comprobar que todos los forms por lo menos el de vacaciones, solicitudes y personas funcionan bien y los otros con los datos de personas
 
 export default function Clientes() {
   const {
@@ -48,6 +59,11 @@ export default function Clientes() {
 
   const [clienteFormUpdated, setClienteFormUpdated] = useState(false);
   const [rowSelected, setRowSelected] = useState(null);
+
+  const [backendError, setBackendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
+    useState(false);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -143,30 +159,49 @@ export default function Clientes() {
     },
   ];
 
-  const fetchGetAllClientes = async () => {
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  const fetchGetAllClientesAndHandleErrors = async () => {
     try {
       setTableLoading(true);
       const responseGetAllClientes = await getAllClientes();
-      if (responseGetAllClientes.status === 200) {
-        const clientesMap = responseGetAllClientes.data.map((cliente) => {
-          return {
-            id: cliente.id_cliente,
-            nif: cliente.nif,
-            nombre_apellidos: cliente.nombre_apellidos,
-            razon_social: cliente.razon_social,
-            numero_telefono: cliente.numero_telefono,
-            correo_electronico: cliente.correo_electronico,
-            direccion: cliente.direccion,
-            codigo_postal: cliente.codigo_postal,
-            provincia: cliente.provincia,
-            ciudad: cliente.ciudad,
-          };
-        });
-        setDataSource(clientesMap);
+
+      errorHandlingInfo = checkResponseForErrors(responseGetAllClientes);
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(responseGetAllClientes.errorMessage);
+        return false;
       }
+
+      const clientesMap = responseGetAllClientes.data.map((cliente) => {
+        return {
+          id: cliente.id_cliente,
+          nif: cliente.nif,
+          nombre_apellidos: cliente.nombre_apellidos,
+          razon_social: cliente.razon_social,
+          numero_telefono: cliente.numero_telefono,
+          correo_electronico: cliente.correo_electronico,
+          direccion: cliente.direccion,
+          codigo_postal: cliente.codigo_postal,
+          provincia: cliente.provincia,
+          ciudad: cliente.ciudad,
+        };
+      });
+
+      setDataSource(clientesMap);
       setTableLoading(false);
+
+      return true;
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -176,18 +211,15 @@ export default function Clientes() {
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllClientes();
+      fetchGetAllClientesAndHandleErrors();
     }
   }, [authUser]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (clienteFormUpdated === true) {
-        await fetchGetAllClientes();
-        setClienteFormUpdated(false);
-      }
-    };
-    fetchData();
+    if (clienteFormUpdated === true) {
+      fetchGetAllClientesAndHandleErrors();
+      setClienteFormUpdated(false);
+    }
   }, [clienteFormUpdated]);
 
   function clienteFormUpdatedTrigger() {
@@ -208,11 +240,13 @@ export default function Clientes() {
 
   const handleCreateClick = () => {
     console.log("Añadir un nuevo cliente");
+
     toggleCreateClienteForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar un cliente");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateClienteForm();
@@ -220,6 +254,7 @@ export default function Clientes() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver un cliente");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueClienteForm();
@@ -400,7 +435,13 @@ export default function Clientes() {
     );
   };
 
-  if (showFormCreate) {
+  if (backendOrDDBBConnectionError === true) {
+    return (
+      <div>
+        <ServerConnectionError message={errorMessage} />
+      </div>
+    );
+  } else if (showFormCreate) {
     return (
       <div>
         <FormClientes
@@ -408,6 +449,8 @@ export default function Clientes() {
           clienteDataForm={""}
           formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"create"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormClientes>
       </div>
     );
@@ -419,6 +462,8 @@ export default function Clientes() {
           clienteDataForm={rowSelected}
           formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"update"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormClientes>
       </div>
     );
@@ -430,6 +475,8 @@ export default function Clientes() {
           clienteDataForm={rowSelected}
           formUpdateTrigger={clienteFormUpdatedTrigger}
           operationType={"view"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormClientes>
       </div>
     );

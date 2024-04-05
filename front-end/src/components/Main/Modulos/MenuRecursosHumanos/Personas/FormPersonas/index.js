@@ -21,6 +21,7 @@ let errorHandlingInfo = {
   errorMessage: "",
   backendOrDDBBConnectionError: false,
   backendError: false,
+  noContent: false,
 };
 
 export default function FormPersonas({
@@ -93,6 +94,45 @@ export default function FormPersonas({
       console.error("Ha ocurrido algo inesperado", error);
     }
   };
+
+  useEffect(() => {
+    let noCallErrorsDetected = false;
+
+    const fetchData = async () => {
+      try {
+        noCallErrorsDetected = await fetchTiposPersonasOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
+        console.log("operationType: ", operationType);
+
+        if (operationType === "update" || operationType === "view") {
+          if (validarFechaYYYYMMDD(personaDataForm.fecha_nacimiento) === null) {
+            const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
+              personaDataForm.fecha_nacimiento
+            );
+
+            console.log("fechaFormateada: ", fechaNacimientoFormateada);
+
+            setFormData(() => ({
+              ...personaDataForm,
+              fecha_nacimiento: fechaNacimientoFormateada,
+            }));
+          } else {
+            setFormData(() => ({
+              ...personaDataForm,
+            }));
+          }
+        }
+      } catch (error) {
+        console.error("Ha ocurrido algo inesperado", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const validateRequiredFields = () => {
     const errorMissingFields = {};
@@ -274,45 +314,6 @@ export default function FormPersonas({
       console.error("Ha ocurrido algo inesperado", error);
     }
   };
-
-  useEffect(() => {
-    let noCallErrorsDetected = false;
-
-    const fetchData = async () => {
-      try {
-        noCallErrorsDetected = await fetchTiposPersonasOptionsAndHandleErrors();
-
-        if (noCallErrorsDetected === false) {
-          return;
-        }
-
-        console.log("operationType: ", operationType);
-
-        if (operationType === "update" || operationType === "view") {
-          if (validarFechaYYYYMMDD(personaDataForm.fecha_nacimiento) === null) {
-            const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
-              personaDataForm.fecha_nacimiento
-            );
-
-            console.log("fechaFormateada: ", fechaNacimientoFormateada);
-
-            setFormData(() => ({
-              ...personaDataForm,
-              fecha_nacimiento: fechaNacimientoFormateada,
-            }));
-          } else {
-            setFormData(() => ({
-              ...personaDataForm,
-            }));
-          }
-        }
-      } catch (error) {
-        console.error("Ha ocurrido algo inesperado");
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <>

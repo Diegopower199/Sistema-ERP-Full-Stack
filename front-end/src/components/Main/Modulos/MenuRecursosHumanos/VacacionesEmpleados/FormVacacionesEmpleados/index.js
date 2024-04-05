@@ -21,6 +21,7 @@ let errorHandlingInfo = {
   errorMessage: "",
   backendOrDDBBConnectionError: false,
   backendError: false,
+  noContent: false,
 };
 
 export default function FormVacacionesEmpleados({
@@ -91,6 +92,55 @@ export default function FormVacacionesEmpleados({
       console.error("Ha ocurrido algo inesperado", error);
     }
   };
+
+  useEffect(() => {
+    let noCallErrorsDetected = false;
+
+    const fetchData = async () => {
+      try {
+        noCallErrorsDetected = await fetchTiposEstadosOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
+        console.log("operationType: ", operationType, vacacionEmpleadoDataForm);
+
+        if (operationType === "update" || operationType === "view") {
+          if (
+            validarFechaYYYYMMDD(vacacionEmpleadoDataForm.fecha_inicio) ===
+              null ||
+            validarFechaYYYYMMDD(vacacionEmpleadoDataForm.fecha_fin) === null
+          ) {
+            const fechaInicioFormateada = formatearFechaYYYYMMDD(
+              vacacionEmpleadoDataForm.fecha_inicio
+            );
+
+            const fechaFinFormateada = formatearFechaYYYYMMDD(
+              vacacionEmpleadoDataForm.fecha_fin
+            );
+
+            console.log("fechaInicioFormateada: ", fechaInicioFormateada);
+            console.log("fechaFinFormateada: ", fechaFinFormateada);
+
+            setFormData(() => ({
+              ...vacacionEmpleadoDataForm,
+              fecha_inicio: fechaInicioFormateada,
+              fecha_fin: fechaFinFormateada,
+            }));
+          } else {
+            setFormData(() => ({
+              ...vacacionEmpleadoDataForm,
+            }));
+          }
+        }
+      } catch (error) {
+        console.error("Ha ocurrido algo inesperado", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const validateRequiredFields = () => {
     const errorMissingFields = {};
@@ -255,55 +305,6 @@ export default function FormVacacionesEmpleados({
       console.error("Ha ocurrido algo inesperado", error);
     }
   };
-
-  useEffect(() => {
-    let noCallErrorsDetected = false;
-
-    const fetchData = async () => {
-      try {
-        noCallErrorsDetected = await fetchTiposEstadosOptionsAndHandleErrors();
-
-        if (noCallErrorsDetected === false) {
-          return;
-        }
-
-        console.log("operationType: ", operationType, vacacionEmpleadoDataForm);
-
-        if (operationType === "update" || operationType === "view") {
-          if (
-            validarFechaYYYYMMDD(vacacionEmpleadoDataForm.fecha_inicio) ===
-              null ||
-            validarFechaYYYYMMDD(vacacionEmpleadoDataForm.fecha_fin) === null
-          ) {
-            const fechaInicioFormateada = formatearFechaYYYYMMDD(
-              vacacionEmpleadoDataForm.fecha_inicio
-            );
-
-            const fechaFinFormateada = formatearFechaYYYYMMDD(
-              vacacionEmpleadoDataForm.fecha_fin
-            );
-
-            console.log("fechaInicioFormateada: ", fechaInicioFormateada);
-            console.log("fechaFinFormateada: ", fechaFinFormateada);
-
-            setFormData(() => ({
-              ...vacacionEmpleadoDataForm,
-              fecha_inicio: fechaInicioFormateada,
-              fecha_fin: fechaFinFormateada,
-            }));
-          } else {
-            setFormData(() => ({
-              ...vacacionEmpleadoDataForm,
-            }));
-          }
-        }
-      } catch (error) {
-        console.error("Ha ocurrido algo inesperado", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <div>

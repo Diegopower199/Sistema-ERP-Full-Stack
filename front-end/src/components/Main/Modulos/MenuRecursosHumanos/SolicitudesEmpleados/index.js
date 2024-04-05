@@ -39,6 +39,7 @@ let errorHandlingInfo = {
   errorMessage: "",
   backendOrDDBBConnectionError: false,
   backendError: false,
+  noContent: false,
 };
 
 export default function SolicitudesEmpleados() {
@@ -175,6 +176,12 @@ export default function SolicitudesEmpleados() {
       errorHandlingInfo = checkResponseForErrors(
         responseGetAllSolicitudesEmpleados
       );
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible.");
+        setTableLoading(false);
+        return false;
+      }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(

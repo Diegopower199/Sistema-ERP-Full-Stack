@@ -30,7 +30,7 @@ import styles from "./styles.module.css";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 
-export default function NominasEmpleados() {
+export default function NominasEmpleados() { // ESTE ES IGUAL QUE LAS FACTURAS, ASI QUE HASTAS QUE NO TENGA FACTURAS PERFECTO NO LO CAMBIO
   const {
     authUser,
     setAuthUser,

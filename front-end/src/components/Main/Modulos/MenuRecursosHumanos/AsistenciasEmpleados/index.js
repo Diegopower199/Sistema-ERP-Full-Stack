@@ -12,7 +12,6 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
   GridToolbarExportContainer,
-  GridCsvExportMenuItem,
   useGridApiContext,
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
@@ -32,6 +31,15 @@ import FormAsistenciasEmpleados from "./FormAsistenciasEmpleados";
 import styles from "./styles.module.css";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import ErrorIcon from "@mui/icons-material/Error";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,noContent: false,
+};
 
 export default function AsistenciasEmpleados() {
   const {
@@ -54,6 +62,7 @@ export default function AsistenciasEmpleados() {
 
   const [idAsistenciaEmpleadoSelected, setIdAsistenciaEmpleadoSelected] =
     useState(0);
+
   const [
     dniPersonaAsistenciaEmpleadoSelected,
     setDniPersonaAsistenciaEmpleadoSelected,
@@ -66,6 +75,11 @@ export default function AsistenciasEmpleados() {
   const [asistenciaEmpleadoFormUpdated, setAsistenciaEmpleadoFormUpdated] =
     useState(false);
   const [rowSelected, setRowSelected] = useState(null);
+
+  const [backendError, setBackendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
+    useState(false);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -149,30 +163,52 @@ export default function AsistenciasEmpleados() {
     },
   ];
 
-  const fetchGetAllAsistenciasEmpleados = async () => {
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  const fetchGetAllAsistenciasEmpleadosAndHandleErrors = async () => {
     try {
       setTableLoading(true);
       const responseGetAllAsistenciasEmpleados =
         await getAllAsistenciaEmpleados();
-      if (responseGetAllAsistenciasEmpleados.status === 200) {
-        const asistenciasEmpleadosMap =
-          responseGetAllAsistenciasEmpleados.data.map((asistenciaEmpleado) => {
-            return {
-              id: asistenciaEmpleado.id_asistencia_empleado,
-              fecha_asistencia: asistenciaEmpleado.fecha_asistencia,
-              hora_entrada: asistenciaEmpleado.hora_entrada,
-              hora_salida: asistenciaEmpleado.hora_salida,
-              horas_trabajadas_dia: asistenciaEmpleado.horas_trabajadas_dia,
-              observacion: asistenciaEmpleado.observacion,
-              id_persona: asistenciaEmpleado.persona.id_persona,
-              dni: asistenciaEmpleado.persona.dni,
-            };
-          });
-        setDataSource(asistenciasEmpleadosMap);
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllAsistenciasEmpleados
+      );
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGetAllAsistenciasEmpleados.errorMessage
+        );
+        return false;
       }
+
+      const asistenciasEmpleadosMap =
+        responseGetAllAsistenciasEmpleados.data.map((asistenciaEmpleado) => {
+          return {
+            id: asistenciaEmpleado.id_asistencia_empleado,
+            fecha_asistencia: asistenciaEmpleado.fecha_asistencia,
+            hora_entrada: asistenciaEmpleado.hora_entrada,
+            hora_salida: asistenciaEmpleado.hora_salida,
+            horas_trabajadas_dia: asistenciaEmpleado.horas_trabajadas_dia,
+            observacion: asistenciaEmpleado.observacion,
+            id_persona: asistenciaEmpleado.persona.id_persona,
+            dni: asistenciaEmpleado.persona.dni,
+          };
+        });
+      setDataSource(asistenciasEmpleadosMap);
       setTableLoading(false);
+
+      return true;
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -182,21 +218,18 @@ export default function AsistenciasEmpleados() {
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllAsistenciasEmpleados();
+      fetchGetAllAsistenciasEmpleadosAndHandleErrors();
     }
   }, [authUser]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (asistenciaEmpleadoFormUpdated === true) {
-        await fetchGetAllAsistenciasEmpleados();
-        setAsistenciaEmpleadoFormUpdated(false);
-      } else if (asistenciaEmpleadoDelete === true) {
-        await fetchGetAllAsistenciasEmpleados();
-        setAsistenciaEmpleadoDelete(false);
-      }
-    };
-    fetchData();
+    if (asistenciaEmpleadoFormUpdated === true) {
+      fetchGetAllAsistenciasEmpleadosAndHandleErrors();
+      setAsistenciaEmpleadoFormUpdated(false);
+    } else if (asistenciaEmpleadoDelete === true) {
+      fetchGetAllAsistenciasEmpleadosAndHandleErrors();
+      setAsistenciaEmpleadoDelete(false);
+    }
   }, [asistenciaEmpleadoFormUpdated, asistenciaEmpleadoDelete]);
 
   function asistenciaEmpleadoFormUpdatedTrigger() {
@@ -217,11 +250,13 @@ export default function AsistenciasEmpleados() {
 
   const handleCreateClick = () => {
     console.log("Añadir nueva asistencia empleado");
+
     toggleCreateAsistenciaEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateAsistenciaEmpleadoForm();
@@ -231,6 +266,7 @@ export default function AsistenciasEmpleados() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+
     setIdAsistenciaEmpleadoSelected(id);
     setDniPersonaAsistenciaEmpleadoSelected(filaSeleccionada.dni);
     setFechaAsistenciaEmpleadoSelected(filaSeleccionada.fecha_asistencia);
@@ -239,21 +275,37 @@ export default function AsistenciasEmpleados() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una asistencia empleado");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueAsistenciaEmpleadoForm();
   };
 
-  // Handles 'delete' modal ok button
   const handleModalOk = async () => {
-    const responseDeleteAsistenciaEmpleado = await deleteAsistenciaEmpleado(
-      idAsistenciaEmpleadoSelected
-    );
-    if (responseDeleteAsistenciaEmpleado.status === 200) {
+    try {
+      const responseDeleteAsistenciaEmpleado = await deleteAsistenciaEmpleado(
+        idAsistenciaEmpleadoSelected
+      );
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseDeleteAsistenciaEmpleado
+      );
+
+      if (errorHandlingInfo.backendError) {
+        handleBackendError(responseDeleteAsistenciaEmpleado.errorMessage);
+        return;
+      } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseDeleteAsistenciaEmpleado.errorMessage
+        );
+        return;
+      }
+
       setAsistenciaEmpleadoDelete(true);
+      resetStates();
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
     }
-    // console.log("Response delete: ", response);
-    resetStates();
   };
 
   const handleModalClose = () => {
@@ -388,8 +440,6 @@ export default function AsistenciasEmpleados() {
   }
 
   const renderTableAsistenciaEmpleado = () => {
-    // Hacer aqui el deleteModal
-
     function deleteModal() {
       return (
         <Antd.Modal
@@ -400,7 +450,16 @@ export default function AsistenciasEmpleados() {
           cancelText="Cancelar"
           onCancel={handleModalClose}
           centered
-        ></Antd.Modal>
+        >
+          {errorMessage.length !== 0 && backendError === true && (
+            <div>
+              <p className={styles.BackendError}>
+                <ErrorIcon fontSize="medium" color="red" />
+                Error: {errorMessage}
+              </p>
+            </div>
+          )}
+        </Antd.Modal>
       );
     }
 
@@ -456,38 +515,50 @@ export default function AsistenciasEmpleados() {
     );
   };
 
-  if (showFormCreate) {
+  if (backendOrDDBBConnectionError === true) {
     return (
-      <>
+      <div>
+        <ServerConnectionError message={errorMessage} />
+      </div>
+    );
+  } else if (showFormCreate) {
+    return (
+      <div>
         <FormAsistenciasEmpleados
           toggleForm={toggleCreateAsistenciaEmpleadoForm}
           asistenciaEmpleadoDataForm={""}
           formUpdateTrigger={asistenciaEmpleadoFormUpdatedTrigger}
           operationType={"create"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormAsistenciasEmpleados>
-      </>
+      </div>
     );
   } else if (showFormUpdate) {
     return (
-      <>
+      <div>
         <FormAsistenciasEmpleados
           toggleForm={toggleUpdateAsistenciaEmpleadoForm}
           asistenciaEmpleadoDataForm={rowSelected}
           formUpdateTrigger={asistenciaEmpleadoFormUpdatedTrigger}
           operationType={"update"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormAsistenciasEmpleados>
-      </>
+      </div>
     );
   } else if (showFormViewUnique) {
     return (
-      <>
+      <div>
         <FormAsistenciasEmpleados
           toggleForm={toggleViewUniqueAsistenciaEmpleadoForm}
           asistenciaEmpleadoDataForm={rowSelected}
           formUpdateTrigger={asistenciaEmpleadoFormUpdatedTrigger}
           operationType={"view"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormAsistenciasEmpleados>
-      </>
+      </div>
     );
   } else {
     return renderTableAsistenciaEmpleado();

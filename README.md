@@ -243,11 +243,68 @@ npm run dev
 > @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_ayudas_empleados_personas"))
 > private PersonaModel personaAsignada;
 >
->
 > Ademas tengo que cambiar y controlar si el back no esta conectado, el ejemplo esta en el fichero de personas, en components ahi esta todo y cambiar el nombre de las funciones como este "fetchTiposPersonasOptionsAndHandleErrors"
 >
->
 > Separar en dos tablas los estados: tipos_estados_pago para los estados relacionados con el proceso de pago y tipos_estados_recursos_humanos
->
->
->
+
+## Front-end:
+
+CLIENTES SECTION:
+
+- Clientes:
+  1. GetAll
+  2. Add
+  3. Update
+  4. Fetch
+
+Pedidos Clientes:
+
+FACTURACION SECTION
+
+RECURSOS HUMANOS SECTION
+
+Asistencias empleados
+
+Ayudas empleados
+
+Bajas laborales empleados
+
+Nominas empleados
+
+- **Personas**
+
+Funciones con el back lanzado:
+
+1. getAllPersonas ✔️
+2. deletePersona ✔️
+3. getAllTiposPersonas ✔️
+4. savePersona ✔️
+5. updatePersona ✔️
+
+Control de conexion back funciones:
+
+1. getAllPersonas ✔️
+2. deletePersona ✔️
+3. getAllTiposPersonas ✔️
+4. savePersona ✔️
+5. updatePersona ✔️
+
+Solicitudes empleados
+
+Funciones con el back lanzado:
+
+1. getAllPersonas ✔️
+2. deletePersona ✔️
+3. getAllTiposPersonas ✔️
+4. savePersona ✔️
+5. updatePersona ✔️
+
+Control de conexion back funciones:
+
+1. getAllPersonas ✔️
+2. deletePersona ✔️
+3. getAllTiposPersonas ✔️
+4. savePersona ✔️
+5. updatePersona ✔️
+
+Vacaciones empleados

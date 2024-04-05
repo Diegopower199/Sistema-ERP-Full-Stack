@@ -150,7 +150,7 @@ export default function UpdatePassword() {
   return (
     <div>
       {correctEmail === false && correctVerificationCode === false && (
-        <>
+        <div>
           <h1>Recuperacion de cuenta</h1>
           <label>
             Correo electronico:
@@ -169,17 +169,17 @@ export default function UpdatePassword() {
           </label>
           <br />
           <br />
-        </>
+        </div>
       )}
       {correctEmail === false && correctVerificationCode === false && (
-        <>
+        <div>
           <button onClick={redirectToLogin}>Cancelar</button>{" "}
           <button onClick={sendEmail}>Continuar</button>
-        </>
+        </div>
       )}
 
       {correctEmail === true && correctVerificationCode === false && (
-        <>
+        <div>
           <h1>Introduce el codigo</h1>
           <p>
             Introduce el codigo de verificacion de 6 digitos del correo
@@ -205,10 +205,10 @@ export default function UpdatePassword() {
           </label>
           <br />
           <br />
-        </>
+        </div>
       )}
       {correctEmail === true && correctVerificationCode === false && (
-        <>
+        <div>
           <button onClick={resetStates}>Anterior</button>{" "}
           <button
             onClick={verifyCode}
@@ -220,11 +220,11 @@ export default function UpdatePassword() {
           >
             Verificar
           </button>
-        </>
+        </div>
       )}
 
       {correctEmail === true && correctVerificationCode === true && (
-        <>
+        <div>
           <h1>Cambiar la contraseña</h1>
           <label>
             Nueva contraseña:
@@ -248,13 +248,13 @@ export default function UpdatePassword() {
           </label>
           <br />
           <br />
-        </>
+        </div>
       )}
       {correctEmail === true && correctVerificationCode === true && (
-        <>
+        <div>
           <button onClick={resetStates}>Anterior</button>{" "}
           <button onClick={changePassword}>Cambiar la contraseña</button>
-        </>
+        </div>
       )}
     </div>
   );

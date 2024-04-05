@@ -36,6 +36,7 @@ let errorHandlingInfo = {
   errorMessage: "",
   backendOrDDBBConnectionError: false,
   backendError: false,
+  noContent: false,
 };
 
 export default function Personas() {
@@ -192,6 +193,13 @@ export default function Personas() {
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
 
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible.");
+        setDataSource([]);
+        setTableLoading(false);
+        return false;
+      }
+
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
         return false;
@@ -213,12 +221,13 @@ export default function Personas() {
           id_tipo_persona: persona.tipo_persona.id_tipo_persona,
         };
       });
+
       setDataSource(personasMap);
       setTableLoading(false);
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado");
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -260,7 +269,7 @@ export default function Personas() {
 
   const handleCreateClick = () => {
     console.log("Añadir nueva persona");
-    
+
     toggleCreatePersonaForm();
   };
 
@@ -284,6 +293,7 @@ export default function Personas() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver una persona");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniquePersonaForm();
@@ -306,7 +316,7 @@ export default function Personas() {
       setPersonaDelete(true);
       resetStates();
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado");
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

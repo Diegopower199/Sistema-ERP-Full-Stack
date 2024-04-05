@@ -27,6 +27,15 @@ import styles from "./styles.module.css";
 import { getAllPedidosClientes } from "@/services/PedidoClienteService";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import ErrorIcon from "@mui/icons-material/Error";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,noContent: false,
+};
 
 export default function PedidosClientes() {
   const {
@@ -49,6 +58,11 @@ export default function PedidosClientes() {
   const [pedidoClienteFormUpdated, setPedidoClienteFormUpdated] =
     useState(false);
   const [rowSelected, setRowSelected] = useState(null);
+
+  const [backendError, setBackendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
+    useState(false);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -186,51 +200,67 @@ export default function PedidosClientes() {
     },
   ];
 
-  const fetchGetAllPedidosClientes = async () => {
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  const fetchGetAllPedidosClientesAndHandleErrors = async () => {
     try {
       setTableLoading(true);
       const responseGetAllPedidosClientes = await getAllPedidosClientes();
-      console.log(
-        "responseGetAllPedidosClientes: ",
-        responseGetAllPedidosClientes
-      );
-      if (responseGetAllPedidosClientes.status === 200) {
-        const pedidosClientesMap = responseGetAllPedidosClientes.data.map(
-          (pedidoCliente) => {
-            return {
-              id: pedidoCliente.id_pedido_cliente,
-              direccion_entrega: pedidoCliente.direccion_entrega,
-              fecha_solicitud_pedido: pedidoCliente.fecha_solicitud_pedido,
-              fecha_entrega_prevista: pedidoCliente.fecha_entrega_prevista,
-              fecha_entrega_real: pedidoCliente.fecha_entrega_real,
-              hora_inicio_desplazamiento:
-                pedidoCliente.hora_inicio_desplazamiento,
-              hora_fin_desplazamiento: pedidoCliente.hora_fin_desplazamiento,
-              tiempo_desplazamiento_total:
-                pedidoCliente.tiempo_desplazamiento_total,
-              hora_inicio_servicio: pedidoCliente.hora_inicio_servicio,
-              hora_fin_servicio: pedidoCliente.hora_fin_servicio,
-              tiempo_servicio_total: pedidoCliente.tiempo_servicio_total,
-              descripcion: pedidoCliente.descripcion,
-              observacion: pedidoCliente.observacion,
-              id_cliente: pedidoCliente.cliente.id_cliente,
-              nif_cliente: pedidoCliente.cliente.nif,
-              id_persona: pedidoCliente.persona_encargado.id_persona,
-              dni_persona: pedidoCliente.persona_encargado.dni,
-              tipo_estado: pedidoCliente.tipo_estado.tipo_estado,
-              id_tipo_estado: pedidoCliente.tipo_estado.id_tipo_estado,
-              tipo_estado_factura:
-                pedidoCliente.tipo_estado_factura.tipo_estado_factura,
-              id_tipo_estado_factura:
-                pedidoCliente.tipo_estado_factura.id_tipo_estado_factura,
-            };
-          }
+
+      errorHandlingInfo = checkResponseForErrors(responseGetAllPedidosClientes);
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGetAllPedidosClientes.errorMessage
         );
-        setDataSource(pedidosClientesMap);
+        return false;
       }
+
+      const pedidosClientesMap = responseGetAllPedidosClientes.data.map(
+        (pedidoCliente) => {
+          return {
+            id: pedidoCliente.id_pedido_cliente,
+            direccion_entrega: pedidoCliente.direccion_entrega,
+            fecha_solicitud_pedido: pedidoCliente.fecha_solicitud_pedido,
+            fecha_entrega_prevista: pedidoCliente.fecha_entrega_prevista,
+            fecha_entrega_real: pedidoCliente.fecha_entrega_real,
+            hora_inicio_desplazamiento:
+              pedidoCliente.hora_inicio_desplazamiento,
+            hora_fin_desplazamiento: pedidoCliente.hora_fin_desplazamiento,
+            tiempo_desplazamiento_total:
+              pedidoCliente.tiempo_desplazamiento_total,
+            hora_inicio_servicio: pedidoCliente.hora_inicio_servicio,
+            hora_fin_servicio: pedidoCliente.hora_fin_servicio,
+            tiempo_servicio_total: pedidoCliente.tiempo_servicio_total,
+            descripcion: pedidoCliente.descripcion,
+            observacion: pedidoCliente.observacion,
+            id_cliente: pedidoCliente.cliente.id_cliente,
+            nif_cliente: pedidoCliente.cliente.nif,
+            id_persona: pedidoCliente.persona_encargado.id_persona,
+            dni_persona: pedidoCliente.persona_encargado.dni,
+            tipo_estado: pedidoCliente.tipo_estado.tipo_estado,
+            id_tipo_estado: pedidoCliente.tipo_estado.id_tipo_estado,
+            tipo_estado_factura:
+              pedidoCliente.tipo_estado_factura.tipo_estado_factura,
+            id_tipo_estado_factura:
+              pedidoCliente.tipo_estado_factura.id_tipo_estado_factura,
+          };
+        }
+      );
+      setDataSource(pedidosClientesMap);
       setTableLoading(false);
+
+      return true;
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -240,18 +270,15 @@ export default function PedidosClientes() {
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllPedidosClientes();
+      fetchGetAllPedidosClientesAndHandleErrors();
     }
   }, [authUser]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (pedidoClienteFormUpdated === true) {
-        await fetchGetAllPedidosClientes();
-        setPedidoClienteFormUpdated(false);
-      }
-    };
-    fetchData();
+    if (pedidoClienteFormUpdated === true) {
+      fetchGetAllPedidosClientesAndHandleErrors();
+      setPedidoClienteFormUpdated(false);
+    }
   }, [pedidoClienteFormUpdated]);
 
   function pedidoClienteFormUpdatedTrigger() {
@@ -272,11 +299,13 @@ export default function PedidosClientes() {
 
   const handleCreateClick = () => {
     console.log("Añadir nuevo pedido cliente");
+
     toggleCreatePedidoClienteForm();
   };
 
   const handleUpdateClick = (id) => () => {
     console.log("Boton para actualizar");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdatePedidoClienteForm();
@@ -284,6 +313,7 @@ export default function PedidosClientes() {
 
   const handleViewUniqueClick = (id) => () => {
     console.log("Boton para ver un pedido cliente");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniquePedidoClienteForm();
@@ -464,38 +494,50 @@ export default function PedidosClientes() {
     );
   };
 
-  if (showFormCreate) {
+  if (backendOrDDBBConnectionError === true) {
     return (
-      <>
+      <div>
+        <ServerConnectionError message={errorMessage} />
+      </div>
+    );
+  } else if (showFormCreate) {
+    return (
+      <div>
         <FormPedidosClientes
           toggleForm={toggleCreatePedidoClienteForm}
           pedidoClienteDataForm={""}
           formUpdateTrigger={pedidoClienteFormUpdatedTrigger}
           operationType={"create"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormPedidosClientes>
-      </>
+      </div>
     );
   } else if (showFormUpdate) {
     return (
-      <>
+      <div>
         <FormPedidosClientes
           toggleForm={toggleUpdatePedidoClienteForm}
           pedidoClienteDataForm={rowSelected}
           formUpdateTrigger={pedidoClienteFormUpdatedTrigger}
           operationType={"update"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormPedidosClientes>
-      </>
+      </div>
     );
   } else if (showFormViewUnique) {
     return (
-      <>
+      <div>
         <FormPedidosClientes
           toggleForm={toggleViewUniquePedidoClienteForm}
           pedidoClienteDataForm={rowSelected}
           formUpdateTrigger={pedidoClienteFormUpdatedTrigger}
           operationType={"view"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormPedidosClientes>
-      </>
+      </div>
     );
   } else {
     return renderTableVacacionEmpleado();

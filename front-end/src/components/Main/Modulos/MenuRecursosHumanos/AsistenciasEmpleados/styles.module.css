@@ -1,11 +1,11 @@
-.errorMessage {
-    display: flex;
-    text-align: center;
-    background-color: #f5afb5;
-    color: #c20e20;
-    padding: 10px;
-    border: 2px solid #f3989f;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    font-size: 17px;
-  }
+.BackendError {
+  display: flex;
+  text-align: center;
+  background-color: #f5afb5;
+  color: #c20e20;
+  padding: 10px;
+  border: 2px solid #f3989f;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 17px;
+}

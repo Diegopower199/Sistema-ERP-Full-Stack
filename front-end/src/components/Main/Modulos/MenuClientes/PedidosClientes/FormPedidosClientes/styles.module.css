@@ -1,8 +1,14 @@
-.inputError {
-  border: 1px solid red;
+.StyleInput {
+  width: 35%;
 }
 
-.errorMessage {
+.RequiredFieldsOrFormatError {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.BackendError {
   display: flex;
   text-align: center;
   background-color: #f5afb5;

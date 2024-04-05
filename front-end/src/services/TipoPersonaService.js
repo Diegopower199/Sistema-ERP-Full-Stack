@@ -5,15 +5,25 @@ export const getAllTiposPersonas = async () => {
   const url = API_URL_BACK_END.replace("#", "tiposPersonas");
   try {
     const response = await axios.get(url + "getAll");
-    console.log("Response de getAllTiposPersonas es: ", response);
+
+    if (response.status === 204) {
+      return {
+        data: [],
+        status: response.status,
+      };
+    }
+
     const promises = response.data.map((tipoPersona) => {
       return {
         value: tipoPersona.id_tipo_persona,
         label: tipoPersona.tipo_persona,
       };
     });
-    console.log("Promises de getAllTiposPersonas son: ", promises);
-    return promises;
+
+    return {
+      data: promises,
+      status: response.status,
+    };
   } catch (error) {
     if (error.response) {
       return {

@@ -209,6 +209,13 @@ export default function VacacionesEmpleados() {
         responseGetAllVacacionesEmpleados
       );
 
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible.");
+        setDataSource([]);
+        setTableLoading(false);
+        return false;
+      }
+
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(
           responseGetAllVacacionesEmpleados.errorMessage

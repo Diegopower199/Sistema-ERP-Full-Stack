@@ -249,47 +249,29 @@ npm run dev
 
 ## Front-end:
 
-CLIENTES SECTION:
+### CLIENTES SECTION:
 
-- Clientes:
-  1. GetAll
-  2. Add
-  3. Update
-  4. Fetch
+**Clientes**:
 
-Pedidos Clientes:
+**Pedidos Clientes**
 
-FACTURACION SECTION
+### FACTURACION SECTION
 
-RECURSOS HUMANOS SECTION
+**Facturas Clientes**
 
-Asistencias empleados
+**Pagos Facturas Clientes**
 
-Ayudas empleados
+### RECURSOS HUMANOS SECTION
 
-Bajas laborales empleados
+**Asistencias empleados**
 
-Nominas empleados
+**Ayudas empleados**
 
-- **Personas**
+**Bajas laborales empleados**
 
-Funciones con el back lanzado:
+**Nominas empleados**
 
-1. getAllPersonas ✔️
-2. deletePersona ✔️
-3. getAllTiposPersonas ✔️
-4. savePersona ✔️
-5. updatePersona ✔️
-
-Control de conexion back funciones:
-
-1. getAllPersonas ✔️
-2. deletePersona ✔️
-3. getAllTiposPersonas ✔️
-4. savePersona ✔️
-5. updatePersona ✔️
-
-Solicitudes empleados
+**Personas**
 
 Funciones con el back lanzado:
 
@@ -307,4 +289,24 @@ Control de conexion back funciones:
 4. savePersona ✔️
 5. updatePersona ✔️
 
-Vacaciones empleados
+**Solicitudes empleados**
+
+Funciones con el back lanzado:
+
+1.  getAllSolicitudesEmpleados ✔️
+2.  deleteSolicitudEmpleado ✔️
+3.  getAllTiposSolicitudes ✔️
+4.  getAllTiposEstados ✔️
+5.  saveSolicitudEmpleado ✔️
+6.  updateSolicitudEmpleado ✔️
+
+Control de conexion back funciones:
+
+1.  getAllSolicitudesEmpleados ✔️
+2.  deleteSolicitudEmpleado ✔️
+3.  getAllTiposSolicitudes ✔️
+4.  getAllTiposEstados ✔️
+5.  saveSolicitudEmpleado ✔️
+6.  updateSolicitudEmpleado ✔️
+
+**Vacaciones empleados**

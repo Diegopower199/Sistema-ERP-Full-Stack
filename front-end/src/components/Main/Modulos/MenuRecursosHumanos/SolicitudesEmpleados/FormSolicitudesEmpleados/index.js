@@ -20,7 +20,8 @@ import { REGEX_DNI } from "@/utils/regexPatterns";
 let errorHandlingInfo = {
   errorMessage: "",
   backendOrDDBBConnectionError: false,
-  backendError: false,noContent: false,
+  backendError: false,
+  noContent: false,
 };
 
 export default function FormSolicitudesEmpleados({
@@ -67,6 +68,12 @@ export default function FormSolicitudesEmpleados({
         responseGetAllTiposSolicitudes
       );
 
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible.");
+        setTiposSolicitudesOptions([]);
+        return false;
+      }
+
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(
           responseGetAllTiposSolicitudes.errorMessage
@@ -74,7 +81,7 @@ export default function FormSolicitudesEmpleados({
         return false;
       }
 
-      setTiposSolicitudesOptions(responseGetAllTiposSolicitudes);
+      setTiposSolicitudesOptions(responseGetAllTiposSolicitudes.data);
 
       return true;
     } catch (error) {
@@ -84,9 +91,16 @@ export default function FormSolicitudesEmpleados({
 
   const fetchTiposEstadosOptionsAndHandleErrors = async () => {
     try {
+      debugger;
       const responseGetAllTiposEstados = await getAllTiposEstados();
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposEstados);
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible.");
+        setTiposEstadosOptions([]);
+        return false;
+      }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(
@@ -95,14 +109,16 @@ export default function FormSolicitudesEmpleados({
         return false;
       }
 
-      setTiposEstadosOptions(responseGetAllTiposEstados);
+      setTiposEstadosOptions(responseGetAllTiposEstados.data);
 
       if (operationType === "create") {
         setFormData((prevDataState) => {
           return {
             ...prevDataState,
-            ["tipo_estado"]: responseGetAllTiposEstados[0].label.toString(),
-            ["id_tipo_estado"]: responseGetAllTiposEstados[0].value.toString(),
+            ["tipo_estado"]:
+              responseGetAllTiposEstados.data[0].label.toString(),
+            ["id_tipo_estado"]:
+              responseGetAllTiposEstados.data[0].value.toString(),
           };
         });
       }

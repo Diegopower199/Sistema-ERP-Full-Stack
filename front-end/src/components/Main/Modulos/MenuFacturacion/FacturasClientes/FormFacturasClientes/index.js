@@ -20,7 +20,8 @@ import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 let errorHandlingInfo = {
   errorMessage: "",
   backendOrDDBBConnectionError: false,
-  backendError: false,noContent: false,
+  backendError: false,
+  noContent: false,
 };
 
 export default function FormFacturasClientes({
@@ -79,6 +80,12 @@ export default function FormFacturasClientes({
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposPersonas);
 
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible.");
+        setTiposPersonasOptions([]);
+        return false;
+      }
+
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(
           responseGetAllTiposPersonas.errorMessage
@@ -86,7 +93,7 @@ export default function FormFacturasClientes({
         return false;
       }
 
-      setTiposPersonasOptions(responseGetAllTiposPersonas);
+      setTiposPersonasOptions(responseGetAllTiposPersonas.data);
 
       return true;
     } catch (error) {

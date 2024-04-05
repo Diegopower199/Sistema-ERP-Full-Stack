@@ -6,15 +6,25 @@ export const getAllTiposAyudas = async () => {
     const url = API_URL_BACK_END.replace("#", "tiposAyudas");
 
     const response = await axios.get(url + "getAll");
-    console.log("Response de getAllTiposAyudas es: ", response);
+
+    if (response.status === 204) {
+      return {
+        data: [],
+        status: response.status,
+      };
+    }
+
     const promises = response.data.map((tipoAyuda) => {
       return {
         value: tipoAyuda.id_tipo_ayuda,
         label: tipoAyuda.tipo_ayuda,
       };
     });
-    console.log("Promises de getAllTiposAyudas son: ", promises);
-    return promises;
+
+    return {
+      data: promises,
+      status: response.status,
+    };
   } catch (error) {
     if (error.response) {
       return {

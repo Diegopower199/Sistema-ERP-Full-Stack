@@ -68,21 +68,30 @@ export default function FormVacacionesEmpleados({
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposEstados);
 
+      console.log("errorHandlingInfo: ", errorHandlingInfo)
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible.");
+        setTiposEstadosOptions([]);
+        return false;
+      }
+
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(
           responseGetAllTiposEstados.errorMessage
         );
         return false;
       }
 
-      setTiposEstadosOptions(responseGetAllTiposEstados);
+      setTiposEstadosOptions(responseGetAllTiposEstados.data);
 
       if (operationType === "create") {
         setFormData((prevDataState) => {
           return {
             ...prevDataState,
-            ["tipo_estado"]: responseGetAllTiposEstados[0].label.toString(),
-            ["id_tipo_estado"]: responseGetAllTiposEstados[0].value.toString(),
+            ["tipo_estado"]: responseGetAllTiposEstados.data[0].label.toString(),
+            ["id_tipo_estado"]: responseGetAllTiposEstados.data[0].value.toString(),
           };
         });
       }

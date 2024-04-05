@@ -34,7 +34,8 @@ import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 let errorHandlingInfo = {
   errorMessage: "",
   backendOrDDBBConnectionError: false,
-  backendError: false,noContent: false,
+  backendError: false,
+  noContent: false,
 };
 
 export default function PedidosClientes() {
@@ -216,6 +217,13 @@ export default function PedidosClientes() {
       const responseGetAllPedidosClientes = await getAllPedidosClientes();
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllPedidosClientes);
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible.");
+        setDataSource([]);
+        setTableLoading(false);
+        return false;
+      }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(

@@ -80,6 +80,12 @@ export default function FormPersonas({
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposPersonas);
 
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible.");
+        setTiposPersonasOptions([]);
+        return false;
+      }
+
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(
           responseGetAllTiposPersonas.errorMessage
@@ -87,7 +93,7 @@ export default function FormPersonas({
         return false;
       }
 
-      setTiposPersonasOptions(responseGetAllTiposPersonas);
+      setTiposPersonasOptions(responseGetAllTiposPersonas.data);
 
       return true;
     } catch (error) {

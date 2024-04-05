@@ -179,6 +179,7 @@ export default function SolicitudesEmpleados() {
 
       if (errorHandlingInfo.noContent) {
         console.log("No hay contenido disponible.");
+        setDataSource([]);
         setTableLoading(false);
         return false;
       }

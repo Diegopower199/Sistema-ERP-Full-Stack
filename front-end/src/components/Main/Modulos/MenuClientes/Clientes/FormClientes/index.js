@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
 import { saveCliente, updateCliente } from "@/services/ClienteService";
-import * as Antd from "antd";
 import { PROVINCIAS_CON_CIUDADES } from "@/utils/provinciasConCiudades";
 import {
   REGEX_EMAIL,
@@ -12,12 +11,23 @@ import {
 } from "@/utils/regexPatterns";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import * as Antd from "antd";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,
+  noContent: false,
+};
 
 export default function FormClientes({
   toggleForm,
   clienteDataForm,
   formUpdateTrigger,
   operationType,
+  triggerBackendOrDDBBConnectionError,
+  triggerErrorMessage,
 }) {
   const options = [
     { id: 1, label: "Persona Física", value: false },
@@ -36,14 +46,53 @@ export default function FormClientes({
     ciudad: "",
   });
 
+  const [selectedOptionRadio, setSelectedOptionRadio] = useState(0);
   const [selectedProvince, setSelectedProvince] = useState({});
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
-
   const [errorMessage, setErrorMessage] = useState("");
+  const [backendError, setBackendError] = useState(false);
 
-  const [selectedOptionRadio, setSelectedOptionRadio] = useState(0);
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    triggerBackendOrDDBBConnectionError(true);
+    triggerErrorMessage(errorMessage);
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (operationType === "update" || operationType === "view") {
+          if (clienteDataForm.nombre_apellidos !== null) {
+            setSelectedOptionRadio(1);
+          } else {
+            setSelectedOptionRadio(2);
+          }
+
+          const infoProvincia = PROVINCIAS_CON_CIUDADES.find((provincia) => {
+            return (
+              provincia.provincia.toLowerCase() ===
+              clienteDataForm.provincia.toLowerCase()
+            );
+          });
+          setSelectedProvince(infoProvincia);
+
+          setFormData(() => ({
+            ...clienteDataForm,
+          }));
+        }
+      } catch (error) {
+        console.error("Ha ocurrido algo inesperado", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const validateRequiredFields = () => {
     const errorMissingFields = {};
@@ -128,36 +177,6 @@ export default function FormClientes({
 
     return Object.keys(errorForm).length !== 0;
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (operationType === "update" || operationType === "view") {
-          if (clienteDataForm.nombre_apellidos !== null) {
-            setSelectedOptionRadio(1);
-          } else {
-            setSelectedOptionRadio(2);
-          }
-
-          const infoProvincia = PROVINCIAS_CON_CIUDADES.find((provincia) => {
-            return (
-              provincia.provincia.toLowerCase() ===
-              clienteDataForm.provincia.toLowerCase()
-            );
-          });
-          setSelectedProvince(infoProvincia);
-
-          setFormData(() => ({
-            ...clienteDataForm,
-          }));
-        }
-      } catch (error) {
-        console.error("Error en useEffect: ", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const handleFormChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -249,56 +268,45 @@ export default function FormClientes({
       return;
     }
 
-    let errorDevueltoBack = false;
     try {
       if (operationType === "create") {
         const responseCreateCliente = await saveCliente(formData);
-        console.log(
-          `Resultado en handleSubmit en ${operationType} : `,
-          responseCreateCliente
-        );
 
-        if (responseCreateCliente.status === 409) {
-          const mensajeError = responseCreateCliente.errorMessage;
-          console.log("El error es: ", mensajeError);
-          setErrorMessage(mensajeError);
-          errorDevueltoBack = true;
-        } else {
-          errorDevueltoBack = false;
+        errorHandlingInfo = checkResponseForErrors(responseCreateCliente);
+
+        if (errorHandlingInfo.backendError) {
+          handleBackendError(responseCreateCliente.errorMessage);
+          return;
+        } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+          handleBackendAndDBConnectionError(responseCreateCliente.errorMessage);
+          return;
         }
 
-        if (!errorDevueltoBack) {
-          setErrorMessage("");
-          toggleForm();
-          formUpdateTrigger();
-        }
+        setErrorMessage("");
+        toggleForm();
+        formUpdateTrigger();
       } else if (operationType === "update") {
         const responseUpdateCliente = await updateCliente(
           formData.id,
           formData
         );
-        console.log(
-          `Resultado en handleSubmit en ${operationType} : `,
-          responseUpdateCliente
-        );
 
-        if (responseUpdateCliente.status === 409) {
-          const mensajeError = responseUpdateCliente.errorMessage;
-          console.log("El error es: ", mensajeError);
-          setErrorMessage(mensajeError);
-          errorDevueltoBack = true;
-        } else {
-          errorDevueltoBack = false;
+        errorHandlingInfo = checkResponseForErrors(responseUpdateCliente);
+
+        if (errorHandlingInfo.backendError) {
+          handleBackendError(responseUpdateCliente.errorMessage);
+          return;
+        } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+          handleBackendAndDBConnectionError(responseUpdateCliente.errorMessage);
+          return;
         }
 
-        if (!errorDevueltoBack) {
-          setErrorMessage("");
-          toggleForm();
-          formUpdateTrigger();
-        }
+        setErrorMessage("");
+        toggleForm();
+        formUpdateTrigger();
       }
     } catch (error) {
-      console.log("Error al agregar registro: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -319,9 +327,7 @@ export default function FormClientes({
                 </Antd.Radio>
               ))}
               {requiredFieldsIncomplete.selectedOptionRadio && (
-                <div
-                  style={{ color: "red", fontSize: "12px", marginTop: "5px" }}
-                >
+                <div className={styles.RequiredFieldsOrFormatError}>
                   {requiredFieldsIncomplete.selectedOptionRadio}
                 </div>
               )}
@@ -338,9 +344,10 @@ export default function FormClientes({
             status={
               requiredFieldsIncomplete.nif || formErrors.nif ? "error" : ""
             }
+            className={styles.StyleInput}
           />
           {(requiredFieldsIncomplete.nif || formErrors.nif) && (
-            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            <div className={styles.RequiredFieldsOrFormatError}>
               {requiredFieldsIncomplete.nif || formErrors.nif}
             </div>
           )}
@@ -359,11 +366,10 @@ export default function FormClientes({
                 status={
                   requiredFieldsIncomplete.nombre_apellidos ? "error" : ""
                 }
+                className={styles.StyleInput}
               />
               {requiredFieldsIncomplete.nombre_apellidos && (
-                <div
-                  style={{ color: "red", fontSize: "12px", marginTop: "5px" }}
-                >
+                <div className={styles.RequiredFieldsOrFormatError}>
                   {requiredFieldsIncomplete.nombre_apellidos}
                 </div>
               )}
@@ -382,11 +388,10 @@ export default function FormClientes({
                 onChange={operationType === "view" ? null : handleFormChange}
                 readOnly={operationType === "view" ? true : false}
                 status={requiredFieldsIncomplete.razon_social ? "error" : ""}
+                className={styles.StyleInput}
               />
               {requiredFieldsIncomplete.razon_social && (
-                <div
-                  style={{ color: "red", fontSize: "12px", marginTop: "5px" }}
-                >
+                <div className={styles.RequiredFieldsOrFormatError}>
                   {requiredFieldsIncomplete.razon_social}
                 </div>
               )}
@@ -406,10 +411,11 @@ export default function FormClientes({
                 ? "error"
                 : ""
             }
+            className={styles.StyleInput}
           />
           {(requiredFieldsIncomplete.numero_telefono ||
             formErrors.numero_telefono) && (
-            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            <div className={styles.RequiredFieldsOrFormatError}>
               {requiredFieldsIncomplete.numero_telefono ||
                 formErrors.numero_telefono}
             </div>
@@ -429,10 +435,11 @@ export default function FormClientes({
                 ? "error"
                 : ""
             }
+            className={styles.StyleInput}
           />
           {(requiredFieldsIncomplete.correo_electronico ||
             formErrors.correo_electronico) && (
-            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            <div className={styles.RequiredFieldsOrFormatError}>
               {requiredFieldsIncomplete.correo_electronico ||
                 formErrors.correo_electronico}
             </div>
@@ -447,9 +454,10 @@ export default function FormClientes({
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.direccion ? "error" : ""}
+            className={styles.StyleInput}
           />
           {requiredFieldsIncomplete.direccion && (
-            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            <div className={styles.RequiredFieldsOrFormatError}>
               {requiredFieldsIncomplete.direccion}
             </div>
           )}
@@ -463,9 +471,10 @@ export default function FormClientes({
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.codigo_postal ? "error" : ""}
+            className={styles.StyleInput}
           />
           {requiredFieldsIncomplete.codigo_postal && (
-            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            <div className={styles.RequiredFieldsOrFormatError}>
               {requiredFieldsIncomplete.codigo_postal}
             </div>
           )}
@@ -479,19 +488,20 @@ export default function FormClientes({
                 ? formData.provincia
                 : "Selecciona una provincia"
             }
-            showSearch={true}
-            style={{ width: "35%" }}
-            status={requiredFieldsIncomplete.provincia ? "error" : ""}
             onChange={
               operationType === "view" ? null : handleSelectProvinciaChange
             }
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.provincia ? "error" : ""}
+            className={styles.StyleInput}
+            notFoundContent={<span>No hay provincia</span>}
+            showSearch={true}
             onSearch={
               operationType === "view" ? null : handleSelectProvinciaSearch
             }
             filterOption={
               operationType === "view" ? null : filterIncrementalSearch
             }
-            notFoundContent={<span>No hay provincia</span>}
           >
             {operationType !== "view" &&
               PROVINCIAS_CON_CIUDADES.map((provincia, index) => (
@@ -501,7 +511,7 @@ export default function FormClientes({
               ))}
           </Antd.Select>
           {requiredFieldsIncomplete.provincia && (
-            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            <div className={styles.RequiredFieldsOrFormatError}>
               {requiredFieldsIncomplete.provincia}
             </div>
           )}
@@ -510,19 +520,19 @@ export default function FormClientes({
           <Antd.Select
             name="ciudad"
             value={formData.ciudad ? formData.ciudad : "Selecciona una ciudad"}
-            showSearch={true}
-            style={{ width: "35%" }}
-            status={requiredFieldsIncomplete.ciudad ? "error" : ""}
             onChange={
               operationType === "view" ? null : handleSelectCiudadChange
             }
+            status={requiredFieldsIncomplete.ciudad ? "error" : ""}
+            className={styles.StyleInput}
+            notFoundContent={<span>No hay ciudades</span>}
+            showSearch={true}
             onSearch={
               operationType === "view" ? null : handleSelectCiudadSearch
             }
             filterOption={
               operationType === "view" ? null : filterIncrementalSearch
             }
-            notFoundContent={<span>No hay ciudades</span>}
             disabled={Object.keys(selectedProvince).length > 0 ? false : true}
           >
             {formData.provincia !== "" &&
@@ -534,31 +544,31 @@ export default function FormClientes({
               ))}
           </Antd.Select>
           {requiredFieldsIncomplete.ciudad && (
-            <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            <div className={styles.RequiredFieldsOrFormatError}>
               {requiredFieldsIncomplete.ciudad}
             </div>
           )}
         </Antd.Form.Item>
+        {errorMessage.length !== 0 && backendError && (
+          <div>
+            <p className={styles.BackendError}>
+              <ErrorIcon fontSize="medium" color="red" />
+              Error: {errorMessage}
+            </p>
+          </div>
+        )}
+        {(operationType === "create" || operationType === "update") && (
+          <div>
+            <Antd.Button onClick={toggleForm}>Cancelar</Antd.Button>{" "}
+            <Antd.Button onClick={handleSubmit}>Guardar</Antd.Button>
+          </div>
+        )}
+        {operationType === "view" && (
+          <div>
+            <Antd.Button onClick={toggleForm}>Salir</Antd.Button>
+          </div>
+        )}
       </Antd.Form>
-      {errorMessage.length !== 0 && (
-        <div>
-          <p className={styles.errorMessage}>
-            <ErrorIcon fontSize="medium" color="red" />
-            Error: {errorMessage}
-          </p>
-        </div>
-      )}
-      {(operationType === "create" || operationType === "update") && (
-        <div>
-          <button onClick={toggleForm}>Cancelar</button>{" "}
-          <button onClick={handleSubmit}>Guardar</button>
-        </div>
-      )}
-      {operationType === "view" && (
-        <div>
-          <button onClick={toggleForm}>Salir</button>
-        </div>
-      )}
       <Footer />
     </div>
   );

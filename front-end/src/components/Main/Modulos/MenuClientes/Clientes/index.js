@@ -33,10 +33,11 @@ import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 let errorHandlingInfo = {
   errorMessage: "",
   backendOrDDBBConnectionError: false,
-  backendError: false,noContent: false,
+  backendError: false,
+  noContent: false,
 };
 
-// Tengo que hacerlo para clientes, pedidos clientes, facturas y pagos de facturas, y tambien el formulario, 
+// Tengo que hacerlo para clientes, pedidos clientes, facturas y pagos de facturas, y tambien el formulario,
 // y comprobar que todos los forms por lo menos el de vacaciones, solicitudes y personas funcionan bien y los otros con los datos de personas
 
 export default function Clientes() {
@@ -175,6 +176,13 @@ export default function Clientes() {
       const responseGetAllClientes = await getAllClientes();
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllClientes);
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible.");
+        setDataSource([]);
+        setTableLoading(false);
+        return false;
+      }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(responseGetAllClientes.errorMessage);

@@ -6,15 +6,25 @@ export const getAllTiposEstados = async () => {
     const url = API_URL_BACK_END.replace("#", "tiposEstados");
 
     const response = await axios.get(url + "getAll");
-    console.log("Response de getAllTiposEstados es: ", response);
+
+    if (response.status === 204) {
+      return {
+        data: [],
+        status: response.status,
+      };
+    }
+
     const promises = response.data.map((tipoEstado) => {
       return {
         value: tipoEstado.id_tipo_estado,
         label: tipoEstado.tipo_estado,
       };
     });
-    console.log("Promises de getAllTiposEstados son: ", promises);
-    return promises;
+
+    return {
+      data: promises,
+      status: response.status,
+    };
   } catch (error) {
     if (error.response) {
       return {

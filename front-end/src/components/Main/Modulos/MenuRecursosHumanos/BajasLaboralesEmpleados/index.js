@@ -39,7 +39,8 @@ import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 let errorHandlingInfo = {
   errorMessage: "",
   backendOrDDBBConnectionError: false,
-  backendError: false,noContent: false,
+  backendError: false,
+  noContent: false,
 };
 
 export default function BajasLaboralesEmpleados() {
@@ -184,6 +185,13 @@ export default function BajasLaboralesEmpleados() {
       errorHandlingInfo = checkResponseForErrors(
         responseGetAllBajasLaboralesEmpleados
       );
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible.");
+        setDataSource([]);
+        setTableLoading(false);
+        return false;
+      }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(

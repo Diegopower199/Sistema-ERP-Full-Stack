@@ -6,15 +6,25 @@ export const getAllMotivosBajas = async () => {
     const url = API_URL_BACK_END.replace("#", "motivosBajas");
 
     const response = await axios.get(url + "getAll");
-    console.log("Response de getAllMotivosBajas es: ", response);
+
+    if (response.status === 204) {
+      return {
+        data: [],
+        status: response.status,
+      };
+    }
+
     const promises = response.data.map((motivoBaja) => {
       return {
         value: motivoBaja.id_motivo_baja,
         label: motivoBaja.motivo_baja,
       };
     });
-    console.log("Promises de getAllMotivosBajas son: ", promises);
-    return promises;
+
+    return {
+      data: promises,
+      status: response.status,
+    };
   } catch (error) {
     if (error.response) {
       return {

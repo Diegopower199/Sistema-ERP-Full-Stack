@@ -251,13 +251,35 @@ npm run dev
 
 ### CLIENTES SECTION:
 
-**Clientes**:
+**Clientes**
+
+Funciones con el back lanzado:
+
+1. getAllClientes ✔️
+2. saveCliente ✔️
+3. updateCliente ✔️
+
+Control de conexion back funciones:
+
+1. getAllClientes ✔️
+2. saveCliente ✔️
+3. updateCliente ✔️
 
 **Pedidos Clientes**
 
 ### FACTURACION SECTION
 
 **Facturas Clientes**
+
+Funciones con el back lanzado:
+
+1. getAllFacturasClientes ✔️
+2. generateFacturasClientes ✔️
+
+Control de conexion back funciones:
+
+1. getAllFacturasClientes ✔️
+2. generateFacturasClientes ✔️ 
 
 **Pagos Facturas Clientes**
 
@@ -310,3 +332,23 @@ Control de conexion back funciones:
 6.  updateSolicitudEmpleado ✔️
 
 **Vacaciones empleados**
+
+Funciones con el back lanzado:
+
+1. getAllVacacionesEmpleados ✔️
+2. deleteVacacionEmpleado ✔️
+3. getAllTiposEstados ✔️
+4. saveVacacionEmpleado ✔️
+5. updateVacacionEmpleado ✔️
+6. saveTransaccionVacacionAutorizada ✔️
+7. getAllTransaccionesVacacionesAutorizadas ✔️
+
+Control de conexion back funciones:
+
+1. getAllVacacionesEmpleados ✔️
+2. deleteVacacionEmpleado ✔️
+3. getAllTiposEstados ✔️
+4. saveVacacionEmpleado ✔️
+5. updateVacacionEmpleado ✔️
+6. saveTransaccionVacacionAutorizada ✔️
+7. getAllTransaccionesVacacionesAutorizadas ✔️

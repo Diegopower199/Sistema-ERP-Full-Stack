@@ -210,7 +210,7 @@ export default function VacacionesEmpleados() {
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
+        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -220,6 +220,7 @@ export default function VacacionesEmpleados() {
         handleBackendAndDBConnectionError(
           responseGetAllVacacionesEmpleados.errorMessage
         );
+        setTableLoading(false);
         return false;
       }
 

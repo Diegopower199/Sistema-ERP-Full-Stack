@@ -188,6 +188,7 @@ export default function SolicitudesEmpleados() {
         handleBackendAndDBConnectionError(
           responseGetAllSolicitudesEmpleados.errorMessage
         );
+        setTableLoading(false);
         return false;
       }
 

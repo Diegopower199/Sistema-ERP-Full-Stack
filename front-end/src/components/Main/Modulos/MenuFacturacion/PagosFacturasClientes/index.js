@@ -174,7 +174,7 @@ export default function PagosFacturasClientes() {
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
+        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -184,6 +184,7 @@ export default function PagosFacturasClientes() {
         handleBackendAndDBConnectionError(
           responseGetAllPagosFacturasClientes.errorMessage
         );
+        setTableLoading(false);
         return false;
       }
 

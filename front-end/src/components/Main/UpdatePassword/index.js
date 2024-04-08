@@ -162,7 +162,7 @@ export default function UpdatePassword() {
             />
             {(requiredFieldsIncomplete.correo_electronico ||
               errorMessage.length !== 0) && (
-              <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+              <div className={styles.RequiredFieldsOrFormatError}>
                 {requiredFieldsIncomplete.correo_electronico || errorMessage}
               </div>
             )}
@@ -198,7 +198,7 @@ export default function UpdatePassword() {
               onChange={handleFormChange}
             />
             {errorMessage.length !== 0 && (
-              <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+              <div className={styles.RequiredFieldsOrFormatError}>
                 {errorMessage}
               </div>
             )}

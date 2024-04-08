@@ -69,7 +69,7 @@ export default function FormSolicitudesEmpleados({
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
+        console.log("No hay contenido disponible");
         setTiposSolicitudesOptions([]);
         return false;
       }
@@ -97,7 +97,7 @@ export default function FormSolicitudesEmpleados({
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposEstados);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
+        console.log("No hay contenido disponible");
         setTiposEstadosOptions([]);
         return false;
       }

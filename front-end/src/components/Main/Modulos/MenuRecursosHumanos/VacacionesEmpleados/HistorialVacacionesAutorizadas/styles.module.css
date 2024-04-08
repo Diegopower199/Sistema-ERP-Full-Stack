@@ -1,11 +1,20 @@
 .BackendError {
-  display: flex;
-  text-align: center;
-  background-color: #f5afb5;
-  color: #c20e20;
-  padding: 10px;
-  border: 2px solid #f3989f;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  font-size: 17px;
+  width: 80%;
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.BackendError h1 {
+  color: #e74c3c;
+  font-size: 24px;
+}
+
+.BackendError p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
 }

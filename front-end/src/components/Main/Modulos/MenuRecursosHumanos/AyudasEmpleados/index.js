@@ -186,7 +186,7 @@ export default function AyudasEmpleados() {
       errorHandlingInfo = checkResponseForErrors(responseGetAllAyudasEmpleados);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
+        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -196,6 +196,7 @@ export default function AyudasEmpleados() {
         handleBackendAndDBConnectionError(
           responseGetAllAyudasEmpleados.errorMessage
         );
+        setTableLoading(false);
         return false;
       }
 

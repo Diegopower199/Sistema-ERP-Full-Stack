@@ -187,7 +187,7 @@ export default function BajasLaboralesEmpleados() {
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
+        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -197,6 +197,7 @@ export default function BajasLaboralesEmpleados() {
         handleBackendAndDBConnectionError(
           responseGetAllBajasLaboralesEmpleados.errorMessage
         );
+        setTableLoading(false);
         return false;
       }
 

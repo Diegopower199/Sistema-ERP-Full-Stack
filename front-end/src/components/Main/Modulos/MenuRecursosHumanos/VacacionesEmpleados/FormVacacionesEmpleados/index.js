@@ -71,7 +71,7 @@ export default function FormVacacionesEmpleados({
       console.log("errorHandlingInfo: ", errorHandlingInfo)
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
+        console.log("No hay contenido disponible");
         setTiposEstadosOptions([]);
         return false;
       }

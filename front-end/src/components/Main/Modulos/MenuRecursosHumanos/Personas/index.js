@@ -202,6 +202,7 @@ export default function Personas() {
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
+        setTableLoading(false);
         return false;
       }
 

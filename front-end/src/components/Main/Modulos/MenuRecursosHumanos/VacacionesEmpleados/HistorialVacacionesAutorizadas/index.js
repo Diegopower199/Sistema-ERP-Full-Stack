@@ -6,7 +6,6 @@ import {
   DataGrid,
   GridToolbarContainer,
   GridToolbarExportContainer,
-  GridCsvExportMenuItem,
   useGridApiContext,
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
@@ -21,6 +20,16 @@ import styles from "./styles.module.css";
 import { getAllTransaccionesVacacionesAutorizadas } from "@/services/BlockchainVacacionAutorizadaService";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import ErrorIcon from "@mui/icons-material/Error";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,
+  noContent: false,
+};
 
 export default function HistorialVacacionesAutorizadas({ toggleView }) {
   const {
@@ -35,6 +44,11 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
   const router = useRouter();
 
   const [tableLoading, setTableLoading] = useState(true);
+
+  const [backendError, setBackendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
+    useState(false);
 
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
@@ -124,17 +138,42 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
     },
   ];
 
-  const fetchGetAllTransaccionesVacacionesAutorizadas = async () => {
-    try {
-      setTableLoading(true);
-      const responseGetAllTransaccionesVacacionesAutorizadas =
-        await getAllTransaccionesVacacionesAutorizadas();
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
 
-      console.log(
-        "responseReadAllTransaccionesVacacionesAutorizadas: ",
-        responseGetAllTransaccionesVacacionesAutorizadas
-      );
-      if (responseGetAllTransaccionesVacacionesAutorizadas.status === 200) {
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  const fetchGetAllTransaccionesVacacionesAutorizadasAndHandleErrors =
+    async () => {
+      try {
+        setTableLoading(true);
+        const responseGetAllTransaccionesVacacionesAutorizadas =
+          await getAllTransaccionesVacacionesAutorizadas();
+
+        errorHandlingInfo = checkResponseForErrors(
+          responseGetAllTransaccionesVacacionesAutorizadas
+        );
+
+        if (errorHandlingInfo.noContent) {
+          console.log("No hay contenido disponible");
+          setDataSource([]);
+          setTableLoading(false);
+          return false;
+        }
+
+        if (errorHandlingInfo.backendOrDDBBConnectionError) {
+          handleBackendAndDBConnectionError(
+            responseGetAllTransaccionesVacacionesAutorizadas.errorMessage
+          );
+          setTableLoading(false);
+          return false;
+        }
+
         const vacacionesEmpleadosMap =
           responseGetAllTransaccionesVacacionesAutorizadas.data.map(
             (transaccionVacacionAutorizada) => {
@@ -172,13 +211,15 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
               };
             }
           );
+
         setDataSource(vacacionesEmpleadosMap);
+        setTableLoading(false);
+
+        return true;
+      } catch (error) {
+        console.error("Ha ocurrido algo inesperado", error);
       }
-      setTableLoading(false);
-    } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
-    }
-  };
+    };
 
   useEffect(() => {
     console.log("Pagina de historial vacaciones autorizadas: ");
@@ -186,7 +227,7 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllTransaccionesVacacionesAutorizadas();
+      fetchGetAllTransaccionesVacacionesAutorizadasAndHandleErrors();
     }
   }, [authUser]);
 
@@ -308,12 +349,12 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
   }
 
   const renderTableHistorialVacacionAutorizada = () => {
-    return (
-      <div>
-        <Header />
-        <h1>Historial Vacaciones Autorizadas</h1>
+    const renderErrorMessage = () => (
+      <div className={styles.BackendError}>{errorMessage}</div>
+    );
 
-        <button onClick={toggleView}>Salir</button>
+    const renderMainContent = () => (
+      <div>
         <Box
           sx={{
             height: 700,
@@ -345,6 +386,20 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
             }}
           />
         </Box>
+      </div>
+    );
+
+    return (
+      <div>
+        <Header />
+        <h1>Historial Vacaciones Autorizadas</h1>
+
+        <button onClick={toggleView}>Salir</button>
+
+        {errorMessage.length !== 0 &&
+        (backendError || backendOrDDBBConnectionError)
+          ? renderErrorMessage()
+          : renderMainContent()}
         <Footer />
       </div>
     );

@@ -219,7 +219,7 @@ export default function PedidosClientes() {
       errorHandlingInfo = checkResponseForErrors(responseGetAllPedidosClientes);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
+        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -229,6 +229,7 @@ export default function PedidosClientes() {
         handleBackendAndDBConnectionError(
           responseGetAllPedidosClientes.errorMessage
         );
+        setTableLoading(false);
         return false;
       }
 

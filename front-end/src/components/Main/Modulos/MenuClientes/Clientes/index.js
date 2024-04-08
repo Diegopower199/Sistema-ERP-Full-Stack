@@ -178,7 +178,7 @@ export default function Clientes() {
       errorHandlingInfo = checkResponseForErrors(responseGetAllClientes);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
+        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -186,6 +186,7 @@ export default function Clientes() {
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
         handleBackendAndDBConnectionError(responseGetAllClientes.errorMessage);
+        setTableLoading(false);
         return false;
       }
 

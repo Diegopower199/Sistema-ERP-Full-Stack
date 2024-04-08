@@ -81,7 +81,7 @@ export default function FormAyudasEmpleados({
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposPersonas);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
+        console.log("No hay contenido disponible");
         setTiposPersonasOptions([]);
         return false;
       }

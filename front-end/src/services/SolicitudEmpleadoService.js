@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
+import { asignarNullSiCadenaVacia } from "@/utils/helpers";
 
 export const getAllSolicitudesEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "solicitudesEmpleados");
@@ -32,7 +33,7 @@ export const saveSolicitudEmpleado = async (data) => {
   try {
     const formData = {
       fecha_solicitud: data.fecha_solicitud,
-      observacion: data.observacion,
+      observacion: asignarNullSiCadenaVacia(data.observacion),
       persona: {
         dni: data.dni,
       },
@@ -96,7 +97,7 @@ export const updateSolicitudEmpleado = async (id, data) => {
   try {
     const formData = {
       fecha_solicitud: data.fecha_solicitud,
-      observacion: data.observacion,
+      observacion: asignarNullSiCadenaVacia(data.observacion),
       persona: {
         dni: data.dni,
       },

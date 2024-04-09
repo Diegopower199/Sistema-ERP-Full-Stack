@@ -334,6 +334,7 @@ export default function FormClientes({
             </Antd.Form.Item>
           </>
         )}
+
         <Antd.Form.Item label="NIF">
           <Antd.Input
             type="text"
@@ -352,6 +353,7 @@ export default function FormClientes({
             </div>
           )}
         </Antd.Form.Item>
+
         {((operationType === "create" && selectedOptionRadio === 1) ||
           ((operationType === "update" || operationType === "view") &&
             formData.nombre_apellidos !== null)) && (
@@ -376,6 +378,7 @@ export default function FormClientes({
             </Antd.Form.Item>
           </div>
         )}
+
         {((operationType === "create" && selectedOptionRadio === 2) ||
           ((operationType === "update" || operationType === "view") &&
             formData.razon_social !== null)) && (
@@ -398,6 +401,7 @@ export default function FormClientes({
             </Antd.Form.Item>
           </div>
         )}
+
         <Antd.Form.Item label="Numero telefono:">
           <Antd.Input
             type="text"
@@ -516,6 +520,7 @@ export default function FormClientes({
             </div>
           )}
         </Antd.Form.Item>
+
         <Antd.Form.Item label="Ciudad seleccionada">
           <Antd.Select
             name="ciudad"
@@ -549,6 +554,7 @@ export default function FormClientes({
             </div>
           )}
         </Antd.Form.Item>
+
         {errorMessage.length !== 0 && backendError && (
           <div>
             <p className={styles.BackendError}>
@@ -557,12 +563,14 @@ export default function FormClientes({
             </p>
           </div>
         )}
+
         {(operationType === "create" || operationType === "update") && (
           <div>
             <Antd.Button onClick={toggleForm}>Cancelar</Antd.Button>{" "}
             <Antd.Button onClick={handleSubmit}>Guardar</Antd.Button>
           </div>
         )}
+
         {operationType === "view" && (
           <div>
             <Antd.Button onClick={toggleForm}>Salir</Antd.Button>

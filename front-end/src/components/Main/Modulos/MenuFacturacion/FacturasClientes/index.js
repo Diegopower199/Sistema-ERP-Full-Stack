@@ -99,44 +99,44 @@ export default function FacturasClientes() {
     },
     {
       field: "descripcion_servicio",
-      headerName: "Descripcion servicio",
+      headerName: "Descripción servicio",
       width: 180,
       editable: false,
     },
     {
       field: "direccion_entrega",
-      headerName: "Direccion entrega",
+      headerName: "Dirección entrega",
       width: 180,
       editable: false,
     },
     {
       field: "hora_inicio_desplazamiento",
       headerName: "Hora inicio desplazamiento",
-      width: 180,
+      width: 220,
       editable: false,
     },
     {
       field: "hora_fin_desplazamiento",
       headerName: "Hora fin desplazamiento",
-      width: 130,
+      width: 210,
       editable: false,
     },
     {
       field: "tiempo_desplazamiento_total",
       headerName: "Tiempo desplazamiento total",
-      width: 180,
+      width: 210,
       editable: false,
     },
     {
       field: "hora_inicio_servicio",
       headerName: "Hora inicio servicio",
-      width: 180,
+      width: 160,
       editable: false,
     },
     {
       field: "hora_fin_servicio",
       headerName: "Hora fin servicio",
-      width: 180,
+      width: 160,
       editable: false,
     },
     {
@@ -147,14 +147,14 @@ export default function FacturasClientes() {
     },
     {
       field: "observacion",
-      headerName: "Observacion",
+      headerName: "Observación",
       width: 180,
       editable: false,
     },
     {
       field: "fecha_entrega_real_pedido",
       headerName: "Fecha entrega real pedido",
-      width: 180,
+      width: 200,
       editable: false,
     },
     {
@@ -166,7 +166,7 @@ export default function FacturasClientes() {
     {
       field: "tarifa_hora_desplazamiento",
       headerName: "Tarifa hora desplazamiento",
-      width: 180,
+      width: 220,
       editable: false,
     },
     {
@@ -184,13 +184,13 @@ export default function FacturasClientes() {
     {
       field: "iva",
       headerName: "IVA",
-      width: 180,
+      width: 100,
       editable: false,
     },
     {
       field: "total_factura",
       headerName: "Total factura",
-      width: 180,
+      width: 130,
       editable: false,
     },
 

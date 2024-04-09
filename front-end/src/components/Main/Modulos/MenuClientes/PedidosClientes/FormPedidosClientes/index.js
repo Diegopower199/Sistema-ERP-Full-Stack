@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { savePersona, updatePersona } from "@/services/PersonaService";
-import { getAllTiposPersonas } from "@/services/TipoPersonaService";
 import {
   REGEX_DNI,
-  REGEX_EMAIL,
-  REGEX_TELEFONO_CON_PREFIJO,
+  REGEX_NIF_PERSONAS_FISICAS,
+  REGEX_NIF_PERSONAS_JURIDICAS,
 } from "@/utils/regexPatterns";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
@@ -16,6 +14,15 @@ import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import moment from "moment";
+import { getAllTiposEstadosFacturas } from "@/services/TipoEstadoFacturaService";
+import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import {
+  savePedidoCliente,
+  updatePedidoCliente,
+} from "@/services/PedidoClienteService";
+import { getAllClientes } from "@/services/ClienteService";
+import { getAllPersonas } from "@/services/PersonaService";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -32,31 +39,33 @@ export default function FormPedidosClientes({
   triggerBackendOrDDBBConnectionError,
   triggerErrorMessage,
 }) {
-  const generoOptions = [
-    {
-      value: 1,
-      label: "Masculino",
-    },
-    {
-      value: 2,
-      label: "Femenino",
-    },
-  ];
-
-  const [tiposPersonasOptions, setTiposPersonasOptions] = useState([]);
+  const [tiposEstadosOptions, setTiposEstadosOptions] = useState([]);
+  const [tiposEstadosFacturasOptions, setTiposEstadosFacturasOptions] =
+    useState([]);
+  const [clientesOptions, setClientesOptions] = useState([]);
+  const [personasOptions, setPersonasOptions] = useState([]);
 
   const [formData, setFormData] = useState({
-    numero_empleado: "",
-    nombre: "",
-    apellidos: "",
-    genero: "",
-    fecha_nacimiento: "",
-    dni: "",
-    direccion: "",
-    numero_telefono: "34",
-    correo_electronico: "",
-    id_tipo_persona: "",
-    tipo_persona: "",
+    direccion_entrega: "",
+    fecha_solicitud_pedido: "",
+    fecha_entrega_prevista: "",
+    fecha_entrega_real: "",
+    hora_inicio_desplazamiento: "",
+    hora_fin_desplazamiento: "",
+    tiempo_desplazamiento_total: "",
+    hora_inicio_servicio: "",
+    hora_fin_servicio: "",
+    tiempo_servicio_total: "",
+    descripcion: "",
+    observacion: "",
+    id_cliente: "",
+    clienteInfo: "",
+    id_persona: "",
+    personaInfo: "",
+    tipo_estado: "",
+    id_tipo_estado: "",
+    tipo_estado_factura: "",
+    id_tipo_estado_factura: "",
   });
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
@@ -74,26 +83,153 @@ export default function FormPedidosClientes({
     triggerErrorMessage(errorMessage);
   }
 
-  const fetchTiposPersonasOptionsAndHandleErrors = async () => {
+  const fetchTiposEstadosOptionsAndHandleErrors = async () => {
     try {
-      const responseGetAllTiposPersonas = await getAllTiposPersonas();
+      const responseGetAllTiposEstados = await getAllTiposEstados();
 
-      errorHandlingInfo = checkResponseForErrors(responseGetAllTiposPersonas);
+      errorHandlingInfo = checkResponseForErrors(responseGetAllTiposEstados);
 
       if (errorHandlingInfo.noContent) {
         console.log("No hay contenido disponible");
-        setTiposPersonasOptions([]);
+        setTiposEstadosOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(
-          responseGetAllTiposPersonas.errorMessage
+          responseGetAllTiposEstados.errorMessage
         );
         return false;
       }
 
-      setTiposPersonasOptions(responseGetAllTiposPersonas.data);
+      setTiposEstadosOptions(responseGetAllTiposEstados.data);
+
+      if (operationType === "create") {
+        setFormData((prevDataState) => {
+          return {
+            ...prevDataState,
+            ["tipo_estado"]:
+              responseGetAllTiposEstados.data[0].label.toString(),
+            ["id_tipo_estado"]:
+              responseGetAllTiposEstados.data[0].value.toString(),
+          };
+        });
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
+    }
+  };
+
+  const fetchTiposEstadosFacturasOptionsAndHandleErrors = async () => {
+    try {
+      const responseGetAllTiposEstadosFacturas =
+        await getAllTiposEstadosFacturas();
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllTiposEstadosFacturas
+      );
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible");
+        setTiposEstadosOptions([]);
+        return false;
+      }
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("ERROR EN EL BACK");
+        handleBackendAndDBConnectionError(
+          responseGetAllTiposEstadosFacturas.errorMessage
+        );
+        return false;
+      }
+
+      setTiposEstadosFacturasOptions(responseGetAllTiposEstadosFacturas.data);
+
+      if (operationType === "create") {
+        setFormData((prevDataState) => {
+          return {
+            ...prevDataState,
+            ["tipo_estado_factura"]:
+              responseGetAllTiposEstadosFacturas.data[0].label.toString(),
+            ["id_tipo_estado_factura"]:
+              responseGetAllTiposEstadosFacturas.data[0].value.toString(),
+          };
+        });
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
+    }
+  };
+
+  const fetchClientesOptionsAndHandleErrors = async () => {
+    try {
+      const responseGetAllClientes = await getAllClientes();
+
+      errorHandlingInfo = checkResponseForErrors(responseGetAllClientes);
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible");
+        setClientesOptions([]);
+        return false;
+      }
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("ERROR EN EL BACK");
+        handleBackendAndDBConnectionError(responseGetAllClientes.errorMessage);
+        return false;
+      }
+
+      const optionsClientes = responseGetAllClientes.data.map((cliente) => {
+        const { id_cliente, nombre_apellidos, razon_social, nif } = cliente;
+        const nombreOrRazonSocial = nombre_apellidos || razon_social;
+
+        return {
+          value: id_cliente,
+          label: `${nombreOrRazonSocial} - ${nif}`,
+        };
+      });
+
+      setClientesOptions(optionsClientes);
+
+      return true;
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
+    }
+  };
+
+  const fetchPersonasOptionsAndHandleErrors = async () => {
+    try {
+      const responseGetAllPersonas = await getAllPersonas();
+
+      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible");
+        setPersonasOptions([]);
+        return false;
+      }
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("ERROR EN EL BACK");
+        handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
+        return false;
+      }
+
+      const optionsPersonas = responseGetAllPersonas.data.map((persona) => {
+        const { id_persona, nombre, apellidos, dni } = persona;
+
+        return {
+          value: id_persona,
+          label: `${nombre + " " + apellidos} - ${dni}`,
+        };
+      });
+
+      setPersonasOptions(optionsPersonas);
 
       return true;
     } catch (error) {
@@ -104,9 +240,30 @@ export default function FormPedidosClientes({
   useEffect(() => {
     let noCallErrorsDetected = false;
 
+    console.log("pedidoClienteDataForm: ", pedidoClienteDataForm);
+
     const fetchData = async () => {
       try {
-        noCallErrorsDetected = await fetchTiposPersonasOptionsAndHandleErrors();
+        noCallErrorsDetected = await fetchTiposEstadosOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
+        noCallErrorsDetected =
+          await fetchTiposEstadosFacturasOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
+        noCallErrorsDetected = await fetchClientesOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
+        noCallErrorsDetected = await fetchPersonasOptionsAndHandleErrors();
 
         if (noCallErrorsDetected === false) {
           return;
@@ -115,22 +272,57 @@ export default function FormPedidosClientes({
         console.log("operationType: ", operationType);
 
         if (operationType === "update" || operationType === "view") {
-          if (validarFechaYYYYMMDD(pedidoClienteDataForm.fecha_nacimiento) === null) {
-            const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
-              pedidoClienteDataForm.fecha_nacimiento
+          const fechaSolicitudValida = validarFechaYYYYMMDD(
+            pedidoClienteDataForm.fecha_solicitud_pedido
+          );
+          const fechaEntregaPrevistaValida = validarFechaYYYYMMDD(
+            pedidoClienteDataForm.fecha_entrega_prevista
+          );
+          const fechaEntregaRealValida = validarFechaYYYYMMDD(
+            pedidoClienteDataForm.fecha_entrega_real
+          );
+
+          if (
+            fechaSolicitudValida === null ||
+            fechaEntregaPrevistaValida === null ||
+            fechaEntregaRealValida === null
+          ) {
+            const fechaSolicitudFormateada = formatearFechaYYYYMMDD(
+              pedidoClienteDataForm.fecha_solicitud_pedido
             );
 
-            console.log("fechaFormateada: ", fechaNacimientoFormateada);
+            const fechaEntregaPrevistaFormateada = formatearFechaYYYYMMDD(
+              pedidoClienteDataForm.fecha_entrega_prevista
+            );
+
+            const fechaEntregaRealFormateada = formatearFechaYYYYMMDD(
+              pedidoClienteDataForm.fecha_entrega_real
+            );
+
+            console.log("fechaSolicitudFormateada: ", fechaSolicitudFormateada);
+            console.log(
+              "fechaEntregaPrevistaFormateada: ",
+              fechaEntregaPrevistaFormateada
+            );
+            console.log(
+              "fechaEntregaRealFormateada: ",
+              fechaEntregaRealFormateada
+            );
 
             setFormData(() => ({
               ...pedidoClienteDataForm,
-              fecha_nacimiento: fechaNacimientoFormateada,
+              fecha_solicitud_pedido: fechaSolicitudFormateada,
+              fecha_entrega_prevista: fechaEntregaPrevistaFormateada,
+              fecha_entrega_real: fechaEntregaRealFormateada,
             }));
           } else {
             setFormData(() => ({
               ...pedidoClienteDataForm,
             }));
           }
+          setFormData(() => ({
+            ...pedidoClienteDataForm,
+          }));
         }
       } catch (error) {
         console.error("Ha ocurrido algo inesperado", error);
@@ -143,50 +335,68 @@ export default function FormPedidosClientes({
   const validateRequiredFields = () => {
     const errorMissingFields = {};
 
-    if (!formData.numero_empleado) {
-      errorMissingFields.numero_empleado =
-        "Por favor, ingresa un numero empleado";
+    if (!formData.direccion_entrega) {
+      errorMissingFields.direccion_entrega =
+        "Por favor, ingresa una direccion de entrega";
     }
 
-    if (!formData.nombre) {
-      errorMissingFields.nombre = "Por favor, ingresa un nombre";
+    if (!formData.fecha_solicitud_pedido) {
+      errorMissingFields.fecha_solicitud_pedido =
+        "Por favor, ingresa la fecha de solicitud del pedido";
     }
 
-    if (!formData.apellidos) {
-      errorMissingFields.apellidos = "Por favor, ingresa un apellido";
+    if (!formData.fecha_entrega_prevista) {
+      errorMissingFields.fecha_entrega_prevista =
+        "Por favor, ingresa la fecha de entrega prevista";
     }
 
-    if (!formData.genero) {
-      errorMissingFields.genero = "Por favor, selecciona un género";
+    if (!formData.fecha_entrega_real) {
+      errorMissingFields.fecha_entrega_real =
+        "Por favor, ingresa la fecha entrega real";
     }
 
-    if (!formData.fecha_nacimiento) {
-      errorMissingFields.fecha_nacimiento =
-        "Por favor, selecciona una fecha de nacimiento";
+    if (operationType === "update") {
+      if (!formData.hora_inicio_desplazamiento) {
+        errorMissingFields.hora_inicio_desplazamiento =
+          "Por favor, ingresa la hora de inicio del desplazamiento";
+      }
+
+      if (!formData.hora_fin_desplazamiento) {
+        errorMissingFields.hora_fin_desplazamiento =
+          "Por favor, ingresa la hora de fin del desplazamiento";
+      }
+
+      if (!formData.hora_inicio_servicio) {
+        errorMissingFields.hora_inicio_servicio =
+          "Por favor, ingresa la hora de inicio del servicio";
+      }
+
+      if (!formData.hora_fin_servicio) {
+        errorMissingFields.hora_fin_servicio =
+          "Por favor, ingresa la hora de fin del servicio";
+      }
     }
 
-    if (!formData.dni) {
-      errorMissingFields.dni = "Por favor, ingresa un DNI";
+    if (!formData.id_cliente) {
+      errorMissingFields.id_cliente = "Por favor, ingresa el nif del cliente";
     }
 
-    if (!formData.direccion) {
-      errorMissingFields.direccion = "Por favor, ingresa una direccion";
+    if (!formData.id_persona) {
+      errorMissingFields.id_persona =
+        "Por favor, ingresa la persona que se encarga del pedido";
     }
 
-    if (!formData.numero_telefono || formData.numero_telefono === "34") {
-      errorMissingFields.numero_telefono =
-        "Por favor, ingresa un numero de telefono";
+    if (!formData.id_tipo_estado) {
+      errorMissingFields.id_tipo_estado =
+        "Por favor, ingresa un tipo de estado";
     }
 
-    if (!formData.correo_electronico) {
-      errorMissingFields.correo_electronico =
-        "Por favor, ingresa un correo electronico";
+    if (!formData.id_tipo_estado_factura) {
+      errorMissingFields.id_tipo_estado_factura =
+        "Por favor, ingresa un tipo de estado de factura";
     }
 
-    if (!formData.id_tipo_persona) {
-      errorMissingFields.id_tipo_persona =
-        "Por favor, selecciona un tipo de persona";
-    }
+    console.log("errorMissingFields: ", errorMissingFields);
 
     setRequiredFieldsIncomplete(errorMissingFields);
 
@@ -196,19 +406,6 @@ export default function FormPedidosClientes({
   const validateFormData = () => {
     const errorForm = {};
 
-    if (!formData.dni.match(REGEX_DNI)) {
-      errorForm.dni = "Por favor, ingresa un DNI válido";
-    }
-
-    if (!formData.numero_telefono.match(REGEX_TELEFONO_CON_PREFIJO)) {
-      errorForm.numero_telefono =
-        "Por favor, ingresa un numero de telefono válido";
-    }
-
-    if (!formData.correo_electronico.match(REGEX_EMAIL)) {
-      errorForm.correo_electronico = "Por favor, ingresa un email válido";
-    }
-
     setFormErrors(errorForm);
     console.log("errorForm: ", errorForm);
 
@@ -216,44 +413,87 @@ export default function FormPedidosClientes({
   };
 
   const handleFormChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    console.log("Name: ", name, " Value: ", value);
-    if (name === "numero_telefono") {
-      const nuevoValor = value.startsWith("34") ? value : "34" + value;
+    const { name, value } = event.target;
+    // console.log("Name: ", name, " Value: ", value);
 
-      setFormData((prevFormValue) => ({
-        ...prevFormValue,
-        [name]: nuevoValor,
-      }));
-    } else {
-      setFormData((prevDataState) => {
-        return {
-          ...prevDataState,
-          [name]: value,
-        };
-      });
-    }
-  };
-
-  const handleSelectGeneroChange = (value, option) => {
-    console.log("El genero es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
-        ["genero"]: option?.children.toString(),
+        [name]: value,
       };
     });
   };
 
-  const handleTipoPersonaChange = (value, option) => {
-    console.log("El tipo persona es: ", value, option);
+  const handleTimeChange = (time, timeString, name) => {
+    console.log("time: ", time, "timeString: ", timeString, name);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
-        ["tipo_persona"]: option?.children.toString(),
-        ["id_tipo_persona"]: value.toString(),
+        [name]: timeString,
       };
     });
+  };
+
+  const handleTipoEstadoChange = (value, option) => {
+    console.log("El tipo estado es: ", value, option);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["tipo_estado"]: option?.children.toString(),
+        ["id_tipo_estado"]: value.toString(),
+      };
+    });
+  };
+
+  const handleTipoEstadoFacturaChange = (value, option) => {
+    console.log("El tipo estado factura es: ", value, option);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["tipo_estado_factura"]: option?.children.toString(),
+        ["id_tipo_estado_factura"]: value.toString(),
+      };
+    });
+  };
+
+  const handleSelectClienteChange = (value, option) => {
+    console.log("El cliente seleccionado es: ", value, option);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["id_cliente"]: value.toString(),
+        ["clienteInfo"]: option?.children.toString(),
+      };
+    });
+  };
+
+  const handleSelectPersonaChange = (value, option) => {
+    console.log("La persona seleccionado es: ", value, option);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["id_persona"]: value.toString(),
+        ["personaInfo"]: option?.children.toString(),
+      };
+    });
+  };
+
+  const handleSelectClienteSearch = (value) => {
+    console.log("Search cliente:", value);
+  };
+
+  const handleSelectPersonaSearch = (value) => {
+    console.log("Search persona:", value);
+  };
+
+  const filterIncrementalSearch = (input, option) => {
+    const optionLabel = option?.children.toLowerCase();
+
+    const userInput = input.toLowerCase();
+
+    const isOptionIncluded = optionLabel.includes(userInput);
+
+    return isOptionIncluded;
   };
 
   const handleSubmit = async (event) => {
@@ -281,15 +521,17 @@ export default function FormPedidosClientes({
 
     try {
       if (operationType === "create") {
-        const responseCreatePersona = await savePersona(formData);
+        const responseCreatePedidoCliente = await savePedidoCliente(formData);
 
-        errorHandlingInfo = checkResponseForErrors(responseCreatePersona);
+        errorHandlingInfo = checkResponseForErrors(responseCreatePedidoCliente);
 
         if (errorHandlingInfo.backendError) {
-          handleBackendError(responseCreatePersona.errorMessage);
+          handleBackendError(responseCreatePedidoCliente.errorMessage);
           return;
         } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
-          handleBackendAndDBConnectionError(responseCreatePersona.errorMessage);
+          handleBackendAndDBConnectionError(
+            responseCreatePedidoCliente.errorMessage
+          );
           return;
         }
 
@@ -297,18 +539,20 @@ export default function FormPedidosClientes({
         toggleForm();
         formUpdateTrigger();
       } else if (operationType === "update") {
-        const responseUpdatePersona = await updatePersona(
+        const responseUpdatePedidoCliente = await updatePedidoCliente(
           formData.id,
           formData
         );
 
-        errorHandlingInfo = checkResponseForErrors(responseUpdatePersona);
+        errorHandlingInfo = checkResponseForErrors(responseUpdatePedidoCliente);
 
         if (errorHandlingInfo.backendError) {
-          handleBackendError(responseUpdatePersona.errorMessage);
+          handleBackendError(responseUpdatePedidoCliente.errorMessage);
           return;
         } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
-          handleBackendAndDBConnectionError(responseUpdatePersona.errorMessage);
+          handleBackendAndDBConnectionError(
+            responseUpdatePedidoCliente.errorMessage
+          );
           return;
         }
 
@@ -325,207 +569,408 @@ export default function FormPedidosClientes({
     <>
       <Header />
       <Antd.Form>
-        <Antd.Form.Item label="Numero empleado">
-          <Antd.Input
-            type="number"
-            name="numero_empleado"
-            value={formData.numero_empleado}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.numero_empleado ? "error" : ""}
-            className={styles.StyleInput}
-          />
-          {requiredFieldsIncomplete.numero_empleado && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.numero_empleado}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Nombre">
+        <Antd.Form.Item label="Direccion entrega">
           <Antd.Input
             type="text"
-            name="nombre"
-            value={formData.nombre}
+            name="direccion_entrega"
+            value={formData.direccion_entrega}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.nombre ? "error" : ""}
+            status={requiredFieldsIncomplete.direccion_entrega ? "error" : ""}
             className={styles.StyleInput}
           />
-          {requiredFieldsIncomplete.nombre && (
+          {requiredFieldsIncomplete.direccion_entrega && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.nombre}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Apellidos">
-          <Antd.Input
-            type="text"
-            name="apellidos"
-            value={formData.apellidos}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.apellidos ? "error" : ""}
-            className={styles.StyleInput}
-          />
-          {requiredFieldsIncomplete.apellidos && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.apellidos}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Genero">
-          <Antd.Select
-            name="genero"
-            value={formData.genero ? formData.genero : "Selecciona un género"}
-            onChange={
-              operationType === "view" ? null : handleSelectGeneroChange
-            }
-            readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.genero ? "error" : ""}
-            className={styles.StyleInput}
-            notFoundContent={<span>No hay géneros</span>}
-          >
-            {operationType !== "view" &&
-              generoOptions.map((genero) => (
-                <Antd.Select.Option key={genero.value} value={genero.value}>
-                  {genero.label}
-                </Antd.Select.Option>
-              ))}
-          </Antd.Select>
-          {requiredFieldsIncomplete.genero && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.genero}
+              {requiredFieldsIncomplete.direccion_entrega}
             </div>
           )}
         </Antd.Form.Item>
 
-        <Antd.Form.Item label=" Fecha nacimiento">
+        <Antd.Form.Item label="Fecha solicitud pedido">
           <Antd.Input
             type="date"
-            name="fecha_nacimiento"
-            value={formData.fecha_nacimiento}
+            name="fecha_solicitud_pedido"
+            value={formData.fecha_solicitud_pedido}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.fecha_nacimiento ? "error" : ""}
+            status={
+              requiredFieldsIncomplete.fecha_solicitud_pedido ? "error" : ""
+            }
             className={styles.StyleInput}
           />
-          {requiredFieldsIncomplete.fecha_nacimiento && (
+          {requiredFieldsIncomplete.fecha_solicitud_pedido && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.fecha_nacimiento}
+              {requiredFieldsIncomplete.fecha_solicitud_pedido}
             </div>
           )}
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Dni">
+        <Antd.Form.Item label="Fecha entrega prevista">
           <Antd.Input
-            type="text"
-            name="dni"
-            value={formData.dni}
+            type="date"
+            name="fecha_entrega_prevista"
+            value={formData.fecha_entrega_prevista}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
             status={
-              requiredFieldsIncomplete.dni || formErrors.dni ? "error" : ""
+              requiredFieldsIncomplete.fecha_entrega_prevista ? "error" : ""
             }
             className={styles.StyleInput}
           />
-          {(requiredFieldsIncomplete.dni || formErrors.dni) && (
+          {requiredFieldsIncomplete.fecha_entrega_prevista && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.dni || formErrors.dni}
+              {requiredFieldsIncomplete.fecha_entrega_prevista}
             </div>
           )}
         </Antd.Form.Item>
-        <Antd.Form.Item label="Direccion">
+
+        <Antd.Form.Item label="Fecha entrega real">
           <Antd.Input
-            type="text"
-            name="direccion"
-            value={formData.direccion}
+            type="date"
+            name="fecha_entrega_real"
+            value={formData.fecha_entrega_real}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.direccion ? "error" : ""}
+            status={requiredFieldsIncomplete.fecha_entrega_real ? "error" : ""}
             className={styles.StyleInput}
           />
-          {requiredFieldsIncomplete.direccion && (
+          {requiredFieldsIncomplete.fecha_entrega_real && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.direccion}
+              {requiredFieldsIncomplete.fecha_entrega_real}
             </div>
           )}
         </Antd.Form.Item>
-        <Antd.Form.Item label="Numero telefono">
+
+        {(operationType === "update" || operationType === "view") && (
+          <div>
+            <Antd.Form.Item label="Hora inicio desplazamiento">
+              <Antd.TimePicker
+                name="hora_inicio_desplazamiento"
+                value={
+                  formData.hora_inicio_desplazamiento
+                    ? moment(formData.hora_inicio_desplazamiento, "HH:mm")
+                    : null
+                }
+                onChange={(time, timeString) =>
+                  handleTimeChange(
+                    time,
+                    timeString,
+                    "hora_inicio_desplazamiento"
+                  )
+                }
+                readOnly={operationType === "view" ? true : false}
+                status={
+                  requiredFieldsIncomplete.hora_inicio_desplazamiento
+                    ? "error"
+                    : ""
+                }
+                className={styles.StyleInput}
+                format="HH:mm"
+                disabled={formData.tipo_estado !== "Aprobado" ? true : false}
+              />
+              {requiredFieldsIncomplete.hora_inicio_desplazamiento && (
+                <div className={styles.RequiredFieldsOrFormatError}>
+                  {requiredFieldsIncomplete.hora_inicio_desplazamiento}
+                </div>
+              )}
+            </Antd.Form.Item>
+
+            <Antd.Form.Item label="Hora fin desplazamiento">
+              <Antd.TimePicker
+                name="hora_fin_desplazamiento"
+                value={
+                  formData.hora_fin_desplazamiento
+                    ? moment(formData.hora_fin_desplazamiento, "HH:mm")
+                    : null
+                }
+                onChange={(time, timeString) =>
+                  handleTimeChange(time, timeString, "hora_fin_desplazamiento")
+                }
+                readOnly={operationType === "view" ? true : false}
+                status={
+                  requiredFieldsIncomplete.hora_fin_desplazamiento
+                    ? "error"
+                    : ""
+                }
+                className={styles.StyleInput}
+                format="HH:mm"
+                disabled={formData.tipo_estado !== "Aprobado" ? true : false}
+              />
+              {requiredFieldsIncomplete.hora_fin_desplazamiento && (
+                <div className={styles.RequiredFieldsOrFormatError}>
+                  {requiredFieldsIncomplete.hora_fin_desplazamiento}
+                </div>
+              )}
+            </Antd.Form.Item>
+          </div>
+        )}
+
+        {operationType === "view" && (
+          <div>
+            <Antd.Form.Item label="Tiempo desplazamiento total">
+              <Antd.TimePicker
+                name="hora_fin_desplazamiento"
+                value={
+                  formData.hora_fin_desplazamiento
+                    ? moment(formData.hora_fin_desplazamiento, "HH:mm")
+                    : null
+                }
+                readOnly={true}
+                className={styles.StyleInput}
+                format="HH:mm"
+              />
+            </Antd.Form.Item>
+          </div>
+        )}
+
+        {(operationType === "update" || operationType === "view") && (
+          <div>
+            <Antd.Form.Item label="Hora inicio servicio">
+              <Antd.TimePicker
+                name="hora_inicio_servicio"
+                value={
+                  formData.hora_inicio_servicio
+                    ? moment(formData.hora_inicio_servicio, "HH:mm")
+                    : null
+                }
+                onChange={(time, timeString) =>
+                  handleTimeChange(time, timeString, "hora_inicio_servicio")
+                }
+                readOnly={operationType === "view" ? true : false}
+                status={
+                  requiredFieldsIncomplete.hora_inicio_servicio ? "error" : ""
+                }
+                className={styles.StyleInput}
+                format="HH:mm"
+                disabled={formData.tipo_estado !== "Aprobado" ? true : false}
+              />
+              {requiredFieldsIncomplete.hora_inicio_servicio && (
+                <div className={styles.RequiredFieldsOrFormatError}>
+                  {requiredFieldsIncomplete.hora_inicio_servicio}
+                </div>
+              )}
+            </Antd.Form.Item>
+
+            <Antd.Form.Item label="Hora fin servicio">
+              <Antd.TimePicker
+                name="hora_fin_servicio"
+                value={
+                  formData.hora_fin_servicio
+                    ? moment(formData.hora_fin_servicio, "HH:mm")
+                    : null
+                }
+                onChange={(time, timeString) =>
+                  handleTimeChange(time, timeString, "hora_fin_servicio")
+                }
+                readOnly={operationType === "view" ? true : false}
+                status={
+                  requiredFieldsIncomplete.hora_fin_servicio ? "error" : ""
+                }
+                className={styles.StyleInput}
+                format="HH:mm"
+                disabled={formData.tipo_estado !== "Aprobado" ? true : false}
+              />
+              {requiredFieldsIncomplete.hora_fin_servicio && (
+                <div className={styles.RequiredFieldsOrFormatError}>
+                  {requiredFieldsIncomplete.hora_fin_servicio}
+                </div>
+              )}
+            </Antd.Form.Item>
+          </div>
+        )}
+
+        {operationType === "view" && (
+          <div>
+            <Antd.Form.Item label="Tiempo servicio total">
+              <Antd.TimePicker
+                name="tiempo_servicio_total"
+                value={
+                  formData.tiempo_servicio_total
+                    ? moment(formData.tiempo_servicio_total, "HH:mm")
+                    : null
+                }
+                readOnly={true}
+                className={styles.StyleInput}
+                format="HH:mm"
+              />
+            </Antd.Form.Item>
+          </div>
+        )}
+
+        <Antd.Form.Item label="Descripcion">
           <Antd.Input
             type="text"
-            name="numero_telefono"
-            value={formData.numero_telefono}
+            name="descripcion"
+            value={formData.descripcion}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={
-              requiredFieldsIncomplete.numero_telefono ||
-              formErrors.numero_telefono
-                ? "error"
-                : ""
-            }
             className={styles.StyleInput}
           />
-          {(requiredFieldsIncomplete.numero_telefono ||
-            formErrors.numero_telefono) && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.numero_telefono ||
-                formErrors.numero_telefono}
-            </div>
-          )}
         </Antd.Form.Item>
-        <Antd.Form.Item label="Correo electronico">
+
+        <Antd.Form.Item label="Observacion">
           <Antd.Input
             type="text"
-            name="correo_electronico"
-            value={formData.correo_electronico}
+            name="observacion"
+            value={formData.observacion}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={
-              requiredFieldsIncomplete.correo_electronico ||
-              formErrors.correo_electronico
-                ? "error"
-                : ""
-            }
             className={styles.StyleInput}
           />
-          {(requiredFieldsIncomplete.correo_electronico ||
-            formErrors.correo_electronico) && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.correo_electronico ||
-                formErrors.correo_electronico}
-            </div>
-          )}
         </Antd.Form.Item>
-        <Antd.Form.Item label="Selecciona un tipo de persona">
+
+        <Antd.Form.Item label="Selecciona un cliente">
           <Antd.Select
-            name="tipo_persona"
+            name="clienteInfo"
             value={
-              formData.tipo_persona
-                ? formData.tipo_persona
-                : "Selecciona un tipo de persona"
+              formData.clienteInfo
+                ? formData.clienteInfo
+                : "Selecciona un cliente"
             }
-            onChange={operationType === "view" ? null : handleTipoPersonaChange}
+            onChange={
+              operationType === "view" ? null : handleSelectClienteChange
+            }
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.id_tipo_persona ? "error" : ""}
+            status={requiredFieldsIncomplete.id_cliente ? "error" : ""}
             className={styles.StyleInput}
-            notFoundContent={<span>No hay opciones</span>}
+            notFoundContent={<span>No hay clientes</span>}
+            showSearch={true}
+            onSearch={
+              operationType === "view" ? null : handleSelectClienteSearch
+            }
+            filterOption={
+              operationType === "view" ? null : filterIncrementalSearch
+            }
           >
             {operationType !== "view" &&
-              tiposPersonasOptions.map((tipoPersona) => (
-                <Antd.Select.Option
-                  key={tipoPersona.value}
-                  value={tipoPersona.value}
-                >
-                  {tipoPersona.label}
+              clientesOptions.map((cliente) => (
+                <Antd.Select.Option key={cliente.value} value={cliente.value}>
+                  {cliente.label}
                 </Antd.Select.Option>
               ))}
           </Antd.Select>
-          {requiredFieldsIncomplete.id_tipo_persona && (
+          {requiredFieldsIncomplete.id_cliente && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.id_tipo_persona}
+              {requiredFieldsIncomplete.id_cliente}
             </div>
           )}
         </Antd.Form.Item>
+
+        <Antd.Form.Item label="Selecciona una persona que se encargue del pedido">
+          <Antd.Select
+            name="personaInfo"
+            value={
+              formData.personaInfo
+                ? formData.personaInfo
+                : "Selecciona un persona"
+            }
+            onChange={
+              operationType === "view" ? null : handleSelectPersonaChange
+            }
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.id_persona ? "error" : ""}
+            className={styles.StyleInput}
+            notFoundContent={<span>No hay personas</span>}
+            showSearch={true}
+            onSearch={
+              operationType === "view" ? null : handleSelectPersonaSearch
+            }
+            filterOption={
+              operationType === "view" ? null : filterIncrementalSearch
+            }
+          >
+            {operationType !== "view" &&
+              personasOptions.map((persona) => (
+                <Antd.Select.Option key={persona.value} value={persona.value}>
+                  {persona.label}
+                </Antd.Select.Option>
+              ))}
+          </Antd.Select>
+          {requiredFieldsIncomplete.id_persona && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.id_persona}
+            </div>
+          )}
+        </Antd.Form.Item>
+
+        {(operationType === "update" || operationType === "view") && (
+          <div>
+            <Antd.Form.Item label="Selecciona un tipo de estado">
+              <Antd.Select
+                name="tipo_estado"
+                value={
+                  formData.tipo_estado
+                    ? formData.tipo_estado
+                    : "Selecciona un tipo de estado"
+                }
+                onChange={
+                  operationType === "view" ? null : handleTipoEstadoChange
+                }
+                readOnly={operationType === "view" ? true : false}
+                status={requiredFieldsIncomplete.id_tipo_estado ? "error" : ""}
+                className={styles.StyleInput}
+                notFoundContent={<span>No hay opciones</span>}
+              >
+                {operationType !== "view" &&
+                  tiposEstadosOptions.map((tipoEstado) => (
+                    <Antd.Select.Option
+                      key={tipoEstado.value}
+                      value={tipoEstado.value}
+                    >
+                      {tipoEstado.label}
+                    </Antd.Select.Option>
+                  ))}
+              </Antd.Select>
+              {requiredFieldsIncomplete.id_tipo_estado && (
+                <div className={styles.RequiredFieldsOrFormatError}>
+                  {requiredFieldsIncomplete.id_tipo_estado}
+                </div>
+              )}
+            </Antd.Form.Item>
+          </div>
+        )}
+
+        {(operationType === "update" || operationType === "view") && (
+          <div>
+            <Antd.Form.Item label="Selecciona un tipo de estado de factura">
+              <Antd.Select
+                name="tipo_estado_factura"
+                value={
+                  formData.tipo_estado_factura
+                    ? formData.tipo_estado_factura
+                    : "Selecciona un tipo de estado de factura"
+                }
+                onChange={
+                  operationType === "view"
+                    ? null
+                    : handleTipoEstadoFacturaChange
+                }
+                readOnly={operationType === "view" ? true : false}
+                status={
+                  requiredFieldsIncomplete.id_tipo_estado_factura ? "error" : ""
+                }
+                className={styles.StyleInput}
+                notFoundContent={<span>No hay opciones</span>}
+              >
+                {operationType !== "view" &&
+                  tiposEstadosFacturasOptions.map((tipoEstadoFactura) => (
+                    <Antd.Select.Option
+                      key={tipoEstadoFactura.value}
+                      value={tipoEstadoFactura.value}
+                    >
+                      {tipoEstadoFactura.label}
+                    </Antd.Select.Option>
+                  ))}
+              </Antd.Select>
+              {requiredFieldsIncomplete.id_tipo_estado_factura && (
+                <div className={styles.RequiredFieldsOrFormatError}>
+                  {requiredFieldsIncomplete.id_tipo_estado_factura}
+                </div>
+              )}
+            </Antd.Form.Item>
+          </div>
+        )}
+
         {errorMessage.length !== 0 && backendError && (
           <div>
             <p className={styles.BackendError}>

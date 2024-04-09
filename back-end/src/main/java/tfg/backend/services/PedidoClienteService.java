@@ -1,5 +1,7 @@
 package tfg.backend.services;
 
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -142,6 +144,7 @@ public class PedidoClienteService {
 
     public PedidoClienteModel updatePedidoCliente(PedidoClienteModel cambiosPedidoCliente, int idPedidoCliente) {
 
+        System.out.println("\n\n\nidPedidoCliente: " + idPedidoCliente + "\n\n\n");
         PedidoClienteModel pedidoClienteExistente = pedidoClienteRepository.findById(idPedidoCliente)
                 .orElseThrow(() -> new RuntimeException(
                         "Pedido cliente con id " + idPedidoCliente + " no encontrado"));
@@ -153,8 +156,49 @@ public class PedidoClienteService {
          * }
          */
 
-        // HACER AQUI LOS SETTER -> Ejemplo:
-        // asistenciaEmpleadoExistente.setFecha(cambiosAsistenciaEmpleado.getFecha());
+        LocalTime horaInicioDesplazamiento = cambiosPedidoCliente.getHora_inicio_desplazamiento();
+        LocalTime horaFinDesplazamiento = cambiosPedidoCliente.getHora_fin_desplazamiento();
+        LocalTime horaInicioServicio = cambiosPedidoCliente.getHora_inicio_servicio();
+        LocalTime horaFinServicio = cambiosPedidoCliente.getHora_fin_servicio();
+
+        pedidoClienteExistente.setDireccion_entrega(cambiosPedidoCliente.getDireccion_entrega());
+        pedidoClienteExistente.setFecha_solicitud_pedido(cambiosPedidoCliente.getFecha_solicitud_pedido());
+        pedidoClienteExistente.setFecha_entrega_prevista(cambiosPedidoCliente.getFecha_entrega_prevista());
+        pedidoClienteExistente.setFecha_entrega_real(cambiosPedidoCliente.getFecha_entrega_real());
+
+        TipoEstadoModel tipoEstadoAprobado = new TipoEstadoModel();
+        tipoEstadoAprobado.setId_tipo_estado(2);
+
+        if (tipoEstadoAprobado.getId_tipo_estado() == cambiosPedidoCliente.getTipo_estado().getId_tipo_estado()) {
+            pedidoClienteExistente.setHora_inicio_desplazamiento(cambiosPedidoCliente.getHora_inicio_desplazamiento());
+            pedidoClienteExistente.setHora_fin_desplazamiento(cambiosPedidoCliente.getHora_fin_desplazamiento());
+            pedidoClienteExistente.setHora_inicio_servicio(cambiosPedidoCliente.getHora_inicio_servicio());
+            pedidoClienteExistente.setHora_fin_servicio(cambiosPedidoCliente.getHora_fin_servicio());
+
+            // Calculamos el total de tiempo de desplazamiento y de servicio
+            long minutosEntreInicioDesplazamientoYServicio = horaInicioDesplazamiento.until(horaInicioServicio,
+                    ChronoUnit.MINUTES);
+            long minutosEntreInicioYFinDeServicio = horaInicioServicio.until(horaFinServicio, ChronoUnit.MINUTES);
+            long minutosEntreFinDeServicioYFinDesplazamiento = horaFinServicio.until(horaFinDesplazamiento,
+                    ChronoUnit.MINUTES);
+
+            long minutosDesplazamiento = minutosEntreInicioDesplazamientoYServicio
+                    + minutosEntreFinDeServicioYFinDesplazamiento;
+            long minutosServicio = minutosEntreInicioYFinDeServicio;
+
+            LocalTime resultadoTotalTiempoDesplazamiento = LocalTime.of((int) minutosDesplazamiento / 60,
+                    (int) minutosDesplazamiento % 60, 0);
+
+            LocalTime resultadoTotalTiempoServicio = LocalTime.of((int) minutosServicio / 60,
+                    (int) minutosServicio % 60,
+                    0);
+
+            pedidoClienteExistente.setTiempo_desplazamiento_total(resultadoTotalTiempoDesplazamiento);
+            pedidoClienteExistente.setTiempo_servicio_total(resultadoTotalTiempoServicio);
+        }
+
+        pedidoClienteExistente.setDescripcion(cambiosPedidoCliente.getDescripcion());
+        pedidoClienteExistente.setObservacion(cambiosPedidoCliente.getObservacion());
 
         int id_cliente = cambiosPedidoCliente.getCliente().getId_cliente();
 
@@ -166,6 +210,16 @@ public class PedidoClienteService {
         pedidoClienteExistente.setCliente(clienteEncontrado);
         clienteEncontrado.getPedidosClientes().add(pedidoClienteExistente);
 
+        int id_persona = cambiosPedidoCliente.getPersona_encargado().getId_persona();
+
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
+
+        pedidoClienteExistente.getPersona_encargado().getPedidosClientes().remove(pedidoClienteExistente);
+        pedidoClienteExistente.setPersona_encargado(personaEncontrado);
+        personaEncontrado.getPedidosClientes().add(pedidoClienteExistente);
+
         int id_tipo_estado = cambiosPedidoCliente.getTipo_estado().getId_tipo_estado();
 
         TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
@@ -174,6 +228,17 @@ public class PedidoClienteService {
         pedidoClienteExistente.getTipo_estado().getPedidosClientes().remove(pedidoClienteExistente);
         pedidoClienteExistente.setTipo_estado(tipoEstadoEncontrado);
         tipoEstadoEncontrado.getPedidosClientes().add(pedidoClienteExistente);
+
+        int id_tipo_estado_factura = cambiosPedidoCliente.getTipo_estado_factura().getId_tipo_estado_factura();
+
+        TipoEstadoFacturaModel tipoEstadoFacturaEncontrado = tipoEstadoFacturaRepository
+                .findById(id_tipo_estado_factura)
+                .orElseThrow(
+                        () -> new RuntimeException("Tipo estado factura con id " + id_tipo_estado + " no encontrado"));
+
+        pedidoClienteExistente.getTipo_estado_factura().getPedidosClientes().remove(pedidoClienteExistente);
+        pedidoClienteExistente.setTipo_estado_factura(tipoEstadoFacturaEncontrado);
+        tipoEstadoFacturaEncontrado.getPedidosClientes().add(pedidoClienteExistente);
 
         PedidoClienteModel pedidoClienteActualizado = pedidoClienteRepository.save(pedidoClienteExistente);
 

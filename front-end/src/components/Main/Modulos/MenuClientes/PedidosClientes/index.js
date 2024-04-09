@@ -106,31 +106,31 @@ export default function PedidosClientes() {
     {
       field: "hora_inicio_desplazamiento",
       headerName: "Hora inicio desplazamiento",
-      width: 180,
+      width: 220,
       editable: false,
     },
     {
       field: "hora_fin_desplazamiento",
       headerName: "Hora fin desplazamiento",
-      width: 130,
+      width: 200,
       editable: false,
     },
     {
       field: "tiempo_desplazamiento_total",
       headerName: "Tiempo desplazamiento total",
-      width: 180,
+      width: 210,
       editable: false,
     },
     {
       field: "hora_inicio_servicio",
       headerName: "Hora inicio servicio",
-      width: 180,
+      width: 160,
       editable: false,
     },
     {
       field: "hora_fin_servicio",
       headerName: "Hora fin servicio",
-      width: 180,
+      width: 160,
       editable: false,
     },
     {
@@ -152,27 +152,27 @@ export default function PedidosClientes() {
       editable: false,
     },
     {
-      field: "nif_cliente",
-      headerName: "Nif cliente",
-      width: 180,
+      field: "clienteInfo",
+      headerName: "Cliente info",
+      width: 280,
       editable: false,
     },
     {
-      field: "dni_persona",
-      headerName: "Dni persona",
-      width: 180,
+      field: "personaInfo",
+      headerName: "Persona info",
+      width: 280,
       editable: false,
     },
     {
       field: "tipo_estado",
       headerName: "Tipo estado",
-      width: 180,
+      width: 200,
       editable: false,
     },
     {
       field: "tipo_estado_factura",
       headerName: "Tipo estado factura",
-      width: 180,
+      width: 200,
       editable: false,
     },
     {
@@ -235,6 +235,10 @@ export default function PedidosClientes() {
 
       const pedidosClientesMap = responseGetAllPedidosClientes.data.map(
         (pedidoCliente) => {
+          const { nombre_apellidos, razon_social, nif } = pedidoCliente.cliente;
+          const nombreOrRazonSocial = nombre_apellidos || razon_social;
+          const { nombre, apellidos, dni } = pedidoCliente.persona_encargado;
+
           return {
             id: pedidoCliente.id_pedido_cliente,
             direccion_entrega: pedidoCliente.direccion_entrega,
@@ -252,9 +256,9 @@ export default function PedidosClientes() {
             descripcion: pedidoCliente.descripcion,
             observacion: pedidoCliente.observacion,
             id_cliente: pedidoCliente.cliente.id_cliente,
-            nif_cliente: pedidoCliente.cliente.nif,
+            clienteInfo: `${nombreOrRazonSocial} - ${nif}`,
             id_persona: pedidoCliente.persona_encargado.id_persona,
-            dni_persona: pedidoCliente.persona_encargado.dni,
+            personaInfo: `${nombre + " " + apellidos} - ${dni}`,
             tipo_estado: pedidoCliente.tipo_estado.tipo_estado,
             id_tipo_estado: pedidoCliente.tipo_estado.id_tipo_estado,
             tipo_estado_factura:

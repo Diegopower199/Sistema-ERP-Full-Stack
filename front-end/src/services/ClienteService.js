@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
+import { asignarNullSiCadenaVacia } from "@/utils/helpers";
 
 export const getAllClientes = async () => {
   const url = API_URL_BACK_END.replace("#", "clientes");
@@ -31,9 +32,8 @@ export const saveCliente = async (data) => {
   try {
     const formData = {
       nif: data.nif,
-      nombre_apellidos:
-        data.nombre_apellidos === "" ? null : data.nombre_apellidos,
-      razon_social: data.razon_social === "" ? null : data.razon_social,
+      nombre_apellidos: asignarNullSiCadenaVacia(data.nombre_apellidos),
+      razon_social: asignarNullSiCadenaVacia(data.razon_social),
       numero_telefono: data.numero_telefono,
       correo_electronico: data.correo_electronico,
       direccion: data.direccion,
@@ -93,9 +93,8 @@ export const updateCliente = async (id, data) => {
   try {
     const formData = {
       nif: data.nif,
-      nombre_apellidos:
-        data.nombre_apellidos === "" ? null : data.nombre_apellidos,
-      razon_social: data.razon_social === "" ? null : data.razon_social,
+      nombre_apellidos: asignarNullSiCadenaVacia(data.nombre_apellidos),
+      razon_social: asignarNullSiCadenaVacia(data.razon_social),
       numero_telefono: data.numero_telefono,
       correo_electronico: data.correo_electronico,
       direccion: data.direccion,

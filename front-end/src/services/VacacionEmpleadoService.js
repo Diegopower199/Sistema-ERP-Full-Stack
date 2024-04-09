@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
+import { asignarNullSiCadenaVacia } from "@/utils/helpers";
 
 export const getAllVacacionesEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
@@ -27,14 +28,13 @@ export const getAllVacacionesEmpleados = async () => {
 };
 
 export const saveVacacionEmpleado = async (data) => {
-  // Los dias los calculo en el back
   const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
   console.log("FORM VACACIONES EMPLEADOS: ", data);
   try {
     const formData = {
       fecha_inicio: data.fecha_inicio,
       fecha_fin: data.fecha_fin,
-      observacion: data.observacion,
+      observacion: asignarNullSiCadenaVacia(data.observacion),
       persona: {
         dni: data.dni,
       },
@@ -97,7 +97,7 @@ export const updateVacacionEmpleado = async (id, data) => {
     const formData = {
       fecha_inicio: data.fecha_inicio,
       fecha_fin: data.fecha_fin,
-      observacion: data.observacion,
+      observacion: asignarNullSiCadenaVacia(data.observacion),
       persona: {
         dni: data.dni,
       },

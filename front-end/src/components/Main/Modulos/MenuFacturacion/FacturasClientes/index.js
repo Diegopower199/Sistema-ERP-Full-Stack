@@ -548,7 +548,7 @@ export default function FacturasClientes() {
             <div>
               <Antd.Form style={{ marginTop: "5%" }}>
                 <p>
-                  FACTURAS TOTALES GENERADAS:{" "}
+                  Facturas totales generadas:{" "}
                   {contadorFacturasClientesGeneradas}
                 </p>
               </Antd.Form>

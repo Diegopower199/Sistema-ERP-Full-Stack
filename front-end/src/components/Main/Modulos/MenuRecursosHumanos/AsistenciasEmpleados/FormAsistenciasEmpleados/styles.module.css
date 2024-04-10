@@ -19,3 +19,7 @@
   margin-bottom: 10px;
   font-size: 17px;
 }
+
+.SelectDisabled {
+  pointer-events: none;
+}

@@ -497,7 +497,11 @@ export default function FormClientes({
             }
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.provincia ? "error" : ""}
-            className={styles.StyleInput}
+            className={
+              operationType === "view"
+                ? styles.SelectDisabled
+                : styles.SelectEnabled
+            }
             notFoundContent={<span>No hay provincia</span>}
             showSearch={true}
             onSearch={
@@ -529,7 +533,11 @@ export default function FormClientes({
               operationType === "view" ? null : handleSelectCiudadChange
             }
             status={requiredFieldsIncomplete.ciudad ? "error" : ""}
-            className={styles.StyleInput}
+            className={
+              operationType === "view"
+                ? styles.SelectDisabled
+                : styles.StyleInput
+            }
             notFoundContent={<span>No hay ciudades</span>}
             showSearch={true}
             onSearch={

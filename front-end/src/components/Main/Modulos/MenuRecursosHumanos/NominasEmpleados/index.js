@@ -4,15 +4,12 @@ import { useAuth } from "@/context/UserContext";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   DataGrid,
   GridToolbarContainer,
   GridActionsCellItem,
   GridToolbarExportContainer,
-  GridCsvExportMenuItem,
   useGridApiContext,
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
@@ -24,13 +21,26 @@ import {
   LOCALIZED_COLUMN_MENU_TEXTS,
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
-import { getAllNominasEmpleados } from "@/services/NominaEmpleadoService";
-import FormNominasEmpleados from "./FormNominasEmpleados";
 import styles from "./styles.module.css";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import ErrorIcon from "@mui/icons-material/Error";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import {
+  generateNominasEmpleados,
+  getAllNominasEmpleados,
+} from "@/services/NominaEmpleadoService";
+import FormNominasEmpleados from "./FormNominasEmpleados";
 
-export default function NominasEmpleados() { // ESTE ES IGUAL QUE LAS FACTURAS, ASI QUE HASTAS QUE NO TENGA FACTURAS PERFECTO NO LO CAMBIO
+let errorHandlingInfo = {
+  errorMessage: "",
+  backendOrDDBBConnectionError: false,
+  backendError: false,
+  noContent: false,
+};
+
+export default function NominasEmpleados() {
   const {
     authUser,
     setAuthUser,
@@ -42,27 +52,35 @@ export default function NominasEmpleados() { // ESTE ES IGUAL QUE LAS FACTURAS, 
 
   const router = useRouter();
 
-  const [showFormCreate, setShowFormCreate] = useState(false);
-  const [showFormUpdate, setShowFormUpdate] = useState(false);
+  const [showModalGenerate, setShowModalGenerate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
-  const [idVacacionEmpleadoSelected, setIdVacacionEmpleadoSelected] =
-    useState(0);
-  const [
-    dniPersonaVacacionEmpleadoSelected,
-    setDniPersonaVacacionEmpleadoSelected,
-  ] = useState("");
-  const [
-    fechaInicioAndFinVacacionEmpleadoSelected,
-    setFechaInicioAndFinVacacionEmpleadoSelected,
-  ] = useState([]);
-
-  const [vacacionEmpleadoDelete, setVacacionEmpleadoDelete] = useState(false);
-  const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
+  const [nominaEmpleadoFormUpdated, setNominaEmpleadoFormUpdated] =
     useState(false);
+
+  const [nominaEmpleadoGenerateUpdated, setNominaEmpleadoGenerateUpdated] =
+    useState(false);
+
+  const [
+    contadorNominasEmpleadosGeneradas,
+    setContadorNominasEmpleadosGeneradas,
+  ] = useState(0);
+  const [
+    cargandoInformacionNominasEmpleados,
+    setCargandoInformacionNominasEmpleados,
+  ] = useState(false);
+  const [
+    aceptarBotonParaVerResultadosNominasEmpleados,
+    setAceptarBotonParaVerResultadosNominasEmpleados,
+  ] = useState(false);
+
+  const [backendError, setBackendError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
+    useState(false);
+
   const [rowSelected, setRowSelected] = useState(null);
 
   const [paginationModel, setPaginationModel] = useState({
@@ -152,9 +170,9 @@ export default function NominasEmpleados() { // ESTE ES IGUAL QUE LAS FACTURAS, 
       editable: false,
     },
     {
-      field: "dni",
-      headerName: "Dni persona",
-      width: 180,
+      field: "personaInfo",
+      headerName: "Info persona",
+      width: 280,
       editable: false,
     },
     {
@@ -171,153 +189,164 @@ export default function NominasEmpleados() { // ESTE ES IGUAL QUE LAS FACTURAS, 
             onClick={handleViewUniqueClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleUpdateClick(id)}
-            color="inherit"
-          />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
         ];
       },
     },
   ];
 
-  const fetchGetAllNominasEmpleados = async () => {
+  function handleBackendError(errorMessage) {
+    setBackendError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  function handleBackendAndDBConnectionError(errorMessage) {
+    setBackendOrDDBBConnectionError(true);
+    setErrorMessage(errorMessage);
+  }
+
+  const fetchGetAllNominasEmpleadosAndHandleErrors = async () => {
     try {
       setTableLoading(true);
       const responseGetAllNominasEmpleados = await getAllNominasEmpleados();
-      if (responseGetAllNominasEmpleados.status === 200) {
-        const nominasEmpleadosMap = responseGetAllNominasEmpleados.data.map(
-          (nominasEmpleado) => {
-            return {
-              id: nominasEmpleado.id_nomina_empleado,
-              year: nominasEmpleado.year,
-              mes: nominasEmpleado.mes,
-              tipo_nomina: nominasEmpleado.tipo_nomina,
-              salario_base: nominasEmpleado.salario_base,
-              deducciones: nominasEmpleado.deducciones,
-              bonificacion: nominasEmpleado.bonificacion,
-              salario_bruto: nominasEmpleado.salario_bruto,
-              irpf: nominasEmpleado.irpf,
-              seguridad_social: nominasEmpleado.seguridad_social,
-              anticipos: nominasEmpleado.anticipos,
-              salario_neto: nominasEmpleado.salario_neto,
-              cuenta_bancaria: nominasEmpleado.cuenta_bancaria,
-              id_persona: nominasEmpleado.persona.id_persona,
-              dni: nominasEmpleado.persona.dni,
-            };
-          }
-        );
-        setDataSource(nominasEmpleadosMap);
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllNominasEmpleados
+      );
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible");
+        setDataSource([]);
+        setTableLoading(false);
+        return false;
       }
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGetAllNominasEmpleados.errorMessage
+        );
+        setTableLoading(false);
+        return false;
+      }
+
+      const nominasEmpleadosMap = responseGetAllNominasEmpleados.data.map(
+        (nominaEmpleado) => {
+          console.log("nominaEmpleado: ", nominaEmpleado);
+
+          const { nombre, apellidos, dni } = nominaEmpleado.persona;
+
+          return {
+            id: nominaEmpleado.id_nomina_empleado,
+            year: nominaEmpleado.year,
+            mes: nominaEmpleado.mes,
+            tipo_nomina: nominaEmpleado.tipo_nomina,
+            salario_base: nominaEmpleado.salario_base,
+            deducciones: nominaEmpleado.deducciones,
+            bonificacion: nominaEmpleado.bonificacion,
+            salario_bruto: nominaEmpleado.salario_bruto,
+            irpf: nominaEmpleado.irpf,
+            seguridad_social: nominaEmpleado.seguridad_social,
+            anticipos: nominaEmpleado.anticipos,
+            salario_neto: nominaEmpleado.salario_neto,
+            cuenta_bancaria: nominaEmpleado.cuenta_bancaria,
+            id_persona: nominaEmpleado.persona.id_persona,
+            personaInfo: `${nombre + " " + apellidos} - ${dni}`,
+          };
+        }
+      );
+
+      setDataSource(nominasEmpleadosMap);
       setTableLoading(false);
+
+      return true;
     } catch (error) {
-      console.error("El error es: ", error);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
   useEffect(() => {
-    console.log("Pagina de vacaciones empleados: ");
+    console.log("Pagina de nominas empleados: ");
     console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
-      fetchGetAllNominasEmpleados();
+      fetchGetAllNominasEmpleadosAndHandleErrors();
     }
   }, [authUser]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (vacacionEmpleadoFormUpdated === true) {
-        await fetchGetAllNominasEmpleados();
-        setVacacionEmpleadoFormUpdated(false);
-      } else if (vacacionEmpleadoDelete === true) {
-        await fetchGetAllNominasEmpleados();
-        setVacacionEmpleadoDelete(false);
-      }
-    };
-    fetchData();
-  }, [vacacionEmpleadoFormUpdated, vacacionEmpleadoDelete]);
+    if (nominaEmpleadoFormUpdated || nominaEmpleadoGenerateUpdated) {
+      fetchGetAllNominasEmpleadosAndHandleErrors();
+      setNominaEmpleadoFormUpdated(false);
+      setNominaEmpleadoGenerateUpdated(false);
+      console.log("CARGANDO LA TABLA");
+    }
+  }, [nominaEmpleadoFormUpdated, nominaEmpleadoGenerateUpdated]);
 
-  function vacacionEmpleadoFormUpdatedTrigger() {
-    setVacacionEmpleadoFormUpdated(!vacacionEmpleadoFormUpdated);
+  function nominaEmpleadoGenerateUpdatedTrigger() {
+    setNominaEmpleadoGenerateUpdated(!nominaEmpleadoGenerateUpdated);
   }
 
-  function toggleCreateVacacionEmpleadoForm() {
-    setShowFormCreate(!showFormCreate);
+  function nominaEmpleadoFormUpdatedTrigger() {
+    setNominaEmpleadoFormUpdated(!nominaEmpleadoFormUpdated);
   }
 
-  function toggleUpdateVacacionEmpleadoForm() {
-    setShowFormUpdate(!showFormUpdate);
+  function toggleGenerateNominasEmpleadosModal() {
+    setShowModalGenerate(!showModalGenerate);
   }
 
-  function toggleViewUniqueVacacionEmpleadoForm() {
+  function toggleViewUniqueNominaEmpleadoForm() {
     setShowFormViewUnique(!showFormViewUnique);
   }
 
-  const handleCreateClick = () => {
-    console.log("Añadir nueva vacacion empleado");
-    toggleCreateVacacionEmpleadoForm();
-  };
+  const handleGenerateClick = async () => {
+    console.log("Generar nuevas nominas empleados");
 
-  const handleUpdateClick = (id) => () => {
-    console.log("Boton para actualizar");
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
-    setRowSelected(filaSeleccionada);
-    toggleUpdateVacacionEmpleadoForm();
-  };
+    toggleGenerateNominasEmpleadosModal();
+    setCargandoInformacionNominasEmpleados(true);
 
-  const handleDeleteClick = (id) => () => {
-    console.log("ID:", id);
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
-    console.log("Boton para borrar: ", filaSeleccionada);
-    setIdVacacionEmpleadoSelected(id);
-    setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
-    setFechaInicioAndFinVacacionEmpleadoSelected([
-      filaSeleccionada.fecha_inicio,
-      filaSeleccionada.fecha_fin,
-    ]);
-    setShowDelete(true);
+    try {
+      const responseGenerateNominasEmpleados = await generateNominasEmpleados(); // No esta hecha la funcion
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseGenerateNominasEmpleados
+      );
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseGenerateNominasEmpleados.errorMessage
+        );
+        return;
+      }
+
+      setContadorNominasEmpleadosGeneradas(
+        responseGenerateNominasEmpleados.data
+      );
+      setCargandoInformacionNominasEmpleados(false);
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
+    }
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una vacacion empleado");
+    console.log("Boton para ver una nomina empleado");
+
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleViewUniqueVacacionEmpleadoForm();
+    toggleViewUniqueNominaEmpleadoForm();
   };
 
-  // Handles 'delete' modal ok button
-  const handleModalOk = async () => {
-    const responseDeleteVacacionEmpleado = await deleteVacacionEmpleado(
-      idVacacionEmpleadoSelected
-    );
-    if (responseDeleteVacacionEmpleado.status === 200) {
-      setVacacionEmpleadoDelete(true);
-    }
-    // console.log("Response delete: ", response);
+  const handleModalGenerateNominasEmpleadosOk = () => {
     resetStates();
-  };
-
-  const handleModalClose = () => {
-    resetStates();
+    nominaEmpleadoGenerateUpdatedTrigger();
   };
 
   function resetStates() {
-    setShowFormCreate(false);
-    setShowFormUpdate(false);
+    setShowModalGenerate(false);
     setShowFormViewUnique(false);
-    setShowDelete(false);
-    setIdVacacionEmpleadoSelected(0);
-    setDniPersonaVacacionEmpleadoSelected("");
-    setFechaInicioAndFinVacacionEmpleadoSelected([]);
+
+    setContadorNominasEmpleadosGeneradas(0);
+    setCargandoInformacionNominasEmpleados(false);
+    setAceptarBotonParaVerResultadosNominasEmpleados(false);
   }
 
   const getJson = (apiRef) => {
@@ -334,8 +363,6 @@ export default function NominasEmpleados() { // ESTE ES IGUAL QUE LAS FACTURAS, 
       return row;
     });
 
-    // Stringify with some indentation
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters
     return JSON.stringify(data, null, 2);
   };
 
@@ -437,21 +464,53 @@ export default function NominasEmpleados() { // ESTE ES IGUAL QUE LAS FACTURAS, 
     );
   }
 
-  const renderTableVacacionEmpleado = () => {
-    // Hacer aqui el deleteModal
-
-    function deleteModal() {
-      return (
-        <Antd.Modal
-          title={`¿Desea eliminar las vacaciones asociadas al DNI ${dniPersonaVacacionEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
-          open={showDelete}
-          okText="Aceptar"
-          onOk={handleModalOk}
-          cancelText="Cancelar"
-          onCancel={handleModalClose}
-          centered
-        ></Antd.Modal>
-      );
+  const renderTableNominaEmpleado = () => {
+    function generateNominasEmpleadosModal() {
+      if (!aceptarBotonParaVerResultadosNominasEmpleados) {
+        return (
+          <Antd.Modal
+            title={`Generando nominas...`}
+            open={showModalGenerate}
+            okButtonProps={{ style: { display: "none" } }}
+            cancelButtonProps={{ style: { display: "none" } }}
+            centered
+          >
+            <Antd.Form style={{ marginTop: "5%" }}>
+              {!cargandoInformacionNominasEmpleados && (
+                <div>
+                  <Antd.Button
+                    onClick={() =>
+                      setAceptarBotonParaVerResultadosNominasEmpleados(true)
+                    }
+                  >
+                    {"Ver los resultados"}
+                  </Antd.Button>
+                </div>
+              )}
+            </Antd.Form>
+          </Antd.Modal>
+        );
+      } else if (aceptarBotonParaVerResultadosNominasEmpleados) {
+        return (
+          <Antd.Modal
+            title={`Resultados nominas empleados generadas`}
+            open={showModalGenerate}
+            okText="Aceptar"
+            onOk={handleModalGenerateNominasEmpleadosOk}
+            cancelText="Cancelar"
+            cancelButtonProps={{ style: { display: "none" } }}
+            centered
+          >
+            <div>
+              <Antd.Form style={{ marginTop: "5%" }}>
+                <p>
+                  Nóminas totales generadas: {contadorNominasEmpleadosGeneradas}
+                </p>
+              </Antd.Form>
+            </div>
+          </Antd.Modal>
+        );
+      }
     }
 
     return (
@@ -476,9 +535,9 @@ export default function NominasEmpleados() { // ESTE ES IGUAL QUE LAS FACTURAS, 
           <Button
             color="primary"
             startIcon={<AddIcon />}
-            onClick={handleCreateClick}
+            onClick={handleGenerateClick}
           >
-            Añadir nomina empleado
+            Generar nóminas
           </Button>
 
           <DataGrid
@@ -499,47 +558,34 @@ export default function NominasEmpleados() { // ESTE ES IGUAL QUE LAS FACTURAS, 
               toolbar: CustomToolbar,
             }}
           />
-          {showDelete && deleteModal()}
+
+          {showModalGenerate && generateNominasEmpleadosModal()}
         </Box>
         <Footer />
       </div>
     );
   };
 
-  if (showFormCreate) {
+  if (backendOrDDBBConnectionError === true) {
     return (
-      <>
-        <FormNominasEmpleados
-          toggleForm={toggleCreateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={""}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
-          operationType={"create"}
-        ></FormNominasEmpleados>
-      </>
-    );
-  } else if (showFormUpdate) {
-    return (
-      <>
-        <FormNominasEmpleados
-          toggleForm={toggleUpdateVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
-          operationType={"update"}
-        ></FormNominasEmpleados>
-      </>
+      <div>
+        <ServerConnectionError message={errorMessage} />
+      </div>
     );
   } else if (showFormViewUnique) {
     return (
-      <>
+      <div>
         <FormNominasEmpleados
-          toggleForm={toggleViewUniqueVacacionEmpleadoForm}
-          vacacionEmpleadoDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          toggleForm={toggleViewUniqueNominaEmpleadoForm}
+          facturaClienteDataForm={rowSelected}
+          formUpdateTrigger={nominaEmpleadoFormUpdatedTrigger}
           operationType={"view"}
+          triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
+          triggerErrorMessage={setErrorMessage}
         ></FormNominasEmpleados>
-      </>
+      </div>
     );
   } else {
-    return renderTableVacacionEmpleado();
+    return renderTableNominaEmpleado();
   }
 }

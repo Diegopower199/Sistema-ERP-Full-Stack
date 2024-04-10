@@ -119,9 +119,9 @@ export default function AyudasEmpleados() {
       editable: false,
     },
     {
-      field: "dni",
-      headerName: "Dni persona",
-      width: 180,
+      field: "personaInfo",
+      headerName: "Info persona",
+      width: 250,
       editable: false,
     },
     {
@@ -202,6 +202,8 @@ export default function AyudasEmpleados() {
 
       const ayudasEmpleadosMap = responseGetAllAyudasEmpleados.data.map(
         (ayudaEmpleado) => {
+          const { nombre, apellidos, dni } = ayudaEmpleado.persona;
+
           return {
             id: ayudaEmpleado.id_ayuda_empleado,
             fecha_inicio: ayudaEmpleado.fecha_inicio,
@@ -209,7 +211,7 @@ export default function AyudasEmpleados() {
             valor_asociado: ayudaEmpleado.valor_asociado,
             observacion: ayudaEmpleado.observacion,
             id_persona: ayudaEmpleado.persona.id_persona,
-            dni: ayudaEmpleado.persona.dni,
+            personaInfo: `${nombre + " " + apellidos} - ${dni}`,
             tipo_ayuda: ayudaEmpleado.tipo_ayuda.tipo_ayuda,
             id_tipo_ayuda: ayudaEmpleado.tipo_ayuda.id_tipo_ayuda,
             tipo_estado: ayudaEmpleado.tipo_estado.tipo_estado,
@@ -281,9 +283,10 @@ export default function AyudasEmpleados() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+    const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
     setIdAyudaEmpleadoSelected(id);
-    setDniPersonaAyudaEmpleadoSelected(filaSeleccionada.dni);
+    setDniPersonaAyudaEmpleadoSelected(personaPorPartes[1]);
     setFechaInicioAndFinAyudaEmpleadoSelected([
       filaSeleccionada.fecha_inicio,
       filaSeleccionada.fecha_fin,

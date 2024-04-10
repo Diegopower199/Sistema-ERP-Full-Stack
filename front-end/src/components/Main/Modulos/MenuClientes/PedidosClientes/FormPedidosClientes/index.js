@@ -827,7 +827,7 @@ export default function FormPedidosClientes({
             }
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.id_cliente ? "error" : ""}
-            className={styles.StyleInput}
+            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
             notFoundContent={<span>No hay clientes</span>}
             showSearch={true}
             onSearch={
@@ -864,7 +864,7 @@ export default function FormPedidosClientes({
             }
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.id_persona ? "error" : ""}
-            className={styles.StyleInput}
+            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
             notFoundContent={<span>No hay personas</span>}
             showSearch={true}
             onSearch={
@@ -903,7 +903,7 @@ export default function FormPedidosClientes({
                 }
                 readOnly={operationType === "view" ? true : false}
                 status={requiredFieldsIncomplete.id_tipo_estado ? "error" : ""}
-                className={styles.StyleInput}
+                className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
                 notFoundContent={<span>No hay opciones</span>}
               >
                 {operationType !== "view" &&
@@ -944,7 +944,7 @@ export default function FormPedidosClientes({
                 status={
                   requiredFieldsIncomplete.id_tipo_estado_factura ? "error" : ""
                 }
-                className={styles.StyleInput}
+                className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
                 notFoundContent={<span>No hay opciones</span>}
               >
                 {operationType !== "view" &&

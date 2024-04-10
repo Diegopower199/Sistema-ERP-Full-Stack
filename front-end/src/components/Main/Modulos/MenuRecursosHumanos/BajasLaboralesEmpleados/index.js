@@ -117,15 +117,15 @@ export default function BajasLaboralesEmpleados() {
       editable: false,
     },
     {
-      field: "dni",
-      headerName: "Dni persona",
-      width: 180,
+      field: "personaInfo",
+      headerName: "Info persona",
+      width: 280,
       editable: false,
     },
     {
       field: "motivo_baja",
       headerName: "Motivo baja",
-      width: 180,
+      width: 190,
       editable: false,
     },
     {
@@ -204,13 +204,15 @@ export default function BajasLaboralesEmpleados() {
       const bajasLaboralesEmpleadosMap =
         responseGetAllBajasLaboralesEmpleados.data.map(
           (bajaLaboralEmpleado) => {
+            const { nombre, apellidos, dni } = bajaLaboralEmpleado.persona;
+
             return {
               id: bajaLaboralEmpleado.id_baja_laboral_empleado,
               fecha_inicio: bajaLaboralEmpleado.fecha_inicio,
               fecha_fin: bajaLaboralEmpleado.fecha_fin,
               observacion: bajaLaboralEmpleado.observacion,
               id_persona: bajaLaboralEmpleado.persona.id_persona,
-              dni: bajaLaboralEmpleado.persona.dni,
+              personaInfo: `${nombre + " " + apellidos} - ${dni}`,
               motivo_baja: bajaLaboralEmpleado.motivo_baja.motivo_baja,
               id_motivo_baja: bajaLaboralEmpleado.motivo_baja.id_motivo_baja,
               tipo_estado: bajaLaboralEmpleado.tipo_estado.tipo_estado,
@@ -282,9 +284,10 @@ export default function BajasLaboralesEmpleados() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+    const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
     setIdBajaLaboralEmpleadoSelected(id);
-    setDniPersonaBajaLaboralEmpleadoSelected(filaSeleccionada.dni);
+    setDniPersonaBajaLaboralEmpleadoSelected(personaPorPartes[1]);
     setFechaInicioAndFinBajaLaboralEmpleadoSelected([
       filaSeleccionada.fecha_inicio,
       filaSeleccionada.fecha_fin,

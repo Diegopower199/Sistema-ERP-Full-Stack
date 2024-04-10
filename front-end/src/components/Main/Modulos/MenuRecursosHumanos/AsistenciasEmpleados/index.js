@@ -127,9 +127,9 @@ export default function AsistenciasEmpleados() {
       editable: false,
     },
     {
-      field: "dni",
-      headerName: "Dni persona",
-      width: 180,
+      field: "personaInfo",
+      headerName: "Info persona",
+      width: 280,
       editable: false,
     },
     {
@@ -201,6 +201,7 @@ export default function AsistenciasEmpleados() {
 
       const asistenciasEmpleadosMap =
         responseGetAllAsistenciasEmpleados.data.map((asistenciaEmpleado) => {
+          const { nombre, apellidos, dni } = asistenciaEmpleado.persona;
           return {
             id: asistenciaEmpleado.id_asistencia_empleado,
             fecha_asistencia: asistenciaEmpleado.fecha_asistencia,
@@ -209,7 +210,7 @@ export default function AsistenciasEmpleados() {
             horas_trabajadas_dia: asistenciaEmpleado.horas_trabajadas_dia,
             observacion: asistenciaEmpleado.observacion,
             id_persona: asistenciaEmpleado.persona.id_persona,
-            dni: asistenciaEmpleado.persona.dni,
+            personaInfo: `${nombre + " " + apellidos} - ${dni}`,
           };
         });
       setDataSource(asistenciasEmpleadosMap);
@@ -275,9 +276,10 @@ export default function AsistenciasEmpleados() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+    const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
     setIdAsistenciaEmpleadoSelected(id);
-    setDniPersonaAsistenciaEmpleadoSelected(filaSeleccionada.dni);
+    setDniPersonaAsistenciaEmpleadoSelected(personaPorPartes[1]);
     setFechaAsistenciaEmpleadoSelected(filaSeleccionada.fecha_asistencia);
     setShowDelete(true);
   };

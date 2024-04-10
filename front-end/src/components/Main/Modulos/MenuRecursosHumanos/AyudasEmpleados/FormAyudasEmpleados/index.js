@@ -382,7 +382,7 @@ export default function FormAyudasEmpleados({
             }
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.genero ? "error" : ""}
-            className={styles.StyleInput}
+            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
             notFoundContent={<span>No hay géneros</span>}
           >
             {operationType !== "view" &&
@@ -507,7 +507,7 @@ export default function FormAyudasEmpleados({
             onChange={operationType === "view" ? null : handleTipoPersonaChange}
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.id_tipo_persona ? "error" : ""}
-            className={styles.StyleInput}
+            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
             notFoundContent={<span>No hay opciones</span>}
           >
             {operationType !== "view" &&

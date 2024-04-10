@@ -16,6 +16,7 @@ import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 import { REGEX_DNI } from "@/utils/regexPatterns";
+import { getAllPersonas } from "@/services/PersonaService";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -33,6 +34,7 @@ export default function FormVacacionesEmpleados({
   triggerErrorMessage,
 }) {
   const [tiposEstadosOptions, setTiposEstadosOptions] = useState([]);
+  const [personasOptions, setPersonasOptions] = useState([]);
 
   const [formData, setFormData] = useState({
     fecha_inicio: "",
@@ -42,7 +44,8 @@ export default function FormVacacionesEmpleados({
     dias_solicitados: "0",
     dias_disfrutados: "0",
     observacion: "",
-    dni: "",
+    id_persona: "",
+    personaInfo: "",
     id_tipo_estado: "",
     tipo_estado: "",
   });
@@ -68,7 +71,7 @@ export default function FormVacacionesEmpleados({
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposEstados);
 
-      console.log("errorHandlingInfo: ", errorHandlingInfo)
+      console.log("errorHandlingInfo: ", errorHandlingInfo);
 
       if (errorHandlingInfo.noContent) {
         console.log("No hay contenido disponible");
@@ -90,11 +93,48 @@ export default function FormVacacionesEmpleados({
         setFormData((prevDataState) => {
           return {
             ...prevDataState,
-            ["tipo_estado"]: responseGetAllTiposEstados.data[0].label.toString(),
-            ["id_tipo_estado"]: responseGetAllTiposEstados.data[0].value.toString(),
+            ["tipo_estado"]:
+              responseGetAllTiposEstados.data[0].label.toString(),
+            ["id_tipo_estado"]:
+              responseGetAllTiposEstados.data[0].value.toString(),
           };
         });
       }
+
+      return true;
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
+    }
+  };
+
+  const fetchPersonasOptionsAndHandleErrors = async () => {
+    try {
+      const responseGetAllPersonas = await getAllPersonas();
+
+      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible");
+        setPersonasOptions([]);
+        return false;
+      }
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("ERROR EN EL BACK");
+        handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
+        return false;
+      }
+
+      const optionsPersonas = responseGetAllPersonas.data.map((persona) => {
+        const { id_persona, nombre, apellidos, dni } = persona;
+
+        return {
+          value: id_persona,
+          label: `${nombre + " " + apellidos} - ${dni}`,
+        };
+      });
+
+      setPersonasOptions(optionsPersonas);
 
       return true;
     } catch (error) {
@@ -113,14 +153,24 @@ export default function FormVacacionesEmpleados({
           return;
         }
 
+        noCallErrorsDetected = await fetchPersonasOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
         console.log("operationType: ", operationType, vacacionEmpleadoDataForm);
 
         if (operationType === "update" || operationType === "view") {
-          if (
-            validarFechaYYYYMMDD(vacacionEmpleadoDataForm.fecha_inicio) ===
-              null ||
-            validarFechaYYYYMMDD(vacacionEmpleadoDataForm.fecha_fin) === null
-          ) {
+          const fechaInicioValida = validarFechaYYYYMMDD(
+            vacacionEmpleadoDataForm.fecha_inicio
+          );
+
+          const fechaFinValida = validarFechaYYYYMMDD(
+            vacacionEmpleadoDataForm.fecha_fin
+          );
+
+          if (fechaInicioValida === null || fechaFinValida === null) {
             const fechaInicioFormateada = formatearFechaYYYYMMDD(
               vacacionEmpleadoDataForm.fecha_inicio
             );
@@ -163,8 +213,8 @@ export default function FormVacacionesEmpleados({
       errorMissingFields.fecha_fin = "Por favor, selecciona una fecha de fin";
     }
 
-    if (!formData.dni) {
-      errorMissingFields.dni = "Por favor, ingresa un DNI";
+    if (!formData.id_persona) {
+      errorMissingFields.id_persona = "Por favor, selecciona una persona";
     }
 
     if (!formData.id_tipo_estado) {
@@ -181,10 +231,6 @@ export default function FormVacacionesEmpleados({
 
   const validateFormData = () => {
     const errorForm = {};
-
-    if (!formData.dni.match(REGEX_DNI)) {
-      errorForm.dni = "Por favor, ingresa un DNI válido";
-    }
 
     setFormErrors(errorForm);
     console.log("errorForm", errorForm);
@@ -212,6 +258,31 @@ export default function FormVacacionesEmpleados({
         ["id_tipo_estado"]: value.toString(),
       };
     });
+  };
+
+  const handleSelectPersonaChange = (value, option) => {
+    console.log("La persona seleccionado es: ", value, option);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["id_persona"]: value.toString(),
+        ["personaInfo"]: option?.children.toString(),
+      };
+    });
+  };
+
+  const handleSelectPersonaSearch = (value) => {
+    console.log("Search persona:", value);
+  };
+
+  const filterIncrementalSearch = (input, option) => {
+    const optionLabel = option?.children.toLowerCase();
+
+    const userInput = input.toLowerCase();
+
+    const isOptionIncluded = optionLabel.includes(userInput);
+
+    return isOptionIncluded;
   };
 
   const handleSubmit = async (event) => {
@@ -404,21 +475,39 @@ export default function FormVacacionesEmpleados({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Dni persona">
-          <Antd.Input
-            type="text"
-            name="dni"
-            value={formData.dni}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={
-              requiredFieldsIncomplete.dni || formErrors.dni ? "error" : ""
+        <Antd.Form.Item label="Selecciona una persona">
+          <Antd.Select
+            name="personaInfo"
+            value={
+              formData.personaInfo
+                ? formData.personaInfo
+                : "Selecciona un persona"
             }
+            onChange={
+              operationType === "view" ? null : handleSelectPersonaChange
+            }
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.id_persona ? "error" : ""}
             className={styles.StyleInput}
-          />
-          {(requiredFieldsIncomplete.dni || formErrors.dni) && (
+            notFoundContent={<span>No hay personas</span>}
+            showSearch={true}
+            onSearch={
+              operationType === "view" ? null : handleSelectPersonaSearch
+            }
+            filterOption={
+              operationType === "view" ? null : filterIncrementalSearch
+            }
+          >
+            {operationType !== "view" &&
+              personasOptions.map((persona) => (
+                <Antd.Select.Option key={persona.value} value={persona.value}>
+                  {persona.label}
+                </Antd.Select.Option>
+              ))}
+          </Antd.Select>
+          {requiredFieldsIncomplete.id_persona && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.dni || formErrors.dni}
+              {requiredFieldsIncomplete.id_persona}
             </div>
           )}
         </Antd.Form.Item>

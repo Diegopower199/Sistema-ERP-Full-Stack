@@ -64,10 +64,10 @@ public class AyudaEmpleadoService {
          * }
          */
 
-        String dniPersona = nuevoAyudaEmpleado.getPersona().getDni();
+        int id_persona = nuevoAyudaEmpleado.getPersona().getId_persona();
 
-        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
-                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException("Persona con id " + id_persona + " no encontrado"));
 
         nuevoAyudaEmpleado.setPersona(personaEncontrado);
         personaEncontrado.getAyudasEmpleados().add(nuevoAyudaEmpleado);
@@ -137,10 +137,10 @@ public class AyudaEmpleadoService {
         ayudaEmpleadoExistente.setFecha_fin(cambiosAyudaEmpleado.getFecha_fin());
         ayudaEmpleadoExistente.setValor_asociado(cambiosAyudaEmpleado.getValor_asociado());
 
-        String dniPersona = cambiosAyudaEmpleado.getPersona().getDni();
+        int id_persona = cambiosAyudaEmpleado.getPersona().getId_persona();
 
-        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
-                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException("Persona con id " + id_persona + " no encontrado"));
 
         ayudaEmpleadoExistente.getPersona().getAyudasEmpleados().remove(ayudaEmpleadoExistente);
         ayudaEmpleadoExistente.setPersona(personaEncontrado);

@@ -61,8 +61,8 @@ public class VacacionEmpleadoService {
             throw new RuntimeException("El objeto 'persona' no puede ser null");
         }
 
-        if (nuevoVacacionEmpleado.getPersona().getDni() == null) {
-            throw new RuntimeException("El campo 'dni' no puede ser null");
+        if (nuevoVacacionEmpleado.getPersona().getId_persona() == 0) {
+            throw new RuntimeException("El campo 'id_persona' no puede ser 0");
         }
 
         if (nuevoVacacionEmpleado.getTipo_estado() == null) {
@@ -73,11 +73,10 @@ public class VacacionEmpleadoService {
             throw new RuntimeException("El campo 'id_tipo_estado' no puede ser 0");
         }
 
-      
-        String dniPersona = nuevoVacacionEmpleado.getPersona().getDni();
+        int id_persona = nuevoVacacionEmpleado.getPersona().getId_persona();
 
-        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
-                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException("Persona con id " + id_persona + " no encontrado"));
 
         TipoEstadoModel tipoEstadoAceptada = new TipoEstadoModel();
         tipoEstadoAceptada.setId_tipo_estado(2);
@@ -157,8 +156,8 @@ public class VacacionEmpleadoService {
             throw new RuntimeException("El objeto 'persona' no puede ser null");
         }
 
-        if (cambiosVacacionEmpleado.getPersona().getDni() == null) {
-            throw new RuntimeException("El campo 'dni' no puede ser null");
+        if (cambiosVacacionEmpleado.getPersona().getId_persona() == 0) {
+            throw new RuntimeException("El campo 'id_persona' no puede ser 0");
         }
 
         if (cambiosVacacionEmpleado.getTipo_estado() == null) {
@@ -169,10 +168,10 @@ public class VacacionEmpleadoService {
             throw new RuntimeException("El campo 'id_tipo_estado' no puede ser 0");
         }
 
-        String dniPersona = cambiosVacacionEmpleado.getPersona().getDni();
+        int id_persona = cambiosVacacionEmpleado.getPersona().getId_persona();
 
-        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
-                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException("Persona con id " + id_persona + " no encontrado"));
         vacacionEmpleadoExistente.getPersona().getVacacionesEmpleados().remove(vacacionEmpleadoExistente);
         vacacionEmpleadoExistente.setPersona(personaEncontrado);
         personaEncontrado.getVacacionesEmpleados().add(vacacionEmpleadoExistente);

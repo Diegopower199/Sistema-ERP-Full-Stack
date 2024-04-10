@@ -67,10 +67,10 @@ public class SolicitudEmpleadoService {
          * }
          */
 
-        String dniPersona = nuevoSolicitudEmpleado.getPersona().getDni();
+        int id_persona = nuevoSolicitudEmpleado.getPersona().getId_persona();
 
-        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
-                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException("Persona con id " + id_persona + " no encontrado"));
 
         nuevoSolicitudEmpleado.setPersona(personaEncontrado);
         personaEncontrado.getSolicitudesEmpleados().add(nuevoSolicitudEmpleado);
@@ -146,10 +146,10 @@ public class SolicitudEmpleadoService {
 
         solicitudEmpleadoExistente.setObservacion(cambiosSolicitudEmpleado.getObservacion());
 
-        String dniPersona = cambiosSolicitudEmpleado.getPersona().getDni();
+        int id_persona = cambiosSolicitudEmpleado.getPersona().getId_persona();
 
-        PersonaModel personaEncontrado = personaRepository.findByDni(dniPersona)
-                .orElseThrow(() -> new RuntimeException("Persona con dni " + dniPersona + " no encontrado"));
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException("Persona con id " + id_persona + " no encontrado"));
 
         solicitudEmpleadoExistente.getPersona().getSolicitudesEmpleados().remove(solicitudEmpleadoExistente);
         solicitudEmpleadoExistente.setPersona(personaEncontrado);

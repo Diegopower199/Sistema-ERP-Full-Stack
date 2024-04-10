@@ -36,7 +36,7 @@ export const saveVacacionEmpleado = async (data) => {
       fecha_fin: data.fecha_fin,
       observacion: asignarNullSiCadenaVacia(data.observacion),
       persona: {
-        dni: data.dni,
+        id_persona: parseInt(data.id_persona),
       },
       tipo_estado: {
         id_tipo_estado: parseInt(data.id_tipo_estado),
@@ -99,7 +99,7 @@ export const updateVacacionEmpleado = async (id, data) => {
       fecha_fin: data.fecha_fin,
       observacion: asignarNullSiCadenaVacia(data.observacion),
       persona: {
-        dni: data.dni,
+        id_persona: parseInt(data.id_persona),
       },
       tipo_estado: {
         id_tipo_estado: parseInt(data.id_tipo_estado),

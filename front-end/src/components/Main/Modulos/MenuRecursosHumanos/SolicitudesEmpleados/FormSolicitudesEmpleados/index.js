@@ -15,7 +15,7 @@ import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
-import { REGEX_DNI } from "@/utils/regexPatterns";
+import { getAllPersonas } from "@/services/PersonaService";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -34,11 +34,13 @@ export default function FormSolicitudesEmpleados({
 }) {
   const [tiposEstadosOptions, setTiposEstadosOptions] = useState([]);
   const [tiposSolicitudesOptions, setTiposSolicitudesOptions] = useState([]);
+  const [personasOptions, setPersonasOptions] = useState([]);
 
   const [formData, setFormData] = useState({
     fecha_solicitud: "",
     observacion: "",
-    dni: "",
+    id_persona: "",
+    personaInfo: "",
     id_tipo_solicitud: "",
     tipo_solicitud: "",
     id_tipo_estado: "",
@@ -91,7 +93,6 @@ export default function FormSolicitudesEmpleados({
 
   const fetchTiposEstadosOptionsAndHandleErrors = async () => {
     try {
-      debugger;
       const responseGetAllTiposEstados = await getAllTiposEstados();
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposEstados);
@@ -129,6 +130,41 @@ export default function FormSolicitudesEmpleados({
     }
   };
 
+  const fetchPersonasOptionsAndHandleErrors = async () => {
+    try {
+      const responseGetAllPersonas = await getAllPersonas();
+
+      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible");
+        setPersonasOptions([]);
+        return false;
+      }
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("ERROR EN EL BACK");
+        handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
+        return false;
+      }
+
+      const optionsPersonas = responseGetAllPersonas.data.map((persona) => {
+        const { id_persona, nombre, apellidos, dni } = persona;
+
+        return {
+          value: id_persona,
+          label: `${nombre + " " + apellidos} - ${dni}`,
+        };
+      });
+
+      setPersonasOptions(optionsPersonas);
+
+      return true;
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
+    }
+  };
+
   useEffect(() => {
     let noCallErrorsDetected = false;
 
@@ -147,13 +183,20 @@ export default function FormSolicitudesEmpleados({
           return;
         }
 
+        noCallErrorsDetected = await fetchPersonasOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
         console.log("operationType: ", operationType);
 
         if (operationType === "update" || operationType === "view") {
-          if (
-            validarFechaYYYYMMDD(solicitudEmpleadoDataForm.fecha_solicitud) ===
-            null
-          ) {
+          const fechaSolicitudValida = validarFechaYYYYMMDD(
+            solicitudEmpleadoDataForm.fecha_solicitud
+          );
+
+          if (fechaSolicitudValida === null) {
             const fechaSolicitudFormateada = formatearFechaYYYYMMDD(
               solicitudEmpleadoDataForm.fecha_solicitud
             );
@@ -185,8 +228,8 @@ export default function FormSolicitudesEmpleados({
       errorMissingFields.fecha_solicitud = "Por favor, ingresa una fecha";
     }
 
-    if (!formData.dni) {
-      errorMissingFields.dni = "Por favor, ingresa un dni";
+    if (!formData.id_persona) {
+      errorMissingFields.id_persona = "Por favor, selecciona una persona";
     }
 
     if (!formData.id_tipo_solicitud) {
@@ -210,10 +253,6 @@ export default function FormSolicitudesEmpleados({
 
   const validateFormData = () => {
     const errorForm = {};
-
-    if (!formData.dni.match(REGEX_DNI)) {
-      errorForm.dni = "Por favor, ingresa un DNI válido";
-    }
 
     setFormErrors(errorForm);
     console.log("errorForm", errorForm);
@@ -252,6 +291,31 @@ export default function FormSolicitudesEmpleados({
         ["id_tipo_estado"]: value.toString(),
       };
     });
+  };
+
+  const handleSelectPersonaChange = (value, option) => {
+    console.log("La persona seleccionado es: ", value, option);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["id_persona"]: value.toString(),
+        ["personaInfo"]: option?.children.toString(),
+      };
+    });
+  };
+
+  const handleSelectPersonaSearch = (value) => {
+    console.log("Search persona:", value);
+  };
+
+  const filterIncrementalSearch = (input, option) => {
+    const optionLabel = option?.children.toLowerCase();
+
+    const userInput = input.toLowerCase();
+
+    const isOptionIncluded = optionLabel.includes(userInput);
+
+    return isOptionIncluded;
   };
 
   const handleSubmit = async (event) => {
@@ -361,21 +425,39 @@ export default function FormSolicitudesEmpleados({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Dni persona">
-          <Antd.Input
-            type="text"
-            name="dni"
-            value={formData.dni}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={
-              requiredFieldsIncomplete.dni || formErrors.dni ? "error" : ""
+        <Antd.Form.Item label="Selecciona una persona">
+          <Antd.Select
+            name="personaInfo"
+            value={
+              formData.personaInfo
+                ? formData.personaInfo
+                : "Selecciona un persona"
             }
+            onChange={
+              operationType === "view" ? null : handleSelectPersonaChange
+            }
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.id_persona ? "error" : ""}
             className={styles.StyleInput}
-          />
-          {(requiredFieldsIncomplete.dni || formErrors.dni) && (
+            notFoundContent={<span>No hay personas</span>}
+            showSearch={true}
+            onSearch={
+              operationType === "view" ? null : handleSelectPersonaSearch
+            }
+            filterOption={
+              operationType === "view" ? null : filterIncrementalSearch
+            }
+          >
+            {operationType !== "view" &&
+              personasOptions.map((persona) => (
+                <Antd.Select.Option key={persona.value} value={persona.value}>
+                  {persona.label}
+                </Antd.Select.Option>
+              ))}
+          </Antd.Select>
+          {requiredFieldsIncomplete.id_persona && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.dni || formErrors.dni}
+              {requiredFieldsIncomplete.id_persona}
             </div>
           )}
         </Antd.Form.Item>

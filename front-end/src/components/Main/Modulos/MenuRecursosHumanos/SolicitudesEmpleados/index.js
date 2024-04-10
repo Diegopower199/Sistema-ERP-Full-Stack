@@ -103,14 +103,14 @@ export default function SolicitudesEmpleados() {
     },
     {
       field: "observacion",
-      headerName: "Observacion",
+      headerName: "Observación",
       width: 180,
       editable: false,
     },
     {
-      field: "dni",
-      headerName: "Dni persona",
-      width: 180,
+      field: "personaInfo",
+      headerName: "Info persona",
+      width: 280,
       editable: false,
     },
     {
@@ -178,7 +178,7 @@ export default function SolicitudesEmpleados() {
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
+        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -194,12 +194,14 @@ export default function SolicitudesEmpleados() {
 
       const solicitudesEmpleadosMap =
         responseGetAllSolicitudesEmpleados.data.map((solicitudEmpleado) => {
+          const { nombre, apellidos, dni } = solicitudEmpleado.persona;
+
           return {
             id: solicitudEmpleado.id_solicitud_empleado,
             fecha_solicitud: solicitudEmpleado.fecha_solicitud,
             observacion: solicitudEmpleado.observacion,
             id_persona: solicitudEmpleado.persona.id_persona,
-            dni: solicitudEmpleado.persona.dni,
+            personaInfo: `${nombre + " " + apellidos} - ${dni}`,
             tipo_solicitud: solicitudEmpleado.tipo_solicitud.tipo_solicitud,
             id_tipo_solicitud:
               solicitudEmpleado.tipo_solicitud.id_tipo_solicitud,
@@ -271,10 +273,11 @@ export default function SolicitudesEmpleados() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+    const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
     setIdSolicitudEmpleadoSelected(id);
     setFechaSolicitudEmpleadoSelected(filaSeleccionada.fecha_solicitud);
-    setDniPersonaSolicitudEmpleadoSelected(filaSeleccionada.dni);
+    setDniPersonaSolicitudEmpleadoSelected(personaPorPartes[1]);
     setShowDelete(true);
   };
 

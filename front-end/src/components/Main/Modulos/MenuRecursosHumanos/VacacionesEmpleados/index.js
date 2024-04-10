@@ -146,9 +146,9 @@ export default function VacacionesEmpleados() {
       editable: false,
     },
     {
-      field: "dni",
-      headerName: "Dni persona",
-      width: 180,
+      field: "personaInfo",
+      headerName: "Info persona",
+      width: 280,
       editable: false,
     },
     {
@@ -226,6 +226,8 @@ export default function VacacionesEmpleados() {
 
       const vacacionesEmpleadosMap = responseGetAllVacacionesEmpleados.data.map(
         (vacacionEmpleado) => {
+          const { nombre, apellidos, dni } = vacacionEmpleado.persona;
+
           return {
             id: vacacionEmpleado.id_vacacion_empleado,
             fecha_inicio: vacacionEmpleado.fecha_inicio,
@@ -236,7 +238,7 @@ export default function VacacionesEmpleados() {
             dias_disfrutados: vacacionEmpleado.dias_disfrutados,
             observacion: vacacionEmpleado.observacion,
             id_persona: vacacionEmpleado.persona.id_persona,
-            dni: vacacionEmpleado.persona.dni,
+            personaInfo: `${nombre + " " + apellidos} - ${dni}`,
             tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
             id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
           };
@@ -310,9 +312,10 @@ export default function VacacionesEmpleados() {
     console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     console.log("Boton para borrar: ", filaSeleccionada);
+    const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
     setIdVacacionEmpleadoSelected(id);
-    setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
+    setDniPersonaVacacionEmpleadoSelected(personaPorPartes[1]);
     setFechaInicioAndFinVacacionEmpleadoSelected([
       filaSeleccionada.fecha_inicio,
       filaSeleccionada.fecha_fin,

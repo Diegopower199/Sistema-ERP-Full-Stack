@@ -159,7 +159,7 @@ export default function PedidosClientes() {
     },
     {
       field: "personaInfo",
-      headerName: "Persona info",
+      headerName: "Info persona",
       width: 280,
       editable: false,
     },

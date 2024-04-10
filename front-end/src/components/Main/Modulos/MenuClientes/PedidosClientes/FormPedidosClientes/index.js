@@ -1,9 +1,4 @@
 import React, { useEffect, useState } from "react";
-import {
-  REGEX_DNI,
-  REGEX_NIF_PERSONAS_FISICAS,
-  REGEX_NIF_PERSONAS_JURIDICAS,
-} from "@/utils/regexPatterns";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
 import {

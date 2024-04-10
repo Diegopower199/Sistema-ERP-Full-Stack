@@ -51,14 +51,41 @@ public class PersonaService {
         String numero_telefono = nuevoPersona.getNumero_telefono();
         String correo_electronico = nuevoPersona.getCorreo_electronico();
 
-        // Verificar si el nombre de usuario ya existe en la base de datos
+        if (numero_empleado == 0) {
+            throw new RuntimeException("El campo 'numero_empleado' no puede ser 0");
+        }
 
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
+        if (nombre == null) {
+            throw new RuntimeException("El campo 'nombre' no puede ser null");
+        }
+
+        if (apellidos == null) {
+            throw new RuntimeException("El campo 'apellidos' no puede ser null");
+        }
+
+        if (genero == null) {
+            throw new RuntimeException("El campo 'genero' no puede ser null");
+        }
+
+        if (fecha_nacimiento == null) {
+            throw new RuntimeException("El campo 'fecha_nacimiento' no puede ser null");
+        }
+
+        if (dni == null) {
+            throw new RuntimeException("El campo 'dni' no puede ser null");
+        }
+
+        if (direccion == null) {
+            throw new RuntimeException("El campo 'direccion' no puede ser null");
+        }
+
+        if (numero_telefono == null) {
+            throw new RuntimeException("El campo 'numero_telefono' no puede ser null");
+        }
+
+        if (correo_electronico == null) {
+            throw new RuntimeException("El campo 'correo_electronico' no puede ser null");
+        }
 
         if (personaRepository.existsByNumero_empleado(numero_empleado)) {
             throw new RuntimeException("El numero empleado ya existe para una persona");
@@ -87,11 +114,6 @@ public class PersonaService {
         if (!validarNumeroTelefono(numero_telefono)) {
             throw new RuntimeException("El número de teléfono no tene un formato válido");
         }
-
-        /*
-         * String telefono1 = "34612345678";
-         * String telefono2 = "34987654321";
-         */
 
         int id_tipo_persona = nuevoPersona.getTipo_persona().getId_tipo_persona();
 

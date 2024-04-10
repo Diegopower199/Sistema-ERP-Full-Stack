@@ -35,7 +35,7 @@ export const saveSolicitudEmpleado = async (data) => {
       fecha_solicitud: data.fecha_solicitud,
       observacion: asignarNullSiCadenaVacia(data.observacion),
       persona: {
-        dni: data.dni,
+        id_persona: parseInt(data.id_persona),
       },
       tipo_solicitud: {
         id_tipo_solicitud: parseInt(data.id_tipo_solicitud),
@@ -99,7 +99,7 @@ export const updateSolicitudEmpleado = async (id, data) => {
       fecha_solicitud: data.fecha_solicitud,
       observacion: asignarNullSiCadenaVacia(data.observacion),
       persona: {
-        dni: data.dni,
+        id_persona: parseInt(data.id_persona),
       },
       tipo_solicitud: {
         id_tipo_solicitud: parseInt(data.id_tipo_solicitud),

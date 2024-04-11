@@ -1,6 +1,7 @@
 package tfg.backend.models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class PersonaModel implements Serializable {
     private String genero;
 
     @Column(name = "fecha_nacimiento", nullable = false)
-    private String fecha_nacimiento;
+    private LocalDate fecha_nacimiento;
 
     @Column(name = "dni", unique = true, nullable = false)
     private String dni;

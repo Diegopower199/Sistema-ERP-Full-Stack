@@ -1,11 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { savePersona, updatePersona } from "@/services/PersonaService";
-import { getAllTiposPersonas } from "@/services/TipoPersonaService";
-import {
-  REGEX_DNI,
-  REGEX_EMAIL,
-  REGEX_TELEFONO_CON_PREFIJO,
-} from "@/utils/regexPatterns";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
 import {
@@ -16,6 +9,10 @@ import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import {
+  savePagoFacturaCliente,
+  updatePagoFacturaCliente,
+} from "@/services/PagoFacturaClienteService";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -32,31 +29,22 @@ export default function FormPagosFacturasClientes({
   triggerBackendOrDDBBConnectionError,
   triggerErrorMessage,
 }) {
-  const generoOptions = [
+  const importePagadoOptions = [
     {
       value: 1,
-      label: "Masculino",
+      label: "Efectivo",
     },
     {
       value: 2,
-      label: "Femenino",
+      label: "Tarjeta",
     },
   ];
 
-  const [tiposPersonasOptions, setTiposPersonasOptions] = useState([]);
-
   const [formData, setFormData] = useState({
-    numero_empleado: "",
-    nombre: "",
-    apellidos: "",
-    genero: "",
-    fecha_nacimiento: "",
-    dni: "",
-    direccion: "",
-    numero_telefono: "34",
-    correo_electronico: "",
-    id_tipo_persona: "",
-    tipo_persona: "",
+    fecha_pago_realizada: "",
+    importe_pagado: "",
+    metodo_pago: "",
+    id_factura_cliente: "",
   });
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
@@ -74,57 +62,22 @@ export default function FormPagosFacturasClientes({
     triggerErrorMessage(errorMessage);
   }
 
-  const fetchTiposPersonasOptionsAndHandleErrors = async () => {
-    try {
-      const responseGetAllTiposPersonas = await getAllTiposPersonas();
-
-      errorHandlingInfo = checkResponseForErrors(responseGetAllTiposPersonas);
-
-      if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
-        setTiposPersonasOptions([]);
-        return false;
-      }
-
-      if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(
-          responseGetAllTiposPersonas.errorMessage
-        );
-        return false;
-      }
-
-      setTiposPersonasOptions(responseGetAllTiposPersonas.data);
-
-      return true;
-    } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
-    }
-  };
-
   useEffect(() => {
-    let noCallErrorsDetected = false;
-
     const fetchData = async () => {
       try {
-        noCallErrorsDetected = await fetchTiposPersonasOptionsAndHandleErrors();
-
-        if (noCallErrorsDetected === false) {
-          return;
-        }
-
-        console.log("operationType: ", operationType);
-
         if (operationType === "update" || operationType === "view") {
-          if (validarFechaYYYYMMDD(pagoFacturaClienteDataForm.fecha_nacimiento) === null) {
-            const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
-              pagoFacturaClienteDataForm.fecha_nacimiento
-            );
+          const fechaPagoRealizadoValida = validarFechaYYYYMMDD(
+            pagoFacturaClienteDataForm.fecha_pago_realizada
+          );
 
-            console.log("fechaFormateada: ", fechaNacimientoFormateada);
+          if (fechaPagoRealizadoValida === null) {
+            const fechaPagoRealizadoFormateada = formatearFechaYYYYMMDD(
+              pagoFacturaClienteDataForm.fecha_pago_realizada
+            );
 
             setFormData(() => ({
               ...pagoFacturaClienteDataForm,
-              fecha_nacimiento: fechaNacimientoFormateada,
+              fecha_pago_realizada: fechaPagoRealizadoFormateada,
             }));
           } else {
             setFormData(() => ({
@@ -143,49 +96,23 @@ export default function FormPagosFacturasClientes({
   const validateRequiredFields = () => {
     const errorMissingFields = {};
 
-    if (!formData.numero_empleado) {
-      errorMissingFields.numero_empleado =
-        "Por favor, ingresa un numero empleado";
+    if (!formData.fecha_pago_realizada) {
+      errorMissingFields.fecha_pago_realizada =
+        "Por favor, ingresa la fecha del pago realizado";
     }
 
-    if (!formData.nombre) {
-      errorMissingFields.nombre = "Por favor, ingresa un nombre";
+    if (!formData.importe_pagado) {
+      errorMissingFields.importe_pagado =
+        "Por favor, ingresa el importe pagado";
     }
 
-    if (!formData.apellidos) {
-      errorMissingFields.apellidos = "Por favor, ingresa un apellido";
+    if (!formData.metodo_pago) {
+      errorMissingFields.metodo_pago = "Por favor, ingresa el metodo de pago";
     }
 
-    if (!formData.genero) {
-      errorMissingFields.genero = "Por favor, selecciona un género";
-    }
-
-    if (!formData.fecha_nacimiento) {
-      errorMissingFields.fecha_nacimiento =
-        "Por favor, selecciona una fecha de nacimiento";
-    }
-
-    if (!formData.dni) {
-      errorMissingFields.dni = "Por favor, ingresa un DNI";
-    }
-
-    if (!formData.direccion) {
-      errorMissingFields.direccion = "Por favor, ingresa una direccion";
-    }
-
-    if (!formData.numero_telefono || formData.numero_telefono === "34") {
-      errorMissingFields.numero_telefono =
-        "Por favor, ingresa un numero de telefono";
-    }
-
-    if (!formData.correo_electronico) {
-      errorMissingFields.correo_electronico =
-        "Por favor, ingresa un correo electronico";
-    }
-
-    if (!formData.id_tipo_persona) {
-      errorMissingFields.id_tipo_persona =
-        "Por favor, selecciona un tipo de persona";
+    if (!formData.id_factura_cliente) {
+      errorMissingFields.id_factura_cliente =
+        "Por favor, ingresa el id de la factura";
     }
 
     setRequiredFieldsIncomplete(errorMissingFields);
@@ -196,19 +123,6 @@ export default function FormPagosFacturasClientes({
   const validateFormData = () => {
     const errorForm = {};
 
-    if (!formData.dni.match(REGEX_DNI)) {
-      errorForm.dni = "Por favor, ingresa un DNI válido";
-    }
-
-    if (!formData.numero_telefono.match(REGEX_TELEFONO_CON_PREFIJO)) {
-      errorForm.numero_telefono =
-        "Por favor, ingresa un numero de telefono válido";
-    }
-
-    if (!formData.correo_electronico.match(REGEX_EMAIL)) {
-      errorForm.correo_electronico = "Por favor, ingresa un email válido";
-    }
-
     setFormErrors(errorForm);
     console.log("errorForm: ", errorForm);
 
@@ -216,42 +130,22 @@ export default function FormPagosFacturasClientes({
   };
 
   const handleFormChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    console.log("Name: ", name, " Value: ", value);
-    if (name === "numero_telefono") {
-      const nuevoValor = value.startsWith("34") ? value : "34" + value;
+    const { name, value } = event.target;
 
-      setFormData((prevFormValue) => ({
-        ...prevFormValue,
-        [name]: nuevoValor,
-      }));
-    } else {
-      setFormData((prevDataState) => {
-        return {
-          ...prevDataState,
-          [name]: value,
-        };
-      });
-    }
-  };
-
-  const handleSelectGeneroChange = (value, option) => {
-    console.log("El genero es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
-        ["genero"]: option?.children.toString(),
+        [name]: value,
       };
     });
   };
 
-  const handleTipoPersonaChange = (value, option) => {
-    console.log("El tipo persona es: ", value, option);
+  const handleSelectImportePagadoChange = (value, option) => {
+    console.log("El importe pagado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
-        ["tipo_persona"]: option?.children.toString(),
-        ["id_tipo_persona"]: value.toString(),
+        ["metodo_pago"]: option?.children.toString(),
       };
     });
   };
@@ -281,15 +175,21 @@ export default function FormPagosFacturasClientes({
 
     try {
       if (operationType === "create") {
-        const responseCreatePersona = await savePersona(formData);
+        const responseCreatePagoFacturaCliente = await savePagoFacturaCliente(
+          formData
+        );
 
-        errorHandlingInfo = checkResponseForErrors(responseCreatePersona);
+        errorHandlingInfo = checkResponseForErrors(
+          responseCreatePagoFacturaCliente
+        );
 
         if (errorHandlingInfo.backendError) {
-          handleBackendError(responseCreatePersona.errorMessage);
+          handleBackendError(responseCreatePagoFacturaCliente.errorMessage);
           return;
         } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
-          handleBackendAndDBConnectionError(responseCreatePersona.errorMessage);
+          handleBackendAndDBConnectionError(
+            responseCreatePagoFacturaCliente.errorMessage
+          );
           return;
         }
 
@@ -297,18 +197,22 @@ export default function FormPagosFacturasClientes({
         toggleForm();
         formUpdateTrigger();
       } else if (operationType === "update") {
-        const responseUpdatePersona = await updatePersona(
+        const responseUpdatePagoFacturaCliente = await updatePagoFacturaCliente(
           formData.id,
           formData
         );
 
-        errorHandlingInfo = checkResponseForErrors(responseUpdatePersona);
+        errorHandlingInfo = checkResponseForErrors(
+          responseUpdatePagoFacturaCliente
+        );
 
         if (errorHandlingInfo.backendError) {
-          handleBackendError(responseUpdatePersona.errorMessage);
+          handleBackendError(responseUpdatePagoFacturaCliente.errorMessage);
           return;
         } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
-          handleBackendAndDBConnectionError(responseUpdatePersona.errorMessage);
+          handleBackendAndDBConnectionError(
+            responseUpdatePagoFacturaCliente.errorMessage
+          );
           return;
         }
 
@@ -322,210 +226,99 @@ export default function FormPagosFacturasClientes({
   };
 
   return (
-    <>
+    <div>
       <Header />
       <Antd.Form>
-        <Antd.Form.Item label="Numero empleado">
-          <Antd.Input
-            type="number"
-            name="numero_empleado"
-            value={formData.numero_empleado}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.numero_empleado ? "error" : ""}
-            className={styles.StyleInput}
-          />
-          {requiredFieldsIncomplete.numero_empleado && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.numero_empleado}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Nombre">
-          <Antd.Input
-            type="text"
-            name="nombre"
-            value={formData.nombre}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.nombre ? "error" : ""}
-            className={styles.StyleInput}
-          />
-          {requiredFieldsIncomplete.nombre && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.nombre}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Apellidos">
-          <Antd.Input
-            type="text"
-            name="apellidos"
-            value={formData.apellidos}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.apellidos ? "error" : ""}
-            className={styles.StyleInput}
-          />
-          {requiredFieldsIncomplete.apellidos && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.apellidos}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Genero">
-          <Antd.Select
-            name="genero"
-            value={formData.genero ? formData.genero : "Selecciona un género"}
-            onChange={
-              operationType === "view" ? null : handleSelectGeneroChange
-            }
-            readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.genero ? "error" : ""}
-            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
-            notFoundContent={<span>No hay géneros</span>}
-          >
-            {operationType !== "view" &&
-              generoOptions.map((genero) => (
-                <Antd.Select.Option key={genero.value} value={genero.value}>
-                  {genero.label}
-                </Antd.Select.Option>
-              ))}
-          </Antd.Select>
-          {requiredFieldsIncomplete.genero && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.genero}
-            </div>
-          )}
-        </Antd.Form.Item>
-
-        <Antd.Form.Item label=" Fecha nacimiento">
+        <Antd.Form.Item label="Fecha pago realizada">
           <Antd.Input
             type="date"
-            name="fecha_nacimiento"
-            value={formData.fecha_nacimiento}
+            name="fecha_pago_realizada"
+            value={formData.fecha_pago_realizada}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.fecha_nacimiento ? "error" : ""}
+            status={
+              requiredFieldsIncomplete.fecha_pago_realizada ? "error" : ""
+            }
             className={styles.StyleInput}
           />
-          {requiredFieldsIncomplete.fecha_nacimiento && (
+          {requiredFieldsIncomplete.fecha_pago_realizada && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.fecha_nacimiento}
+              {requiredFieldsIncomplete.fecha_pago_realizada}
             </div>
           )}
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Dni">
+        <Antd.Form.Item label="Importe pagado">
           <Antd.Input
-            type="text"
-            name="dni"
-            value={formData.dni}
+            type="number"
+            name="importe_pagado"
+            value={formData.importe_pagado}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={
-              requiredFieldsIncomplete.dni || formErrors.dni ? "error" : ""
-            }
+            status={requiredFieldsIncomplete.importe_pagado ? "error" : ""}
             className={styles.StyleInput}
           />
-          {(requiredFieldsIncomplete.dni || formErrors.dni) && (
+          {requiredFieldsIncomplete.importe_pagado && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.dni || formErrors.dni}
+              {requiredFieldsIncomplete.importe_pagado}
             </div>
           )}
         </Antd.Form.Item>
-        <Antd.Form.Item label="Direccion">
-          <Antd.Input
-            type="text"
-            name="direccion"
-            value={formData.direccion}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.direccion ? "error" : ""}
-            className={styles.StyleInput}
-          />
-          {requiredFieldsIncomplete.direccion && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.direccion}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Numero telefono">
-          <Antd.Input
-            type="text"
-            name="numero_telefono"
-            value={formData.numero_telefono}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={
-              requiredFieldsIncomplete.numero_telefono ||
-              formErrors.numero_telefono
-                ? "error"
-                : ""
-            }
-            className={styles.StyleInput}
-          />
-          {(requiredFieldsIncomplete.numero_telefono ||
-            formErrors.numero_telefono) && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.numero_telefono ||
-                formErrors.numero_telefono}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Correo electronico">
-          <Antd.Input
-            type="text"
-            name="correo_electronico"
-            value={formData.correo_electronico}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={
-              requiredFieldsIncomplete.correo_electronico ||
-              formErrors.correo_electronico
-                ? "error"
-                : ""
-            }
-            className={styles.StyleInput}
-          />
-          {(requiredFieldsIncomplete.correo_electronico ||
-            formErrors.correo_electronico) && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.correo_electronico ||
-                formErrors.correo_electronico}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Selecciona un tipo de persona">
+
+        <Antd.Form.Item label="Método de pago">
           <Antd.Select
-            name="tipo_persona"
+            name="metodo_pago"
             value={
-              formData.tipo_persona
-                ? formData.tipo_persona
-                : "Selecciona un tipo de persona"
+              formData.metodo_pago
+                ? formData.metodo_pago
+                : "Selecciona un metodo de pago"
             }
-            onChange={operationType === "view" ? null : handleTipoPersonaChange}
+            onChange={
+              operationType === "view" ? null : handleSelectImportePagadoChange
+            }
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.id_tipo_persona ? "error" : ""}
-            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
-            notFoundContent={<span>No hay opciones</span>}
+            status={requiredFieldsIncomplete.metodo_pago ? "error" : ""}
+            className={
+              operationType !== "view"
+                ? styles.StyleSelect
+                : styles.StyleSelectDisabled
+            }
+            notFoundContent={<span>No hay opciones de método de pagos</span>}
           >
             {operationType !== "view" &&
-              tiposPersonasOptions.map((tipoPersona) => (
+              importePagadoOptions.map((importePagar) => (
                 <Antd.Select.Option
-                  key={tipoPersona.value}
-                  value={tipoPersona.value}
+                  key={importePagar.value}
+                  value={importePagar.value}
                 >
-                  {tipoPersona.label}
+                  {importePagar.label}
                 </Antd.Select.Option>
               ))}
           </Antd.Select>
-          {requiredFieldsIncomplete.id_tipo_persona && (
+          {requiredFieldsIncomplete.metodo_pago && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.id_tipo_persona}
+              {requiredFieldsIncomplete.metodo_pago}
             </div>
           )}
         </Antd.Form.Item>
+
+        <Antd.Form.Item label="ID factura cliente">
+          <Antd.Input
+            type="text"
+            name="id_factura_cliente"
+            value={formData.id_factura_cliente}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.id_factura_cliente ? "error" : ""}
+            className={styles.StyleInput}
+          />
+          {requiredFieldsIncomplete.id_factura_cliente && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.id_factura_cliente}
+            </div>
+          )}
+        </Antd.Form.Item>
+
         {errorMessage.length !== 0 && backendError && (
           <div>
             <p className={styles.BackendError}>
@@ -547,6 +340,6 @@ export default function FormPagosFacturasClientes({
         )}
       </Antd.Form>
       <Footer />
-    </>
+    </div>
   );
 }

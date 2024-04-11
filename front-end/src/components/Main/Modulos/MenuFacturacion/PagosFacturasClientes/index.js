@@ -487,7 +487,7 @@ export default function PagosFacturasClientes() {
             startIcon={<AddIcon />}
             onClick={handleCreateClick}
           >
-            Añadir vacacion empleado
+            Añadir pago factura cliente
           </Button>
 
           <DataGrid

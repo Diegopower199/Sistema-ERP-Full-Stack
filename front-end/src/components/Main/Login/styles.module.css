@@ -29,6 +29,7 @@ input.inputEmailUsuarioPassword {
   padding: 10px;
   border: none;
   box-sizing: border-box;
+  color: black
 }
 
 div.contenedorInput {
@@ -74,11 +75,6 @@ link.linkPaginaLogin {
   /*:hover {
       color: cadetblue;
     }*/
-}
-
-p.errorMessage {
-  color: red;
-  font-weight: 600;
 }
 
 .errorMessage {

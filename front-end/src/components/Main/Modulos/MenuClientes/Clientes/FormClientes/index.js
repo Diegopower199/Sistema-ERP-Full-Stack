@@ -315,7 +315,7 @@ export default function FormClientes({
       <Header />
       <Antd.Form>
         {operationType === "create" && (
-          <>
+          <div>
             <Antd.Form.Item label="Seleccione su tipo de cliente">
               {options.map((option) => (
                 <Antd.Radio
@@ -332,7 +332,7 @@ export default function FormClientes({
                 </div>
               )}
             </Antd.Form.Item>
-          </>
+          </div>
         )}
 
         <Antd.Form.Item label="NIF">
@@ -498,9 +498,9 @@ export default function FormClientes({
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.provincia ? "error" : ""}
             className={
-              operationType === "view"
-                ? styles.SelectDisabled
-                : styles.SelectEnabled
+              operationType !== "view"
+                ? styles.StyleSelect
+                : styles.StyleSelectDisabled
             }
             notFoundContent={<span>No hay provincia</span>}
             showSearch={true}
@@ -534,9 +534,9 @@ export default function FormClientes({
             }
             status={requiredFieldsIncomplete.ciudad ? "error" : ""}
             className={
-              operationType === "view"
-                ? styles.SelectDisabled
-                : styles.StyleInput
+              operationType !== "view"
+                ? styles.StyleSelect
+                : styles.StyleSelectDisabled
             }
             notFoundContent={<span>No hay ciudades</span>}
             showSearch={true}

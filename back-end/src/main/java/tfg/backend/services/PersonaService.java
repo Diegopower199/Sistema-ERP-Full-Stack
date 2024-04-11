@@ -1,5 +1,6 @@
 package tfg.backend.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class PersonaService {
         String nombre = nuevoPersona.getNombre();
         String apellidos = nuevoPersona.getApellidos();
         String genero = nuevoPersona.getGenero();
-        String fecha_nacimiento = nuevoPersona.getFecha_nacimiento();
+        LocalDate fecha_nacimiento = nuevoPersona.getFecha_nacimiento();
         String dni = nuevoPersona.getDni();
         String direccion = nuevoPersona.getDireccion();
         String numero_telefono = nuevoPersona.getNumero_telefono();

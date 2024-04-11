@@ -322,7 +322,7 @@ export default function FormAsistenciasEmpleados({
   };
 
   return (
-    <>
+    <div>
       <Header />
       <Antd.Form>
         <Antd.Form.Item label="Numero empleado">
@@ -382,7 +382,11 @@ export default function FormAsistenciasEmpleados({
             }
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.genero ? "error" : ""}
-            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
+            className={
+              operationType !== "view"
+                ? styles.StyleSelect
+                : styles.StyleSelectDisabled
+            }
             notFoundContent={<span>No hay géneros</span>}
           >
             {operationType !== "view" &&
@@ -507,7 +511,11 @@ export default function FormAsistenciasEmpleados({
             onChange={operationType === "view" ? null : handleTipoPersonaChange}
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.id_tipo_persona ? "error" : ""}
-            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
+            className={
+              operationType !== "view"
+                ? styles.StyleSelect
+                : styles.StyleSelectDisabled
+            }
             notFoundContent={<span>No hay opciones</span>}
           >
             {operationType !== "view" &&
@@ -547,6 +555,6 @@ export default function FormAsistenciasEmpleados({
         )}
       </Antd.Form>
       <Footer />
-    </>
+    </div>
   );
 }

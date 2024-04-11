@@ -315,9 +315,6 @@ export default function FormPedidosClientes({
               ...pedidoClienteDataForm,
             }));
           }
-          setFormData(() => ({
-            ...pedidoClienteDataForm,
-          }));
         }
       } catch (error) {
         console.error("Ha ocurrido algo inesperado", error);
@@ -561,7 +558,7 @@ export default function FormPedidosClientes({
   };
 
   return (
-    <>
+    <div>
       <Header />
       <Antd.Form>
         <Antd.Form.Item label="Direccion entrega">
@@ -659,9 +656,18 @@ export default function FormPedidosClientes({
                     ? "error"
                     : ""
                 }
-                className={styles.StyleInput}
+                className={
+                  operationType !== "view"
+                    ? styles.StyleTimePicker
+                    : styles.StyleTimePickerDisabled
+                }
                 format="HH:mm"
-                disabled={formData.tipo_estado !== "Aprobado" ? true : false}
+                disabled={
+                  formData.tipo_estado !== "Aprobado" &&
+                  operationType !== "view"
+                    ? true
+                    : false
+                }
               />
               {requiredFieldsIncomplete.hora_inicio_desplazamiento && (
                 <div className={styles.RequiredFieldsOrFormatError}>
@@ -687,9 +693,18 @@ export default function FormPedidosClientes({
                     ? "error"
                     : ""
                 }
-                className={styles.StyleInput}
+                className={
+                  operationType !== "view"
+                    ? styles.StyleTimePicker
+                    : styles.StyleTimePickerDisabled
+                }
                 format="HH:mm"
-                disabled={formData.tipo_estado !== "Aprobado" ? true : false}
+                disabled={
+                  formData.tipo_estado !== "Aprobado" &&
+                  operationType !== "view"
+                    ? true
+                    : false
+                }
               />
               {requiredFieldsIncomplete.hora_fin_desplazamiento && (
                 <div className={styles.RequiredFieldsOrFormatError}>
@@ -711,7 +726,11 @@ export default function FormPedidosClientes({
                     : null
                 }
                 readOnly={true}
-                className={styles.StyleInput}
+                className={
+                  operationType !== "view"
+                    ? styles.StyleTimePicker
+                    : styles.StyleTimePickerDisabled
+                }
                 format="HH:mm"
               />
             </Antd.Form.Item>
@@ -735,9 +754,18 @@ export default function FormPedidosClientes({
                 status={
                   requiredFieldsIncomplete.hora_inicio_servicio ? "error" : ""
                 }
-                className={styles.StyleInput}
+                className={
+                  operationType !== "view"
+                    ? styles.StyleTimePicker
+                    : styles.StyleTimePickerDisabled
+                }
                 format="HH:mm"
-                disabled={formData.tipo_estado !== "Aprobado" ? true : false}
+                disabled={
+                  formData.tipo_estado !== "Aprobado" &&
+                  operationType !== "view"
+                    ? true
+                    : false
+                }
               />
               {requiredFieldsIncomplete.hora_inicio_servicio && (
                 <div className={styles.RequiredFieldsOrFormatError}>
@@ -761,9 +789,18 @@ export default function FormPedidosClientes({
                 status={
                   requiredFieldsIncomplete.hora_fin_servicio ? "error" : ""
                 }
-                className={styles.StyleInput}
+                className={
+                  operationType !== "view"
+                    ? styles.StyleTimePicker
+                    : styles.StyleTimePickerDisabled
+                }
                 format="HH:mm"
-                disabled={formData.tipo_estado !== "Aprobado" ? true : false}
+                disabled={
+                  formData.tipo_estado !== "Aprobado" &&
+                  operationType !== "view"
+                    ? true
+                    : false
+                }
               />
               {requiredFieldsIncomplete.hora_fin_servicio && (
                 <div className={styles.RequiredFieldsOrFormatError}>
@@ -785,7 +822,11 @@ export default function FormPedidosClientes({
                     : null
                 }
                 readOnly={true}
-                className={styles.StyleInput}
+                className={
+                  operationType !== "view"
+                    ? styles.StyleTimePicker
+                    : styles.StyleTimePickerDisabled
+                }
                 format="HH:mm"
               />
             </Antd.Form.Item>
@@ -827,7 +868,11 @@ export default function FormPedidosClientes({
             }
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.id_cliente ? "error" : ""}
-            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
+            className={
+              operationType !== "view"
+                ? styles.StyleSelect
+                : styles.StyleSelectDisabled
+            }
             notFoundContent={<span>No hay clientes</span>}
             showSearch={true}
             onSearch={
@@ -864,7 +909,11 @@ export default function FormPedidosClientes({
             }
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.id_persona ? "error" : ""}
-            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
+            className={
+              operationType !== "view"
+                ? styles.StyleSelect
+                : styles.StyleSelectDisabled
+            }
             notFoundContent={<span>No hay personas</span>}
             showSearch={true}
             onSearch={
@@ -903,7 +952,11 @@ export default function FormPedidosClientes({
                 }
                 readOnly={operationType === "view" ? true : false}
                 status={requiredFieldsIncomplete.id_tipo_estado ? "error" : ""}
-                className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
+                className={
+                  operationType !== "view"
+                    ? styles.StyleSelect
+                    : styles.StyleSelectDisabled
+                }
                 notFoundContent={<span>No hay opciones</span>}
               >
                 {operationType !== "view" &&
@@ -944,7 +997,11 @@ export default function FormPedidosClientes({
                 status={
                   requiredFieldsIncomplete.id_tipo_estado_factura ? "error" : ""
                 }
-                className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
+                className={
+                  operationType !== "view"
+                    ? styles.StyleSelect
+                    : styles.StyleSelectDisabled
+                }
                 notFoundContent={<span>No hay opciones</span>}
               >
                 {operationType !== "view" &&
@@ -987,6 +1044,6 @@ export default function FormPedidosClientes({
         )}
       </Antd.Form>
       <Footer />
-    </>
+    </div>
   );
 }

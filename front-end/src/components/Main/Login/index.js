@@ -9,6 +9,7 @@ import {
 import { useAuth } from "@/context/UserContext";
 import { getTipoUsuarioById } from "@/services/TipoUsuarioService";
 import ErrorIcon from "@mui/icons-material/Error";
+import * as Antd from "antd";
 
 export default function Login() {
   const {
@@ -197,12 +198,12 @@ export default function Login() {
               backendOrDDBBConnectionError ||
               errorMessage.length !== 0 ||
               Object.keys(requiredFieldsIncomplete).length !== 0) && (
-              <>
+              <div>
                 <p className={styles.errorMessage}>
                   <ErrorIcon fontSize="medium" color="error" />
                   Error: {errorMessage}
                 </p>
-              </>
+              </div>
             )}
             <button type="submit">Login</button>
           </form>

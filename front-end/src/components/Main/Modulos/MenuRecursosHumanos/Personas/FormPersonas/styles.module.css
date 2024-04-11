@@ -2,6 +2,10 @@
   width: 35%;
 }
 
+.StyleSelect {
+  width: 35%;
+}
+
 .RequiredFieldsOrFormatError {
   color: red;
   font-size: 12px;
@@ -20,6 +24,10 @@
   font-size: 17px;
 }
 
-.SelectDisabled {
+.StyleInputDisabled {
+  pointer-events: none;
+}
+
+.StyleSelectDisabled {
   pointer-events: none;
 }

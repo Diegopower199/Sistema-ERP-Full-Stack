@@ -140,7 +140,7 @@ const TuComponente = ({ operationType, handleChange, tiposEstadosOptions }) => {
         )}
       </label>
       {(operationType === "update" || operationType === "view") && (
-        <>
+        <div>
           <br />
           <br />
           <label>
@@ -189,7 +189,7 @@ const TuComponente = ({ operationType, handleChange, tiposEstadosOptions }) => {
             />
           </label>
           {/* No se muestran mensajes de error para campos de solo lectura */}
-        </>
+        </div>
       )}
       <br />
       <br />
@@ -228,7 +228,7 @@ const TuComponente = ({ operationType, handleChange, tiposEstadosOptions }) => {
         )}
       </label>
       {(operationType === "update" || operationType === "view") && (
-        <>
+        <div>
           <br />
           <br />
           <label>
@@ -247,7 +247,7 @@ const TuComponente = ({ operationType, handleChange, tiposEstadosOptions }) => {
             </select>
           </label>
           {/* No se muestran mensajes de error para campos de solo lectura */}
-        </>
+        </div>
       )}
       <br />
       <br />

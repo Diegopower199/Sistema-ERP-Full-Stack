@@ -98,6 +98,10 @@ public class PagoFacturaClienteService {
         // HACER AQUI LOS SETTER -> Ejemplo:
         // asistenciaEmpleadoExistente.setFecha(cambiosAsistenciaEmpleado.getFecha());
 
+        pagoFacturaClienteExistente.setFecha_pago_realizada(cambiosPagoFacturaCliente.getFecha_pago_realizada());
+        pagoFacturaClienteExistente.setImporte_pagado(cambiosPagoFacturaCliente.getImporte_pagado());
+        pagoFacturaClienteExistente.setMetodo_pago(cambiosPagoFacturaCliente.getMetodo_pago());
+
         int id_factura_cliente = cambiosPagoFacturaCliente.getFactura_cliente().getId_factura_cliente();
 
         FacturaClienteModel facturaClienteEncontrado = facturaClienteRepository.findById(id_factura_cliente)

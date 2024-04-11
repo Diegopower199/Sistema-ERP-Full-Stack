@@ -488,7 +488,11 @@ export default function FormVacacionesEmpleados({
             }
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.id_persona ? "error" : ""}
-            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
+            className={
+              operationType !== "view"
+                ? styles.StyleSelect
+                : styles.StyleSelectDisabled
+            }
             notFoundContent={<span>No hay personas</span>}
             showSearch={true}
             onSearch={
@@ -527,7 +531,11 @@ export default function FormVacacionesEmpleados({
                 }
                 readOnly={operationType === "view" ? true : false}
                 status={requiredFieldsIncomplete.id_tipo_estado ? "error" : ""}
-                className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
+                className={
+                  operationType !== "view"
+                    ? styles.StyleSelect
+                    : styles.StyleSelectDisabled
+                }
                 notFoundContent={<span>No hay opciones</span>}
               >
                 {operationType !== "view" &&

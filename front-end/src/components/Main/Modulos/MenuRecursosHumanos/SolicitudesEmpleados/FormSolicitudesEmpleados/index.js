@@ -394,7 +394,7 @@ export default function FormSolicitudesEmpleados({
   };
 
   return (
-    <>
+    <div>
       <Header />
       <Antd.Form>
         <Antd.Form.Item label="Fecha de solicitud">
@@ -438,7 +438,11 @@ export default function FormSolicitudesEmpleados({
             }
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.id_persona ? "error" : ""}
-            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
+            className={
+              operationType !== "view"
+                ? styles.StyleSelect
+                : styles.StyleSelectDisabled
+            }
             notFoundContent={<span>No hay personas</span>}
             showSearch={true}
             onSearch={
@@ -475,7 +479,11 @@ export default function FormSolicitudesEmpleados({
             }
             readOnly={operationType === "view" ? true : false}
             status={requiredFieldsIncomplete.id_tipo_solicitud ? "error" : ""}
-            className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
+            className={
+              operationType !== "view"
+                ? styles.StyleSelect
+                : styles.StyleSelectDisabled
+            }
             notFoundContent={<span>No hay opciones</span>}
           >
             {operationType !== "view" &&
@@ -510,7 +518,11 @@ export default function FormSolicitudesEmpleados({
                 }
                 readOnly={operationType === "view" ? true : false}
                 status={requiredFieldsIncomplete.id_tipo_estado ? "error" : ""}
-                className={operationType === "view" ? styles.SelectDisabled : styles.StyleInput}
+                className={
+                  operationType !== "view"
+                    ? styles.StyleSelect
+                    : styles.StyleSelectDisabled
+                }
                 notFoundContent={<span>No hay opciones</span>}
               >
                 {operationType !== "view" &&
@@ -552,6 +564,6 @@ export default function FormSolicitudesEmpleados({
         )}
       </Antd.Form>
       <Footer />
-    </>
+    </div>
   );
 }

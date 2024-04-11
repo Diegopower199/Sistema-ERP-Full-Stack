@@ -113,9 +113,9 @@ function OptimizedErrorHandling() {
         Añadir Respuesta
       </button>
       {addUpdateDeleteCorrect && (
-        <>
+        <div>
           <h1>FUNCIONA BIEN ESTO</h1>
-        </>
+        </div>
       )}
       {backendOrDDBBConnectionError && <p>{errorMessage}</p>}
       {backendError && <p>{errorMessage}</p>}

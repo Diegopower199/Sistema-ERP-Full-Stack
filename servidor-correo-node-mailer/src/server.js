@@ -8,7 +8,7 @@ const {
   TRANSPORTER_PASSWORD,
   PORT_EMAIL_SERVER,
 } = require("./utils/constants");
-require("dotenv").config();
+// require("dotenv").config();
 
 const app = express();
 

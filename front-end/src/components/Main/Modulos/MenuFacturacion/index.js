@@ -23,7 +23,7 @@ export default function MenuFacturacion() {
   const router = useRouter();
 
   return (
-    <>
+    <div>
       <Header />
       <h1>Facturacion</h1>
       <p>
@@ -44,6 +44,6 @@ export default function MenuFacturacion() {
       </p>
       <br />
       <Footer />
-    </>
+    </div>
   );
 }

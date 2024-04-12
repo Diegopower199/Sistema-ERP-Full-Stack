@@ -1,11 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { savePersona, updatePersona } from "@/services/PersonaService";
-import { getAllTiposPersonas } from "@/services/TipoPersonaService";
-import {
-  REGEX_DNI,
-  REGEX_EMAIL,
-  REGEX_TELEFONO_CON_PREFIJO,
-} from "@/utils/regexPatterns";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
 import {
@@ -137,7 +130,7 @@ export default function FormFacturasClientes({
             }
             className={styles.StyleInputTimePickerDisabled}
             readOnly={true}
-            format="HH:mm"
+            format="HH:mm:ss"
           />
         </Antd.Form.Item>
 
@@ -151,7 +144,7 @@ export default function FormFacturasClientes({
             }
             className={styles.StyleInputTimePickerDisabled}
             readOnly={true}
-            format="HH:mm"
+            format="HH:mm:ss"
           />
         </Antd.Form.Item>
 
@@ -165,7 +158,7 @@ export default function FormFacturasClientes({
             }
             className={styles.StyleInputTimePickerDisabled}
             readOnly={true}
-            format="HH:mm"
+            format="HH:mm:ss"
           />
         </Antd.Form.Item>
 
@@ -179,7 +172,7 @@ export default function FormFacturasClientes({
             }
             readOnly={true}
             className={styles.StyleInputTimePickerDisabled}
-            format="HH:mm"
+            format="HH:mm:ss"
           />
         </Antd.Form.Item>
 
@@ -193,7 +186,7 @@ export default function FormFacturasClientes({
             }
             readOnly={true}
             className={styles.StyleInputTimePickerDisabled}
-            format="HH:mm"
+            format="HH:mm:ss"
           />
         </Antd.Form.Item>
 
@@ -207,7 +200,7 @@ export default function FormFacturasClientes({
             }
             readOnly={true}
             className={styles.StyleInputTimePickerDisabled}
-            format="HH:mm"
+            format="HH:mm:ss"
           />
         </Antd.Form.Item>
 

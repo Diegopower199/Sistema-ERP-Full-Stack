@@ -38,6 +38,29 @@ public class AsistenciaEmpleadoService {
         return resultado;
     }
 
+    public AsistenciaEmpleadoModel saveAsistenciaEmpleado(AsistenciaEmpleadoModel nuevoAsistenciaEmpleado) {
+
+        int id_persona = nuevoAsistenciaEmpleado.getPersona().getId_persona();
+
+        PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                .orElseThrow(() -> new RuntimeException(
+                        "Persona con id " + id_persona + " no encontrado"));
+
+        nuevoAsistenciaEmpleado.setPersona(personaEncontrado);
+        personaEncontrado.getAsistenciasEmpleados().add(nuevoAsistenciaEmpleado);
+
+        if (asistenciaEmpleadoRepository.existsByPersonaAndFecha_AsistenciaEmpleado(personaEncontrado,
+                nuevoAsistenciaEmpleado.getFecha_asistencia())) {
+            throw new RuntimeException("La persona con DNI " + personaEncontrado.getDni()
+                    + " ya tiene una asistencia en esta fecha");
+        }
+
+        AsistenciaEmpleadoModel asistenciaEmpleadoGuardado = asistenciaEmpleadoRepository
+                .save(nuevoAsistenciaEmpleado);
+
+        return asistenciaEmpleadoGuardado;
+    }
+
     public AsistenciaEmpleadoModel startOfWorkdayAsistenciaEmpleado(
             AsistenciaEmpleadoModel nuevoAsistenciaEmpleado) {
 

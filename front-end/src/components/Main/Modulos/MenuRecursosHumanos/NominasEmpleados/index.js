@@ -19,6 +19,7 @@ import * as Antd from "antd";
 import Link from "next/link";
 import {
   LOCALIZED_COLUMN_MENU_TEXTS,
+  NOMBRES_MESES,
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
 import styles from "./styles.module.css";
@@ -166,7 +167,7 @@ export default function NominasEmpleados() {
     {
       field: "cuenta_bancaria",
       headerName: "Cuenta bancaria",
-      width: 180,
+      width: 280,
       editable: false,
     },
     {
@@ -237,7 +238,7 @@ export default function NominasEmpleados() {
           return {
             id: nominaEmpleado.id_nomina_empleado,
             year: nominaEmpleado.year,
-            mes: nominaEmpleado.mes,
+            mes: NOMBRES_MESES[nominaEmpleado.mes].label,
             tipo_nomina: nominaEmpleado.tipo_nomina,
             salario_base: nominaEmpleado.salario_base,
             deducciones: nominaEmpleado.deducciones,
@@ -577,7 +578,7 @@ export default function NominasEmpleados() {
       <div>
         <FormNominasEmpleados
           toggleForm={toggleViewUniqueNominaEmpleadoForm}
-          facturaClienteDataForm={rowSelected}
+          nominaEmpleadoDataForm={rowSelected}
           formUpdateTrigger={nominaEmpleadoFormUpdatedTrigger}
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}

@@ -265,6 +265,8 @@ export default function FacturasClientes() {
         return false;
       }
 
+      console.log(responseGetAllFacturasClientes)
+
       const facturasClientesMap = responseGetAllFacturasClientes.data.map(
         (facturaCliente) => {
           return {
@@ -350,6 +352,8 @@ export default function FacturasClientes() {
 
     try {
       const responseGenerateFacturasClientes = await generateFacturasClientes();
+
+      console.log("responseGenerateFacturasClientes: ", responseGenerateFacturasClientes)
 
       errorHandlingInfo = checkResponseForErrors(
         responseGenerateFacturasClientes

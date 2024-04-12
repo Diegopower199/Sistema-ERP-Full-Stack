@@ -1,10 +1,48 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
+import { asignarNullSiCadenaVacia } from "@/utils/helpers";
 
 export const getAllAsistenciaEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
   try {
     const response = await axios.get(url + "getAll");
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    if (error.response) {
+      return {
+        errorMessage: error.response.data.message,
+        status: error.response.status,
+      };
+    } else {
+      return {
+        errorMessage:
+          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        status: 500,
+      };
+    }
+  }
+};
+
+export const saveAsistenciaEmpleado = async (data) => {
+  // Fin de la jornada laboral (NO ESTE BIEN, NO SÉ IDENTIFICARLO)
+  const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
+  console.log("FORM ASISTENCIA EMPLEADO: ", data);
+  try {
+    const formData = {
+      fecha_asistencia: data.fecha_asistencia,
+      hora_entrada: data.hora_entrada,
+      hora_salida: data.hora_salida,
+      horas_trabajadas_dia: data.horas_trabajadas_dia,
+      observacion: asignarNullSiCadenaVacia(data.observacion),
+      persona: {
+        id_persona: parseInt(data.id_persona),
+      },
+    };
+
+    const response = await axios.post(url + "save", formData);
     return {
       data: response.data,
       status: response.status,
@@ -109,7 +147,16 @@ export const updateAsistenciaEmpleado = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
   console.log(`FORM ASISTENCIA EMPLEADO CON id ${id}: `, data);
   try {
-    const formData = {};
+    const formData = {
+      fecha_asistencia: data.fecha_asistencia,
+      hora_entrada: data.hora_entrada,
+      hora_salida: data.hora_salida,
+      horas_trabajadas_dia: data.horas_trabajadas_dia,
+      observacion: asignarNullSiCadenaVacia(data.observacion),
+      persona: {
+        id_persona: parseInt(data.id_persona),
+      },
+    };
 
     const response = await axios.put(url + "update/" + id, formData);
     return {

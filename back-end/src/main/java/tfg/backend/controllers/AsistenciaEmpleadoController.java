@@ -43,6 +43,23 @@ public class AsistenciaEmpleadoController {
         }
     }
 
+    // localhost:8080/asistenciasEmpleados/api/save
+    @PostMapping("/api/save")
+    public ResponseEntity<Map<String, Object>> save(@RequestBody AsistenciaEmpleadoModel asistenciaEmpleadoRequest) {
+        try {
+            AsistenciaEmpleadoModel newAsistenciaEmpleado = asistenciaEmpleadoService
+                    .saveAsistenciaEmpleado(asistenciaEmpleadoRequest);
+
+            return ResponseEntity.ok(asistenciaEmpleadoService
+                    .getAsistenciaEmpleadoById(newAsistenciaEmpleado.getId_asistencia_empleado()));
+
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
     // localhost:8080/asistenciasEmpleados/api/startOfWorkday
     @PostMapping("/api/startOfWorkday")
     public ResponseEntity<Map<String, Object>> startOfWorkday(

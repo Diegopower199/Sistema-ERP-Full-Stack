@@ -250,7 +250,7 @@ export default function FormVacacionesEmpleados({
   };
 
   const handleTipoEstadoChange = (value, option) => {
-    console.log("El tipo persona es: ", value, option);
+    console.log("El tipo estado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,

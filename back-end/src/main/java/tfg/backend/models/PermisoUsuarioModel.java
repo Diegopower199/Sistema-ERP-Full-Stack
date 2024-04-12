@@ -25,6 +25,15 @@ public class PermisoUsuarioModel implements Serializable {
     @Column(name = "id_permiso_usuario", nullable = false)
     private int id_permiso_usuario;
 
+    @Column(name = "ver_section_recursos_humanos", nullable = false, columnDefinition = "boolean default false")
+    private boolean ver_section_recursos_humanos;
+
+    @Column(name = "ver_section_clientes", nullable = false, columnDefinition = "boolean default false")
+    private boolean ver_section_clientes;
+
+    @Column(name = "ver_section_facturacion", nullable = false, columnDefinition = "boolean default false")
+    private boolean ver_section_facturacion;
+
     @Column(name = "crear_usuarios", nullable = false, columnDefinition = "boolean default false")
     private boolean crear_usuarios;
 
@@ -187,7 +196,11 @@ public class PermisoUsuarioModel implements Serializable {
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new LinkedHashMap<>();
+
         map.put("id_permiso_usuario", id_permiso_usuario);
+        map.put("ver_section_clientes", ver_section_clientes);
+        map.put("ver_section_facturacion", ver_section_facturacion);
+        map.put("ver_section_recursos_humanos", ver_section_recursos_humanos);
         map.put("actualizar_usuarios", actualizar_usuarios);
         map.put("actualizar_personas", actualizar_personas);
         map.put("actualizar_nominas", actualizar_nominas);

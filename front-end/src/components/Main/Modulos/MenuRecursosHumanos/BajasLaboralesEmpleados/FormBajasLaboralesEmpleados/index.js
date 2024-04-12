@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { savePersona, updatePersona } from "@/services/PersonaService";
+import {
+  getAllPersonas,
+  savePersona,
+  updatePersona,
+} from "@/services/PersonaService";
 import { getAllTiposPersonas } from "@/services/TipoPersonaService";
 import {
   REGEX_DNI,
@@ -16,6 +20,12 @@ import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import { getAllMotivosBajas } from "@/services/MotivoBajaService";
+import {
+  saveBajaLaboralEmpleado,
+  updateBajaLaboralEmpleado,
+} from "@/services/BajaLaboralEmpleadoService";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -32,31 +42,20 @@ export default function FormBajasLaboralesEmpleados({
   triggerBackendOrDDBBConnectionError,
   triggerErrorMessage,
 }) {
-  const generoOptions = [
-    {
-      value: 1,
-      label: "Masculino",
-    },
-    {
-      value: 2,
-      label: "Femenino",
-    },
-  ];
-
-  const [tiposPersonasOptions, setTiposPersonasOptions] = useState([]);
+  const [tiposEstadosOptions, setTiposEstadosOptions] = useState([]);
+  const [motivosBajasOptions, setMotivosBajasOptions] = useState([]);
+  const [personasOptions, setPersonasOptions] = useState([]);
 
   const [formData, setFormData] = useState({
-    numero_empleado: "",
-    nombre: "",
-    apellidos: "",
-    genero: "",
-    fecha_nacimiento: "",
-    dni: "",
-    direccion: "",
-    numero_telefono: "34",
-    correo_electronico: "",
-    id_tipo_persona: "",
-    tipo_persona: "",
+    fecha_inicio: "",
+    fecha_fin: "",
+    observacion: "",
+    id_persona: "",
+    personaInfo: "",
+    motivo_baja: "",
+    id_motivo_baja: "",
+    tipo_estado: "",
+    id_tipo_estado: "",
   });
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
@@ -74,26 +73,106 @@ export default function FormBajasLaboralesEmpleados({
     triggerErrorMessage(errorMessage);
   }
 
-  const fetchTiposPersonasOptionsAndHandleErrors = async () => {
+  const fetchTiposEstadosOptionsAndHandleErrors = async () => {
     try {
-      const responseGetAllTiposPersonas = await getAllTiposPersonas();
+      const responseGetAllTiposEstados = await getAllTiposEstados();
 
-      errorHandlingInfo = checkResponseForErrors(responseGetAllTiposPersonas);
+      errorHandlingInfo = checkResponseForErrors(responseGetAllTiposEstados);
+
+      console.log("errorHandlingInfo: ", errorHandlingInfo);
 
       if (errorHandlingInfo.noContent) {
         console.log("No hay contenido disponible");
-        setTiposPersonasOptions([]);
+        setTiposEstadosOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(
-          responseGetAllTiposPersonas.errorMessage
+          responseGetAllTiposEstados.errorMessage
         );
         return false;
       }
 
-      setTiposPersonasOptions(responseGetAllTiposPersonas.data);
+      setTiposEstadosOptions(responseGetAllTiposEstados.data);
+
+      if (operationType === "create") {
+        setFormData((prevDataState) => {
+          return {
+            ...prevDataState,
+            ["tipo_estado"]:
+              responseGetAllTiposEstados.data[0].label.toString(),
+            ["id_tipo_estado"]:
+              responseGetAllTiposEstados.data[0].value.toString(),
+          };
+        });
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
+    }
+  };
+
+  const fetchMotivosBajasOptionsAndHandleErrors = async () => {
+    try {
+      const responseGetAllMotivosBajas = await getAllMotivosBajas();
+
+      errorHandlingInfo = checkResponseForErrors(responseGetAllMotivosBajas);
+
+      console.log("errorHandlingInfo: ", errorHandlingInfo);
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible");
+        setTiposEstadosOptions([]);
+        return false;
+      }
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("ERROR EN EL BACK");
+        handleBackendAndDBConnectionError(
+          responseGetAllMotivosBajas.errorMessage
+        );
+        return false;
+      }
+
+      setMotivosBajasOptions(responseGetAllMotivosBajas.data);
+
+      return true;
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
+    }
+  };
+
+  const fetchPersonasOptionsAndHandleErrors = async () => {
+    try {
+      const responseGetAllPersonas = await getAllPersonas();
+
+      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
+
+      if (errorHandlingInfo.noContent) {
+        console.log("No hay contenido disponible");
+        setPersonasOptions([]);
+        return false;
+      }
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        console.log("ERROR EN EL BACK");
+        handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
+        return false;
+      }
+
+      const optionsPersonas = responseGetAllPersonas.data.map((persona) => {
+        const { id_persona, nombre, apellidos, dni } = persona;
+
+        return {
+          value: id_persona,
+          label: `${nombre + " " + apellidos} - ${dni}`,
+        };
+      });
+
+      setPersonasOptions(optionsPersonas);
 
       return true;
     } catch (error) {
@@ -106,7 +185,19 @@ export default function FormBajasLaboralesEmpleados({
 
     const fetchData = async () => {
       try {
-        noCallErrorsDetected = await fetchTiposPersonasOptionsAndHandleErrors();
+        noCallErrorsDetected = await fetchTiposEstadosOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
+        noCallErrorsDetected = await fetchMotivosBajasOptionsAndHandleErrors();
+
+        if (noCallErrorsDetected === false) {
+          return;
+        }
+
+        noCallErrorsDetected = await fetchPersonasOptionsAndHandleErrors();
 
         if (noCallErrorsDetected === false) {
           return;
@@ -115,16 +206,30 @@ export default function FormBajasLaboralesEmpleados({
         console.log("operationType: ", operationType);
 
         if (operationType === "update" || operationType === "view") {
-          if (validarFechaYYYYMMDD(bajaLaboralEmpleadoDataForm.fecha_nacimiento) === null) {
-            const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
-              bajaLaboralEmpleadoDataForm.fecha_nacimiento
+          const fechaInicioValida = validarFechaYYYYMMDD(
+            bajaLaboralEmpleadoDataForm.fecha_inicio
+          );
+
+          const fechaFinValida = validarFechaYYYYMMDD(
+            bajaLaboralEmpleadoDataForm.fecha_fin
+          );
+
+          if (fechaInicioValida === null || fechaFinValida === null) {
+            const fechaInicioFormateada = formatearFechaYYYYMMDD(
+              bajaLaboralEmpleadoDataForm.fecha_inicio
             );
 
-            console.log("fechaFormateada: ", fechaNacimientoFormateada);
+            const fechaFinFormateada = formatearFechaYYYYMMDD(
+              bajaLaboralEmpleadoDataForm.fecha_fin
+            );
+
+            console.log("fechaInicioFormateada: ", fechaInicioFormateada);
+            console.log("fechaFinFormateada: ", fechaFinFormateada);
 
             setFormData(() => ({
               ...bajaLaboralEmpleadoDataForm,
-              fecha_nacimiento: fechaNacimientoFormateada,
+              fecha_inicio: fechaInicioFormateada,
+              fecha_fin: fechaFinFormateada,
             }));
           } else {
             setFormData(() => ({
@@ -143,51 +248,6 @@ export default function FormBajasLaboralesEmpleados({
   const validateRequiredFields = () => {
     const errorMissingFields = {};
 
-    if (!formData.numero_empleado) {
-      errorMissingFields.numero_empleado =
-        "Por favor, ingresa un numero empleado";
-    }
-
-    if (!formData.nombre) {
-      errorMissingFields.nombre = "Por favor, ingresa un nombre";
-    }
-
-    if (!formData.apellidos) {
-      errorMissingFields.apellidos = "Por favor, ingresa un apellido";
-    }
-
-    if (!formData.genero) {
-      errorMissingFields.genero = "Por favor, selecciona un género";
-    }
-
-    if (!formData.fecha_nacimiento) {
-      errorMissingFields.fecha_nacimiento =
-        "Por favor, selecciona una fecha de nacimiento";
-    }
-
-    if (!formData.dni) {
-      errorMissingFields.dni = "Por favor, ingresa un DNI";
-    }
-
-    if (!formData.direccion) {
-      errorMissingFields.direccion = "Por favor, ingresa una direccion";
-    }
-
-    if (!formData.numero_telefono || formData.numero_telefono === "34") {
-      errorMissingFields.numero_telefono =
-        "Por favor, ingresa un numero de telefono";
-    }
-
-    if (!formData.correo_electronico) {
-      errorMissingFields.correo_electronico =
-        "Por favor, ingresa un correo electronico";
-    }
-
-    if (!formData.id_tipo_persona) {
-      errorMissingFields.id_tipo_persona =
-        "Por favor, selecciona un tipo de persona";
-    }
-
     setRequiredFieldsIncomplete(errorMissingFields);
 
     return Object.keys(errorMissingFields).length !== 0;
@@ -196,19 +256,6 @@ export default function FormBajasLaboralesEmpleados({
   const validateFormData = () => {
     const errorForm = {};
 
-    if (!formData.dni.match(REGEX_DNI)) {
-      errorForm.dni = "Por favor, ingresa un DNI válido";
-    }
-
-    if (!formData.numero_telefono.match(REGEX_TELEFONO_CON_PREFIJO)) {
-      errorForm.numero_telefono =
-        "Por favor, ingresa un numero de telefono válido";
-    }
-
-    if (!formData.correo_electronico.match(REGEX_EMAIL)) {
-      errorForm.correo_electronico = "Por favor, ingresa un email válido";
-    }
-
     setFormErrors(errorForm);
     console.log("errorForm: ", errorForm);
 
@@ -216,44 +263,62 @@ export default function FormBajasLaboralesEmpleados({
   };
 
   const handleFormChange = (event) => {
-    const { name, value, type, checked } = event.target;
+    const { name, value } = event.target;
     console.log("Name: ", name, " Value: ", value);
-    if (name === "numero_telefono") {
-      const nuevoValor = value.startsWith("34") ? value : "34" + value;
 
-      setFormData((prevFormValue) => ({
-        ...prevFormValue,
-        [name]: nuevoValor,
-      }));
-    } else {
-      setFormData((prevDataState) => {
-        return {
-          ...prevDataState,
-          [name]: value,
-        };
-      });
-    }
-  };
-
-  const handleSelectGeneroChange = (value, option) => {
-    console.log("El genero es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
-        ["genero"]: option?.children.toString(),
+        [name]: value,
       };
     });
   };
 
-  const handleTipoPersonaChange = (value, option) => {
-    console.log("El tipo persona es: ", value, option);
+  const handleTipoEstadoChange = (value, option) => {
+    console.log("El tipo estado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
-        ["tipo_persona"]: option?.children.toString(),
-        ["id_tipo_persona"]: value.toString(),
+        ["tipo_estado"]: option?.children.toString(),
+        ["id_tipo_estado"]: value.toString(),
       };
     });
+  };
+
+  const handleMotivoBajaChange = (value, option) => {
+    console.log("El motivo baja es: ", value, option);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["motivo_baja"]: option?.children.toString(),
+        ["id_motivo_baja"]: value.toString(),
+      };
+    });
+  };
+
+  const handleSelectPersonaChange = (value, option) => {
+    console.log("La persona seleccionado es: ", value, option);
+    setFormData((prevDataState) => {
+      return {
+        ...prevDataState,
+        ["id_persona"]: value.toString(),
+        ["personaInfo"]: option?.children.toString(),
+      };
+    });
+  };
+
+  const handleSelectPersonaSearch = (value) => {
+    console.log("Search persona:", value);
+  };
+
+  const filterIncrementalSearch = (input, option) => {
+    const optionLabel = option?.children.toLowerCase();
+
+    const userInput = input.toLowerCase();
+
+    const isOptionIncluded = optionLabel.includes(userInput);
+
+    return isOptionIncluded;
   };
 
   const handleSubmit = async (event) => {
@@ -281,15 +346,21 @@ export default function FormBajasLaboralesEmpleados({
 
     try {
       if (operationType === "create") {
-        const responseCreatePersona = await savePersona(formData);
+        const responseCreateBajaLaboralEmpleado = await saveBajaLaboralEmpleado(
+          formData
+        );
 
-        errorHandlingInfo = checkResponseForErrors(responseCreatePersona);
+        errorHandlingInfo = checkResponseForErrors(
+          responseCreateBajaLaboralEmpleado
+        );
 
         if (errorHandlingInfo.backendError) {
-          handleBackendError(responseCreatePersona.errorMessage);
+          handleBackendError(responseCreateBajaLaboralEmpleado.errorMessage);
           return;
         } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
-          handleBackendAndDBConnectionError(responseCreatePersona.errorMessage);
+          handleBackendAndDBConnectionError(
+            responseCreateBajaLaboralEmpleado.errorMessage
+          );
           return;
         }
 
@@ -297,18 +368,20 @@ export default function FormBajasLaboralesEmpleados({
         toggleForm();
         formUpdateTrigger();
       } else if (operationType === "update") {
-        const responseUpdatePersona = await updatePersona(
-          formData.id,
-          formData
+        const responseUpdateBajaLaboralEmpleado =
+          await updateBajaLaboralEmpleado(formData.id, formData);
+
+        errorHandlingInfo = checkResponseForErrors(
+          responseUpdateBajaLaboralEmpleado
         );
 
-        errorHandlingInfo = checkResponseForErrors(responseUpdatePersona);
-
         if (errorHandlingInfo.backendError) {
-          handleBackendError(responseUpdatePersona.errorMessage);
+          handleBackendError(responseUpdateBajaLaboralEmpleado.errorMessage);
           return;
         } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
-          handleBackendAndDBConnectionError(responseUpdatePersona.errorMessage);
+          handleBackendAndDBConnectionError(
+            responseUpdateBajaLaboralEmpleado.errorMessage
+          );
           return;
         }
 
@@ -325,192 +398,103 @@ export default function FormBajasLaboralesEmpleados({
     <div>
       <Header />
       <Antd.Form>
-        <Antd.Form.Item label="Numero empleado">
+        <Antd.Form.Item label="Fecha inicio">
           <Antd.Input
-            type="number"
-            name="numero_empleado"
-            value={formData.numero_empleado}
+            type="date"
+            name="fecha_inicio"
+            value={formData.fecha_inicio}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.numero_empleado ? "error" : ""}
+            status={requiredFieldsIncomplete.fecha_inicio ? "error" : ""}
             className={styles.StyleInput}
           />
-          {requiredFieldsIncomplete.numero_empleado && (
+          {requiredFieldsIncomplete.fecha_inicio && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.numero_empleado}
+              {requiredFieldsIncomplete.fecha_inicio}
             </div>
           )}
         </Antd.Form.Item>
-        <Antd.Form.Item label="Nombre">
+
+        <Antd.Form.Item label="Fecha fin">
+          <Antd.Input
+            type="date"
+            name="fecha_fin"
+            value={formData.fecha_fin}
+            onChange={operationType === "view" ? null : handleFormChange}
+            readOnly={operationType === "view" ? true : false}
+            status={requiredFieldsIncomplete.fecha_fin ? "error" : ""}
+            className={styles.StyleInput}
+          />
+          {requiredFieldsIncomplete.fecha_fin && (
+            <div className={styles.RequiredFieldsOrFormatError}>
+              {requiredFieldsIncomplete.fecha_fin}
+            </div>
+          )}
+        </Antd.Form.Item>
+
+        <Antd.Form.Item label="Observacion">
           <Antd.Input
             type="text"
-            name="nombre"
-            value={formData.nombre}
+            name="observacion"
+            value={formData.observacion}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.nombre ? "error" : ""}
             className={styles.StyleInput}
           />
-          {requiredFieldsIncomplete.nombre && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.nombre}
-            </div>
-          )}
         </Antd.Form.Item>
-        <Antd.Form.Item label="Apellidos">
-          <Antd.Input
-            type="text"
-            name="apellidos"
-            value={formData.apellidos}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.apellidos ? "error" : ""}
-            className={styles.StyleInput}
-          />
-          {requiredFieldsIncomplete.apellidos && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.apellidos}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Genero">
+
+        <Antd.Form.Item label="Selecciona una persona">
           <Antd.Select
-            name="genero"
-            value={formData.genero ? formData.genero : "Selecciona un género"}
+            name="personaInfo"
+            value={
+              formData.personaInfo
+                ? formData.personaInfo
+                : "Selecciona un persona"
+            }
             onChange={
-              operationType === "view" ? null : handleSelectGeneroChange
+              operationType === "view" ? null : handleSelectPersonaChange
             }
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.genero ? "error" : ""}
+            status={requiredFieldsIncomplete.id_persona ? "error" : ""}
             className={
               operationType !== "view"
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay géneros</span>}
+            notFoundContent={<span>No hay personas</span>}
+            showSearch={true}
+            onSearch={
+              operationType === "view" ? null : handleSelectPersonaSearch
+            }
+            filterOption={
+              operationType === "view" ? null : filterIncrementalSearch
+            }
           >
             {operationType !== "view" &&
-              generoOptions.map((genero) => (
-                <Antd.Select.Option key={genero.value} value={genero.value}>
-                  {genero.label}
+              personasOptions.map((persona) => (
+                <Antd.Select.Option key={persona.value} value={persona.value}>
+                  {persona.label}
                 </Antd.Select.Option>
               ))}
           </Antd.Select>
-          {requiredFieldsIncomplete.genero && (
+          {requiredFieldsIncomplete.id_persona && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.genero}
+              {requiredFieldsIncomplete.id_persona}
             </div>
           )}
         </Antd.Form.Item>
 
-        <Antd.Form.Item label=" Fecha nacimiento">
-          <Antd.Input
-            type="date"
-            name="fecha_nacimiento"
-            value={formData.fecha_nacimiento}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.fecha_nacimiento ? "error" : ""}
-            className={styles.StyleInput}
-          />
-          {requiredFieldsIncomplete.fecha_nacimiento && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.fecha_nacimiento}
-            </div>
-          )}
-        </Antd.Form.Item>
-
-        <Antd.Form.Item label="Dni">
-          <Antd.Input
-            type="text"
-            name="dni"
-            value={formData.dni}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={
-              requiredFieldsIncomplete.dni || formErrors.dni ? "error" : ""
-            }
-            className={styles.StyleInput}
-          />
-          {(requiredFieldsIncomplete.dni || formErrors.dni) && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.dni || formErrors.dni}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Direccion">
-          <Antd.Input
-            type="text"
-            name="direccion"
-            value={formData.direccion}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.direccion ? "error" : ""}
-            className={styles.StyleInput}
-          />
-          {requiredFieldsIncomplete.direccion && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.direccion}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Numero telefono">
-          <Antd.Input
-            type="text"
-            name="numero_telefono"
-            value={formData.numero_telefono}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={
-              requiredFieldsIncomplete.numero_telefono ||
-              formErrors.numero_telefono
-                ? "error"
-                : ""
-            }
-            className={styles.StyleInput}
-          />
-          {(requiredFieldsIncomplete.numero_telefono ||
-            formErrors.numero_telefono) && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.numero_telefono ||
-                formErrors.numero_telefono}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Correo electronico">
-          <Antd.Input
-            type="text"
-            name="correo_electronico"
-            value={formData.correo_electronico}
-            onChange={operationType === "view" ? null : handleFormChange}
-            readOnly={operationType === "view" ? true : false}
-            status={
-              requiredFieldsIncomplete.correo_electronico ||
-              formErrors.correo_electronico
-                ? "error"
-                : ""
-            }
-            className={styles.StyleInput}
-          />
-          {(requiredFieldsIncomplete.correo_electronico ||
-            formErrors.correo_electronico) && (
-            <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.correo_electronico ||
-                formErrors.correo_electronico}
-            </div>
-          )}
-        </Antd.Form.Item>
-        <Antd.Form.Item label="Selecciona un tipo de persona">
+        <Antd.Form.Item label="Selecciona un motivo de baja">
           <Antd.Select
-            name="tipo_persona"
+            name="motivo_baja"
             value={
-              formData.tipo_persona
-                ? formData.tipo_persona
-                : "Selecciona un tipo de persona"
+              formData.motivo_baja
+                ? formData.motivo_baja
+                : "Selecciona un motivo de baja"
             }
-            onChange={operationType === "view" ? null : handleTipoPersonaChange}
+            onChange={operationType === "view" ? null : handleMotivoBajaChange}
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.id_tipo_persona ? "error" : ""}
+            status={requiredFieldsIncomplete.motivo_baja ? "error" : ""}
             className={
               operationType !== "view"
                 ? styles.StyleSelect
@@ -519,21 +503,63 @@ export default function FormBajasLaboralesEmpleados({
             notFoundContent={<span>No hay opciones</span>}
           >
             {operationType !== "view" &&
-              tiposPersonasOptions.map((tipoPersona) => (
+              motivosBajasOptions.map((motivoBaja) => (
                 <Antd.Select.Option
-                  key={tipoPersona.value}
-                  value={tipoPersona.value}
+                  key={motivoBaja.value}
+                  value={motivoBaja.value}
                 >
-                  {tipoPersona.label}
+                  {motivoBaja.label}
                 </Antd.Select.Option>
               ))}
           </Antd.Select>
-          {requiredFieldsIncomplete.id_tipo_persona && (
+          {requiredFieldsIncomplete.id_motivo_baja && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.id_tipo_persona}
+              {requiredFieldsIncomplete.id_motivo_baja}
             </div>
           )}
         </Antd.Form.Item>
+
+        {(operationType === "update" || operationType === "view") && (
+          <div>
+            <Antd.Form.Item label="Selecciona un tipo de estado">
+              <Antd.Select
+                name="tipo_estado"
+                value={
+                  formData.tipo_estado
+                    ? formData.tipo_estado
+                    : "Selecciona un tipo de estado"
+                }
+                onChange={
+                  operationType === "view" ? null : handleTipoEstadoChange
+                }
+                readOnly={operationType === "view" ? true : false}
+                status={requiredFieldsIncomplete.id_tipo_estado ? "error" : ""}
+                className={
+                  operationType !== "view"
+                    ? styles.StyleSelect
+                    : styles.StyleSelectDisabled
+                }
+                notFoundContent={<span>No hay opciones</span>}
+              >
+                {operationType !== "view" &&
+                  tiposEstadosOptions.map((tipoEstado) => (
+                    <Antd.Select.Option
+                      key={tipoEstado.value}
+                      value={tipoEstado.value}
+                    >
+                      {tipoEstado.label}
+                    </Antd.Select.Option>
+                  ))}
+              </Antd.Select>
+              {requiredFieldsIncomplete.id_tipo_estado && (
+                <div className={styles.RequiredFieldsOrFormatError}>
+                  {requiredFieldsIncomplete.id_tipo_estado}
+                </div>
+              )}
+            </Antd.Form.Item>
+          </div>
+        )}
+
         {errorMessage.length !== 0 && backendError && (
           <div>
             <p className={styles.BackendError}>

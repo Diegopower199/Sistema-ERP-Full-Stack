@@ -6,6 +6,10 @@
   width: 35%;
 }
 
+.StyleTimePicker {
+  width: 35%;
+}
+
 .RequiredFieldsOrFormatError {
   color: red;
   font-size: 12px;
@@ -25,6 +29,11 @@
 }
 
 .StyleInputDisabled {
+  pointer-events: none;
+}
+
+.StyleTimePickerDisabled {
+  width: 100px;
   pointer-events: none;
 }
 

@@ -133,7 +133,13 @@ public class FacturaClienteService {
             newFacturaClienteFacturado.setTarifa_hora_servicio(GlobalConstants.TARIFA_HORA_SERVICIO);
             newFacturaClienteFacturado.setSubtotal_factura_sin_iva(1000);
             newFacturaClienteFacturado.setIva(GlobalConstants.IVA);
+            int subtotalFactura = 1000;
+            int calculoTotalFactura = subtotalFactura + (subtotalFactura * (GlobalConstants.IVA / 100));
+
             newFacturaClienteFacturado.setTotal_factura(0);
+
+            // total_factura = subtotal_factura_sin_iva + (subtotal_factura_sin_iva * (iva / 100))
+
 
             newFacturaClienteFacturado.setCliente(pedidoCliente.getCliente());
             newFacturaClienteFacturado.setPedido_cliente(pedidoCliente);

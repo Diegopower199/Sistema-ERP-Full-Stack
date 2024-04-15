@@ -54,10 +54,6 @@ export default function FormFacturasClientes({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("operationType: ", operationType);
-
-        console.log("facturaClienteDataForm: ", facturaClienteDataForm);
-
         const fechaEntregaRealPedidoValida = validarFechaYYYYMMDD(
           facturaClienteDataForm.fecha_entrega_real_pedido
         );

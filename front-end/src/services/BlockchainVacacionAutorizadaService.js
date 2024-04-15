@@ -41,7 +41,7 @@ export const getAllTransaccionesVacacionesAutorizadas = async () => {
 
 export const saveTransaccionVacacionAutorizada = async (data) => {
   const url = API_URL_BACK_END.replace("#", "blockchainVacacionesAutorizadas");
-  console.log("FORM blockchain Vacaciones Autorizadas: ", data);
+
   try {
     let formData = {
       id_vacacion_empleado: data.id_vacacion_empleado,
@@ -57,7 +57,7 @@ export const saveTransaccionVacacionAutorizada = async (data) => {
     };
 
     const response = await axios.post(url + "save", formData);
-    console.log("Response: ", response);
+
     return {
       data: response.data,
       status: response.status,

@@ -29,7 +29,7 @@ export const getAllVacacionesEmpleados = async () => {
 
 export const saveVacacionEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
-  console.log("FORM VACACIONES EMPLEADOS: ", data);
+
   try {
     const formData = {
       fecha_inicio: data.fecha_inicio,
@@ -92,7 +92,7 @@ export const getVacacionEmpleadoById = async (id) => {
 export const updateVacacionEmpleado = async (id, data) => {
   // Los dias los calculo en el back, si los rechazo se devuelven los datos anteriores
   const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
-  console.log(`FORM VACACIONES EMPLEADOS CON id ${id}: `, data);
+
   try {
     const formData = {
       fecha_inicio: data.fecha_inicio,

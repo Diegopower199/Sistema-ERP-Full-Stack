@@ -251,7 +251,6 @@ export default function FacturasClientes() {
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -264,8 +263,6 @@ export default function FacturasClientes() {
         setTableLoading(false);
         return false;
       }
-
-      console.log(responseGetAllFacturasClientes)
 
       const facturasClientesMap = responseGetAllFacturasClientes.data.map(
         (facturaCliente) => {
@@ -310,8 +307,6 @@ export default function FacturasClientes() {
   };
 
   useEffect(() => {
-    console.log("Pagina de facturas clientes: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
@@ -324,7 +319,6 @@ export default function FacturasClientes() {
       fetchGetAllFacturasClientesAndHandleErrors();
       setFacturaClienteFormUpdated(false);
       setFacturaClienteGenerateUpdated(false);
-      console.log("CARGANDO LA TABLA");
     }
   }, [facturaClienteFormUpdated, facturaClienteGenerateUpdated]);
 
@@ -345,15 +339,11 @@ export default function FacturasClientes() {
   }
 
   const handleGenerateClick = async () => {
-    console.log("Generar nuevas facturas clientes");
-
     toggleGenerateFacturasClientesModal();
     setCargandoInformacionFacturasClientes(true);
 
     try {
       const responseGenerateFacturasClientes = await generateFacturasClientes();
-
-      console.log("responseGenerateFacturasClientes: ", responseGenerateFacturasClientes)
 
       errorHandlingInfo = checkResponseForErrors(
         responseGenerateFacturasClientes
@@ -376,8 +366,6 @@ export default function FacturasClientes() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una factura cliente");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueFacturaClienteForm();

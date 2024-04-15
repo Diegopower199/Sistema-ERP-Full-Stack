@@ -67,14 +67,11 @@ export default function UpdatePassword() {
 
       setRequiredFieldsIncomplete(errorMissingFields);
 
-      console.log("errorMissingFields: ", errorMissingFields);
-
       if (Object.keys(errorMissingFields).length !== 0) {
         return;
       }
 
       const codigoVerificacion = generateRandomNumber();
-      console.log("codigoVerificacion: ", codigoVerificacion);
       setCodigoVerificacion(codigoVerificacion);
 
       const data = {
@@ -115,8 +112,6 @@ export default function UpdatePassword() {
         return;
       }
 
-      console.log("responseSendEmail: ", responseSendEmail);
-
       resetErrorState();
       setCorrectEmail(true);
     } catch (error) {
@@ -125,15 +120,12 @@ export default function UpdatePassword() {
   };
 
   const verifyCode = () => {
-    console.log("formData.codigo_verificacion: ", formData.codigo_verificacion);
-
     const errorMissingFields = {};
 
     if (!formData.codigo_verificacion) {
       errorMissingFields.codigo_verificacion = "Por favor, ingresa un código";
     }
 
-    console.log("errorMissingFields: ", errorMissingFields);
     setRequiredFieldsIncomplete(errorMissingFields);
 
     if (Object.keys(errorMissingFields).length !== 0) {
@@ -163,8 +155,6 @@ export default function UpdatePassword() {
 
   const changePassword = async () => {
     try {
-      console.log("change password");
-
       const errorMissingFields = {};
 
       if (!formData.new_password) {
@@ -178,8 +168,6 @@ export default function UpdatePassword() {
       }
 
       setRequiredFieldsIncomplete(errorMissingFields);
-
-      console.log("errorMissingFields: ", errorMissingFields);
 
       if (Object.keys(errorMissingFields).length !== 0) {
         setErrorMessage("");
@@ -201,14 +189,12 @@ export default function UpdatePassword() {
           return;
         }
 
-        console.log("responseUpdatePassword: ", responseUpdatePassword);
         // router.push("/login");
       } else {
         setErrorMessage("La contraseñas no coinciden");
-        console.log("La contraseñas no coinciden");
       }
     } catch (error) {
-      console.error("El Error es: ", error.message);
+      console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

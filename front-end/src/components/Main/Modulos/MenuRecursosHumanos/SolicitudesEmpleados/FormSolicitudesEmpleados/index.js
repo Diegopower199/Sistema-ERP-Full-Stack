@@ -71,7 +71,6 @@ export default function FormSolicitudesEmpleados({
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setTiposSolicitudesOptions([]);
         return false;
       }
@@ -98,7 +97,6 @@ export default function FormSolicitudesEmpleados({
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposEstados);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setTiposEstadosOptions([]);
         return false;
       }
@@ -137,13 +135,11 @@ export default function FormSolicitudesEmpleados({
       errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setPersonasOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
         return false;
       }
@@ -189,8 +185,6 @@ export default function FormSolicitudesEmpleados({
           return;
         }
 
-        console.log("operationType: ", operationType);
-
         if (operationType === "update" || operationType === "view") {
           const fechaSolicitudValida = validarFechaYYYYMMDD(
             solicitudEmpleadoDataForm.fecha_solicitud
@@ -200,8 +194,6 @@ export default function FormSolicitudesEmpleados({
             const fechaSolicitudFormateada = formatearFechaYYYYMMDD(
               solicitudEmpleadoDataForm.fecha_solicitud
             );
-
-            console.log("fechaSolicitudFormateada: ", fechaSolicitudFormateada);
 
             setFormData(() => ({
               ...solicitudEmpleadoDataForm,
@@ -246,8 +238,6 @@ export default function FormSolicitudesEmpleados({
 
     setRequiredFieldsIncomplete(errorMissingFields);
 
-    console.log("errorMissingFields: ", errorMissingFields);
-
     return Object.keys(errorMissingFields).length !== 0;
   };
 
@@ -255,7 +245,6 @@ export default function FormSolicitudesEmpleados({
     const errorForm = {};
 
     setFormErrors(errorForm);
-    console.log("errorForm", errorForm);
 
     return Object.keys(errorForm).length !== 0;
   };
@@ -272,7 +261,6 @@ export default function FormSolicitudesEmpleados({
   };
 
   const handleTipoSolicitudChange = (value, option) => {
-    console.log("El tipo persona es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -283,7 +271,6 @@ export default function FormSolicitudesEmpleados({
   };
 
   const handleTipoEstadoChange = (value, option) => {
-    console.log("El tipo persona es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -294,7 +281,6 @@ export default function FormSolicitudesEmpleados({
   };
 
   const handleSelectPersonaChange = (value, option) => {
-    console.log("La persona seleccionado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -305,7 +291,7 @@ export default function FormSolicitudesEmpleados({
   };
 
   const handleSelectPersonaSearch = (value) => {
-    console.log("Search persona:", value);
+    // console.log("Search persona:", value);
   };
 
   const filterIncrementalSearch = (input, option) => {
@@ -321,12 +307,8 @@ export default function FormSolicitudesEmpleados({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("formData: ", formData);
-
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
-      console.log("Error en campos obligatorios: ", requiredFieldsError);
-
       setErrorMessage(
         "No se puede añadir un registro con uno o más campos vacios "
       );
@@ -335,8 +317,6 @@ export default function FormSolicitudesEmpleados({
 
     const formDataError = validateFormData();
     if (formDataError) {
-      console.log("Error en datos correctos: ", formDataError);
-
       setErrorMessage("");
       return;
     }

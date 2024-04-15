@@ -81,7 +81,6 @@ export default function FormPersonas({
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposPersonas);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setTiposPersonasOptions([]);
         return false;
       }
@@ -112,15 +111,11 @@ export default function FormPersonas({
           return;
         }
 
-        console.log("operationType: ", operationType);
-
         if (operationType === "update" || operationType === "view") {
           if (validarFechaYYYYMMDD(personaDataForm.fecha_nacimiento) === null) {
             const fechaNacimientoFormateada = formatearFechaYYYYMMDD(
               personaDataForm.fecha_nacimiento
             );
-
-            console.log("fechaFormateada: ", fechaNacimientoFormateada);
 
             setFormData(() => ({
               ...personaDataForm,
@@ -210,14 +205,13 @@ export default function FormPersonas({
     }
 
     setFormErrors(errorForm);
-    console.log("errorForm: ", errorForm);
 
     return Object.keys(errorForm).length !== 0;
   };
 
   const handleFormChange = (event) => {
     const { name, value, type, checked } = event.target;
-    console.log("Name: ", name, " Value: ", value);
+
     if (name === "numero_telefono") {
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
 
@@ -236,7 +230,6 @@ export default function FormPersonas({
   };
 
   const handleSelectGeneroChange = (value, option) => {
-    console.log("El genero es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -246,7 +239,6 @@ export default function FormPersonas({
   };
 
   const handleTipoPersonaChange = (value, option) => {
-    console.log("El tipo persona es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -259,12 +251,8 @@ export default function FormPersonas({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("formData: ", formData);
-
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
-      console.log("Error en campos obligatorios: ", requiredFieldsError);
-
       setErrorMessage(
         "No se puede añadir un registro con uno o más campos vacios "
       );
@@ -273,8 +261,6 @@ export default function FormPersonas({
 
     const formDataError = validateFormData();
     if (formDataError) {
-      console.log("Error en datos correctos: ", formDataError);
-
       setErrorMessage("");
       return;
     }

@@ -22,7 +22,7 @@ public class TransaccionVacacion implements Serializable {
     private String dni;
     private String tipo_estado;
     private Long timestamp;
-    private String hash;
+    private String hashTransaccionVacacion;
 
     public TransaccionVacacion() {
         // Inicializar algunos valores por defecto
@@ -37,7 +37,7 @@ public class TransaccionVacacion implements Serializable {
         this.dni = "";
         this.tipo_estado = "";
         this.timestamp = System.currentTimeMillis();
-        this.hash = calcularHashTransaccion();
+        this.hashTransaccionVacacion = calcularHashTransaccion();
     }
 
     public TransaccionVacacion(int id_vacacion_empleado, LocalDate fecha_inicio, LocalDate fecha_fin,
@@ -55,7 +55,7 @@ public class TransaccionVacacion implements Serializable {
         this.dni = dni;
         this.tipo_estado = tipo_estado;
         this.timestamp = System.currentTimeMillis();
-        this.hash = calcularHashTransaccion();
+        this.hashTransaccionVacacion = calcularHashTransaccion();
     }
 
     public Long getTimestamp() {
@@ -66,12 +66,12 @@ public class TransaccionVacacion implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public String getHash() {
-        return hash;
+    public String getHashTransaccionVacacion() {
+        return hashTransaccionVacacion;
     }
 
-    public void setHash(String hash) {
-        this.hash = hash;
+    public void setHashTransaccionVacacion(String HashTransaccionVacacion) {
+        this.hashTransaccionVacacion = HashTransaccionVacacion;
     }
 
     public int getId_vacacion_empleado() {
@@ -186,7 +186,7 @@ public class TransaccionVacacion implements Serializable {
     @Override
     public String toString() {
         return "{" +
-                "hash='" + hash + '\'' + "id_vacacion_empleado=" + id_vacacion_empleado + ", fecha_inicio="
+                "hashTransaccionVacacion='" + hashTransaccionVacacion + '\'' + "id_vacacion_empleado=" + id_vacacion_empleado + ", fecha_inicio="
                 + fecha_inicio + ", fecha_fin=" + fecha_fin + ", dias_disponibles=" + dias_disponibles
                 + ", dias_pendientes=" + dias_pendientes + ", dias_solicitados=" + dias_solicitados +
                 ", dias_disfrutados=" + dias_disfrutados + ", observacion='"
@@ -209,7 +209,7 @@ public class TransaccionVacacion implements Serializable {
         map.put("dni", dni);
         map.put("tipo_estado", tipo_estado);
         map.put("timestamp", timestamp);
-        map.put("hash", hash);
+        map.put("hashTransaccionVacacion", hashTransaccionVacacion);
 
         return map;
     }
@@ -230,7 +230,7 @@ public class TransaccionVacacion implements Serializable {
         System.out.println("| DNI: " + dni);
         System.out.println("| Tipo Estado: " + tipo_estado);
         System.out.println("| Timestamp: " + timestamp);
-        System.out.println("| Hash: " + hash);
+        System.out.println("| HashTransaccionVacacion: " + hashTransaccionVacacion);
         System.out.println("+----------------------------------------------------------------------------------+");
     }
 

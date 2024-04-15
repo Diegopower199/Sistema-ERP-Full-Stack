@@ -65,13 +65,11 @@ export default function FormAsistenciasEmpleados({
       errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setPersonasOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
         return false;
       }
@@ -104,8 +102,6 @@ export default function FormAsistenciasEmpleados({
           return;
         }
 
-        console.log("operationType: ", operationType);
-
         if (operationType === "update" || operationType === "view") {
           const fechaAsistenciaValida = validarFechaYYYYMMDD(
             asistenciaEmpleadoDataForm.fecha_asistencia
@@ -113,11 +109,6 @@ export default function FormAsistenciasEmpleados({
           if (fechaAsistenciaValida === null) {
             const fechaAsistenciaFormateada = formatearFechaYYYYMMDD(
               asistenciaEmpleadoDataForm.fecha_asistencia
-            );
-
-            console.log(
-              "fechaAsistenciaFormateada: ",
-              fechaAsistenciaFormateada
             );
 
             setFormData(() => ({
@@ -150,7 +141,6 @@ export default function FormAsistenciasEmpleados({
     const errorForm = {};
 
     setFormErrors(errorForm);
-    console.log("errorForm: ", errorForm);
 
     return Object.keys(errorForm).length !== 0;
   };
@@ -167,7 +157,6 @@ export default function FormAsistenciasEmpleados({
   };
 
   const handleTimeChange = (time, timeString, name) => {
-    console.log("time: ", time, "timeString: ", timeString, name);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -177,7 +166,6 @@ export default function FormAsistenciasEmpleados({
   };
 
   const handleSelectPersonaChange = (value, option) => {
-    console.log("La persona seleccionado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -188,7 +176,7 @@ export default function FormAsistenciasEmpleados({
   };
 
   const handleSelectPersonaSearch = (value) => {
-    console.log("Search persona:", value);
+    // console.log("Search persona:", value);
   };
 
   const filterIncrementalSearch = (input, option) => {
@@ -204,12 +192,8 @@ export default function FormAsistenciasEmpleados({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("formData: ", formData);
-
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
-      console.log("Error en campos obligatorios: ", requiredFieldsError);
-
       setErrorMessage(
         "No se puede añadir un registro con uno o más campos vacios "
       );
@@ -218,8 +202,6 @@ export default function FormAsistenciasEmpleados({
 
     const formDataError = validateFormData();
     if (formDataError) {
-      console.log("Error en datos correctos: ", formDataError);
-
       setErrorMessage("");
       return;
     }

@@ -187,7 +187,6 @@ export default function BajasLaboralesEmpleados() {
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -231,8 +230,6 @@ export default function BajasLaboralesEmpleados() {
   };
 
   useEffect(() => {
-    console.log("Pagina de bajas laborales empleados: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
@@ -267,23 +264,18 @@ export default function BajasLaboralesEmpleados() {
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nueva baja laboral empleado");
-
     toggleCreateBajaLaboralEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
-    console.log("Boton para actualizar");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateBajaLaboralEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
-    console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
-    console.log("Boton para borrar: ", filaSeleccionada);
+
     const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
     setIdBajaLaboralEmpleadoSelected(id);
@@ -296,8 +288,6 @@ export default function BajasLaboralesEmpleados() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una baja laboral empleado");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueBajaLaboralEmpleadoForm();

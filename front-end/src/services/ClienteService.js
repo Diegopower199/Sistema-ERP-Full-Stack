@@ -28,7 +28,7 @@ export const getAllClientes = async () => {
 
 export const saveCliente = async (data) => {
   const url = API_URL_BACK_END.replace("#", "clientes");
-  console.log("FORM cliente: ", data);
+
   try {
     const formData = {
       nif: data.nif,
@@ -89,7 +89,7 @@ export const getClienteById = async (id) => {
 
 export const updateCliente = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "clientes");
-  console.log(`FORM PERSONA CON id ${id}: `, data);
+
   try {
     const formData = {
       nif: data.nif,

@@ -71,16 +71,12 @@ export default function FormVacacionesEmpleados({
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposEstados);
 
-      console.log("errorHandlingInfo: ", errorHandlingInfo);
-
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setTiposEstadosOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(
           responseGetAllTiposEstados.errorMessage
         );
@@ -114,13 +110,11 @@ export default function FormVacacionesEmpleados({
       errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setPersonasOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
         return false;
       }
@@ -159,8 +153,6 @@ export default function FormVacacionesEmpleados({
           return;
         }
 
-        console.log("operationType: ", operationType, vacacionEmpleadoDataForm);
-
         if (operationType === "update" || operationType === "view") {
           const fechaInicioValida = validarFechaYYYYMMDD(
             vacacionEmpleadoDataForm.fecha_inicio
@@ -178,9 +170,6 @@ export default function FormVacacionesEmpleados({
             const fechaFinFormateada = formatearFechaYYYYMMDD(
               vacacionEmpleadoDataForm.fecha_fin
             );
-
-            console.log("fechaInicioFormateada: ", fechaInicioFormateada);
-            console.log("fechaFinFormateada: ", fechaFinFormateada);
 
             setFormData(() => ({
               ...vacacionEmpleadoDataForm,
@@ -224,8 +213,6 @@ export default function FormVacacionesEmpleados({
 
     setRequiredFieldsIncomplete(errorMissingFields);
 
-    console.log("errorMissingFields: ", errorMissingFields);
-
     return Object.keys(errorMissingFields).length !== 0;
   };
 
@@ -233,7 +220,6 @@ export default function FormVacacionesEmpleados({
     const errorForm = {};
 
     setFormErrors(errorForm);
-    console.log("errorForm", errorForm);
 
     return Object.keys(errorForm).length !== 0;
   };
@@ -250,7 +236,6 @@ export default function FormVacacionesEmpleados({
   };
 
   const handleTipoEstadoChange = (value, option) => {
-    console.log("El tipo estado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -261,7 +246,6 @@ export default function FormVacacionesEmpleados({
   };
 
   const handleSelectPersonaChange = (value, option) => {
-    console.log("La persona seleccionado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -272,7 +256,7 @@ export default function FormVacacionesEmpleados({
   };
 
   const handleSelectPersonaSearch = (value) => {
-    console.log("Search persona:", value);
+    // console.log("Search persona:", value);
   };
 
   const filterIncrementalSearch = (input, option) => {
@@ -288,11 +272,8 @@ export default function FormVacacionesEmpleados({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("formData: ", formData);
-
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
-      console.log("Error en campos obligatorios: ", requiredFieldsError);
       setErrorMessage(
         "No se puede añadir un registro con uno o más campos vacios "
       );
@@ -301,7 +282,6 @@ export default function FormVacacionesEmpleados({
 
     const formDataError = validateFormData();
     if (formDataError) {
-      console.log("Error en datos correctos: ", formDataError);
       setErrorMessage("");
       return;
     }
@@ -359,6 +339,8 @@ export default function FormVacacionesEmpleados({
             dni: responseUpdateVacacion.data.persona.dni,
             tipo_estado: responseUpdateVacacion.data.tipo_estado.tipo_estado,
           };
+
+          console.log("dataVacacionAutorizada: ", dataVacacionAutorizada);
 
           const responseCreateBlockchainVacacionAutorizada =
             await saveTransaccionVacacionAutorizada(dataVacacionAutorizada);

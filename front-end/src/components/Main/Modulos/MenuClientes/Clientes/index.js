@@ -178,7 +178,6 @@ export default function Clientes() {
       errorHandlingInfo = checkResponseForErrors(responseGetAllClientes);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -215,8 +214,6 @@ export default function Clientes() {
   };
 
   useEffect(() => {
-    console.log("Pagina de clientes: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
@@ -248,22 +245,16 @@ export default function Clientes() {
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir un nuevo cliente");
-
     toggleCreateClienteForm();
   };
 
   const handleUpdateClick = (id) => () => {
-    console.log("Boton para actualizar un cliente");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateClienteForm();
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver un cliente");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueClienteForm();

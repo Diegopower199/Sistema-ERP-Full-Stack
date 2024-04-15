@@ -28,7 +28,7 @@ export const getAllBajasLaboralesEmpleados = async () => {
 
 export const saveBajaLaboralEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
-  console.log("FORM PERSONA: ", data);
+
   try {
     const formData = {};
 
@@ -79,7 +79,7 @@ export const getBajaLaboralEmpleadoById = async (id) => {
 
 export const updateBajaLaboralEmpleado = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
-  console.log(`FORM PERSONA CON id ${id}: `, data);
+
   try {
     const formData = {};
 

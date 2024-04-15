@@ -219,7 +219,6 @@ export default function PedidosClientes() {
       errorHandlingInfo = checkResponseForErrors(responseGetAllPedidosClientes);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -278,8 +277,6 @@ export default function PedidosClientes() {
   };
 
   useEffect(() => {
-    console.log("Pagina de pedidos clientes: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
@@ -311,22 +308,16 @@ export default function PedidosClientes() {
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nuevo pedido cliente");
-
     toggleCreatePedidoClienteForm();
   };
 
   const handleUpdateClick = (id) => () => {
-    console.log("Boton para actualizar");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdatePedidoClienteForm();
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver un pedido cliente");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniquePedidoClienteForm();

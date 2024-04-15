@@ -13,15 +13,15 @@ public class Block implements Serializable {
     private int index;
     private Long timestamp;
     private TransaccionVacacion dataTransaccionVacacion;
-    private String previousHash;
-    private String hash;
+    private String previousHashBlock;
+    private String hashBlock;
 
-    public Block(int index, TransaccionVacacion dataTransaccionVacacion, String previousHash) {
+    public Block(int index, TransaccionVacacion dataTransaccionVacacion, String previousHashBlock) {
         this.index = index;
         this.dataTransaccionVacacion = dataTransaccionVacacion;
-        this.previousHash = previousHash;
+        this.previousHashBlock = previousHashBlock;
         this.timestamp = System.currentTimeMillis();
-        this.hash = calculateHash();
+        this.hashBlock = calculateHash();
     }
 
     public int getIndex() {
@@ -48,25 +48,25 @@ public class Block implements Serializable {
         this.dataTransaccionVacacion = dataTransaccionVacacion;
     }
 
-    public String getPreviousHash() {
-        return previousHash;
+    public String getPreviousHashBlock() {
+        return previousHashBlock;
     }
 
-    public void setPreviousHash(String previousHash) {
-        this.previousHash = previousHash;
+    public void setPreviousHashBlock(String PreviousHashBlock) {
+        this.previousHashBlock = PreviousHashBlock;
     }
 
-    public String getHash() {
-        return hash;
+    public String getHashBlock() {
+        return hashBlock;
     }
 
-    public void setHash(String hash) {
-        this.hash = hash;
+    public void setHashBlock(String hashBlock) {
+        this.hashBlock = hashBlock;
     }
 
     public String calculateHash() {
 
-        String text = String.valueOf(index + previousHash + String.valueOf(timestamp)
+        String text = String.valueOf(index + previousHashBlock + String.valueOf(timestamp)
                 + String.valueOf(dataTransaccionVacacion.calcularHashTransaccion()));
 
         MessageDigest digest = null;
@@ -95,8 +95,8 @@ public class Block implements Serializable {
                 "index=" + index +
                 ", timestamp=" + timestamp +
                 ", dataTransaccionVacacion=" + dataTransaccionVacacion +
-                ", previousHash='" + previousHash + '\'' +
-                ", hash='" + hash + '\'' +
+                ", previousHashBlock='" + previousHashBlock + '\'' +
+                ", hashBlock='" + hashBlock + '\'' +
                 '}';
     }
 
@@ -107,8 +107,8 @@ public class Block implements Serializable {
         map.put("index", index);
         map.put("timestamp", timestamp);
         map.put("dataTransaccionVacacion", dataTransaccionVacacion.toMap()); // Convierte la transacción a un mapa
-        map.put("previousHash", previousHash);
-        map.put("hash", hash);
+        map.put("previousHashBlock", previousHashBlock);
+        map.put("hashBlock", hashBlock);
 
         return map;
     }
@@ -121,8 +121,8 @@ public class Block implements Serializable {
         System.out.println("| Index: " + index);
         System.out.println("| Timestamp: " + timestamp);
         dataTransaccionVacacion.printTransactionData(); // Llama al método de TransaccionVacacion
-        System.out.println("| PreviousHash: " + previousHash);
-        System.out.println("| Hash: " + hash);
+        System.out.println("| PreviousHashBlock: " + previousHashBlock);
+        System.out.println("| HashBlock: " + hashBlock);
         System.out.println("+----------------------------------------------------------------------------------+");
     }
 

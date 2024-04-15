@@ -41,7 +41,7 @@ public class Blockchain implements Serializable {
 
     public Block addBlock(TransaccionVacacion data) { // Data será mi objeto Vacacion
         Block previousBlock = getLatestBlock();
-        Block newBlock = new Block(previousBlock.getIndex() + 1, data, previousBlock.getHash());
+        Block newBlock = new Block(previousBlock.getIndex() + 1, data, previousBlock.getHashBlock());
         libroTransaccionesVacacionesAutorizadas.add(newBlock);
         return newBlock;
     }
@@ -50,10 +50,10 @@ public class Blockchain implements Serializable {
         for (int i = 1; i < libroTransaccionesVacacionesAutorizadas.size(); i++) {
             Block currentBlock = libroTransaccionesVacacionesAutorizadas.get(i);
             Block previousBlock = libroTransaccionesVacacionesAutorizadas.get(i - 1);
-            if (!currentBlock.getHash().equals(currentBlock.calculateHash())) {
+            if (!currentBlock.getHashBlock().equals(currentBlock.calculateHash())) {
                 return false;
             }
-            if (!currentBlock.getPreviousHash().equals(previousBlock.getHash())) {
+            if (!currentBlock.getPreviousHashBlock().equals(previousBlock.getHashBlock())) {
                 return false;
             }
         }

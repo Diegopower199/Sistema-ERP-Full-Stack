@@ -174,7 +174,6 @@ export default function PagosFacturasClientes() {
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -210,8 +209,6 @@ export default function PagosFacturasClientes() {
   };
 
   useEffect(() => {
-    console.log("Pagina de pagos facturas clientes: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
@@ -246,23 +243,17 @@ export default function PagosFacturasClientes() {
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nueva vacacion empleado");
-
     toggleCreateVacacionEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
-    console.log("Boton para actualizar");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateVacacionEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
-    console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
-    console.log("Boton para borrar: ", filaSeleccionada);
 
     setIdVacacionEmpleadoSelected(id);
     setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
@@ -274,8 +265,6 @@ export default function PagosFacturasClientes() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una vacacion empleado");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueVacacionEmpleadoForm();

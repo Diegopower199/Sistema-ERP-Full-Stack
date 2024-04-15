@@ -23,8 +23,6 @@ export default function MenuRecursosHumanos() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("Pagina de recursos humanos: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     }
@@ -40,21 +38,24 @@ export default function MenuRecursosHumanos() {
       <br />
       <p>
         <Link href={"menu-recursos-humanos/personas"}>Personas</Link>
-        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla y form
+        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla y
+        form
       </p>
       <br />
       <p>
         <Link href={"menu-recursos-humanos/solicitudes-empleados"}>
           Solicitudes Empleados
         </Link>
-        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla y form
+        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla y
+        form
       </p>
       <br />
       <p>
         <Link href={"menu-recursos-humanos/vacaciones-empleados"}>
           Vacaciones Empleados
         </Link>
-        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla y form
+        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla y
+        form
       </p>
       <br />
       <p>

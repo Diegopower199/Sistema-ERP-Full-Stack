@@ -27,7 +27,7 @@ export const getAllFacturasClientes = async () => {
 
 export const saveFacturaCliente = async (data) => {
   const url = API_URL_BACK_END.replace("#", "facturasClientes");
-  console.log("FORM PERSONA: ", data);
+
   try {
     const formData = {};
 
@@ -104,7 +104,7 @@ export const getFacturaClienteById = async (id) => {
 
 export const updateFacturaCliente = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "facturasClientes");
-  console.log(`FORM PERSONA CON id ${id}: `, data);
+
   try {
     const formData = {};
 

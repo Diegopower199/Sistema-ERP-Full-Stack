@@ -1,6 +1,7 @@
 package tfg.backend.services;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -114,15 +115,12 @@ public class FacturaClienteService {
                 .findByTipoEstadoFacturaIdOrderByPedidoClienteId(tipoEstadoPendienteFacturar);
 
         LocalDate fechaActual = LocalDate.now();
-        // Calcular la tarifa total
-        double tarifaTotalServicio = 0;
-        double tarifaTotalDesplazamiento = 0;
 
         for (PedidoClienteModel pedidoCliente : listaPedidosClientesParaFacturar) {
             FacturaClienteModel newFacturaClienteFacturado = new FacturaClienteModel();
 
-            //tarifaTotalServicio = calcularTarifa(tiempoTotalServicio, 70);
-            //tarifaTotalDesplazamiento = calcularTarifa(tiempoTotalDesplazamiento, 30);
+            double tarifaTotalDesplazamiento = calcularTarifa(pedidoCliente.getTiempo_desplazamiento_total(), 30);
+            double tarifaTotalServicio = calcularTarifa(pedidoCliente.getTiempo_servicio_total(), 70);
 
             newFacturaClienteFacturado.setDescripcion_servicio(pedidoCliente.getDescripcion());
             newFacturaClienteFacturado.setDireccion_entrega(pedidoCliente.getDireccion_entrega());
@@ -137,15 +135,15 @@ public class FacturaClienteService {
             newFacturaClienteFacturado.setFecha_factura_emitida(fechaActual);
             newFacturaClienteFacturado.setTarifa_hora_desplazamiento(GlobalConstants.TARIFA_HORA_TRANSPORTE);
             newFacturaClienteFacturado.setTarifa_hora_servicio(GlobalConstants.TARIFA_HORA_SERVICIO);
-            newFacturaClienteFacturado.setSubtotal_factura_sin_iva(1000);
+
+            // TODO ESTO LO HACE MAL
+
+            double subtotalFactura = (tarifaTotalDesplazamiento + tarifaTotalServicio);
+            newFacturaClienteFacturado.setSubtotal_factura_sin_iva(subtotalFactura);
             newFacturaClienteFacturado.setIva(GlobalConstants.IVA);
-            int subtotalFactura = 1000;
-            int calculoTotalFactura = subtotalFactura + (subtotalFactura * (GlobalConstants.IVA / 100));
+            double calculoTotalFactura = subtotalFactura + (subtotalFactura * (GlobalConstants.IVA / 100));
 
-            newFacturaClienteFacturado.setTotal_factura(0);
-
-            // total_factura = subtotal_factura_sin_iva + (subtotal_factura_sin_iva * (iva /
-            // 100))
+            newFacturaClienteFacturado.setTotal_factura(calculoTotalFactura);
 
             newFacturaClienteFacturado.setCliente(pedidoCliente.getCliente());
             newFacturaClienteFacturado.setPedido_cliente(pedidoCliente);
@@ -242,7 +240,9 @@ public class FacturaClienteService {
     }
 
     // Función para calcular la tarifa total
-    public static double calcularTarifa(int minutosTotal, double tarifaPorHora) {
+    public static double calcularTarifa(LocalTime tiempoTotal, double tarifaPorHora) {
+        // Convertir el tiempo total a minutos
+        long minutosTotal = tiempoTotal.getHour() * 60 + tiempoTotal.getMinute();
 
         // Calcular la tarifa total
         double tarifaTotal = (minutosTotal / 60.0) * tarifaPorHora;

@@ -29,7 +29,7 @@ export const getAllAsistenciaEmpleados = async () => {
 export const saveAsistenciaEmpleado = async (data) => {
   // Fin de la jornada laboral (NO ESTE BIEN, NO SÉ IDENTIFICARLO)
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
-  console.log("FORM ASISTENCIA EMPLEADO: ", data);
+
   try {
     const formData = {
       fecha_asistencia: data.fecha_asistencia,
@@ -66,7 +66,7 @@ export const saveAsistenciaEmpleado = async (data) => {
 export const startOfWorkdayAsistenciaEmpleado = async (data) => {
   // Inicio de la jornada laboral
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
-  console.log("FORM PERSONA: ", data);
+
   try {
     const formData = {};
 
@@ -94,7 +94,7 @@ export const startOfWorkdayAsistenciaEmpleado = async (data) => {
 export const endOfWorkdayAsistenciaEmpleado = async (data) => {
   // Fin de la jornada laboral (NO ESTE BIEN, NO SÉ IDENTIFICARLO)
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
-  console.log("FORM ASISTENCIA EMPLEADO: ", data);
+
   try {
     const formData = {};
 
@@ -145,7 +145,7 @@ export const getAsistenciaEmpleadoById = async (id) => {
 
 export const updateAsistenciaEmpleado = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
-  console.log(`FORM ASISTENCIA EMPLEADO CON id ${id}: `, data);
+
   try {
     const formData = {
       fecha_asistencia: data.fecha_asistencia,

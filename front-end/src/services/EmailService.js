@@ -3,7 +3,7 @@ import { API_URL_EMAIL } from "@/utils/constants";
 
 export const sendEmailNodeMailer = async (data) => {
   const url = API_URL_EMAIL;
-  console.log("FORM send email: ", data);
+
   try {
     const formData = {
       to: data.correo_electronico,
@@ -16,7 +16,6 @@ export const sendEmailNodeMailer = async (data) => {
       status: response.status,
     };
   } catch (error) {
-    console.log("error email: ", error)
     return {
       errorMessage: (
         <div>

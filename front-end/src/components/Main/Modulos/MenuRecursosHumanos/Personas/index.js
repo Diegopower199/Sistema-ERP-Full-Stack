@@ -194,7 +194,6 @@ export default function Personas() {
       errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible.");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -233,8 +232,6 @@ export default function Personas() {
   };
 
   useEffect(() => {
-    console.log("Pagina de personas: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
@@ -269,23 +266,17 @@ export default function Personas() {
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nueva persona");
-
     toggleCreatePersonaForm();
   };
 
   const handleUpdateClick = (id) => () => {
-    console.log("Boton para actualizar");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdatePersonaForm();
   };
 
   const handleDeleteClick = (id) => () => {
-    console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
-    console.log("Boton para borrar: ", filaSeleccionada);
 
     setIdPersonaSelected(id);
     setNamePersonaSelected(filaSeleccionada.nombre);
@@ -293,8 +284,6 @@ export default function Personas() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una persona");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniquePersonaForm();

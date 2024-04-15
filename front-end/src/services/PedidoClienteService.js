@@ -28,7 +28,7 @@ export const getAllPedidosClientes = async () => {
 
 export const savePedidoCliente = async (data) => {
   const url = API_URL_BACK_END.replace("#", "pedidosClientes");
-  console.log("FORM pedido cliente: ", data);
+
   try {
     const formData = {
       direccion_entrega: data.direccion_entrega,
@@ -64,8 +64,6 @@ export const savePedidoCliente = async (data) => {
         id_tipo_estado_factura: parseInt(data.id_tipo_estado_factura),
       },
     };
-
-    console.log("FORM DATA EN SERVICE: ", formData);
 
     const response = await axios.post(url + "save", formData);
 
@@ -115,7 +113,7 @@ export const getPedidoClienteById = async (id) => {
 
 export const updatePedidoCliente = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "pedidosClientes");
-  console.log(`FORM PERSONA CON id ${id}: `, data);
+
   try {
     const formData = {
       direccion_entrega: data.direccion_entrega,
@@ -152,15 +150,12 @@ export const updatePedidoCliente = async (id, data) => {
       },
     };
 
-    console.log("formData: ", formData)
-
     const response = await axios.put(url + "update/" + id, formData);
     return {
       data: response.data,
       status: response.status,
     };
   } catch (error) {
-    console.log(error)
     if (error.response) {
       return {
         errorMessage: error.response.data.message,

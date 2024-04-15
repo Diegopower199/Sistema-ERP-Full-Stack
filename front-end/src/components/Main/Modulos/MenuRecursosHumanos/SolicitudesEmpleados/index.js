@@ -178,7 +178,6 @@ export default function SolicitudesEmpleados() {
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -220,8 +219,6 @@ export default function SolicitudesEmpleados() {
   };
 
   useEffect(() => {
-    console.log("Pagina de solicitudes empleados: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
@@ -256,23 +253,18 @@ export default function SolicitudesEmpleados() {
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nueva solicitud empleado");
-
     toggleCreateSolicitudEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
-    console.log("Boton para actualizar");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateSolicitudEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
-    console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
-    console.log("Boton para borrar: ", filaSeleccionada);
+
     const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
     setIdSolicitudEmpleadoSelected(id);
@@ -282,8 +274,6 @@ export default function SolicitudesEmpleados() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una solicitud empleado");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueSolicitudEmpleadoForm();

@@ -127,13 +127,13 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
     {
       field: "hashBlock",
       headerName: "Hash block",
-      width: 280,
+      width: 580,
       editable: false,
     },
     {
-      field: "hashPreviousHash",
-      headerName: "Hash previous hash",
-      width: 280,
+      field: "previousHashBlock",
+      headerName: "Previous hash block",
+      width: 580,
       editable: false,
     },
   ];
@@ -160,7 +160,6 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
         );
 
         if (errorHandlingInfo.noContent) {
-          console.log("No hay contenido disponible");
           setDataSource([]);
           setTableLoading(false);
           return false;
@@ -205,9 +204,11 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
                   transaccionVacacionAutorizada.dataTransaccionVacacion
                     .tipo_estado,
                 hashTransaccionVacacion:
-                  transaccionVacacionAutorizada.dataTransaccionVacacion.hash,
-                hashBlock: transaccionVacacionAutorizada.hash,
-                hashPreviousHash: transaccionVacacionAutorizada.previousHash,
+                  transaccionVacacionAutorizada.dataTransaccionVacacion
+                    .hashTransaccionVacacion,
+                hashBlock: transaccionVacacionAutorizada.hashBlock,
+                previousHashBlock:
+                  transaccionVacacionAutorizada.previousHashBlock,
               };
             }
           );
@@ -222,8 +223,6 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
     };
 
   useEffect(() => {
-    console.log("Pagina de historial vacaciones autorizadas: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {

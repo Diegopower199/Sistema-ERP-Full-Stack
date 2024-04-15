@@ -19,8 +19,6 @@ export default function MenuPrincipal() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("Pagina de menu principal: ");
-    console.log("authUser: ", authUser, "permisosUser: ", permisosUser);
     if (!authUser) {
       router.push("/login");
     }

@@ -29,7 +29,7 @@ export const getAllSolicitudesEmpleados = async () => {
 
 export const saveSolicitudEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "solicitudesEmpleados");
-  console.log("FORM SOLICITUD EMPLEADO: ", data);
+
   try {
     const formData = {
       fecha_solicitud: data.fecha_solicitud,
@@ -93,7 +93,7 @@ export const getSolicitudEmpleadoById = async (id) => {
 
 export const updateSolicitudEmpleado = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "solicitudesEmpleados");
-  console.log(`FORM PERSONA CON id ${id}: `, data);
+
   try {
     const formData = {
       fecha_solicitud: data.fecha_solicitud,

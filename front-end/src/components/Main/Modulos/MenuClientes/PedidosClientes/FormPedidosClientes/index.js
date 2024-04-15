@@ -85,13 +85,11 @@ export default function FormPedidosClientes({
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposEstados);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setTiposEstadosOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(
           responseGetAllTiposEstados.errorMessage
         );
@@ -128,13 +126,11 @@ export default function FormPedidosClientes({
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setTiposEstadosOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(
           responseGetAllTiposEstadosFacturas.errorMessage
         );
@@ -168,13 +164,11 @@ export default function FormPedidosClientes({
       errorHandlingInfo = checkResponseForErrors(responseGetAllClientes);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setClientesOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(responseGetAllClientes.errorMessage);
         return false;
       }
@@ -204,13 +198,11 @@ export default function FormPedidosClientes({
       errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setPersonasOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
         return false;
       }
@@ -234,8 +226,6 @@ export default function FormPedidosClientes({
 
   useEffect(() => {
     let noCallErrorsDetected = false;
-
-    console.log("pedidoClienteDataForm: ", pedidoClienteDataForm);
 
     const fetchData = async () => {
       try {
@@ -264,8 +254,6 @@ export default function FormPedidosClientes({
           return;
         }
 
-        console.log("operationType: ", operationType);
-
         if (operationType === "update" || operationType === "view") {
           const fechaSolicitudValida = validarFechaYYYYMMDD(
             pedidoClienteDataForm.fecha_solicitud_pedido
@@ -292,16 +280,6 @@ export default function FormPedidosClientes({
 
             const fechaEntregaRealFormateada = formatearFechaYYYYMMDD(
               pedidoClienteDataForm.fecha_entrega_real
-            );
-
-            console.log("fechaSolicitudFormateada: ", fechaSolicitudFormateada);
-            console.log(
-              "fechaEntregaPrevistaFormateada: ",
-              fechaEntregaPrevistaFormateada
-            );
-            console.log(
-              "fechaEntregaRealFormateada: ",
-              fechaEntregaRealFormateada
             );
 
             setFormData(() => ({
@@ -388,8 +366,6 @@ export default function FormPedidosClientes({
         "Por favor, ingresa un tipo de estado de factura";
     }
 
-    console.log("errorMissingFields: ", errorMissingFields);
-
     setRequiredFieldsIncomplete(errorMissingFields);
 
     return Object.keys(errorMissingFields).length !== 0;
@@ -399,14 +375,12 @@ export default function FormPedidosClientes({
     const errorForm = {};
 
     setFormErrors(errorForm);
-    console.log("errorForm: ", errorForm);
 
     return Object.keys(errorForm).length !== 0;
   };
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
-    // console.log("Name: ", name, " Value: ", value);
 
     setFormData((prevDataState) => {
       return {
@@ -417,7 +391,6 @@ export default function FormPedidosClientes({
   };
 
   const handleTimeChange = (time, timeString, name) => {
-    console.log("time: ", time, "timeString: ", timeString, name);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -427,7 +400,6 @@ export default function FormPedidosClientes({
   };
 
   const handleTipoEstadoChange = (value, option) => {
-    console.log("El tipo estado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -438,7 +410,6 @@ export default function FormPedidosClientes({
   };
 
   const handleTipoEstadoFacturaChange = (value, option) => {
-    console.log("El tipo estado factura es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -449,7 +420,6 @@ export default function FormPedidosClientes({
   };
 
   const handleSelectClienteChange = (value, option) => {
-    console.log("El cliente seleccionado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -460,7 +430,6 @@ export default function FormPedidosClientes({
   };
 
   const handleSelectPersonaChange = (value, option) => {
-    console.log("La persona seleccionado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -471,11 +440,11 @@ export default function FormPedidosClientes({
   };
 
   const handleSelectClienteSearch = (value) => {
-    console.log("Search cliente:", value);
+    // console.log("Search cliente:", value);
   };
 
   const handleSelectPersonaSearch = (value) => {
-    console.log("Search persona:", value);
+    // console.log("Search persona:", value);
   };
 
   const filterIncrementalSearch = (input, option) => {
@@ -491,12 +460,8 @@ export default function FormPedidosClientes({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("formData: ", formData);
-
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
-      console.log("Error en campos obligatorios: ", requiredFieldsError);
-
       setErrorMessage(
         "No se puede añadir un registro con uno o más campos vacios "
       );
@@ -505,8 +470,6 @@ export default function FormPedidosClientes({
 
     const formDataError = validateFormData();
     if (formDataError) {
-      console.log("Error en datos correctos: ", formDataError);
-
       setErrorMessage("");
       return;
     }

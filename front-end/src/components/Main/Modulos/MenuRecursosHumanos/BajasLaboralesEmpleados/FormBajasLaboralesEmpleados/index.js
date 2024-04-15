@@ -79,16 +79,12 @@ export default function FormBajasLaboralesEmpleados({
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllTiposEstados);
 
-      console.log("errorHandlingInfo: ", errorHandlingInfo);
-
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setTiposEstadosOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(
           responseGetAllTiposEstados.errorMessage
         );
@@ -121,16 +117,12 @@ export default function FormBajasLaboralesEmpleados({
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllMotivosBajas);
 
-      console.log("errorHandlingInfo: ", errorHandlingInfo);
-
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setTiposEstadosOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(
           responseGetAllMotivosBajas.errorMessage
         );
@@ -152,13 +144,11 @@ export default function FormBajasLaboralesEmpleados({
       errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setPersonasOptions([]);
         return false;
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        console.log("ERROR EN EL BACK");
         handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
         return false;
       }
@@ -203,8 +193,6 @@ export default function FormBajasLaboralesEmpleados({
           return;
         }
 
-        console.log("operationType: ", operationType);
-
         if (operationType === "update" || operationType === "view") {
           const fechaInicioValida = validarFechaYYYYMMDD(
             bajaLaboralEmpleadoDataForm.fecha_inicio
@@ -222,9 +210,6 @@ export default function FormBajasLaboralesEmpleados({
             const fechaFinFormateada = formatearFechaYYYYMMDD(
               bajaLaboralEmpleadoDataForm.fecha_fin
             );
-
-            console.log("fechaInicioFormateada: ", fechaInicioFormateada);
-            console.log("fechaFinFormateada: ", fechaFinFormateada);
 
             setFormData(() => ({
               ...bajaLaboralEmpleadoDataForm,
@@ -257,14 +242,12 @@ export default function FormBajasLaboralesEmpleados({
     const errorForm = {};
 
     setFormErrors(errorForm);
-    console.log("errorForm: ", errorForm);
 
     return Object.keys(errorForm).length !== 0;
   };
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
-    console.log("Name: ", name, " Value: ", value);
 
     setFormData((prevDataState) => {
       return {
@@ -275,7 +258,6 @@ export default function FormBajasLaboralesEmpleados({
   };
 
   const handleTipoEstadoChange = (value, option) => {
-    console.log("El tipo estado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -286,7 +268,6 @@ export default function FormBajasLaboralesEmpleados({
   };
 
   const handleMotivoBajaChange = (value, option) => {
-    console.log("El motivo baja es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -297,7 +278,6 @@ export default function FormBajasLaboralesEmpleados({
   };
 
   const handleSelectPersonaChange = (value, option) => {
-    console.log("La persona seleccionado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -308,7 +288,7 @@ export default function FormBajasLaboralesEmpleados({
   };
 
   const handleSelectPersonaSearch = (value) => {
-    console.log("Search persona:", value);
+    // console.log("Search persona:", value);
   };
 
   const filterIncrementalSearch = (input, option) => {
@@ -324,12 +304,8 @@ export default function FormBajasLaboralesEmpleados({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("formData: ", formData);
-
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
-      console.log("Error en campos obligatorios: ", requiredFieldsError);
-
       setErrorMessage(
         "No se puede añadir un registro con uno o más campos vacios "
       );
@@ -338,8 +314,6 @@ export default function FormBajasLaboralesEmpleados({
 
     const formDataError = validateFormData();
     if (formDataError) {
-      console.log("Error en datos correctos: ", formDataError);
-
       setErrorMessage("");
       return;
     }

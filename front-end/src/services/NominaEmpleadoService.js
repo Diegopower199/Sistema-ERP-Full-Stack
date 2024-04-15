@@ -27,7 +27,7 @@ export const getAllNominasEmpleados = async () => {
 
 export const saveNominaEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "nominasEmpleados");
-  console.log("FORM PERSONA: ", data);
+
   try {
     const formData = {};
 
@@ -104,7 +104,7 @@ export const getNominaEmpleadoById = async (id) => {
 
 export const updateNominaEmpleado = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "nominasEmpleados");
-  console.log(`FORM PERSONA CON id ${id}: `, data);
+
   try {
     const formData = {};
 

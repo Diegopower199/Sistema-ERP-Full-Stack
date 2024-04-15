@@ -185,7 +185,6 @@ export default function AsistenciasEmpleados() {
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -223,8 +222,6 @@ export default function AsistenciasEmpleados() {
   };
 
   useEffect(() => {
-    console.log("Pagina de asistencias empleados: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
@@ -259,23 +256,18 @@ export default function AsistenciasEmpleados() {
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nueva asistencia empleado");
-
     toggleCreateAsistenciaEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
-    console.log("Boton para actualizar");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateAsistenciaEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
-    console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
-    console.log("Boton para borrar: ", filaSeleccionada);
+
     const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
     setIdAsistenciaEmpleadoSelected(id);
@@ -285,8 +277,6 @@ export default function AsistenciasEmpleados() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una asistencia empleado");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueAsistenciaEmpleadoForm();

@@ -62,19 +62,19 @@ public class FacturaClienteModel implements Serializable {
     private LocalDate fecha_factura_emitida;
 
     @Column(name = "tarifa_hora_desplazamiento", nullable = false)
-    private float tarifa_hora_desplazamiento;
+    private double tarifa_hora_desplazamiento;
 
     @Column(name = "tarifa_hora_servicio", nullable = false)
-    private float tarifa_hora_servicio;
+    private double tarifa_hora_servicio;
 
     @Column(name = "subtotal_factura_sin_iva", nullable = false)
-    private float subtotal_factura_sin_iva;
+    private double subtotal_factura_sin_iva;
 
     @Column(name = "iva", nullable = false)
-    private float iva;
+    private double iva;
 
     @Column(name = "total_factura", nullable = false)
-    private float total_factura;
+    private double total_factura;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false, foreignKey = @ForeignKey(name = "FK_facturas_clientes_clientes"))

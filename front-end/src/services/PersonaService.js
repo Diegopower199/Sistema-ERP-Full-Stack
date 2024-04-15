@@ -27,7 +27,7 @@ export const getAllPersonas = async () => {
 
 export const savePersona = async (data) => {
   const url = API_URL_BACK_END.replace("#", "personas");
-  console.log("FORM PERSONA: ", data);
+
   try {
     const formData = {
       numero_empleado: parseInt(data.numero_empleado),
@@ -92,7 +92,7 @@ export const getPersonaById = async (id) => {
 
 export const updatePersona = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "personas");
-  console.log(`FORM PERSONA CON id ${id}: `, data);
+
   try {
     const formData = {
       numero_empleado: parseInt(data.numero_empleado),
@@ -166,7 +166,6 @@ export const existsCorreoElectronico = async (correo_electronico) => {
       status: response.status,
     };
   } catch (error) {
-    console.log("error updatePassword: ", error);
     return {
       errorMessage: (
         <div>

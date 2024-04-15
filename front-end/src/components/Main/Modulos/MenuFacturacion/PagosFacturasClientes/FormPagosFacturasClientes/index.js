@@ -124,7 +124,6 @@ export default function FormPagosFacturasClientes({
     const errorForm = {};
 
     setFormErrors(errorForm);
-    console.log("errorForm: ", errorForm);
 
     return Object.keys(errorForm).length !== 0;
   };
@@ -141,7 +140,6 @@ export default function FormPagosFacturasClientes({
   };
 
   const handleSelectImportePagadoChange = (value, option) => {
-    console.log("El importe pagado es: ", value, option);
     setFormData((prevDataState) => {
       return {
         ...prevDataState,
@@ -153,12 +151,8 @@ export default function FormPagosFacturasClientes({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("formData: ", formData);
-
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
-      console.log("Error en campos obligatorios: ", requiredFieldsError);
-
       setErrorMessage(
         "No se puede añadir un registro con uno o más campos vacios "
       );
@@ -167,8 +161,6 @@ export default function FormPagosFacturasClientes({
 
     const formDataError = validateFormData();
     if (formDataError) {
-      console.log("Error en datos correctos: ", formDataError);
-
       setErrorMessage("");
       return;
     }

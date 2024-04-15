@@ -97,8 +97,6 @@ export default function FormClientes({
   const validateRequiredFields = () => {
     const errorMissingFields = {};
 
-    console.log("formdata", formData);
-
     if (!formData.nif) {
       errorMissingFields.nif = "Por favor, ingresa un nif";
     }
@@ -141,8 +139,6 @@ export default function FormClientes({
 
     setRequiredFieldsIncomplete(errorMissingFields);
 
-    console.log("errorMissingFields: ", errorMissingFields);
-
     return Object.keys(errorMissingFields).length !== 0;
   };
 
@@ -173,7 +169,6 @@ export default function FormClientes({
     }
 
     setFormErrors(errorForm);
-    console.log("errorForm", errorForm);
 
     return Object.keys(errorForm).length !== 0;
   };
@@ -232,11 +227,11 @@ export default function FormClientes({
   };
 
   const handleSelectProvinciaSearch = (value) => {
-    console.log("Search provincia:", value);
+    // console.log("Search provincia:", value);
   };
 
   const handleSelectCiudadSearch = (value) => {
-    console.log("Search ciudad:", value);
+    // console.log("Search ciudad:", value);
   };
 
   const filterIncrementalSearch = (input, option) => {
@@ -254,7 +249,6 @@ export default function FormClientes({
 
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
-      console.log("Error en campos obligatorios: ", requiredFieldsError);
       setErrorMessage(
         "No se puede añadir un registro con uno o más campos vacios"
       );
@@ -263,7 +257,6 @@ export default function FormClientes({
 
     const formDataError = validateFormData();
     if (formDataError) {
-      console.log("Error en datos correctos: ", formDataError);
       setErrorMessage("");
       return;
     }

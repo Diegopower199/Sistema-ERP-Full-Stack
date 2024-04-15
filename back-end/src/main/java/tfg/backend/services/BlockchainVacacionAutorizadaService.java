@@ -68,7 +68,7 @@ public class BlockchainVacacionAutorizadaService {
             RespuestaServidorCliente respuestaDelServidor = null;
             respuestaDelServidor = (RespuestaServidorCliente) objectInputStream.readObject();
 
-            System.out.println(respuestaDelServidor);
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n\n\n\n" + respuestaDelServidor + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n\n\n\n");
 
         } catch (ConnectException ce) {
             System.out.println("EL ERROR AQUI");

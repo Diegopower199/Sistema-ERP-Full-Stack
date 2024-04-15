@@ -210,7 +210,6 @@ export default function VacacionesEmpleados() {
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -255,8 +254,6 @@ export default function VacacionesEmpleados() {
   };
 
   useEffect(() => {
-    console.log("Pagina de vacaciones empleados: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
@@ -295,23 +292,17 @@ export default function VacacionesEmpleados() {
   }
 
   const handleCreateClick = () => {
-    console.log("Añadir nueva vacacion empleado");
-
     toggleCreateVacacionEmpleadoForm();
   };
 
   const handleUpdateClick = (id) => () => {
-    console.log("Boton para actualizar");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleUpdateVacacionEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
-    console.log("ID:", id);
     const filaSeleccionada = dataSource.find((row) => row.id === id);
-    console.log("Boton para borrar: ", filaSeleccionada);
     const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
     setIdVacacionEmpleadoSelected(id);
@@ -324,16 +315,12 @@ export default function VacacionesEmpleados() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una vacacion empleado");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueVacacionEmpleadoForm();
   };
 
   const handleShowHistorialVacacionesAutorizadasClick = () => {
-    console.log("Boton para ver el historial de vacaciones autorizadas");
-
     toggleShowHistorialVacacionesAutorizadas();
   };
 

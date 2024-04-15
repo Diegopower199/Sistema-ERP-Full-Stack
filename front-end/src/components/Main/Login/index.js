@@ -57,9 +57,6 @@ export default function Login() {
   }
 
   useEffect(() => {
-    console.log("pagina de login: ");
-    console.log("authUser: ", authUser);
-    console.log("isLoggedIn: ", isLoggedIn);
     if (authUser) {
       router.push("/menu-principal");
     } else {
@@ -91,8 +88,6 @@ export default function Login() {
 
     setRequiredFieldsIncomplete(errorMissingFields);
 
-    console.log("errorMissingFields: ", errorMissingFields);
-
     return Object.keys(errorMissingFields).length !== 0;
   };
 
@@ -103,12 +98,10 @@ export default function Login() {
       return;
     }
 
-    console.log("loginButtonClicked", loginButtonClicked)
     setLoginButtonClicked(true);
 
     const requiredFieldsError = validateRequiredFields();
     if (requiredFieldsError) {
-      console.log("Error en campos obligatorios: ", requiredFieldsError);
       setErrorMessage(
         "No se puede añadir un registro con uno o más campos vacios "
       );
@@ -117,8 +110,6 @@ export default function Login() {
     }
 
     try {
-      console.log(formData);
-
       const responseAuthenticateUser = await authenticateUser(
         formData.nombre_usuario,
         formData.password

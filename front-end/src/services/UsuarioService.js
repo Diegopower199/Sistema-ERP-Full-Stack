@@ -27,7 +27,7 @@ export const getAllUsuarios = async () => {
 
 export const saveUsuario = async (data) => {
   const url = API_URL_BACK_END.replace("#", "usuarios");
-  console.log("FORM USUARIO: ", data);
+
   try {
     const formData = {
       nombre_usuario: data.nombre_usuario,
@@ -89,7 +89,7 @@ export const getUsuarioById = async (id) => {
 
 export const updateUsuario = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "usuarios");
-  console.log(`FORM USUARIO CON id ${id}: `, data);
+
   try {
     const formData = {
       nombre_usuario: data.nombre_usuario,
@@ -127,7 +127,7 @@ export const deleteUsuario = async (id) => {
   const url = API_URL_BACK_END.replace("#", "usuarios");
   try {
     const response = await axios.delete(url + "delete/" + id);
-    console.log("Response delete: ", response);
+
     return {
       data: response.data,
       status: response.status,
@@ -158,7 +158,7 @@ export const authenticateUser = async (nombre_usuario, password) => {
 
   try {
     const response = await axios.post(url + "login", data);
-    console.log("Response es: ", response);
+
     return {
       data: response.data,
       status: response.status,
@@ -193,7 +193,6 @@ export const updatePassword = async (data) => {
       status: response.status,
     };
   } catch (error) {
-    console.log("error updatePassword: ", error);
     return {
       errorMessage: (
         <div>

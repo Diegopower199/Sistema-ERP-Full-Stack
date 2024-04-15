@@ -215,7 +215,6 @@ export default function NominasEmpleados() {
       );
 
       if (errorHandlingInfo.noContent) {
-        console.log("No hay contenido disponible");
         setDataSource([]);
         setTableLoading(false);
         return false;
@@ -231,8 +230,6 @@ export default function NominasEmpleados() {
 
       const nominasEmpleadosMap = responseGetAllNominasEmpleados.data.map(
         (nominaEmpleado) => {
-          console.log("nominaEmpleado: ", nominaEmpleado);
-
           const { nombre, apellidos, dni } = nominaEmpleado.persona;
 
           return {
@@ -265,8 +262,6 @@ export default function NominasEmpleados() {
   };
 
   useEffect(() => {
-    console.log("Pagina de nominas empleados: ");
-    console.log("authUser: ", authUser);
     if (!authUser) {
       router.push("/login");
     } else {
@@ -279,7 +274,6 @@ export default function NominasEmpleados() {
       fetchGetAllNominasEmpleadosAndHandleErrors();
       setNominaEmpleadoFormUpdated(false);
       setNominaEmpleadoGenerateUpdated(false);
-      console.log("CARGANDO LA TABLA");
     }
   }, [nominaEmpleadoFormUpdated, nominaEmpleadoGenerateUpdated]);
 
@@ -300,8 +294,6 @@ export default function NominasEmpleados() {
   }
 
   const handleGenerateClick = async () => {
-    console.log("Generar nuevas nominas empleados");
-
     toggleGenerateNominasEmpleadosModal();
     setCargandoInformacionNominasEmpleados(true);
 
@@ -329,8 +321,6 @@ export default function NominasEmpleados() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    console.log("Boton para ver una nomina empleado");
-
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniqueNominaEmpleadoForm();

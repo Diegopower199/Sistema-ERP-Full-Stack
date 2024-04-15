@@ -34,7 +34,8 @@ export default function MenuFacturacion() {
         <Link href={"menu-facturacion/facturas-clientes"}>
           Facturas clientes
         </Link>
-        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla, FORM NO
+        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla,
+        FORM NO
       </p>
       <br />
       <p>

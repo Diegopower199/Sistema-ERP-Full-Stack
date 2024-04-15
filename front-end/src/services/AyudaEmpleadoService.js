@@ -27,7 +27,7 @@ export const getAllAyudasEmpleados = async () => {
 
 export const saveAyudaEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
-  console.log("FORM PERSONA: ", data);
+
   try {
     const formData = {};
 
@@ -78,7 +78,7 @@ export const getAyudaEmpleadoById = async (id) => {
 
 export const updateAyudaEmpleado = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
-  console.log(`FORM PERSONA CON id ${id}: `, data);
+
   try {
     const formData = {};
 

@@ -45,6 +45,15 @@ public class VacacionEmpleadoModel implements Serializable {
     @Column(name = "observacion", nullable = true)
     private String observacion;
 
+    @Column(name = "hash_transaccion_vacacion", nullable = true, columnDefinition = "VARCHAR(256) DEFAULT NULL")
+    private String hash_transaccion_vacacion;
+
+    @Column(name = "hash_block", nullable = true, columnDefinition = "VARCHAR(256) DEFAULT NULL")
+    private String hash_block;
+
+    @Column(name = "previous_hash_block", nullable = true, columnDefinition = "VARCHAR(256) DEFAULT NULL")
+    private String previous_hash_block;
+
     @ManyToOne
     @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_vacaciones_empleados_personas"))
     private PersonaModel persona;

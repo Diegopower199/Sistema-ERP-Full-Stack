@@ -53,10 +53,6 @@ export default function FormNominasEmpleados({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("operationType: ", operationType);
-
-        console.log("nominaEmpleadoDataForm: ", nominaEmpleadoDataForm);
-
         if (operationType === "update" || operationType === "view") {
           setFormData(() => ({
             ...nominaEmpleadoDataForm,

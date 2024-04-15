@@ -114,9 +114,15 @@ public class FacturaClienteService {
                 .findByTipoEstadoFacturaIdOrderByPedidoClienteId(tipoEstadoPendienteFacturar);
 
         LocalDate fechaActual = LocalDate.now();
+        // Calcular la tarifa total
+        double tarifaTotalServicio = 0;
+        double tarifaTotalDesplazamiento = 0;
 
         for (PedidoClienteModel pedidoCliente : listaPedidosClientesParaFacturar) {
             FacturaClienteModel newFacturaClienteFacturado = new FacturaClienteModel();
+
+            //tarifaTotalServicio = calcularTarifa(tiempoTotalServicio, 70);
+            //tarifaTotalDesplazamiento = calcularTarifa(tiempoTotalDesplazamiento, 30);
 
             newFacturaClienteFacturado.setDescripcion_servicio(pedidoCliente.getDescripcion());
             newFacturaClienteFacturado.setDireccion_entrega(pedidoCliente.getDireccion_entrega());
@@ -138,8 +144,8 @@ public class FacturaClienteService {
 
             newFacturaClienteFacturado.setTotal_factura(0);
 
-            // total_factura = subtotal_factura_sin_iva + (subtotal_factura_sin_iva * (iva / 100))
-
+            // total_factura = subtotal_factura_sin_iva + (subtotal_factura_sin_iva * (iva /
+            // 100))
 
             newFacturaClienteFacturado.setCliente(pedidoCliente.getCliente());
             newFacturaClienteFacturado.setPedido_cliente(pedidoCliente);
@@ -233,6 +239,14 @@ public class FacturaClienteService {
 
         facturaClienteRepository.deleteById(idFacturaCliente);
 
+    }
+
+    // Función para calcular la tarifa total
+    public static double calcularTarifa(int minutosTotal, double tarifaPorHora) {
+
+        // Calcular la tarifa total
+        double tarifaTotal = (minutosTotal / 60.0) * tarifaPorHora;
+        return tarifaTotal;
     }
 
 }

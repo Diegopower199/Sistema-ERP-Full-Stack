@@ -121,7 +121,7 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
     {
       field: "hashTransaccionVacacion",
       headerName: "Hash transaccion vacacion",
-      width: 280,
+      width: 580,
       editable: false,
     },
     {

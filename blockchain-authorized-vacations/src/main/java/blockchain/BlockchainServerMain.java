@@ -86,18 +86,28 @@ public class BlockchainServerMain {
                             break;
                         case "ADD":
                             // Guardar el usuario en el archivo y actualizar la lista de usuarios
-                            guardarTransaccionVacacion(transaccionVacacionRecibido);
+                            Block bloqueGuardado = guardarTransaccionVacacion(transaccionVacacionRecibido);
+
+                            mostrarInformacionLibroTransaccionVacacion();
+                            if (bloqueGuardado == null) {
+                                respuestaAlCliente = new RespuestaServidorCliente(
+                                        "Transaccion vacacion rechazada. Ya se autorizó la vacación", 409, null);
+                                objectOutputStream.writeObject(respuestaAlCliente);
+                                break;
+                            }
+
+                            System.out.println("\n\nbloqueGuardado: " + bloqueGuardado.toMap() + "\n\n\n");
 
                             // Enviar una respuesta al cliente
                             respuestaAlCliente = new RespuestaServidorCliente(
-                                    "Transaccion vacacion recibido y guardado exitosamente", 200);
+                                    "Transaccion vacacion recibido y guardado exitosamente", 200, bloqueGuardado);
                             objectOutputStream.writeObject(respuestaAlCliente);
 
                             break;
                         default:
                             System.out.println("Operacion no valida - " + tipoOperacionRecibida);
                             respuestaAlCliente = new RespuestaServidorCliente(
-                                    "Operacion no valida", 200);
+                                    "Operacion no valida", 200, null);
                             objectOutputStream.writeObject(respuestaAlCliente);
 
                             break;
@@ -114,7 +124,6 @@ public class BlockchainServerMain {
 
     // Método para cargar la lista de usuarios desde el archivo
     private static Blockchain cargarLibroVacaciones() {
-        // Crear una nueva lista para almacenar las vacaciones
         List<Block> listaBloquesDeVacacionesAlmacenados = new ArrayList<>();
 
         // Intentar cargar usuarios desde el archivo
@@ -124,42 +133,59 @@ public class BlockchainServerMain {
             listaBloquesDeVacacionesAlmacenados = blockchainDesdeArchivo.getLibroTransaccionesVacacionesAutorizadas();
             System.out.println("Vacaciones cargados correctamente");
         } catch (FileNotFoundException e) {
-            // El archivo no existe, imprimir mensaje y continuar
             System.out.println("Archivo no encontrado. Se creara uno nuevo");
         } catch (IOException | ClassNotFoundException e) {
-            // Manejar excepciones de entrada/salida o deserialización
+            System.out.println("SE PETA");
             e.printStackTrace();
         }
 
-        // Devolver la lista de usuarios cargada
         return new Blockchain(listaBloquesDeVacacionesAlmacenados);
     }
 
-    private static void guardarTransaccionVacacion(TransaccionVacacion newTransaccionVacacion) {
-        // Lógica para guardar el historial en un archivo
+    private static Block guardarTransaccionVacacion(TransaccionVacacion newTransaccionVacacion) {
+        Block newBlock = null;
+
+        System.out.println("newTransaccionVacacion" + newTransaccionVacacion.toMap() + "\n\n");
 
         System.out.println("Guardar transaccion");
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO_LIBRO_VACACIONES))) {
-            libroVacaciones.addBlock(newTransaccionVacacion);
+
+            boolean existeVacacionAutorizadaPorId = libroVacaciones.verificarVacacionAutorizadaExiste(libroVacaciones,
+                    newTransaccionVacacion.getId_vacacion_empleado());
+            System.out.println("\n\n" + "SI ES TRUE EXISTE: " + existeVacacionAutorizadaPorId + "\n\n");
+
+            if (existeVacacionAutorizadaPorId == true) {
+                System.out.println("\n\n" + "NO SE AÑADE NADA" + "\n\n");
+                return null;
+            }
+
+            newBlock = libroVacaciones.addBlock(newTransaccionVacacion);
             oos.writeObject(libroVacaciones);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return newBlock;
     }
 
     // Método para mostrar todos los bloques de transacciones de vacaciones
     // almacenados en la lista en memoria
-    /*
-     * private static void mostrarInformacionLibroTransaccionVacacion() {
-     * List<Block> blockChain =
-     * libroVacaciones.getLibroTransaccionesVacacionesAutorizadas();
-     * // Verificar si la lista de usuarios está vacía
-     * if (blockChain.isEmpty()) {
-     * System.out.println("No hay transacciones de vacaciones registrados");
-     * } else {
-     * System.out.println("Hay transacciones de vacaciones registrados");
-     * }
-     * }
-     */
+
+    private static void mostrarInformacionLibroTransaccionVacacion() {
+        List<Block> blockChain = libroVacaciones.getLibroTransaccionesVacacionesAutorizadas();
+        // Verificar si la lista de usuarios está vacía
+        if (blockChain.isEmpty()) {
+            System.out.println("No hay transacciones de vacaciones registrados");
+        } else {
+            System.out.println("Hay transacciones de vacaciones registrados");
+
+            for (Block block : blockChain) {
+                // Llama al método para imprimir todos los datos del bloque
+                System.out.println("\n");
+                block.printBlockData();
+                System.out.println("\n");
+            }
+
+        }
+    }
 
 }

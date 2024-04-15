@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import commonclasses.TransaccionVacacion;
 import tfg.backend.ExcepcionControlada.ConexionServidoresException;
+import tfg.backend.ExcepcionControlada.TransaccionVacacionRechazadaException;
 import tfg.backend.services.BlockchainVacacionAutorizadaService;
 import tfg.backend.utils.GlobalConstants;
 
@@ -70,7 +71,11 @@ public class BlockchainVacacionAutorizadaController {
                 return ResponseEntity.ok(newVacacionAutorizada.toMap());
             }
         } catch (ConexionServidoresException e) {
-            
+            System.out.println("EL ERROR EN CONTROLLER" + e.getMessage());
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(e.getStatus()).body(response);
+        } catch (TransaccionVacacionRechazadaException e) {
             System.out.println("EL ERROR EN CONTROLLER" + e.getMessage());
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());

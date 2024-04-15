@@ -340,14 +340,14 @@ export default function FormVacacionesEmpleados({
             tipo_estado: responseUpdateVacacion.data.tipo_estado.tipo_estado,
           };
 
-          console.log("dataVacacionAutorizada: ", dataVacacionAutorizada);
+          console.log("dataVacacionAutorizada: ", dataVacacionAutorizada, "\n\n");
 
           const responseCreateBlockchainVacacionAutorizada =
             await saveTransaccionVacacionAutorizada(dataVacacionAutorizada);
 
           console.log(
             "responseCreateBlockchainVacacionAutorizada: ",
-            responseCreateBlockchainVacacionAutorizada
+            responseCreateBlockchainVacacionAutorizada, "\n\n"
           );
 
           console.log("ESTO TENGO QUE VERLO");

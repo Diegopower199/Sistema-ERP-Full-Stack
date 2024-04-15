@@ -10,6 +10,7 @@ public class RespuestaServidorCliente implements Serializable {
     private List<Block> libroTransaccionesVacacionesAutorizadas;
     private String mensaje;
     private int codigo;
+    private Block blockActual;
 
     // Constructor para el caso "GET ALL"
     public RespuestaServidorCliente(List<Block> libroTransaccionesVacacionesAutorizadas, int codigo) {
@@ -17,9 +18,10 @@ public class RespuestaServidorCliente implements Serializable {
         this.codigo = codigo;
     }
 
-    public RespuestaServidorCliente(String mensaje, int codigo) {
+    public RespuestaServidorCliente(String mensaje, int codigo, Block blockActual) {
         this.mensaje = mensaje;
         this.codigo = codigo;
+        this.blockActual = blockActual;
     }
 
     public List<Block> getLibroTransaccionesVacacionesAutorizadas() {
@@ -34,12 +36,17 @@ public class RespuestaServidorCliente implements Serializable {
         return codigo;
     }
 
+    public Block getBlockActual() {
+        return blockActual;
+    }
+
     @Override
     public String toString() {
         return "RespuestaServidorCliente{" +
                 ", mensaje='" + mensaje + '\'' +
                 ", libroTransaccionesVacacionesAutorizadas=" + libroTransaccionesVacacionesAutorizadas +
-                ", codigo=" + codigo +
+                ", codigo=" + codigo + 
+                ", blockActual=" + blockActual +
                 '}';
     }
 

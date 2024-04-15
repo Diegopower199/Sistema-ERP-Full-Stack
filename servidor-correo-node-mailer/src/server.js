@@ -8,7 +8,6 @@ const {
   TRANSPORTER_PASSWORD,
   PORT_EMAIL_SERVER,
 } = require("./utils/constants");
-// require("dotenv").config();
 
 const app = express();
 
@@ -62,7 +61,6 @@ app.post("/sendEmail", async (req, res) => {
     if (!info.error) {
       res.status(200).send("Mensaje enviado");
     } else {
-      console.log(info.error);
       res.status(500).send(info.error);
     }
   } catch (error) {
@@ -70,20 +68,6 @@ app.post("/sendEmail", async (req, res) => {
   }
 });
 
-console.log("ERROR ANTES");
-
 app.listen(parseInt(PORT_EMAIL_SERVER), () =>
   console.log(`Escuchando desde http://localhost:${PORT_EMAIL_SERVER}`)
 );
-
-console.log("ERROR DESPUES");
-
-/*
-PARA ENVIARLO A MAS DE UNA PERSONA
-const info = await transporter.sendMail({
-      from: "TechSoluciones Informáticas S.L <soporte@techsoluciones.com>",
-      to: ["diegogs2323@gmail.com", "dgonzalezs2@alumnos.nebrija.es"],
-      subject: "Código de Verificación",
-      html: content,
-    });
-*/

@@ -214,7 +214,7 @@ public class VacacionEmpleadoService {
                 vacacionEmpleadoExistente.setDias_pendientes(diasSolicitadosCalculado);
                 vacacionEmpleadoExistente.setDias_disfrutados(0);
                 vacacionEmpleadoExistente.setDias_solicitados(diasSolicitadosCalculado);
-            } else { // TODO TAMBIEN TENGO QUE CALCULARLO, Y ADEMAS EN DIAS DISFRUTADOS CONTROLAR
+            } else {
                 vacacionEmpleadoExistente.setDias_disfrutados(ultimaVacacionEmpleado.get().getDias_disfrutados());
                 vacacionEmpleadoExistente.setDias_pendientes(
                         ultimaVacacionEmpleado.get().getDias_pendientes() + diasSolicitadosCalculado);

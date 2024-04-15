@@ -12,7 +12,6 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
   GridToolbarExportContainer,
-  GridCsvExportMenuItem,
   useGridApiContext,
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
@@ -452,7 +451,6 @@ export default function BajasLaboralesEmpleados() {
   }
 
   const renderTableBajaLaboralEmpleado = () => {
-    // Hacer aqui el deleteModal
 
     function deleteModal() {
       return (

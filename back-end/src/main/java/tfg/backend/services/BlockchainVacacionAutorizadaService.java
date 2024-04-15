@@ -15,7 +15,6 @@ import commonclasses.TransaccionVacacion;
 import tfg.backend.ExcepcionControlada.ConexionServidoresException;
 import tfg.backend.utils.GlobalConstants;
 
-// Propósito: Contiene la lógica de negocio relacionada con las operaciones de vacaciones autorizadas.
 
 @Service
 public class BlockchainVacacionAutorizadaService {

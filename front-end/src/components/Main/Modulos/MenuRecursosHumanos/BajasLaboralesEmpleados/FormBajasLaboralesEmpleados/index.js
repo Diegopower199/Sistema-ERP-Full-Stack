@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  getAllPersonas,
-  savePersona,
-  updatePersona,
-} from "@/services/PersonaService";
-import { getAllTiposPersonas } from "@/services/TipoPersonaService";
-import {
-  REGEX_DNI,
-  REGEX_EMAIL,
-  REGEX_TELEFONO_CON_PREFIJO,
-} from "@/utils/regexPatterns";
+import { getAllPersonas } from "@/services/PersonaService";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
 import {

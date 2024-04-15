@@ -1,17 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { savePersona, updatePersona } from "@/services/PersonaService";
-import { getAllTiposPersonas } from "@/services/TipoPersonaService";
-import {
-  REGEX_DNI,
-  REGEX_EMAIL,
-  REGEX_TELEFONO_CON_PREFIJO,
-} from "@/utils/regexPatterns";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
-import {
-  formatearFechaYYYYMMDD,
-  validarFechaYYYYMMDD,
-} from "@/utils/functionsFecha";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";

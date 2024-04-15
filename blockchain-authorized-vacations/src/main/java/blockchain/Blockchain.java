@@ -13,12 +13,10 @@ public class Blockchain implements Serializable {
 
     private List<Block> libroTransaccionesVacacionesAutorizadas;
 
-    // Constructor vacío
     public Blockchain() {
         this.libroTransaccionesVacacionesAutorizadas = new ArrayList<>();
     }
 
-    // Constructor con parámetro
     public Blockchain(List<Block> libroTransaccionesVacacionesAutorizadas) {
         this.libroTransaccionesVacacionesAutorizadas = libroTransaccionesVacacionesAutorizadas;
     }
@@ -27,7 +25,6 @@ public class Blockchain implements Serializable {
         return libroTransaccionesVacacionesAutorizadas;
     }
 
-    // Método para obtener el último bloque de la cadena
     private Block getLatestBlock() {
         if (libroTransaccionesVacacionesAutorizadas.isEmpty()) {
             createGenesisBlock();
@@ -36,10 +33,11 @@ public class Blockchain implements Serializable {
     }
 
     private void createGenesisBlock() {
-        libroTransaccionesVacacionesAutorizadas.add(new Block(0, new TransaccionVacacion(), "Hello"));
+        libroTransaccionesVacacionesAutorizadas.add(new Block(0, new TransaccionVacacion(),
+                "e276561d728d35821ec042db26585172dff6615fba1c539d91e18220f0c44f4f"));
     }
 
-    public Block addBlock(TransaccionVacacion data) { // Data será mi objeto Vacacion
+    public Block addBlock(TransaccionVacacion data) {
         Block previousBlock = getLatestBlock();
         Block newBlock = new Block(previousBlock.getIndex() + 1, data, previousBlock.getHashBlock());
         libroTransaccionesVacacionesAutorizadas.add(newBlock);

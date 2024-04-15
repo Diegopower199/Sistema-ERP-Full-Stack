@@ -36,7 +36,7 @@ export default function Login() {
     password: "a",
   });
 
-  const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({}); // ME FALTA HACER ESTO
+  const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [loginButtonClicked, setLoginButtonClicked] = useState(false);
 
   const [backendError, setBackendError] = useState(false);

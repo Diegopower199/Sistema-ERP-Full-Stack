@@ -189,7 +189,7 @@ export default function UpdatePassword() {
           return;
         }
 
-        // router.push("/login");
+        router.push("/login");
       } else {
         setErrorMessage("La contraseñas no coinciden");
       }

@@ -34,31 +34,31 @@ public class PedidoClienteModel implements Serializable {
     @Column(name = "fecha_solicitud_pedido", nullable = false)
     private LocalDate fecha_solicitud_pedido;
 
-    @Column(name = "fecha_entrega_prevista", nullable = true) // Al crear no se pasa nada, es al modificar
+    @Column(name = "fecha_entrega_prevista", nullable = true)
     private LocalDate fecha_entrega_prevista;
 
-    @Column(name = "fecha_entrega_real", nullable = true) // Al crear no se pasa nada, es al modificar
+    @Column(name = "fecha_entrega_real", nullable = true)
     private LocalDate fecha_entrega_real;
 
-    @Column(name = "hora_inicio_desplazamiento", nullable = true) // Al crear no se pasa nada, es al modificar
+    @Column(name = "hora_inicio_desplazamiento", nullable = true)
     private LocalTime hora_inicio_desplazamiento;
 
-    @Column(name = "hora_fin_desplazamiento", nullable = true) // Al crear no se pasa nada, es al modificar
+    @Column(name = "hora_fin_desplazamiento", nullable = true)
     private LocalTime hora_fin_desplazamiento;
 
-    @Column(name = "tiempo_desplazamiento_total", nullable = true) // Al crear no se pasa nada, es al modificar
+    @Column(name = "tiempo_desplazamiento_total", nullable = true)
     private LocalTime tiempo_desplazamiento_total;
 
-    @Column(name = "hora_inicio_servicio", nullable = true) // Al crear no se pasa nada, es al modificar
+    @Column(name = "hora_inicio_servicio", nullable = true)
     private LocalTime hora_inicio_servicio;
 
-    @Column(name = "hora_fin_servicio", nullable = true) // Al crear no se pasa nada, es al modificar
+    @Column(name = "hora_fin_servicio", nullable = true)
     private LocalTime hora_fin_servicio;
 
-    @Column(name = "tiempo_servicio_total", nullable = true) // Al crear no se pasa nada, es al modificar
+    @Column(name = "tiempo_servicio_total", nullable = true)
     private LocalTime tiempo_servicio_total;
 
-    @Column(name = "descripcion", nullable = true) 
+    @Column(name = "descripcion", nullable = true)
     private String descripcion;
 
     @Column(name = "observacion", nullable = true)

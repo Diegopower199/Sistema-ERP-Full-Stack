@@ -143,7 +143,6 @@ public class PersonaService {
         PersonaModel personaExistente = personaRepository.findById(idPersona)
                 .orElseThrow(() -> new RuntimeException("Persona con id " + idPersona + " no encontrado"));
 
-        // ANTES DE PONER LOS SETTER VERIFICAR QUE TODOS LOS CAMPOS ESTAN RELLENOS
         personaExistente.setNombre(cambiosPersona.getNombre());
         personaExistente.setApellidos(cambiosPersona.getApellidos());
         personaExistente.setGenero(cambiosPersona.getGenero());
@@ -202,7 +201,6 @@ public class PersonaService {
 
     }
 
-    // LAS DE ABAJO NO ESTAN COMPROBADAS
     public Boolean existsCorreoElectronico(String correo_electronico) {
 
         if (!personaRepository.existsBycorreo_electronico(correo_electronico)) {

@@ -6,10 +6,6 @@ import styles from "./styles.module.css";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 
-// Quitar esto
-import CheckIcon from "@mui/icons-material/Check";
-import Button from "@mui/material/Button";
-
 export default function MenuClientes() {
   const {
     authUser,
@@ -32,8 +28,6 @@ export default function MenuClientes() {
       <br />
       <p>
         <Link href={"menu-clientes/clientes"}>Clientes</Link>
-        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla y
-        form
       </p>
       <br />
       <p>

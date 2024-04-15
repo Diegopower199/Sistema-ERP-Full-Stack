@@ -37,9 +37,6 @@ let errorHandlingInfo = {
   noContent: false,
 };
 
-// Tengo que hacerlo para clientes, pedidos clientes, facturas y pagos de facturas, y tambien el formulario,
-// y comprobar que todos los forms por lo menos el de vacaciones, solicitudes y personas funcionan bien y los otros con los datos de personas
-
 export default function Clientes() {
   const {
     authUser,

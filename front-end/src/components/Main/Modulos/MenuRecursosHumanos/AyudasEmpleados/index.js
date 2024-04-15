@@ -449,7 +449,6 @@ export default function AyudasEmpleados() {
   }
 
   const renderTableAyudaEmpleado = () => {
-    // Hacer aqui el deleteModal
 
     function deleteModal() {
       return (

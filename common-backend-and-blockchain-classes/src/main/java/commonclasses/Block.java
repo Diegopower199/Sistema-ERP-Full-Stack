@@ -100,27 +100,25 @@ public class Block implements Serializable {
                 '}';
     }
 
-    // Método toMap() para convertir la instancia de la clase a un mapa
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
 
         map.put("index", index);
         map.put("timestamp", timestamp);
-        map.put("dataTransaccionVacacion", dataTransaccionVacacion.toMap()); // Convierte la transacción a un mapa
+        map.put("dataTransaccionVacacion", dataTransaccionVacacion.toMap());
         map.put("previousHashBlock", previousHashBlock);
         map.put("hashBlock", hashBlock);
 
         return map;
     }
 
-    // Método para imprimir todos los datos de un bloque
     public void printBlockData() {
         System.out.println("+----------------------------------------------------------------------------------+");
         System.out.println("| Datos del Bloque                                                                 |");
         System.out.println("+----------------------------------------------------------------------------------+");
         System.out.println("| Index: " + index);
         System.out.println("| Timestamp: " + timestamp);
-        dataTransaccionVacacion.printTransactionData(); // Llama al método de TransaccionVacacion
+        dataTransaccionVacacion.printTransactionData();
         System.out.println("| PreviousHashBlock: " + previousHashBlock);
         System.out.println("| HashBlock: " + hashBlock);
         System.out.println("+----------------------------------------------------------------------------------+");

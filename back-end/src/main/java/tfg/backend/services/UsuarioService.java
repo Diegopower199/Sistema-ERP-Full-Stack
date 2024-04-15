@@ -32,7 +32,6 @@ public class UsuarioService {
 
         for (UsuarioModel usuario : listaUsuarios) {
             Map<String, Object> usuarioMap = usuario.toMap();
-            // Aqui debe aparecer las claves foraneas, debo ponerlas
             usuarioMap.put("persona", usuario.getPersona() != null ? usuario.getPersona().toMap() : null);
 
             usuarioMap.put("tipo_usuario",
@@ -48,7 +47,6 @@ public class UsuarioService {
 
         String nombre_usuario = nuevoPersona.getNombre_usuario();
 
-        // Comprobar campo persona
         if (nuevoPersona.getNombre_usuario() == null) {
             throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
         }
@@ -120,7 +118,6 @@ public class UsuarioService {
         UsuarioModel usuarioExistente = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario con id " + idUsuario + " no encontrado"));
 
-        // Comprobar campo persona
         if (cambiosUsuario.getNombre_usuario() == null) {
             throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
         }
@@ -192,7 +189,6 @@ public class UsuarioService {
         }
     }
 
-    // LAS DE ABAJO NO ESTAN COMPROBADAS
     public Boolean authenticateUser(UsuarioModel credencialesUsuario) {
 
         if (credencialesUsuario.getNombre_usuario() == null) {
@@ -221,8 +217,6 @@ public class UsuarioService {
         if (newPassword == null) {
             throw new RuntimeException("El campo 'new_password' no puede ser null");
         }
-
-        // TODO Si es la misma contraseña que ya habia puesta lanzar un error
 
         PersonaModel personaEncontrada = personaRepository.findByCorreo_electronico(correoElectronico)
                 .orElseThrow(() -> new RuntimeException("El correo electronico no existe"));

@@ -25,10 +25,10 @@ public class TransaccionVacacion implements Serializable {
     private String hashTransaccionVacacion;
 
     public TransaccionVacacion() {
-        // Inicializar algunos valores por defecto
-        this.id_vacacion_empleado = 0; // O el valor que consideres adecuado
-        this.fecha_inicio = LocalDate.now(); // Fecha actual
-        this.fecha_fin = LocalDate.now().plusDays(7); // Fecha actual + 7 días
+        
+        this.id_vacacion_empleado = 0;
+        this.fecha_inicio = LocalDate.now();
+        this.fecha_fin = LocalDate.now().plusDays(7);
         this.dias_disponibles = 0;
         this.dias_pendientes = 0;
         this.dias_solicitados = 0;
@@ -154,7 +154,6 @@ public class TransaccionVacacion implements Serializable {
         this.tipo_estado = tipo_estado;
     }
 
-    // Método para calcular el hash de la transacción de vacacion
     public String calcularHashTransaccion() {
 
         String text = String.valueOf(id_vacacion_empleado) + String.valueOf(fecha_inicio) + String.valueOf(fecha_fin)
@@ -167,7 +166,7 @@ public class TransaccionVacacion implements Serializable {
             digest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            return null; // Manejo de error, puedes ajustarlo según tus necesidades
+            return null;
         }
 
         final byte bytes[] = digest.digest(text.getBytes());
@@ -194,7 +193,6 @@ public class TransaccionVacacion implements Serializable {
                 ", timestamp=" + timestamp + '}';
     }
 
-    // Método toMap() para convertir la instancia de la clase a un mapa
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
 
@@ -214,7 +212,6 @@ public class TransaccionVacacion implements Serializable {
         return map;
     }
 
-    // Método para imprimir todos los datos de la transacción
     public void printTransactionData() {
         System.out.println("+----------------------------------------------------------------------------------+");
         System.out.println("| Datos de la Transaccion                                                          |");

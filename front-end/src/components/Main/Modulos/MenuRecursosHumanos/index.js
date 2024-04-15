@@ -6,10 +6,6 @@ import styles from "./styles.module.css";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 
-// Quitar esto
-import CheckIcon from "@mui/icons-material/Check";
-import Button from "@mui/material/Button";
-
 export default function MenuRecursosHumanos() {
   const {
     authUser,
@@ -38,24 +34,18 @@ export default function MenuRecursosHumanos() {
       <br />
       <p>
         <Link href={"menu-recursos-humanos/personas"}>Personas</Link>
-        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla y
-        form
       </p>
       <br />
       <p>
         <Link href={"menu-recursos-humanos/solicitudes-empleados"}>
           Solicitudes Empleados
         </Link>
-        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla y
-        form
       </p>
       <br />
       <p>
         <Link href={"menu-recursos-humanos/vacaciones-empleados"}>
           Vacaciones Empleados
         </Link>
-        <Button color="primary" startIcon={<CheckIcon />}></Button>La tabla y
-        form
       </p>
       <br />
       <p>

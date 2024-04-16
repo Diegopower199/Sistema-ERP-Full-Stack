@@ -340,34 +340,18 @@ export default function FormVacacionesEmpleados({
             tipo_estado: responseUpdateVacacion.data.tipo_estado.tipo_estado,
           };
 
-          console.log("dataVacacionAutorizada: ", dataVacacionAutorizada, "\n\n");
-
           const responseCreateBlockchainVacacionAutorizada =
             await saveTransaccionVacacionAutorizada(dataVacacionAutorizada);
 
-          console.log(
-            "responseCreateBlockchainVacacionAutorizada: ",
-            responseCreateBlockchainVacacionAutorizada, "\n\n"
+          errorHandlingInfo = checkResponseForErrors(
+            responseCreateBlockchainVacacionAutorizada
           );
 
-          errorHandlingInfo = checkResponseForErrors(responseCreateBlockchainVacacionAutorizada);
-
-        if (errorHandlingInfo.backendError) {
-          handleBackendError(responseCreateBlockchainVacacionAutorizada.errorMessage);
-          return;
-        } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
-          handleBackendAndDBConnectionError(
-            responseCreateBlockchainVacacionAutorizada.errorMessage
-          );
-          return;
-        }
-
-          console.log("ESTO TENGO QUE VERLO");
-          if (responseCreateBlockchainVacacionAutorizada.status !== 200) {
-            const mensajeError =
-              responseCreateBlockchainVacacionAutorizada.errorMessage;
-            console.log("El error es: ", mensajeError);
-            setErrorMessage(mensajeError);
+          if (errorHandlingInfo.backendOrDDBBConnectionError) {
+            handleBackendAndDBConnectionError(
+              responseCreateBlockchainVacacionAutorizada.errorMessage
+            );
+            return;
           }
         }
 

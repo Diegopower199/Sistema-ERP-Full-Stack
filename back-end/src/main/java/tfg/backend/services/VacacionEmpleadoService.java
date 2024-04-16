@@ -246,6 +246,7 @@ public class VacacionEmpleadoService {
             vacacionEmpleadoExistente.setHash_transaccion_vacacion(blockchainInfoRequest.getHashTransaccionVacacion());
             vacacionEmpleadoExistente.setHash_block(blockchainInfoRequest.getHashBlock());
             vacacionEmpleadoExistente.setPrevious_hash_block(blockchainInfoRequest.getPreviousHashBlock());
+            vacacionEmpleadoExistente.setGestionado_con_blockchain(true);
         }
 
         vacacionEmpleadoRepository.save(vacacionEmpleadoExistente);
@@ -258,6 +259,31 @@ public class VacacionEmpleadoService {
                 () -> new RuntimeException("Vacacion empleado con id " + idVacacionEmpleado + " no encontrado"));
 
         vacacionEmpleadoRepository.deleteById(idVacacionEmpleado);
+    }
+
+    public List<Map<String, Object>> getAllVacacionesAutorizadasConInconsistenciasBlockchain() {
+        Optional<List<VacacionEmpleadoModel>> listaVacacionEmpleado = vacacionEmpleadoRepository
+                .findVacacionesAutorizadasConInconsistenciasBlockchain();
+        List<Map<String, Object>> resultado = new ArrayList<>();
+
+        if (listaVacacionEmpleado.isPresent() == false) {
+            return null;
+        }
+
+        for (VacacionEmpleadoModel vacacionEmpleado : listaVacacionEmpleado.get()) {
+            Map<String, Object> vacacionEmpleadoMap = vacacionEmpleado.toMap();
+
+            vacacionEmpleadoMap.put("persona",
+                    vacacionEmpleado.getPersona() != null ? vacacionEmpleado.getPersona().toMap() : null);
+
+            vacacionEmpleadoMap.put("tipo_estado",
+                    vacacionEmpleado.getTipo_estado() != null ? vacacionEmpleado.getTipo_estado().toMap() : null);
+
+            resultado.add(vacacionEmpleadoMap);
+        }
+
+        return resultado;
+
     }
 
 }

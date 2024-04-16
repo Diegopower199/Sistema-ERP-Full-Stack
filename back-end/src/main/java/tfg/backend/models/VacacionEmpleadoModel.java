@@ -57,6 +57,9 @@ public class VacacionEmpleadoModel implements Serializable {
     @Column(name = "error_blockchain", nullable = false, columnDefinition = "boolean default false")
     private boolean error_blockchain;
 
+    @Column(name = "gestionado_con_blockchain", nullable = false)
+    private boolean gestionado_con_blockchain;
+
     @ManyToOne
     @JoinColumn(name = "id_persona", nullable = false, foreignKey = @ForeignKey(name = "FK_vacaciones_empleados_personas"))
     private PersonaModel persona;
@@ -79,6 +82,7 @@ public class VacacionEmpleadoModel implements Serializable {
         map.put("hash_block", hash_block);
         map.put("previous_hash_block", previous_hash_block);
         map.put("error_blockchain", error_blockchain);
+        map.put("gestionado_con_blockchain", gestionado_con_blockchain);
         return map;
     }
 

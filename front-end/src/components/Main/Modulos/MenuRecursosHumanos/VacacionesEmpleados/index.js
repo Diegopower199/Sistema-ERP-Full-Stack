@@ -82,8 +82,6 @@ export default function VacacionesEmpleados() {
   const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
     useState(false);
 
-  const [highlightedIds, setHighlightedIds] = useState([1, 4, 10, 12]); // IDs de las filas a resaltar
-
   const [backendError, setBackendError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
@@ -264,6 +262,13 @@ export default function VacacionesEmpleados() {
             personaInfo: `${nombre + " " + apellidos} - ${dni}`,
             tipo_estado: vacacionEmpleado.tipo_estado.tipo_estado,
             id_tipo_estado: vacacionEmpleado.tipo_estado.id_tipo_estado,
+            hash_transaccion_vacacion:
+              vacacionEmpleado.hash_transaccion_vacacion,
+            hash_block: vacacionEmpleado.hash_block,
+            previous_hash_block: vacacionEmpleado.previous_hash_block,
+            error_blockchain: vacacionEmpleado.error_blockchain,
+            gestionado_con_blockchain:
+              vacacionEmpleado.gestionado_con_blockchain,
           };
         }
       );
@@ -519,12 +524,12 @@ export default function VacacionesEmpleados() {
           centered
         >
           {errorMessage.length !== 0 && backendError === true && (
-            <div>
+            <>
               <p className={styles.BackendError}>
                 <ErrorIcon fontSize="medium" color="red" />
                 Error: {errorMessage}
               </p>
-            </div>
+            </>
           )}
         </Antd.Modal>
       );
@@ -555,10 +560,11 @@ export default function VacacionesEmpleados() {
               borderRight: "1px solid #ccc",
             },
             "& .highlighted-row": {
-              backgroundColor: "#ffdddd",
-            },
-            "& .highlighted-row:hover": {
-              backgroundColor: "#ffaaaa",
+              backgroundColor: "#ffcccc",
+              transition: "background-color 0.3s",
+              "&:hover": {
+                backgroundColor: "#ffa8a8",
+              },
             },
             "& .MuiDataGrid-row": {
               borderBottom: "1px solid #ccc",
@@ -598,13 +604,10 @@ export default function VacacionesEmpleados() {
             onRowSelectionModelChange={(newRowSelectionModel) => {
               setRowSelectionModel(newRowSelectionModel);
             }}
-            getRowClassName={(params) =>
-              highlightedIds.includes(params.row.id) ? "highlighted-row" : ""
-            } // Aplicamos la clase solo a las filas con ID en la lista de resaltados
+            getRowClassName={(params) => {
+              return params.row.error_blockchain ? "highlighted-row" : "";
+            }}
             rowSelectionModel={rowSelectionModel}
-            /*getRowClassName={(params) => ESTO ES UNA VARIABLE QUE TENGO QUE CREAR
-              params.row.error_blockchain ? "highlighted-row" : ""
-            }*/
             slots={{
               toolbar: CustomToolbar,
             }}
@@ -618,13 +621,13 @@ export default function VacacionesEmpleados() {
 
   if (backendOrDDBBConnectionError === true) {
     return (
-      <div>
+      <>
         <ServerConnectionError message={errorMessage} />
-      </div>
+      </>
     );
   } else if (showFormCreate) {
     return (
-      <div>
+      <>
         <FormVacacionesEmpleados
           toggleForm={toggleCreateVacacionEmpleadoForm}
           vacacionEmpleadoDataForm={""}
@@ -633,11 +636,11 @@ export default function VacacionesEmpleados() {
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormVacacionesEmpleados>
-      </div>
+      </>
     );
   } else if (showFormUpdate) {
     return (
-      <div>
+      <>
         <FormVacacionesEmpleados
           toggleForm={toggleUpdateVacacionEmpleadoForm}
           vacacionEmpleadoDataForm={rowSelected}
@@ -646,11 +649,11 @@ export default function VacacionesEmpleados() {
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormVacacionesEmpleados>
-      </div>
+      </>
     );
   } else if (showFormViewUnique) {
     return (
-      <div>
+      <>
         <FormVacacionesEmpleados
           toggleForm={toggleViewUniqueVacacionEmpleadoForm}
           vacacionEmpleadoDataForm={rowSelected}
@@ -659,17 +662,17 @@ export default function VacacionesEmpleados() {
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormVacacionesEmpleados>
-      </div>
+      </>
     );
   } else if (showHistorialVacacionesAutorizadas) {
     return (
-      <div>
+      <>
         <HistorialVacacionesAutorizadas
           toggleView={toggleShowHistorialVacacionesAutorizadas}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></HistorialVacacionesAutorizadas>
-      </div>
+      </>
     );
   } else {
     return renderTableVacacionesEmpleados();

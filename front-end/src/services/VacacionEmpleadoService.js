@@ -43,6 +43,8 @@ export const saveVacacionEmpleado = async (data) => {
       },
     };
 
+    console.log("FORM DATA VACACION EMPLEADO: ", formData)
+
     const response = await axios.post(url + "save", formData);
 
     return {

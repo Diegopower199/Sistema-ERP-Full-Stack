@@ -88,6 +88,9 @@ public class BlockchainServerMain {
                             objectOutputStream.writeObject(respuestaAlCliente);
 
                             break;
+                        case "CHECK": 
+                            // AQUI VERIFICARLO
+                            break;
                         default:
                             respuestaAlCliente = new RespuestaServidorCliente(
                                     "Operacion no valida", 200, null);
@@ -131,6 +134,8 @@ public class BlockchainServerMain {
         if (existeVacacionAutorizadaPorId == true) {
             return null;
         }
+
+
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO_LIBRO_VACACIONES))) {
             newBlock = libroVacaciones.addBlock(newTransaccionVacacion);

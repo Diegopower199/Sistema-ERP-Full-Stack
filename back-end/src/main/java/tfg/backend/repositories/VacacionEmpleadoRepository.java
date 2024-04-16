@@ -20,7 +20,11 @@ public interface VacacionEmpleadoRepository extends JpaRepository<VacacionEmplea
     List<VacacionEmpleadoModel> findAllOrderedById();
 
     @Query("SELECT c FROM VacacionEmpleadoModel c WHERE c.persona = :id_persona AND c.tipo_estado = :id_tipo_estado ORDER BY c.id_vacacion_empleado DESC LIMIT 1")
-    Optional<VacacionEmpleadoModel> findUltimaVacacionAceptada(@Param("id_persona") PersonaModel id_persona, @Param("id_tipo_estado") TipoEstadoModel id_tipo_estado);
+    Optional<VacacionEmpleadoModel> findUltimaVacacionAceptada(@Param("id_persona") PersonaModel id_persona,
+            @Param("id_tipo_estado") TipoEstadoModel id_tipo_estado);
+
+    @Query("SELECT c FROM VacacionEmpleadoModel c WHERE c.gestionado_con_blockchain = true AND c.error_blockchain = true ORDER BY c.id_vacacion_empleado")
+    Optional<List<VacacionEmpleadoModel>> findVacacionesAutorizadasConInconsistenciasBlockchain();
 
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM VacacionEmpleadoModel c WHERE c.persona = :id_persona AND c.fecha_inicio <= :fecha_fin AND c.fecha_fin >= :fecha_inicio")
     boolean existsByPersonaAndFecha_inicioAndFecha_fin(

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import commonclasses.Block;
@@ -14,10 +15,14 @@ import commonclasses.RespuestaServidorCliente;
 import commonclasses.TransaccionVacacion;
 import tfg.backend.ExcepcionControlada.ConexionServidoresException;
 import tfg.backend.ExcepcionControlada.TransaccionVacacionRechazadaException;
+import tfg.backend.models.BlockchainInfo;
 import tfg.backend.utils.GlobalConstants;
 
 @Service
 public class BlockchainVacacionAutorizadaService {
+
+    @Autowired
+    private VacacionEmpleadoService vacacionEmpleadoService;
 
     public List<Map<String, Object>> getAllTransaccionesVacacionesAutorizadas() throws ConexionServidoresException {
         List<Block> libroTransaccionesVacacionesAutorizadas = new ArrayList<>();
@@ -31,7 +36,6 @@ public class BlockchainVacacionAutorizadaService {
 
             objectOutputStream.writeObject(mensajeAlServidor);
 
-            // Recibir la respuesta del servidor
             RespuestaServidorCliente respuestaDelServidor = null;
             respuestaDelServidor = (RespuestaServidorCliente) objectInputStream.readObject();
 
@@ -41,12 +45,10 @@ public class BlockchainVacacionAutorizadaService {
 
                 resultado.add(transaccionesVacacionesAutorizadasMap);
             }
-            System.out.println("respuestaDelServidor GET ALL: " + respuestaDelServidor);
 
         } catch (ConnectException ce) {
             throw new ConexionServidoresException("El servidor esta caido", 500);
         } catch (IOException | ClassNotFoundException e) {
-            // e.printStackTrace();
             System.out.println("HAY UN ERROR");
         }
 
@@ -67,11 +69,25 @@ public class BlockchainVacacionAutorizadaService {
 
             respuestaDelServidor = (RespuestaServidorCliente) objectInputStream.readObject();
 
-            System.out.println("respuestaDelServidor SAVE: " + respuestaDelServidor);
+            int idVacacionEmpleado = transaccionVacacionAutorizada.getId_vacacion_empleado();
 
             if (respuestaDelServidor.getCodigo() == 409) {
+                BlockchainInfo blockchainInfo = new BlockchainInfo(null, null, null, true);
+                vacacionEmpleadoService.actualizarVacacionesAutorizadasBlockchain(blockchainInfo, idVacacionEmpleado);
+
                 throw new TransaccionVacacionRechazadaException(respuestaDelServidor.getMensaje(), 409);
+
             }
+
+            String hashBlock = respuestaDelServidor.getBlockActual().getHashBlock();
+            String previousHashBlock = respuestaDelServidor.getBlockActual().getPreviousHashBlock();
+            String hashTransaccionVacacion = respuestaDelServidor.getBlockActual().getDataTransaccionVacacion()
+                    .getHashTransaccionVacacion();
+
+            BlockchainInfo blockchainInfo = new BlockchainInfo(hashTransaccionVacacion, hashBlock, previousHashBlock,
+                    false);
+
+            vacacionEmpleadoService.actualizarVacacionesAutorizadasBlockchain(blockchainInfo, idVacacionEmpleado);
 
         } catch (ConnectException ce) {
             throw new ConexionServidoresException("El servidor esta caido", 500);

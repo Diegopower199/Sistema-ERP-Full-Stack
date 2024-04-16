@@ -82,6 +82,8 @@ export default function VacacionesEmpleados() {
   const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
     useState(false);
 
+  const [highlightedIds, setHighlightedIds] = useState([1, 4, 10, 12]); // IDs de las filas a resaltar
+
   const [backendError, setBackendError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
@@ -101,60 +103,80 @@ export default function VacacionesEmpleados() {
       field: "id",
       headerName: "ID",
       width: 85,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_inicio",
       headerName: "Fecha inicio",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_fin",
       headerName: "Fecha fin",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "dias_disponibles",
       headerName: "Dias disponibles",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "dias_pendientes",
       headerName: "Dias pendientes",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "dias_solicitados",
       headerName: "Dias solicitados",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "dias_disfrutados",
       headerName: "Dias disfrutados",
       width: 130,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "observacion",
       headerName: "Observacion",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "personaInfo",
       headerName: "Info persona",
       width: 280,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tipo_estado",
       headerName: "Tipo estado",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
@@ -162,6 +184,8 @@ export default function VacacionesEmpleados() {
       type: "actions",
       headerName: "Actions",
       width: 100,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -523,6 +547,23 @@ export default function VacacionesEmpleados() {
             "& .textPrimary": {
               color: "text.primary",
             },
+            "& .custom-header": {
+              backgroundColor: "#e0e7fa",
+              color: "#333",
+              fontWeight: "bold",
+              borderBottom: "2px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .highlighted-row": {
+              backgroundColor: "#ffdddd",
+            },
+            "& .highlighted-row:hover": {
+              backgroundColor: "#ffaaaa",
+            },
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -557,7 +598,13 @@ export default function VacacionesEmpleados() {
             onRowSelectionModelChange={(newRowSelectionModel) => {
               setRowSelectionModel(newRowSelectionModel);
             }}
+            getRowClassName={(params) =>
+              highlightedIds.includes(params.row.id) ? "highlighted-row" : ""
+            } // Aplicamos la clase solo a las filas con ID en la lista de resaltados
             rowSelectionModel={rowSelectionModel}
+            /*getRowClassName={(params) => ESTO ES UNA VARIABLE QUE TENGO QUE CREAR
+              params.row.error_blockchain ? "highlighted-row" : ""
+            }*/
             slots={{
               toolbar: CustomToolbar,
             }}

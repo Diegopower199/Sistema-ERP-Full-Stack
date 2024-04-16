@@ -21,7 +21,7 @@ public class Block implements Serializable {
         this.dataTransaccionVacacion = dataTransaccionVacacion;
         this.previousHashBlock = previousHashBlock;
         this.timestamp = System.currentTimeMillis();
-        this.hashBlock = calculateHash();
+        this.hashBlock = calculateHashBlock();
     }
 
     public int getIndex() {
@@ -52,8 +52,8 @@ public class Block implements Serializable {
         return previousHashBlock;
     }
 
-    public void setPreviousHashBlock(String PreviousHashBlock) {
-        this.previousHashBlock = PreviousHashBlock;
+    public void setPreviousHashBlock(String previousHashBlock) {
+        this.previousHashBlock = previousHashBlock;
     }
 
     public String getHashBlock() {
@@ -64,7 +64,7 @@ public class Block implements Serializable {
         this.hashBlock = hashBlock;
     }
 
-    public String calculateHash() {
+    public String calculateHashBlock() {
 
         String text = String.valueOf(index + previousHashBlock + String.valueOf(timestamp)
                 + String.valueOf(dataTransaccionVacacion.calcularHashTransaccion()));

@@ -34,7 +34,7 @@ public class Blockchain implements Serializable {
 
     private void createGenesisBlock() {
         libroTransaccionesVacacionesAutorizadas.add(new Block(0, new TransaccionVacacion(),
-                "Hello"));
+                "e276561d728d35821ec042db26585172dff6615fba1c539d91e18220f0c44f4f"));
     }
 
     public Block calculateBlock(TransaccionVacacion data) {
@@ -45,20 +45,15 @@ public class Blockchain implements Serializable {
 
     public Block addBlock(TransaccionVacacion data) {
         Block newBlock = calculateBlock(data);
-        System.out.println("\n\nVALOR EN LA FUNCION: " + newBlock.toMap());
         libroTransaccionesVacacionesAutorizadas.add(newBlock);
         return newBlock;
     }
 
     public boolean verificarVacacionAutorizadaExiste(Blockchain blockchain, int idVacacion) {
-        int index = 1;
         for (Block block : blockchain.getLibroTransaccionesVacacionesAutorizadas()) {
-            System.out.println("VALOR DEL BLOQUE " + index + ": " + block.toMap() + "\n\n\n");
             if (block.getDataTransaccionVacacion().getId_vacacion_empleado() == idVacacion) {
-                System.out.println("ESTO ES VERDADERO " + "\n\n\n");
                 return true;
             }
-            index += 1;
         }
         return false;
     }
@@ -67,7 +62,7 @@ public class Blockchain implements Serializable {
         for (int i = 1; i < libroTransaccionesVacacionesAutorizadas.size(); i++) {
             Block currentBlock = libroTransaccionesVacacionesAutorizadas.get(i);
             Block previousBlock = libroTransaccionesVacacionesAutorizadas.get(i - 1);
-            if (!currentBlock.getHashBlock().equals(currentBlock.calculateHash())) {
+            if (!currentBlock.getHashBlock().equals(currentBlock.calculateHashBlock())) {
                 return false;
             }
             if (!currentBlock.getPreviousHashBlock().equals(previousBlock.getHashBlock())) {

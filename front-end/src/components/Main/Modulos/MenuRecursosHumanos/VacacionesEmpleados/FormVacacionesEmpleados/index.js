@@ -350,6 +350,18 @@ export default function FormVacacionesEmpleados({
             responseCreateBlockchainVacacionAutorizada, "\n\n"
           );
 
+          errorHandlingInfo = checkResponseForErrors(responseCreateBlockchainVacacionAutorizada);
+
+        if (errorHandlingInfo.backendError) {
+          handleBackendError(responseCreateBlockchainVacacionAutorizada.errorMessage);
+          return;
+        } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+          handleBackendAndDBConnectionError(
+            responseCreateBlockchainVacacionAutorizada.errorMessage
+          );
+          return;
+        }
+
           console.log("ESTO TENGO QUE VERLO");
           if (responseCreateBlockchainVacacionAutorizada.status !== 200) {
             const mensajeError =

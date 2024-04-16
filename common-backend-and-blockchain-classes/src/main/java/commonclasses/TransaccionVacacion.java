@@ -70,8 +70,8 @@ public class TransaccionVacacion implements Serializable {
         return hashTransaccionVacacion;
     }
 
-    public void setHashTransaccionVacacion(String HashTransaccionVacacion) {
-        this.hashTransaccionVacacion = HashTransaccionVacacion;
+    public void setHashTransaccionVacacion(String hashTransaccionVacacion) {
+        this.hashTransaccionVacacion = hashTransaccionVacacion;
     }
 
     public int getId_vacacion_empleado() {

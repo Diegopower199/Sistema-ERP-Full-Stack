@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tfg.backend.models.BlockchainInfo;
 import tfg.backend.models.PersonaModel;
 import tfg.backend.models.TipoEstadoModel;
 import tfg.backend.models.VacacionEmpleadoModel;
@@ -229,6 +230,26 @@ public class VacacionEmpleadoService {
         VacacionEmpleadoModel vacacionEmpleadoActualizado = vacacionEmpleadoRepository.save(vacacionEmpleadoExistente);
 
         return vacacionEmpleadoActualizado;
+
+    }
+
+    public void actualizarVacacionesAutorizadasBlockchain(
+            BlockchainInfo blockchainInfoRequest, int idVacacionEmpleado) {
+
+        VacacionEmpleadoModel vacacionEmpleadoExistente = vacacionEmpleadoRepository.findById(idVacacionEmpleado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Vacacion empleado con id " + idVacacionEmpleado + " no encontrado"));
+
+        if (blockchainInfoRequest.getErrorBlockchain() == true) {
+            vacacionEmpleadoExistente.setError_blockchain(blockchainInfoRequest.getErrorBlockchain());
+        } else {
+            vacacionEmpleadoExistente.setHash_transaccion_vacacion(blockchainInfoRequest.getHashTransaccionVacacion());
+            vacacionEmpleadoExistente.setHash_block(blockchainInfoRequest.getHashBlock());
+            vacacionEmpleadoExistente.setPrevious_hash_block(blockchainInfoRequest.getPreviousHashBlock());
+        }
+
+        vacacionEmpleadoRepository.save(vacacionEmpleadoExistente);
+        return;
 
     }
 

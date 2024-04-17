@@ -54,6 +54,9 @@ public class VacacionEmpleadoModel implements Serializable {
     @Column(name = "previous_hash_block", nullable = true, columnDefinition = "VARCHAR(256) DEFAULT NULL")
     private String previous_hash_block;
 
+    @Column(name = "timestamp_transaccion_vacacion", nullable = true) // Despues tengo que hacer un parse a long
+    private String timestamp_transaccion_vacacion;
+
     @Column(name = "error_blockchain", nullable = false, columnDefinition = "boolean default false")
     private boolean error_blockchain;
 
@@ -81,6 +84,7 @@ public class VacacionEmpleadoModel implements Serializable {
         map.put("hash_transaccion_vacacion", hash_transaccion_vacacion);
         map.put("hash_block", hash_block);
         map.put("previous_hash_block", previous_hash_block);
+        map.put("timestamp_transaccion_vacacion", timestamp_transaccion_vacacion);
         map.put("error_blockchain", error_blockchain);
         map.put("gestionado_con_blockchain", gestionado_con_blockchain);
         return map;

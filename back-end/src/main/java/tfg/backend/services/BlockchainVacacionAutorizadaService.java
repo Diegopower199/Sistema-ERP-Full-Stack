@@ -2,9 +2,12 @@ package tfg.backend.services;
 
 import java.io.*;
 import java.net.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,8 @@ import commonclasses.TransaccionVacacion;
 import tfg.backend.ExcepcionControlada.ConexionServidoresException;
 import tfg.backend.ExcepcionControlada.TransaccionVacacionRechazadaException;
 import tfg.backend.models.BlockchainInfo;
+import tfg.backend.models.VacacionEmpleadoModel;
+import tfg.backend.repositories.VacacionEmpleadoRepository;
 import tfg.backend.utils.GlobalConstants;
 
 @Service
@@ -23,6 +28,9 @@ public class BlockchainVacacionAutorizadaService {
 
     @Autowired
     private VacacionEmpleadoService vacacionEmpleadoService;
+
+    @Autowired
+    private VacacionEmpleadoRepository vacacionEmpleadoRepository;
 
     public List<Map<String, Object>> getAllTransaccionesVacacionesAutorizadas() throws ConexionServidoresException {
         List<Block> libroTransaccionesVacacionesAutorizadas = new ArrayList<>();
@@ -63,6 +71,14 @@ public class BlockchainVacacionAutorizadaService {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())) {
 
+            // Se calcula el hash de la transacción de vacaciones antes de enviarla al
+            // servidor para asegura que el hash sea consistente con los datos que se
+            // están enviando.
+            transaccionVacacionAutorizada
+                    .setHashTransaccionVacacion(transaccionVacacionAutorizada.calcularHashTransaccion());
+
+            System.out.println("\n\ntransaccionVacacionAutorizada: " + transaccionVacacionAutorizada + "\n\n");
+
             MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("ADD", transaccionVacacionAutorizada);
 
             objectOutputStream.writeObject(mensajeAlServidor);
@@ -72,7 +88,7 @@ public class BlockchainVacacionAutorizadaService {
             int idVacacionEmpleado = transaccionVacacionAutorizada.getId_vacacion_empleado();
 
             if (respuestaDelServidor.getCodigo() == 409) {
-                BlockchainInfo blockchainInfo = new BlockchainInfo(null, null, null, true);
+                BlockchainInfo blockchainInfo = new BlockchainInfo(null, null, null, null, true);
                 vacacionEmpleadoService.actualizarVacacionesAutorizadasBlockchain(blockchainInfo, idVacacionEmpleado);
 
                 throw new TransaccionVacacionRechazadaException(respuestaDelServidor.getMensaje(), 409);
@@ -83,8 +99,11 @@ public class BlockchainVacacionAutorizadaService {
             String previousHashBlock = respuestaDelServidor.getBlockActual().getPreviousHashBlock();
             String hashTransaccionVacacion = respuestaDelServidor.getBlockActual().getDataTransaccionVacacion()
                     .getHashTransaccionVacacion();
+            String timestampTransaccionVacacion = String
+                    .valueOf(respuestaDelServidor.getBlockActual().getDataTransaccionVacacion().getTimestamp());
 
             BlockchainInfo blockchainInfo = new BlockchainInfo(hashTransaccionVacacion, hashBlock, previousHashBlock,
+                    timestampTransaccionVacacion,
                     false);
 
             vacacionEmpleadoService.actualizarVacacionesAutorizadasBlockchain(blockchainInfo, idVacacionEmpleado);
@@ -95,6 +114,78 @@ public class BlockchainVacacionAutorizadaService {
             // throw new UnhandledException("Error", 1000);
         }
         return transaccionVacacionAutorizada;
+    }
+
+    public List<Map<String, Object>> checkVacacionesAutorizadas() throws ConexionServidoresException {
+        List<Block> libroTransaccionesVacacionesAutorizadas = new ArrayList<>();
+        List<Map<String, Object>> resultado = new ArrayList<>();
+
+        RespuestaServidorCliente respuestaDelServidor = null;
+
+        try (Socket socket = new Socket(GlobalConstants.HOST_BLOCKCHAIN_SERVER, GlobalConstants.PORT_BLOCKCHAIN_SERVER);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())) {
+
+            List<TransaccionVacacion> listaTransaccionesVacacionesAutorizadas = new ArrayList<>();
+
+            Optional<List<VacacionEmpleadoModel>> listaVacacionEmpleado = vacacionEmpleadoRepository
+                    .findVacacionesGestionadoConBlockchain();
+
+            if (listaVacacionEmpleado.isPresent() == false) {
+                return null;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            for (VacacionEmpleadoModel vacacionEmpleado : listaVacacionEmpleado.get()) {
+
+                LocalDate fecha_inicio = vacacionEmpleado.getFecha_inicio();
+                LocalDate fecha_fin = vacacionEmpleado.getFecha_fin();
+
+                int id_vacacion_empleado = vacacionEmpleado.getId_vacacion_empleado();
+                String fechaInicioString = fecha_inicio.format(formatter);
+                String fechaFinString = fecha_fin.format(formatter);
+                int dias_disponibles = vacacionEmpleado.getDias_disponibles();
+                int dias_pendientes = vacacionEmpleado.getDias_pendientes();
+                int dias_solicitados = vacacionEmpleado.getDias_solicitados();
+                int dias_disfrutados = vacacionEmpleado.getDias_disfrutados();
+                String observacion = vacacionEmpleado.getObservacion();
+                String dni = vacacionEmpleado.getPersona().getDni();
+                String tipo_estado = vacacionEmpleado.getTipo_estado().getTipo_estado();
+                Long timestamp = Long.parseLong(vacacionEmpleado.getTimestamp_transaccion_vacacion());
+
+                TransaccionVacacion transaccionVacacion = new TransaccionVacacion(id_vacacion_empleado,
+                        fechaInicioString,
+                        fechaFinString, dias_disponibles, dias_pendientes, dias_solicitados, dias_disfrutados,
+                        observacion,
+                        dni, tipo_estado, timestamp);
+
+                listaTransaccionesVacacionesAutorizadas.add(transaccionVacacion);
+
+                System.out.println("\n\nvacacionEmpleado: " + vacacionEmpleado.toMap() + " dni=" + dni
+                        + "   tipo_estado=" + tipo_estado);
+
+                System.out.println("\n\n transaccionVacacion.calcularHashTransaccion(): "
+                        + transaccionVacacion.calcularHashTransaccion());
+                System.out.println("\n\n transaccionVacacion: " + transaccionVacacion);
+
+            }
+
+            MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("CHECK", null);
+
+            objectOutputStream.writeObject(mensajeAlServidor);
+
+            respuestaDelServidor = (RespuestaServidorCliente) objectInputStream.readObject();
+
+            System.out.println("respuestaDelServidor: " + respuestaDelServidor);
+
+        } catch (ConnectException ce) {
+            throw new ConexionServidoresException("El servidor esta caido", 500);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("HAY UN ERROR");
+        }
+
+        return resultado;
     }
 
 }

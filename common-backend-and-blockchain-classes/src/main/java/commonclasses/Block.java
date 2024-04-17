@@ -67,7 +67,7 @@ public class Block implements Serializable {
     public String calculateHashBlock() {
 
         String text = String.valueOf(index + previousHashBlock + String.valueOf(timestamp)
-                + String.valueOf(dataTransaccionVacacion.calcularHashTransaccion()));
+                + String.valueOf(dataTransaccionVacacion.getHashTransaccionVacacion()));
 
         MessageDigest digest = null;
         try {
@@ -92,11 +92,11 @@ public class Block implements Serializable {
     @Override
     public String toString() {
         return "Block{" +
-                "index=" + index +
-                ", timestamp=" + timestamp +
-                ", dataTransaccionVacacion=" + dataTransaccionVacacion +
-                ", previousHashBlock='" + previousHashBlock + '\'' +
-                ", hashBlock='" + hashBlock + '\'' +
+                    "index=" + index +
+                    ", timestamp=" + timestamp +
+                    ", dataTransaccionVacacion=" + dataTransaccionVacacion +
+                    ", previousHashBlock=\"" + previousHashBlock + '\"' +
+                    ", hashBlock=\"" + hashBlock + '\"' +
                 '}';
     }
 

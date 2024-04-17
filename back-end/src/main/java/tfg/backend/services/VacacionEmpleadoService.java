@@ -246,6 +246,7 @@ public class VacacionEmpleadoService {
             vacacionEmpleadoExistente.setHash_transaccion_vacacion(blockchainInfoRequest.getHashTransaccionVacacion());
             vacacionEmpleadoExistente.setHash_block(blockchainInfoRequest.getHashBlock());
             vacacionEmpleadoExistente.setPrevious_hash_block(blockchainInfoRequest.getPreviousHashBlock());
+            vacacionEmpleadoExistente.setTimestamp_transaccion_vacacion(blockchainInfoRequest.getTimestampTransaccionVacacion());
             vacacionEmpleadoExistente.setGestionado_con_blockchain(true);
         }
 

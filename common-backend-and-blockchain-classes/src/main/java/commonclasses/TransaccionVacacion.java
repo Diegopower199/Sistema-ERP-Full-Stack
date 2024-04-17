@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +13,8 @@ public class TransaccionVacacion implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int id_vacacion_empleado;
-    private LocalDate fecha_inicio;
-    private LocalDate fecha_fin;
+    private String fecha_inicio;
+    private String fecha_fin;
     private int dias_disponibles;
     private int dias_pendientes;
     private int dias_solicitados;
@@ -25,10 +26,18 @@ public class TransaccionVacacion implements Serializable {
     private String hashTransaccionVacacion;
 
     public TransaccionVacacion() {
-        
+
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaActualPlusSieteDias = LocalDate.now().plusDays(7);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        String fechaInicioString = fechaActual.format(formatter);
+        String fechaFinString = fechaActualPlusSieteDias.format(formatter);
+
         this.id_vacacion_empleado = 0;
-        this.fecha_inicio = LocalDate.now();
-        this.fecha_fin = LocalDate.now().plusDays(7);
+        this.fecha_inicio = fechaInicioString;
+        this.fecha_fin = fechaFinString;
         this.dias_disponibles = 0;
         this.dias_pendientes = 0;
         this.dias_solicitados = 0;
@@ -40,7 +49,7 @@ public class TransaccionVacacion implements Serializable {
         this.hashTransaccionVacacion = calcularHashTransaccion();
     }
 
-    public TransaccionVacacion(int id_vacacion_empleado, LocalDate fecha_inicio, LocalDate fecha_fin,
+    public TransaccionVacacion(int id_vacacion_empleado, String fecha_inicio, String fecha_fin,
             int dias_disponibles, int dias_pendientes,
             int dias_solicitados, int dias_disfrutados, String observacion, String dni,
             String tipo_estado) {
@@ -55,6 +64,24 @@ public class TransaccionVacacion implements Serializable {
         this.dni = dni;
         this.tipo_estado = tipo_estado;
         this.timestamp = System.currentTimeMillis();
+        this.hashTransaccionVacacion = calcularHashTransaccion();
+    }
+
+    public TransaccionVacacion(int id_vacacion_empleado, String fecha_inicio, String fecha_fin,
+            int dias_disponibles, int dias_pendientes,
+            int dias_solicitados, int dias_disfrutados, String observacion, String dni,
+            String tipo_estado, Long timestamp) {
+        this.id_vacacion_empleado = id_vacacion_empleado;
+        this.fecha_inicio = fecha_inicio;
+        this.fecha_fin = fecha_fin;
+        this.dias_disponibles = dias_disponibles;
+        this.dias_pendientes = dias_pendientes;
+        this.dias_solicitados = dias_solicitados;
+        this.dias_disfrutados = dias_disfrutados;
+        this.observacion = observacion;
+        this.dni = dni;
+        this.tipo_estado = tipo_estado;
+        this.timestamp = timestamp;
         this.hashTransaccionVacacion = calcularHashTransaccion();
     }
 
@@ -82,19 +109,19 @@ public class TransaccionVacacion implements Serializable {
         this.id_vacacion_empleado = id_vacacion_empleado;
     }
 
-    public LocalDate getFecha_inicio() {
+    public String getFecha_inicio() {
         return fecha_inicio;
     }
 
-    public void setFecha_inicio(LocalDate fecha_inicio) {
+    public void setFecha_inicio(String fecha_inicio) {
         this.fecha_inicio = fecha_inicio;
     }
 
-    public LocalDate getFecha_fin() {
+    public String getFecha_fin() {
         return fecha_fin;
     }
 
-    public void setFecha_fin(LocalDate fecha_fin) {
+    public void setFecha_fin(String fecha_fin) {
         this.fecha_fin = fecha_fin;
     }
 
@@ -161,6 +188,8 @@ public class TransaccionVacacion implements Serializable {
                 + String.valueOf(dias_disfrutados) + String.valueOf(observacion) + String.valueOf(dni)
                 + String.valueOf(tipo_estado) + String.valueOf(timestamp);
 
+        System.out.println("\n\nINFO TRANSACCION " + toString() + "\n\n");
+
         MessageDigest digest = null;
         try {
             digest = MessageDigest.getInstance("SHA-256");
@@ -185,12 +214,19 @@ public class TransaccionVacacion implements Serializable {
     @Override
     public String toString() {
         return "{" +
-                "hashTransaccionVacacion='" + hashTransaccionVacacion + '\'' + "id_vacacion_empleado=" + id_vacacion_empleado + ", fecha_inicio="
-                + fecha_inicio + ", fecha_fin=" + fecha_fin + ", dias_disponibles=" + dias_disponibles
-                + ", dias_pendientes=" + dias_pendientes + ", dias_solicitados=" + dias_solicitados +
-                ", dias_disfrutados=" + dias_disfrutados + ", observacion='"
-                + observacion + '\'' + ", dni='" + dni + '\'' + ", tipo_estado='" + tipo_estado + '\'' +
-                ", timestamp=" + timestamp + '}';
+                "hashTransaccionVacacion=\"" + hashTransaccionVacacion + '\"'
+                + ", id_vacacion_empleado=" + id_vacacion_empleado
+                + ", fecha_inicio=" + fecha_inicio
+                + ", fecha_fin=" + fecha_fin
+                + ", dias_disponibles=" + dias_disponibles
+                + ", dias_pendientes=" + dias_pendientes
+                + ", dias_solicitados=" + dias_solicitados
+                + ", dias_disfrutados=" + dias_disfrutados
+                + ", observacion=\"" + observacion + '\"'
+                + ", dni=\"" + dni + '\"'
+                + ", tipo_estado=\"" + tipo_estado + '\"'
+                + ", timestamp=" + timestamp +
+                "}";
     }
 
     public Map<String, Object> toMap() {

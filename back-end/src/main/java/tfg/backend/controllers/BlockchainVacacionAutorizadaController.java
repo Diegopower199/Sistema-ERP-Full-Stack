@@ -87,4 +87,35 @@ public class BlockchainVacacionAutorizadaController {
         }
     }
 
+    // localhost:8080/blockchainVacacionesAutorizadas/api/checkVacacionesAutorizadas
+    @GetMapping("/api/checkVacacionesAutorizadas")
+    public ResponseEntity<List<Map<String, Object>>> check() {
+        try {
+            List<Map<String, Object>> allVacacionesEmpleados = blockchainVacacionAutorizadaService
+                    .checkVacacionesAutorizadas();
+
+            return ResponseEntity.noContent().build();
+
+            /*
+             * if (allVacacionesEmpleados.isEmpty()) {
+             * return ResponseEntity.noContent().build();
+             * } else {
+             * return ResponseEntity.ok(allVacacionesEmpleados);
+             * }
+             */
+        } catch (ConexionServidoresException e) {
+            List<Map<String, Object>> resultado = new ArrayList<>();
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            resultado.add(response);
+            return ResponseEntity.status(e.getStatus()).body(resultado);
+        } catch (Exception e) {
+            List<Map<String, Object>> resultado = new ArrayList<>();
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            resultado.add(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(resultado);
+        }
+    }
+
 }

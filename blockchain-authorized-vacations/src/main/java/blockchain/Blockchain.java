@@ -43,6 +43,11 @@ public class Blockchain implements Serializable {
         return newBlock;
     }
 
+    public Block checkVacacionAutorizadaNotChange(TransaccionVacacion data) {
+        Block newBlock = calculateBlock(data);
+        return newBlock;
+    }
+
     public Block addBlock(TransaccionVacacion data) {
         Block newBlock = calculateBlock(data);
         libroTransaccionesVacacionesAutorizadas.add(newBlock);
@@ -51,6 +56,7 @@ public class Blockchain implements Serializable {
 
     public boolean verificarVacacionAutorizadaExiste(Blockchain blockchain, int idVacacion) {
         for (Block block : blockchain.getLibroTransaccionesVacacionesAutorizadas()) {
+            // System.out.println("\n\nINFO BLOQUE: " + block);
             if (block.getDataTransaccionVacacion().getId_vacacion_empleado() == idVacacion) {
                 return true;
             }

@@ -4,20 +4,25 @@ public class BlockchainInfo {
     private String hashTransaccionVacacion;
     private String hashBlock;
     private String previousHashBlock;
+    private String timestampTransaccionVacacion;
     private boolean errorBlockchain;
 
     public BlockchainInfo(String hashTransaccionVacacion, String hashBlock, String previousHashBlock,
+            String timestampTransaccionVacacion,
             boolean errorBlockchain) {
         this.hashTransaccionVacacion = hashTransaccionVacacion;
         this.hashBlock = hashBlock;
         this.previousHashBlock = previousHashBlock;
+        this.timestampTransaccionVacacion = timestampTransaccionVacacion;
         this.errorBlockchain = errorBlockchain;
     }
 
-    public BlockchainInfo(String hashTransaccionVacacion, String hashBlock, String previousHashBlock) {
+    public BlockchainInfo(String hashTransaccionVacacion, String hashBlock, String previousHashBlock,
+            String timestampTransaccionVacacion) {
         this.hashTransaccionVacacion = hashTransaccionVacacion;
         this.hashBlock = hashBlock;
         this.previousHashBlock = previousHashBlock;
+        this.timestampTransaccionVacacion = timestampTransaccionVacacion;
         this.errorBlockchain = false;
     }
 
@@ -36,12 +41,12 @@ public class BlockchainInfo {
         this.hashTransaccionVacacion = hashTransaccionVacacion;
     }
 
-    public String getHashBlock() {
-        return hashBlock;
+    public String getTimestampTransaccionVacacion() {
+        return timestampTransaccionVacacion;
     }
 
-    public void setHashBlock(String hashBlock) {
-        this.hashBlock = hashBlock;
+    public void setTimestampTransaccionVacacion(String timestampTransaccionVacacion) {
+        this.timestampTransaccionVacacion = timestampTransaccionVacacion;
     }
 
     public String getPreviousHashBlock() {
@@ -50,6 +55,14 @@ public class BlockchainInfo {
 
     public void setPreviousHashBlock(String previousHashBlock) {
         this.previousHashBlock = previousHashBlock;
+    }
+
+    public String getHashBlock() {
+        return hashBlock;
+    }
+
+    public void setHashBlock(String hashBlock) {
+        this.hashBlock = hashBlock;
     }
 
     public boolean getErrorBlockchain() {

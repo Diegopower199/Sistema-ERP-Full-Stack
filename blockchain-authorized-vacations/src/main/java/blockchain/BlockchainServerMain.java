@@ -61,6 +61,7 @@ public class BlockchainServerMain {
                     String tipoOperacionRecibida = mensajeDelCliente.getTipoOperacion();
                     TransaccionVacacion transaccionVacacionRecibido = mensajeDelCliente
                             .getTransaccionVacacionAutorizada();
+                            
 
                     RespuestaServidorCliente respuestaAlCliente;
 
@@ -90,6 +91,10 @@ public class BlockchainServerMain {
                             break;
                         case "CHECK": 
                             // AQUI VERIFICARLO
+                            System.out.println("CHECK");
+                            respuestaAlCliente = new RespuestaServidorCliente(
+                                        "NO HAY NADA HECHO", 409, null);
+                                objectOutputStream.writeObject(respuestaAlCliente);
                             break;
                         default:
                             respuestaAlCliente = new RespuestaServidorCliente(
@@ -127,6 +132,8 @@ public class BlockchainServerMain {
 
     private static Block guardarTransaccionVacacion(TransaccionVacacion newTransaccionVacacion) {
         Block newBlock = null;
+
+        System.out.println("newTransaccionVacacion: " + newTransaccionVacacion);
 
         boolean existeVacacionAutorizadaPorId = libroVacaciones.verificarVacacionAutorizadaExiste(libroVacaciones,
                 newTransaccionVacacion.getId_vacacion_empleado());

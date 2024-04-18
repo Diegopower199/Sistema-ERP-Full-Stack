@@ -192,6 +192,7 @@ export default function UpdatePassword() {
         router.push("/login");
       } else {
         setErrorMessage("La contraseñas no coinciden");
+        setBackendError(true);
       }
     } catch (error) {
       console.error("Ha ocurrido algo inesperado", error);

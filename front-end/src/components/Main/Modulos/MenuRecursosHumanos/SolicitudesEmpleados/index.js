@@ -58,6 +58,7 @@ export default function SolicitudesEmpleados() {
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -191,6 +192,7 @@ export default function SolicitudesEmpleados() {
         return false;
       }
 
+
       const solicitudesEmpleadosMap =
         responseGetAllSolicitudesEmpleados.data.map((solicitudEmpleado) => {
           const { nombre, apellidos, dni } = solicitudEmpleado.persona;
@@ -227,17 +229,28 @@ export default function SolicitudesEmpleados() {
   }, [authUser]);
 
   useEffect(() => {
-    if (solicitudEmpleadoFormUpdated === true) {
+    if (
+      solicitudEmpleadoFormUpdated ||
+      solicitudEmpleadoDelete ||
+      cancelOrExitClicked
+    ) {
       fetchGetAllSolicitudesEmpleadosAndHandleErrors();
       setSolicitudEmpleadoFormUpdated(false);
-    } else if (solicitudEmpleadoDelete === true) {
-      fetchGetAllSolicitudesEmpleadosAndHandleErrors();
       setSolicitudEmpleadoDelete(false);
+      setCancelOrExitClicked(false);
     }
-  }, [solicitudEmpleadoFormUpdated, solicitudEmpleadoDelete]);
+  }, [
+    solicitudEmpleadoFormUpdated,
+    solicitudEmpleadoDelete,
+    cancelOrExitClicked,
+  ]);
 
   function solicitudEmpleadoFormUpdatedTrigger() {
     setSolicitudEmpleadoFormUpdated(!solicitudEmpleadoFormUpdated);
+  }
+
+  function solicitudEmpleadoFormClickCancelOrExitTrigger() {
+    setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
   function toggleCreateSolicitudEmpleadoForm() {
@@ -526,6 +539,9 @@ export default function SolicitudesEmpleados() {
           toggleForm={toggleCreateSolicitudEmpleadoForm}
           solicitudEmpleadoDataForm={""}
           formUpdateTrigger={solicitudEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            solicitudEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"create"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -539,6 +555,9 @@ export default function SolicitudesEmpleados() {
           toggleForm={toggleUpdateSolicitudEmpleadoForm}
           solicitudEmpleadoDataForm={rowSelected}
           formUpdateTrigger={solicitudEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            solicitudEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"update"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -552,6 +571,9 @@ export default function SolicitudesEmpleados() {
           toggleForm={toggleViewUniqueSolicitudEmpleadoForm}
           solicitudEmpleadoDataForm={rowSelected}
           formUpdateTrigger={solicitudEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            solicitudEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}

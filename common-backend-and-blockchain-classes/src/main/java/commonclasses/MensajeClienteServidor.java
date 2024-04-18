@@ -1,6 +1,7 @@
 package commonclasses;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class MensajeClienteServidor implements Serializable {
 
@@ -8,10 +9,14 @@ public class MensajeClienteServidor implements Serializable {
 
     private String tipoOperacion;
     private TransaccionVacacion transaccionVacacionAutorizada;
+    private List<TransaccionVacacion> listaTransaccionesVacacionesAutorizadas;
 
-    public MensajeClienteServidor(String tipoOperacion, TransaccionVacacion transaccionVacacionAutorizada) {
+    public MensajeClienteServidor(String tipoOperacion, TransaccionVacacion transaccionVacacionAutorizada,
+            List<TransaccionVacacion> listaTransaccionesVacacionesAutorizadas) {
         this.tipoOperacion = tipoOperacion;
         this.transaccionVacacionAutorizada = transaccionVacacionAutorizada;
+        this.listaTransaccionesVacacionesAutorizadas = listaTransaccionesVacacionesAutorizadas;
+
     }
 
     public String getTipoOperacion() {
@@ -22,10 +27,14 @@ public class MensajeClienteServidor implements Serializable {
         return transaccionVacacionAutorizada;
     }
 
+    public List<TransaccionVacacion> getListaTransaccionesVacacionesAutorizadas() {
+        return listaTransaccionesVacacionesAutorizadas;
+    }
+
     @Override
     public String toString() {
         return "MensajeClienteServidor{" +
-                "tipoOperacion='" + tipoOperacion + '\'' +
+                "tipoOperacion=\"" + tipoOperacion + '\"' +
                 ", transaccionVacacionAutorizada=" + transaccionVacacionAutorizada +
                 '}';
     }

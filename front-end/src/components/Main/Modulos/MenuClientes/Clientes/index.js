@@ -52,6 +52,7 @@ export default function Clientes() {
   const [showFormCreate, setShowFormCreate] = useState(false);
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
+  const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -185,7 +186,7 @@ export default function Clientes() {
         setTableLoading(false);
         return false;
       }
-
+      
       const clientesMap = responseGetAllClientes.data.map((cliente) => {
         return {
           id: cliente.id_cliente,
@@ -219,14 +220,19 @@ export default function Clientes() {
   }, [authUser]);
 
   useEffect(() => {
-    if (clienteFormUpdated === true) {
+    if (clienteFormUpdated || cancelOrExitClicked) {
       fetchGetAllClientesAndHandleErrors();
       setClienteFormUpdated(false);
+      setCancelOrExitClicked(false);
     }
-  }, [clienteFormUpdated]);
+  }, [clienteFormUpdated, cancelOrExitClicked]);
 
   function clienteFormUpdatedTrigger() {
     setClienteFormUpdated(!clienteFormUpdated);
+  }
+
+  function clienteFormClickCancelOrExitTrigger() {
+    setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
   function toggleCreateClienteForm() {
@@ -445,6 +451,7 @@ export default function Clientes() {
           toggleForm={toggleCreateClienteForm}
           clienteDataForm={""}
           formUpdateTrigger={clienteFormUpdatedTrigger}
+          cancelOrExitClickTrigger={clienteFormClickCancelOrExitTrigger}
           operationType={"create"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -458,6 +465,7 @@ export default function Clientes() {
           toggleForm={toggleUpdateClienteForm}
           clienteDataForm={rowSelected}
           formUpdateTrigger={clienteFormUpdatedTrigger}
+          cancelOrExitClickTrigger={clienteFormClickCancelOrExitTrigger}
           operationType={"update"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -471,6 +479,7 @@ export default function Clientes() {
           toggleForm={toggleViewUniqueClienteForm}
           clienteDataForm={rowSelected}
           formUpdateTrigger={clienteFormUpdatedTrigger}
+          cancelOrExitClickTrigger={clienteFormClickCancelOrExitTrigger}
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}

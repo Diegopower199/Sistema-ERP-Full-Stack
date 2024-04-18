@@ -17,7 +17,10 @@ import {
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
 import styles from "./styles.module.css";
-import { getAllTransaccionesVacacionesAutorizadas } from "@/services/BlockchainVacacionAutorizadaService";
+import {
+  checkVacacionesAutorizadas,
+  getAllTransaccionesVacacionesAutorizadas,
+} from "@/services/BlockchainVacacionAutorizadaService";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
@@ -31,7 +34,10 @@ let errorHandlingInfo = {
   noContent: false,
 };
 
-export default function HistorialVacacionesAutorizadas({ toggleView }) {
+export default function HistorialVacacionesAutorizadas({
+  toggleView,
+  cancelOrExitClickTrigger,
+}) {
   const {
     authUser,
     setAuthUser,
@@ -148,6 +154,30 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
     setErrorMessage(errorMessage);
   }
 
+  const fetchCheckVacacionesAutorizadasAndHandleErrors = async () => {
+    try {
+      setTableLoading(true);
+      const responseCheckVacacionesAutorizadas =
+        await checkVacacionesAutorizadas();
+
+      errorHandlingInfo = checkResponseForErrors(
+        responseCheckVacacionesAutorizadas
+      );
+
+      if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(
+          responseCheckVacacionesAutorizadas.errorMessage
+        );
+        setTableLoading(false);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
+    }
+  };
+
   const fetchGetAllTransaccionesVacacionesAutorizadasAndHandleErrors =
     async () => {
       try {
@@ -226,6 +256,7 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
     if (!authUser) {
       router.push("/login");
     } else {
+      fetchCheckVacacionesAutorizadasAndHandleErrors();
       fetchGetAllTransaccionesVacacionesAutorizadasAndHandleErrors();
     }
   }, [authUser]);
@@ -393,7 +424,14 @@ export default function HistorialVacacionesAutorizadas({ toggleView }) {
         <Header />
         <h1>Historial Vacaciones Autorizadas</h1>
 
-        <button onClick={toggleView}>Salir</button>
+        <Antd.Button
+          onClick={() => {
+            toggleView();
+            cancelOrExitClickTrigger();
+          }}
+        >
+          Salir
+        </Antd.Button>
 
         {errorMessage.length !== 0 &&
         (backendError || backendOrDDBBConnectionError)

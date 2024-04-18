@@ -25,6 +25,7 @@ export default function FormClientes({
   toggleForm,
   clienteDataForm,
   formUpdateTrigger,
+  cancelOrExitClickTrigger,
   operationType,
   triggerBackendOrDDBBConnectionError,
   triggerErrorMessage,
@@ -567,14 +568,28 @@ export default function FormClientes({
 
         {(operationType === "create" || operationType === "update") && (
           <div>
-            <Antd.Button onClick={toggleForm}>Cancelar</Antd.Button>{" "}
+            <Antd.Button
+              onClick={() => {
+                toggleForm();
+                cancelOrExitClickTrigger();
+              }}
+            >
+              Cancelar
+            </Antd.Button>{" "}
             <Antd.Button onClick={handleSubmit}>Guardar</Antd.Button>
           </div>
         )}
 
         {operationType === "view" && (
           <div>
-            <Antd.Button onClick={toggleForm}>Salir</Antd.Button>
+            <Antd.Button
+              onClick={() => {
+                toggleForm();
+                cancelOrExitClickTrigger();
+              }}
+            >
+              Salir
+            </Antd.Button>
           </div>
         )}
       </Antd.Form>

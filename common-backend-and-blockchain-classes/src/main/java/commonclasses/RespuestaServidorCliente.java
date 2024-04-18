@@ -11,6 +11,7 @@ public class RespuestaServidorCliente implements Serializable {
     private String mensaje;
     private int codigo;
     private Block blockActual;
+    private List<TransaccionVacacion> listaVacacionesAutorizadasConInconsistencias;
 
     // Constructor para el caso "GET ALL"
     public RespuestaServidorCliente(List<Block> libroTransaccionesVacacionesAutorizadas, int codigo) {
@@ -18,10 +19,12 @@ public class RespuestaServidorCliente implements Serializable {
         this.codigo = codigo;
     }
 
-    public RespuestaServidorCliente(String mensaje, int codigo, Block blockActual) {
+    public RespuestaServidorCliente(String mensaje, int codigo, Block blockActual,
+            List<TransaccionVacacion> listaVacacionesAutorizadasConInconsistencias) {
         this.mensaje = mensaje;
         this.codigo = codigo;
         this.blockActual = blockActual;
+        this.listaVacacionesAutorizadasConInconsistencias = listaVacacionesAutorizadasConInconsistencias;
     }
 
     public List<Block> getLibroTransaccionesVacacionesAutorizadas() {
@@ -40,13 +43,18 @@ public class RespuestaServidorCliente implements Serializable {
         return blockActual;
     }
 
+    public List<TransaccionVacacion> getListaVacacionesAutorizadasConInconsistencias() {
+        return listaVacacionesAutorizadasConInconsistencias;
+    }
+
     @Override
     public String toString() {
         return "RespuestaServidorCliente{" +
-                ", mensaje='" + mensaje + '\'' +
+                "mensaje=\"" + mensaje + '\"' +
                 ", libroTransaccionesVacacionesAutorizadas=" + libroTransaccionesVacacionesAutorizadas +
-                ", codigo=" + codigo + 
+                ", codigo=" + codigo +
                 ", blockActual=" + blockActual +
+                ", listaVacacionesAutorizadasConInconsistencias=" + listaVacacionesAutorizadasConInconsistencias +
                 '}';
     }
 

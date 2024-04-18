@@ -40,7 +40,7 @@ public class BlockchainVacacionAutorizadaService {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())) {
 
-            MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("GET ALL", null);
+            MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("GET ALL", null, null);
 
             objectOutputStream.writeObject(mensajeAlServidor);
 
@@ -79,7 +79,8 @@ public class BlockchainVacacionAutorizadaService {
 
             System.out.println("\n\ntransaccionVacacionAutorizada: " + transaccionVacacionAutorizada + "\n\n");
 
-            MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("ADD", transaccionVacacionAutorizada);
+            MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("ADD", transaccionVacacionAutorizada,
+                    null);
 
             objectOutputStream.writeObject(mensajeAlServidor);
 
@@ -117,7 +118,7 @@ public class BlockchainVacacionAutorizadaService {
     }
 
     public List<Map<String, Object>> checkVacacionesAutorizadas() throws ConexionServidoresException {
-        List<Block> libroTransaccionesVacacionesAutorizadas = new ArrayList<>();
+        List<TransaccionVacacion> listaTransaccionesVacacionesAutorizadas = new ArrayList<>();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
         RespuestaServidorCliente respuestaDelServidor = null;
@@ -125,8 +126,6 @@ public class BlockchainVacacionAutorizadaService {
         try (Socket socket = new Socket(GlobalConstants.HOST_BLOCKCHAIN_SERVER, GlobalConstants.PORT_BLOCKCHAIN_SERVER);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())) {
-
-            List<TransaccionVacacion> listaTransaccionesVacacionesAutorizadas = new ArrayList<>();
 
             Optional<List<VacacionEmpleadoModel>> listaVacacionEmpleado = vacacionEmpleadoRepository
                     .findVacacionesGestionadoConBlockchain();
@@ -162,22 +161,32 @@ public class BlockchainVacacionAutorizadaService {
 
                 listaTransaccionesVacacionesAutorizadas.add(transaccionVacacion);
 
-                System.out.println("\n\nvacacionEmpleado: " + vacacionEmpleado.toMap() + " dni=" + dni
-                        + "   tipo_estado=" + tipo_estado);
-
-                System.out.println("\n\n transaccionVacacion.calcularHashTransaccion(): "
-                        + transaccionVacacion.calcularHashTransaccion());
-                System.out.println("\n\n transaccionVacacion: " + transaccionVacacion);
-
             }
 
-            MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("CHECK", null);
+            MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("CHECK", null,
+                    listaTransaccionesVacacionesAutorizadas);
 
             objectOutputStream.writeObject(mensajeAlServidor);
 
             respuestaDelServidor = (RespuestaServidorCliente) objectInputStream.readObject();
 
-            System.out.println("respuestaDelServidor: " + respuestaDelServidor);
+            System.out.println("\n\n\nrespuestaDelServidor: " + respuestaDelServidor);
+
+            if (respuestaDelServidor.getListaVacacionesAutorizadasConInconsistencias().isEmpty() == false) {
+                for (TransaccionVacacion transaccionVacacionError : respuestaDelServidor
+                        .getListaVacacionesAutorizadasConInconsistencias()) {
+                    int idVacacionEmpleado = transaccionVacacionError.getId_vacacion_empleado();
+
+                    BlockchainInfo blockchainInfo = new BlockchainInfo(null, null, null, null, true);
+                    vacacionEmpleadoService.actualizarVacacionesAutorizadasBlockchain(blockchainInfo,
+                            idVacacionEmpleado);
+
+                    resultado.add(transaccionVacacionError.toMap());
+
+                }
+
+                System.out.println("HAY DATOS");
+            }
 
         } catch (ConnectException ce) {
             throw new ConexionServidoresException("El servidor esta caido", 500);

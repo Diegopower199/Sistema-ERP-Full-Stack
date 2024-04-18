@@ -188,8 +188,6 @@ public class TransaccionVacacion implements Serializable {
                 + String.valueOf(dias_disfrutados) + String.valueOf(observacion) + String.valueOf(dni)
                 + String.valueOf(tipo_estado) + String.valueOf(timestamp);
 
-        System.out.println("\n\nINFO TRANSACCION " + toString() + "\n\n");
-
         MessageDigest digest = null;
         try {
             digest = MessageDigest.getInstance("SHA-256");

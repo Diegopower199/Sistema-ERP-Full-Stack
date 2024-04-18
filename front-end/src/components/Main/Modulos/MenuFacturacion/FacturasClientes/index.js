@@ -54,6 +54,7 @@ export default function FacturasClientes() {
 
   const [showModalGenerate, setShowModalGenerate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
+  const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -263,7 +264,7 @@ export default function FacturasClientes() {
         setTableLoading(false);
         return false;
       }
-
+      
       const facturasClientesMap = responseGetAllFacturasClientes.data.map(
         (facturaCliente) => {
           return {
@@ -315,12 +316,21 @@ export default function FacturasClientes() {
   }, [authUser]);
 
   useEffect(() => {
-    if (facturaClienteFormUpdated || facturaClienteGenerateUpdated) {
+    if (
+      facturaClienteFormUpdated ||
+      facturaClienteGenerateUpdated ||
+      cancelOrExitClicked
+    ) {
       fetchGetAllFacturasClientesAndHandleErrors();
       setFacturaClienteFormUpdated(false);
       setFacturaClienteGenerateUpdated(false);
+      setCancelOrExitClicked(false);
     }
-  }, [facturaClienteFormUpdated, facturaClienteGenerateUpdated]);
+  }, [
+    facturaClienteFormUpdated,
+    facturaClienteGenerateUpdated,
+    cancelOrExitClicked,
+  ]);
 
   function facturaClienteGenerateUpdatedTrigger() {
     setFacturaClienteGenerateUpdated(!facturaClienteGenerateUpdated);
@@ -328,6 +338,10 @@ export default function FacturasClientes() {
 
   function facturaClienteFormUpdatedTrigger() {
     setFacturaClienteFormUpdated(!facturaClienteFormUpdated);
+  }
+
+  function facturaClienteFormClickCancelOrExitTrigger() {
+    setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
   function toggleGenerateFacturasClientesModal() {
@@ -616,6 +630,7 @@ export default function FacturasClientes() {
           toggleForm={toggleViewUniqueFacturaClienteForm}
           facturaClienteDataForm={rowSelected}
           formUpdateTrigger={facturaClienteFormUpdatedTrigger}
+          cancelOrExitClickTrigger={facturaClienteFormClickCancelOrExitTrigger}
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}

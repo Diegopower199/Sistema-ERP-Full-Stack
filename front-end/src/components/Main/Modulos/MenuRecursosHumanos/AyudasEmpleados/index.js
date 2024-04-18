@@ -59,6 +59,7 @@ export default function AyudasEmpleados() {
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -198,7 +199,7 @@ export default function AyudasEmpleados() {
         setTableLoading(false);
         return false;
       }
-
+      
       const ayudasEmpleadosMap = responseGetAllAyudasEmpleados.data.map(
         (ayudaEmpleado) => {
           const { nombre, apellidos, dni } = ayudaEmpleado.persona;
@@ -237,17 +238,24 @@ export default function AyudasEmpleados() {
   }, [authUser]);
 
   useEffect(() => {
-    if (ayudaEmpleadoFormUpdated === true) {
+    if (
+      ayudaEmpleadoFormUpdated ||
+      ayudaEmpleadoDelete ||
+      cancelOrExitClicked
+    ) {
       fetchGetAllAyudasEmpleadosAndHandleErrors();
       setAyudaEmpleadoFormUpdated(false);
-    } else if (ayudaEmpleadoDelete === true) {
-      fetchGetAllAyudasEmpleadosAndHandleErrors();
       setAyudaEmpleadoDelete(false);
+      setCancelOrExitClicked(false);
     }
-  }, [ayudaEmpleadoFormUpdated, ayudaEmpleadoDelete]);
+  }, [ayudaEmpleadoFormUpdated, ayudaEmpleadoDelete, cancelOrExitClicked]);
 
   function ayudaEmpleadoFormUpdatedTrigger() {
     setAyudaEmpleadoFormUpdated(!ayudaEmpleadoFormUpdated);
+  }
+
+  function ayudaEmpleadoFormClickCancelOrExitTrigger() {
+    setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
   function toggleCreateAyudaEmpleadoForm() {
@@ -449,7 +457,6 @@ export default function AyudasEmpleados() {
   }
 
   const renderTableAyudaEmpleado = () => {
-
     function deleteModal() {
       return (
         <Antd.Modal
@@ -538,6 +545,7 @@ export default function AyudasEmpleados() {
           toggleForm={toggleCreateAyudaEmpleadoForm}
           ayudaEmpleadoDataForm={""}
           formUpdateTrigger={ayudaEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={ayudaEmpleadoFormClickCancelOrExitTrigger}
           operationType={"create"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -551,6 +559,7 @@ export default function AyudasEmpleados() {
           toggleForm={toggleUpdateAyudaEmpleadoForm}
           ayudaEmpleadoDataForm={rowSelected}
           formUpdateTrigger={ayudaEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={ayudaEmpleadoFormClickCancelOrExitTrigger}
           operationType={"update"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -564,6 +573,7 @@ export default function AyudasEmpleados() {
           toggleForm={toggleViewUniqueAyudaEmpleadoForm}
           ayudaEmpleadoDataForm={rowSelected}
           formUpdateTrigger={ayudaEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={ayudaEmpleadoFormClickCancelOrExitTrigger}
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}

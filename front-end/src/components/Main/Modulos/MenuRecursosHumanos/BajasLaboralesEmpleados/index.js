@@ -58,6 +58,7 @@ export default function BajasLaboralesEmpleados() {
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -198,7 +199,7 @@ export default function BajasLaboralesEmpleados() {
         setTableLoading(false);
         return false;
       }
-
+      
       const bajasLaboralesEmpleadosMap =
         responseGetAllBajasLaboralesEmpleados.data.map(
           (bajaLaboralEmpleado) => {
@@ -237,17 +238,28 @@ export default function BajasLaboralesEmpleados() {
   }, [authUser]);
 
   useEffect(() => {
-    if (bajaLaboralEmpleadoFormUpdated === true) {
+    if (
+      bajaLaboralEmpleadoFormUpdated ||
+      bajaLaboralEmpleadoDelete ||
+      cancelOrExitClicked
+    ) {
       fetchGetAllBajasLaboralesEmpleados();
       setBajaLaboralEmpleadoFormUpdated(false);
-    } else if (bajaLaboralEmpleadoDelete === true) {
-      fetchGetAllBajasLaboralesEmpleados();
       setBajaLaboralEmpleadoDelete(false);
+      setCancelOrExitClicked(false);
     }
-  }, [bajaLaboralEmpleadoFormUpdated, bajaLaboralEmpleadoDelete]);
+  }, [
+    bajaLaboralEmpleadoFormUpdated,
+    bajaLaboralEmpleadoDelete,
+    cancelOrExitClicked,
+  ]);
 
   function bajaLaboralEmpleadoFormUpdatedTrigger() {
     setBajaLaboralEmpleadoFormUpdated(!bajaLaboralEmpleadoFormUpdated);
+  }
+
+  function bajaLaboralEmpleadoFormClickCancelOrExitTrigger() {
+    setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
   function toggleCreateBajaLaboralEmpleadoForm() {
@@ -451,7 +463,6 @@ export default function BajasLaboralesEmpleados() {
   }
 
   const renderTableBajaLaboralEmpleado = () => {
-
     function deleteModal() {
       return (
         <Antd.Modal
@@ -540,6 +551,9 @@ export default function BajasLaboralesEmpleados() {
           toggleForm={toggleCreateBajaLaboralEmpleadoForm}
           bajaLaboralEmpleadoDataForm={""}
           formUpdateTrigger={bajaLaboralEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            bajaLaboralEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"create"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -553,6 +567,9 @@ export default function BajasLaboralesEmpleados() {
           toggleForm={toggleUpdateBajaLaboralEmpleadoForm}
           bajaLaboralEmpleadoDataForm={rowSelected}
           formUpdateTrigger={bajaLaboralEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            bajaLaboralEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"update"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -566,6 +583,9 @@ export default function BajasLaboralesEmpleados() {
           toggleForm={toggleViewUniqueBajaLaboralEmpleadoForm}
           bajaLaboralEmpleadoDataForm={rowSelected}
           formUpdateTrigger={bajaLaboralEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            bajaLaboralEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}

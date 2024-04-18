@@ -58,10 +58,11 @@ public class BlockchainServerMain {
 
                     MensajeClienteServidor mensajeDelCliente = (MensajeClienteServidor) objectInputStream.readObject();
 
-                    String tipoOperacionRecibida = mensajeDelCliente.getTipoOperacion();
+                    String tipoOperacionRecibida = mensajeDelCliente.getTipoOperacion().toUpperCase();
                     TransaccionVacacion transaccionVacacionRecibido = mensajeDelCliente
                             .getTransaccionVacacionAutorizada();
-                            
+                    List<TransaccionVacacion> listaTransaccionesVacacionesAutorizadasRecibido = mensajeDelCliente
+                            .getListaTransaccionesVacacionesAutorizadas();
 
                     RespuestaServidorCliente respuestaAlCliente;
 
@@ -79,26 +80,29 @@ public class BlockchainServerMain {
 
                             if (bloqueGuardado == null) {
                                 respuestaAlCliente = new RespuestaServidorCliente(
-                                        "Transaccion vacacion rechazada. Ya se autorizó la vacación", 409, null);
+                                        "Transaccion vacacion rechazada. Ya se autorizó la vacación", 409, null, null);
                                 objectOutputStream.writeObject(respuestaAlCliente);
                                 break;
                             }
 
                             respuestaAlCliente = new RespuestaServidorCliente(
-                                    "Transaccion vacacion recibido y guardado exitosamente", 200, bloqueGuardado);
+                                    "Transaccion vacacion recibido y guardado exitosamente", 200, bloqueGuardado, null);
                             objectOutputStream.writeObject(respuestaAlCliente);
 
                             break;
-                        case "CHECK": 
-                            // AQUI VERIFICARLO
-                            System.out.println("CHECK");
+                        case "CHECK":
+
+                            List<TransaccionVacacion> inconsistenciasEncontradas = obtenerVacacionesConInconsistencias(
+                                    listaTransaccionesVacacionesAutorizadasRecibido);
+
                             respuestaAlCliente = new RespuestaServidorCliente(
-                                        "NO HAY NADA HECHO", 409, null);
-                                objectOutputStream.writeObject(respuestaAlCliente);
+                                    "Check blockchain realizado", 200, null, inconsistenciasEncontradas);
+                            objectOutputStream.writeObject(respuestaAlCliente);
+
                             break;
                         default:
                             respuestaAlCliente = new RespuestaServidorCliente(
-                                    "Operacion no valida", 200, null);
+                                    "Operacion no valida", 200, null, null);
                             objectOutputStream.writeObject(respuestaAlCliente);
 
                             break;
@@ -133,7 +137,7 @@ public class BlockchainServerMain {
     private static Block guardarTransaccionVacacion(TransaccionVacacion newTransaccionVacacion) {
         Block newBlock = null;
 
-        System.out.println("newTransaccionVacacion: " + newTransaccionVacacion);
+        System.out.println("\nnewTransaccionVacacion: " + newTransaccionVacacion);
 
         boolean existeVacacionAutorizadaPorId = libroVacaciones.verificarVacacionAutorizadaExiste(libroVacaciones,
                 newTransaccionVacacion.getId_vacacion_empleado());
@@ -141,8 +145,6 @@ public class BlockchainServerMain {
         if (existeVacacionAutorizadaPorId == true) {
             return null;
         }
-
-
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO_LIBRO_VACACIONES))) {
             newBlock = libroVacaciones.addBlock(newTransaccionVacacion);
@@ -152,6 +154,41 @@ public class BlockchainServerMain {
         }
 
         return newBlock;
+    }
+
+    private static List<TransaccionVacacion> obtenerVacacionesConInconsistencias(
+            List<TransaccionVacacion> listaTransaccionesVacaciones) {
+        List<Block> bloquesVacacionesAutorizadas = libroVacaciones.getLibroTransaccionesVacacionesAutorizadas();
+
+        // Variable para almacenar las inconsistencias encontradas
+        List<TransaccionVacacion> transaccionesVacacionesInconsistentes = new ArrayList<>();
+
+        for (int pos = 1; pos < bloquesVacacionesAutorizadas.size(); pos++) {
+            Block infoBlockVacacionesAutorizadas = bloquesVacacionesAutorizadas.get(pos);
+
+            for (TransaccionVacacion infoTransaccionVacacionDeBBDD : listaTransaccionesVacaciones) {
+
+                // Verificamos si el ID de vacación es el mismo en ambos registros
+                boolean mismoIdVacacionBlockchainAndBBDD = infoBlockVacacionesAutorizadas.getDataTransaccionVacacion()
+                        .getId_vacacion_empleado() == infoTransaccionVacacionDeBBDD.getId_vacacion_empleado();
+
+                // Verificamos si el hash de la transacción de vacaciones ha cambiado
+                boolean hashTransaccionVacacionDiferenteBlockchainAndBBDD = !infoBlockVacacionesAutorizadas
+                        .getDataTransaccionVacacion()
+                        .getHashTransaccionVacacion()
+                        .equals(infoTransaccionVacacionDeBBDD.getHashTransaccionVacacion());
+
+                if (mismoIdVacacionBlockchainAndBBDD && hashTransaccionVacacionDiferenteBlockchainAndBBDD) {
+                    transaccionesVacacionesInconsistentes.add(infoTransaccionVacacionDeBBDD);
+                    System.out.println("ESTE ID: " + infoTransaccionVacacionDeBBDD.getId_vacacion_empleado()
+                            + " TIENE DIFERENTE INFO CON LA DEL BLOCKCHAIN");
+                    break;
+                }
+
+            }
+        }
+
+        return transaccionesVacacionesInconsistentes;
     }
 
 }

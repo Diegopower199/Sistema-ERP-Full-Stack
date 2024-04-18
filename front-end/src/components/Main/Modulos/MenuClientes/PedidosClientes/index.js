@@ -53,6 +53,7 @@ export default function PedidosClientes() {
   const [showFormCreate, setShowFormCreate] = useState(false);
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
+  const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -231,7 +232,7 @@ export default function PedidosClientes() {
         setTableLoading(false);
         return false;
       }
-
+      
       const pedidosClientesMap = responseGetAllPedidosClientes.data.map(
         (pedidoCliente) => {
           const { nombre_apellidos, razon_social, nif } = pedidoCliente.cliente;
@@ -285,14 +286,19 @@ export default function PedidosClientes() {
   }, [authUser]);
 
   useEffect(() => {
-    if (pedidoClienteFormUpdated === true) {
+    if (pedidoClienteFormUpdated || cancelOrExitClicked) {
       fetchGetAllPedidosClientesAndHandleErrors();
       setPedidoClienteFormUpdated(false);
+      setCancelOrExitClicked(false);
     }
-  }, [pedidoClienteFormUpdated]);
+  }, [pedidoClienteFormUpdated, cancelOrExitClicked]);
 
   function pedidoClienteFormUpdatedTrigger() {
     setPedidoClienteFormUpdated(!pedidoClienteFormUpdated);
+  }
+
+  function pedidoClienteFormClickCancelOrExitTrigger() {
+    setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
   function toggleCreatePedidoClienteForm() {
@@ -511,6 +517,7 @@ export default function PedidosClientes() {
           toggleForm={toggleCreatePedidoClienteForm}
           pedidoClienteDataForm={""}
           formUpdateTrigger={pedidoClienteFormUpdatedTrigger}
+          cancelOrExitClickTrigger={pedidoClienteFormClickCancelOrExitTrigger}
           operationType={"create"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -524,6 +531,7 @@ export default function PedidosClientes() {
           toggleForm={toggleUpdatePedidoClienteForm}
           pedidoClienteDataForm={rowSelected}
           formUpdateTrigger={pedidoClienteFormUpdatedTrigger}
+          cancelOrExitClickTrigger={pedidoClienteFormClickCancelOrExitTrigger}
           operationType={"update"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -537,6 +545,7 @@ export default function PedidosClientes() {
           toggleForm={toggleViewUniquePedidoClienteForm}
           pedidoClienteDataForm={rowSelected}
           formUpdateTrigger={pedidoClienteFormUpdatedTrigger}
+          cancelOrExitClickTrigger={pedidoClienteFormClickCancelOrExitTrigger}
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}

@@ -43,11 +43,6 @@ public class Blockchain implements Serializable {
         return newBlock;
     }
 
-    public Block checkVacacionAutorizadaNotChange(TransaccionVacacion data) {
-        Block newBlock = calculateBlock(data);
-        return newBlock;
-    }
-
     public Block addBlock(TransaccionVacacion data) {
         Block newBlock = calculateBlock(data);
         libroTransaccionesVacacionesAutorizadas.add(newBlock);

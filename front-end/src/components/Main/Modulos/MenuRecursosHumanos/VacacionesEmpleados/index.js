@@ -64,6 +64,7 @@ export default function VacacionesEmpleados() {
     showHistorialVacacionesAutorizadas,
     setShowHistorialVacacionesAutorizadas,
   ] = useState(false);
+  const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -245,6 +246,7 @@ export default function VacacionesEmpleados() {
         return false;
       }
 
+
       const vacacionesEmpleadosMap = responseGetAllVacacionesEmpleados.data.map(
         (vacacionEmpleado) => {
           const { nombre, apellidos, dni } = vacacionEmpleado.persona;
@@ -291,17 +293,28 @@ export default function VacacionesEmpleados() {
   }, [authUser]);
 
   useEffect(() => {
-    if (vacacionEmpleadoFormUpdated === true) {
+    if (
+      vacacionEmpleadoFormUpdated ||
+      vacacionEmpleadoDelete ||
+      cancelOrExitClicked
+    ) {
       fetchGetAllVacacionesEmpleadosAndHandleErrors();
       setVacacionEmpleadoFormUpdated(false);
-    } else if (vacacionEmpleadoDelete === true) {
-      fetchGetAllVacacionesEmpleadosAndHandleErrors();
       setVacacionEmpleadoDelete(false);
+      setCancelOrExitClicked(false);
     }
-  }, [vacacionEmpleadoFormUpdated, vacacionEmpleadoDelete]);
+  }, [
+    vacacionEmpleadoFormUpdated,
+    vacacionEmpleadoDelete,
+    cancelOrExitClicked,
+  ]);
 
   function vacacionEmpleadoFormUpdatedTrigger() {
     setVacacionEmpleadoFormUpdated(!vacacionEmpleadoFormUpdated);
+  }
+
+  function vacacionEmpleadoFormClickCancelOrExitTrigger() {
+    setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
   function toggleCreateVacacionEmpleadoForm() {
@@ -524,12 +537,12 @@ export default function VacacionesEmpleados() {
           centered
         >
           {errorMessage.length !== 0 && backendError === true && (
-            <>
+            <div>
               <p className={styles.BackendError}>
                 <ErrorIcon fontSize="medium" color="red" />
                 Error: {errorMessage}
               </p>
-            </>
+            </div>
           )}
         </Antd.Modal>
       );
@@ -621,58 +634,70 @@ export default function VacacionesEmpleados() {
 
   if (backendOrDDBBConnectionError === true) {
     return (
-      <>
+      <div>
         <ServerConnectionError message={errorMessage} />
-      </>
+      </div>
     );
   } else if (showFormCreate) {
     return (
-      <>
+      <div>
         <FormVacacionesEmpleados
           toggleForm={toggleCreateVacacionEmpleadoForm}
           vacacionEmpleadoDataForm={""}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            vacacionEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"create"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormVacacionesEmpleados>
-      </>
+      </div>
     );
   } else if (showFormUpdate) {
     return (
-      <>
+      <div>
         <FormVacacionesEmpleados
           toggleForm={toggleUpdateVacacionEmpleadoForm}
           vacacionEmpleadoDataForm={rowSelected}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            vacacionEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"update"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormVacacionesEmpleados>
-      </>
+      </div>
     );
   } else if (showFormViewUnique) {
     return (
-      <>
+      <div>
         <FormVacacionesEmpleados
           toggleForm={toggleViewUniqueVacacionEmpleadoForm}
           vacacionEmpleadoDataForm={rowSelected}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            vacacionEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormVacacionesEmpleados>
-      </>
+      </div>
     );
   } else if (showHistorialVacacionesAutorizadas) {
     return (
-      <>
+      <div>
         <HistorialVacacionesAutorizadas
           toggleView={toggleShowHistorialVacacionesAutorizadas}
+          cancelOrExitClickTrigger={
+            vacacionEmpleadoFormClickCancelOrExitTrigger
+          }
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></HistorialVacacionesAutorizadas>
-      </>
+      </div>
     );
   } else {
     return renderTableVacacionesEmpleados();

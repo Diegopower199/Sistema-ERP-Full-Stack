@@ -58,6 +58,7 @@ export default function AsistenciasEmpleados() {
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -197,7 +198,7 @@ export default function AsistenciasEmpleados() {
         setTableLoading(false);
         return false;
       }
-
+      
       const asistenciasEmpleadosMap =
         responseGetAllAsistenciasEmpleados.data.map((asistenciaEmpleado) => {
           const { nombre, apellidos, dni } = asistenciaEmpleado.persona;
@@ -230,17 +231,28 @@ export default function AsistenciasEmpleados() {
   }, [authUser]);
 
   useEffect(() => {
-    if (asistenciaEmpleadoFormUpdated === true) {
+    if (
+      asistenciaEmpleadoFormUpdated ||
+      asistenciaEmpleadoDelete ||
+      cancelOrExitClicked
+    ) {
       fetchGetAllAsistenciasEmpleadosAndHandleErrors();
       setAsistenciaEmpleadoFormUpdated(false);
-    } else if (asistenciaEmpleadoDelete === true) {
-      fetchGetAllAsistenciasEmpleadosAndHandleErrors();
       setAsistenciaEmpleadoDelete(false);
+      setCancelOrExitClicked(false);
     }
-  }, [asistenciaEmpleadoFormUpdated, asistenciaEmpleadoDelete]);
+  }, [
+    asistenciaEmpleadoFormUpdated,
+    asistenciaEmpleadoDelete,
+    cancelOrExitClicked,
+  ]);
 
   function asistenciaEmpleadoFormUpdatedTrigger() {
     setAsistenciaEmpleadoFormUpdated(!asistenciaEmpleadoFormUpdated);
+  }
+
+  function asistenciaEmpleadoFormClickCancelOrExitTrigger() {
+    setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
   function toggleCreateAsistenciaEmpleadoForm() {
@@ -529,6 +541,9 @@ export default function AsistenciasEmpleados() {
           toggleForm={toggleCreateAsistenciaEmpleadoForm}
           asistenciaEmpleadoDataForm={""}
           formUpdateTrigger={asistenciaEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            asistenciaEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"create"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -542,6 +557,9 @@ export default function AsistenciasEmpleados() {
           toggleForm={toggleUpdateAsistenciaEmpleadoForm}
           asistenciaEmpleadoDataForm={rowSelected}
           formUpdateTrigger={asistenciaEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            asistenciaEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"update"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -555,6 +573,9 @@ export default function AsistenciasEmpleados() {
           toggleForm={toggleViewUniqueAsistenciaEmpleadoForm}
           asistenciaEmpleadoDataForm={rowSelected}
           formUpdateTrigger={asistenciaEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            asistenciaEmpleadoFormClickCancelOrExitTrigger
+          }
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}

@@ -55,6 +55,7 @@ export default function Personas() {
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -165,12 +166,6 @@ export default function Personas() {
             onClick={handleUpdateClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
         ];
       },
     },
@@ -204,7 +199,7 @@ export default function Personas() {
         setTableLoading(false);
         return false;
       }
-
+      
       const personasMap = responseGetAllPersonas.data.map((persona) => {
         return {
           id: persona.id_persona,
@@ -240,17 +235,19 @@ export default function Personas() {
   }, [authUser]);
 
   useEffect(() => {
-    if (personaFormUpdated === true) {
+    if (personaFormUpdated || cancelOrExitClicked) {
       fetchGetAllPersonasAndHandleErrors();
       setPersonaFormUpdated(false);
-    } else if (personaDelete === true) {
-      fetchGetAllPersonasAndHandleErrors();
-      setPersonaDelete(false);
+      setCancelOrExitClicked(false);
     }
-  }, [personaFormUpdated, personaDelete]);
+  }, [personaFormUpdated, cancelOrExitClicked]);
 
   function personaFormUpdatedTrigger() {
     setPersonaFormUpdated(!personaFormUpdated);
+  }
+
+  function personaFormClickCancelOrExitTrigger() {
+    setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
   function toggleCreatePersonaForm() {
@@ -275,43 +272,10 @@ export default function Personas() {
     toggleUpdatePersonaForm();
   };
 
-  const handleDeleteClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
-
-    setIdPersonaSelected(id);
-    setNamePersonaSelected(filaSeleccionada.nombre);
-    setShowDelete(true);
-  };
-
   const handleViewUniqueClick = (id) => () => {
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniquePersonaForm();
-  };
-
-  const handleModalOk = async () => {
-    try {
-      const responseDeletePersona = await deletePersona(idPersonaSelected);
-
-      errorHandlingInfo = checkResponseForErrors(responseDeletePersona);
-
-      if (errorHandlingInfo.backendError) {
-        handleBackendError(responseDeletePersona.errorMessage);
-        return;
-      } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(responseDeletePersona.errorMessage);
-        return;
-      }
-
-      setPersonaDelete(true);
-      resetStates();
-    } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
-    }
-  };
-
-  const handleModalClose = () => {
-    resetStates();
   };
 
   function resetStates() {
@@ -441,29 +405,6 @@ export default function Personas() {
   }
 
   const renderTablePersona = () => {
-    function deleteModal() {
-      return (
-        <Antd.Modal
-          title={`¿Eliminar a la siguiente persona ${namePersonaSelected}?`}
-          open={showDelete}
-          okText="Aceptar"
-          onOk={handleModalOk}
-          cancelText="Cancelar"
-          onCancel={handleModalClose}
-          centered
-        >
-          {errorMessage.length !== 0 && backendError === true && (
-            <div>
-              <p className={styles.BackendError}>
-                <ErrorIcon fontSize="medium" color="red" />
-                Error: {errorMessage}
-              </p>
-            </div>
-          )}
-        </Antd.Modal>
-      );
-    }
-
     return (
       <div>
         <Header />
@@ -509,7 +450,6 @@ export default function Personas() {
               toolbar: CustomToolbar,
             }}
           />
-          {showDelete && deleteModal()}
         </Box>
         <Footer />
       </div>
@@ -529,6 +469,7 @@ export default function Personas() {
           toggleForm={toggleCreatePersonaForm}
           personaDataForm={""}
           formUpdateTrigger={personaFormUpdatedTrigger}
+          cancelOrExitClickTrigger={personaFormClickCancelOrExitTrigger}
           operationType={"create"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -542,6 +483,7 @@ export default function Personas() {
           toggleForm={toggleUpdatePersonaForm}
           personaDataForm={rowSelected}
           formUpdateTrigger={personaFormUpdatedTrigger}
+          cancelOrExitClickTrigger={personaFormClickCancelOrExitTrigger}
           operationType={"update"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -555,6 +497,7 @@ export default function Personas() {
           toggleForm={toggleViewUniquePersonaForm}
           personaDataForm={rowSelected}
           formUpdateTrigger={personaFormUpdatedTrigger}
+          cancelOrExitClickTrigger={personaFormClickCancelOrExitTrigger}
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}

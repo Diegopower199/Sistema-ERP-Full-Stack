@@ -55,6 +55,7 @@ export default function NominasEmpleados() {
 
   const [showModalGenerate, setShowModalGenerate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
+  const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -227,7 +228,7 @@ export default function NominasEmpleados() {
         setTableLoading(false);
         return false;
       }
-
+      
       const nominasEmpleadosMap = responseGetAllNominasEmpleados.data.map(
         (nominaEmpleado) => {
           const { nombre, apellidos, dni } = nominaEmpleado.persona;
@@ -270,12 +271,21 @@ export default function NominasEmpleados() {
   }, [authUser]);
 
   useEffect(() => {
-    if (nominaEmpleadoFormUpdated || nominaEmpleadoGenerateUpdated) {
+    if (
+      nominaEmpleadoFormUpdated ||
+      nominaEmpleadoGenerateUpdated ||
+      cancelOrExitClicked
+    ) {
       fetchGetAllNominasEmpleadosAndHandleErrors();
       setNominaEmpleadoFormUpdated(false);
       setNominaEmpleadoGenerateUpdated(false);
+      setCancelOrExitClicked(false);
     }
-  }, [nominaEmpleadoFormUpdated, nominaEmpleadoGenerateUpdated]);
+  }, [
+    nominaEmpleadoFormUpdated,
+    nominaEmpleadoGenerateUpdated,
+    cancelOrExitClicked,
+  ]);
 
   function nominaEmpleadoGenerateUpdatedTrigger() {
     setNominaEmpleadoGenerateUpdated(!nominaEmpleadoGenerateUpdated);
@@ -283,6 +293,10 @@ export default function NominasEmpleados() {
 
   function nominaEmpleadoFormUpdatedTrigger() {
     setNominaEmpleadoFormUpdated(!nominaEmpleadoFormUpdated);
+  }
+
+  function nominaEmpleadoFormClickCancelOrExitTrigger() {
+    setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
   function toggleGenerateNominasEmpleadosModal() {
@@ -570,6 +584,7 @@ export default function NominasEmpleados() {
           toggleForm={toggleViewUniqueNominaEmpleadoForm}
           nominaEmpleadoDataForm={rowSelected}
           formUpdateTrigger={nominaEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={nominaEmpleadoFormClickCancelOrExitTrigger}
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}

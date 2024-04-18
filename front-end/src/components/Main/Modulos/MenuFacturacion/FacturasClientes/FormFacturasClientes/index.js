@@ -22,6 +22,7 @@ export default function FormFacturasClientes({
   toggleForm,
   facturaClienteDataForm,
   formUpdateTrigger,
+  cancelOrExitClickTrigger,
   operationType,
   triggerBackendOrDDBBConnectionError,
   triggerErrorMessage,
@@ -310,7 +311,14 @@ export default function FormFacturasClientes({
           />
         </Antd.Form.Item>
 
-        <Antd.Button onClick={toggleForm}>Salir</Antd.Button>
+        <Antd.Button
+          onClick={() => {
+            toggleForm();
+            cancelOrExitClickTrigger();
+          }}
+        >
+          Salir
+        </Antd.Button>
       </Antd.Form>
       <Footer />
     </div>

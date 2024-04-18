@@ -71,12 +71,10 @@ public class BlockchainVacacionAutorizadaController {
                 return ResponseEntity.ok(newVacacionAutorizada.toMap());
             }
         } catch (ConexionServidoresException e) {
-            System.out.println("EL ERROR EN CONTROLLER" + e.getMessage());
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(e.getStatus()).body(response);
         } catch (TransaccionVacacionRechazadaException e) {
-            System.out.println("EL ERROR EN CONTROLLER" + e.getMessage());
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
             return ResponseEntity.status(e.getStatus()).body(response);
@@ -94,15 +92,14 @@ public class BlockchainVacacionAutorizadaController {
             List<Map<String, Object>> allVacacionesEmpleados = blockchainVacacionAutorizadaService
                     .checkVacacionesAutorizadas();
 
-            return ResponseEntity.noContent().build();
+            // return ResponseEntity.noContent().build();
 
-            /*
-             * if (allVacacionesEmpleados.isEmpty()) {
-             * return ResponseEntity.noContent().build();
-             * } else {
-             * return ResponseEntity.ok(allVacacionesEmpleados);
-             * }
-             */
+            if (allVacacionesEmpleados.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.ok(allVacacionesEmpleados);
+            }
+
         } catch (ConexionServidoresException e) {
             List<Map<String, Object>> resultado = new ArrayList<>();
             Map<String, Object> response = new HashMap<>();

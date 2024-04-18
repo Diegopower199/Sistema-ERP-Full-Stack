@@ -69,3 +69,42 @@ export const saveTransaccionVacacionAutorizada = async (data) => {
     };
   }
 };
+
+export const checkVacacionesAutorizadas = async () => {
+  const url = API_URL_BACK_END.replace("#", "blockchainVacacionesAutorizadas");
+
+  try {
+    const response = await axios.get(url + "checkVacacionesAutorizadas");
+
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    return {
+      errorMessage: (
+        <div>
+          <h1>¡Error Técnico en Nuestro Servidor de Blockchain!</h1>
+          <p>
+            Lo sentimos mucho, pero en estos momentos estamos enfrentando
+            dificultades técnicas con nuestro servidor de blockchain. Esto puede
+            causar una interrupción temporal en la disponibilidad de algunos de
+            nuestros servicios.
+          </p>
+          <p>
+            Estamos trabajando incansablemente para resolver este problema tan
+            pronto como sea posible. Apreciamos enormemente su paciencia y
+            comprensión mientras trabajamos en una solución.
+          </p>
+          <p>
+            Por favor, le pedimos que vuelva a intentarlo más tarde. Si tiene
+            alguna pregunta o inquietud, no dude en ponerse en contacto con
+            nuestro equipo de soporte.
+          </p>
+          <p>¡Gracias por su comprensión y disculpe las molestias!</p>
+        </div>
+      ),
+      status: error.response.status,
+    };
+  }
+};

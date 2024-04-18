@@ -59,6 +59,7 @@ export default function PagosFacturasClientes() {
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
@@ -186,7 +187,7 @@ export default function PagosFacturasClientes() {
         setTableLoading(false);
         return false;
       }
-
+      
       const pagosFacturasClientesMap =
         responseGetAllPagosFacturasClientes.data.map((pagoFacturaCliente) => {
           return {
@@ -217,17 +218,28 @@ export default function PagosFacturasClientes() {
   }, [authUser]);
 
   useEffect(() => {
-    if (vacacionEmpleadoFormUpdated === true) {
+    if (
+      vacacionEmpleadoFormUpdated ||
+      vacacionEmpleadoDelete ||
+      cancelOrExitClicked
+    ) {
       fetchGetAllPagosFacturasClientesAndHandleErrors();
       setVacacionEmpleadoFormUpdated(false);
-    } else if (vacacionEmpleadoDelete === true) {
-      fetchGetAllPagosFacturasClientesAndHandleErrors();
       setVacacionEmpleadoDelete(false);
+      setCancelOrExitClicked(false);
     }
-  }, [vacacionEmpleadoFormUpdated, vacacionEmpleadoDelete]);
+  }, [
+    vacacionEmpleadoFormUpdated,
+    vacacionEmpleadoDelete,
+    cancelOrExitClicked,
+  ]);
 
   function vacacionEmpleadoFormUpdatedTrigger() {
     setVacacionEmpleadoFormUpdated(!vacacionEmpleadoFormUpdated);
+  }
+
+  function pagoFacturaClienteFormClickCancelOrExitTrigger() {
+    setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
   function toggleCreateVacacionEmpleadoForm() {
@@ -517,6 +529,9 @@ export default function PagosFacturasClientes() {
           toggleForm={toggleCreateVacacionEmpleadoForm}
           pagoFacturaClienteDataForm={""}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            pagoFacturaClienteFormClickCancelOrExitTrigger
+          }
           operationType={"create"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -530,6 +545,9 @@ export default function PagosFacturasClientes() {
           toggleForm={toggleUpdateVacacionEmpleadoForm}
           pagoFacturaClienteDataForm={rowSelected}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            pagoFacturaClienteFormClickCancelOrExitTrigger
+          }
           operationType={"update"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
@@ -543,6 +561,9 @@ export default function PagosFacturasClientes() {
           toggleForm={toggleViewUniqueVacacionEmpleadoForm}
           pagoFacturaClienteDataForm={rowSelected}
           formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          cancelOrExitClickTrigger={
+            pagoFacturaClienteFormClickCancelOrExitTrigger
+          }
           operationType={"view"}
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}

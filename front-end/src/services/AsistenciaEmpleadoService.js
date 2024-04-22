@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
 import { asignarNullSiCadenaVacia } from "@/utils/helpers";
+import { backendServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
 
 export const getAllAsistenciaEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
@@ -18,8 +19,7 @@ export const getAllAsistenciaEmpleados = async () => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -55,8 +55,7 @@ export const saveAsistenciaEmpleado = async (data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -83,8 +82,7 @@ export const startOfWorkdayAsistenciaEmpleado = async (data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -111,8 +109,7 @@ export const endOfWorkdayAsistenciaEmpleado = async (data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -135,8 +132,7 @@ export const getAsistenciaEmpleadoById = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -171,8 +167,7 @@ export const updateAsistenciaEmpleado = async (id, data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -195,8 +190,7 @@ export const deleteAsistenciaEmpleado = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }

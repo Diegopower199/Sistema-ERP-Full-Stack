@@ -15,8 +15,8 @@ import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
-import { REGEX_DNI } from "@/utils/regexPatterns";
-import { getAllPersonas } from "@/services/PersonaService";
+import { getAllPersonas, getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
+import moment from "moment";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -53,6 +53,7 @@ export default function FormVacacionesEmpleados({
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
+  const [logicalDataErrors, setLogicalDataErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [backendError, setBackendError] = useState(false);
 
@@ -104,11 +105,11 @@ export default function FormVacacionesEmpleados({
     }
   };
 
-  const fetchPersonasOptionsAndHandleErrors = async () => {
+  const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
     try {
-      const responseGetAllPersonas = await getAllPersonas();
+      const responseGetAllPersonasEmpleadosAndBecarios = await getAllPersonasEmpleadosAndBecarios();
 
-      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
+      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonasEmpleadosAndBecarios);
 
       if (errorHandlingInfo.noContent) {
         setPersonasOptions([]);
@@ -116,11 +117,11 @@ export default function FormVacacionesEmpleados({
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
+        handleBackendAndDBConnectionError(responseGetAllPersonasEmpleadosAndBecarios.errorMessage);
         return false;
       }
 
-      const optionsPersonas = responseGetAllPersonas.data.map((persona) => {
+      const optionsPersonas = responseGetAllPersonasEmpleadosAndBecarios.data.map((persona) => {
         const { id_persona, nombre, apellidos, dni } = persona;
 
         return {
@@ -144,13 +145,13 @@ export default function FormVacacionesEmpleados({
       try {
         noCallErrorsDetected = await fetchTiposEstadosOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
-        noCallErrorsDetected = await fetchPersonasOptionsAndHandleErrors();
+        noCallErrorsDetected = await fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
@@ -225,6 +226,22 @@ export default function FormVacacionesEmpleados({
     return Object.keys(errorForm).length !== 0;
   };
 
+  const validateLogicalData = () => {
+    const logicalErrors = {};
+
+    const fechaInicio = moment(formData.fecha_inicio);
+    const fechaFin = moment(formData.fecha_fin);
+
+    if (fechaFin.isBefore(fechaInicio)) {
+      logicalErrors.fecha_fin =
+        "La fecha de fin no puede ser anterior a la fecha de inicio";
+    }
+
+    setLogicalDataErrors(logicalErrors);
+
+    return Object.keys(logicalErrors).length !== 0;
+  };
+
   const handleFormChange = (event) => {
     const { name, value } = event.target;
 
@@ -274,16 +291,10 @@ export default function FormVacacionesEmpleados({
     event.preventDefault();
 
     const requiredFieldsError = validateRequiredFields();
-    if (requiredFieldsError) {
-      setErrorMessage(
-        "No se puede añadir un registro con uno o más campos vacios "
-      );
-      return;
-    }
-
     const formDataError = validateFormData();
-    if (formDataError) {
-      setErrorMessage("");
+    const logicalDataError = validateLogicalData();
+
+    if (requiredFieldsError || formDataError || logicalDataError) {
       return;
     }
 
@@ -348,12 +359,10 @@ export default function FormVacacionesEmpleados({
             responseCreateBlockchainVacacionAutorizada
           );
 
-          if (errorHandlingInfo.backendOrDDBBConnectionError) {
-            handleBackendAndDBConnectionError(
-              responseCreateBlockchainVacacionAutorizada.errorMessage
-            );
+          /*if (errorHandlingInfo.backendOrDDBBConnectionError) {
+            handleBackendAndDBConnectionError(responseCreateBlockchainVacacionAutorizada.errorMessage);
             return;
-          }
+          }*/
         }
 
         setErrorMessage("");
@@ -393,19 +402,25 @@ export default function FormVacacionesEmpleados({
             value={formData.fecha_fin}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.fecha_fin ? "error" : ""}
+            status={
+              requiredFieldsIncomplete.fecha_fin || logicalDataErrors.fecha_fin
+                ? "error"
+                : ""
+            }
             className={styles.StyleInput}
           />
-          {requiredFieldsIncomplete.fecha_fin && (
+          {(requiredFieldsIncomplete.fecha_fin ||
+            logicalDataErrors.fecha_fin) && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.fecha_fin}
+              {requiredFieldsIncomplete.fecha_fin ||
+                logicalDataErrors.fecha_fin}
             </div>
           )}
         </Antd.Form.Item>
 
         {(operationType === "update" || operationType === "view") && (
           <div>
-            <Antd.Form.Item label="Dias disponibles">
+            <Antd.Form.Item label="Días disponibles">
               <Antd.Input
                 type="number"
                 name="dias_disponibles"
@@ -414,7 +429,7 @@ export default function FormVacacionesEmpleados({
                 className={styles.StyleInput}
               />
             </Antd.Form.Item>
-            <Antd.Form.Item label="Dias pendientes">
+            <Antd.Form.Item label="Días pendientes">
               <Antd.Input
                 type="number"
                 name="dias_pendientes"
@@ -423,7 +438,7 @@ export default function FormVacacionesEmpleados({
                 className={styles.StyleInput}
               />
             </Antd.Form.Item>
-            <Antd.Form.Item label="Dias solicitados">
+            <Antd.Form.Item label="Días solicitados">
               <Antd.Input
                 type="number"
                 name="dias_solicitados"
@@ -432,7 +447,7 @@ export default function FormVacacionesEmpleados({
                 className={styles.StyleInput}
               />
             </Antd.Form.Item>
-            <Antd.Form.Item label="Dias disfrutados">
+            <Antd.Form.Item label="Días disfrutados">
               <Antd.Input
                 type="number"
                 name="dias_disfrutados"
@@ -443,7 +458,7 @@ export default function FormVacacionesEmpleados({
             </Antd.Form.Item>
           </div>
         )}
-        <Antd.Form.Item label="Observacion">
+        <Antd.Form.Item label="Observación">
           <Antd.Input
             type="text"
             name="observacion"
@@ -472,7 +487,7 @@ export default function FormVacacionesEmpleados({
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay personas</span>}
+            notFoundContent={<span>No hay personas disponibles</span>}
             showSearch={true}
             onSearch={
               operationType === "view" ? null : handleSelectPersonaSearch
@@ -515,7 +530,9 @@ export default function FormVacacionesEmpleados({
                     ? styles.StyleSelect
                     : styles.StyleSelectDisabled
                 }
-                notFoundContent={<span>No hay opciones</span>}
+                notFoundContent={
+                  <span>No hay tipos de estados disponibles</span>
+                }
               >
                 {operationType !== "view" &&
                   tiposEstadosOptions.map((tipoEstado) => (

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
 import { asignarNullSiCadenaVacia } from "@/utils/helpers";
+import { backendServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
 
 export const getAllPedidosClientes = async () => {
   const url = API_URL_BACK_END.replace("#", "pedidosClientes");
@@ -18,8 +19,7 @@ export const getAllPedidosClientes = async () => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -79,8 +79,7 @@ export const savePedidoCliente = async (data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -103,8 +102,7 @@ export const getPedidoClienteById = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -163,8 +161,7 @@ export const updatePedidoCliente = async (id, data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -187,8 +184,7 @@ export const deletePedidoCliente = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }

@@ -1,5 +1,7 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
+import { asignarNullSiCadenaVacia } from "@/utils/helpers";
+import { backendServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
 
 export const getAllAyudasEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
@@ -17,8 +19,7 @@ export const getAllAyudasEmpleados = async () => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -29,9 +30,24 @@ export const saveAyudaEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
 
   try {
-    const formData = {};
+    const formData = {
+      fecha_inicio: data.fecha_inicio,
+      fecha_fin: data.fecha_fin,
+      valor_asociado: parseInt(data.valor_asociado),
+      observacion: asignarNullSiCadenaVacia(data.observacion),
+      persona: {
+        id_persona: parseInt(data.id_persona),
+      },
+      tipo_ayuda: {
+        id_tipo_ayuda: parseInt(data.id_tipo_ayuda),
+      },
+      tipo_estado: {
+        id_tipo_estado: parseInt(data.id_tipo_estado),
+      },
+    };
 
     const response = await axios.post(url + "save", formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -44,8 +60,7 @@ export const saveAyudaEmpleado = async (data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -68,8 +83,7 @@ export const getAyudaEmpleadoById = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -80,7 +94,21 @@ export const updateAyudaEmpleado = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "ayudasEmpleados");
 
   try {
-    const formData = {};
+    const formData = {
+      fecha_inicio: data.fecha_inicio,
+      fecha_fin: data.fecha_fin,
+      valor_asociado: parseInt(data.valor_asociado),
+      observacion: asignarNullSiCadenaVacia(data.observacion),
+      persona: {
+        id_persona: parseInt(data.id_persona),
+      },
+      tipo_ayuda: {
+        id_tipo_ayuda: parseInt(data.id_tipo_ayuda),
+      },
+      tipo_estado: {
+        id_tipo_estado: parseInt(data.id_tipo_estado),
+      },
+    };
 
     const response = await axios.put(url + "update/" + id, formData);
     return {
@@ -95,8 +123,7 @@ export const updateAyudaEmpleado = async (id, data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -119,8 +146,7 @@ export const deleteAyudaEmpleado = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }

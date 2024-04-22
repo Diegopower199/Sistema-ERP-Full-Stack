@@ -52,6 +52,8 @@ export default function FormClientes({
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
+
+  const [logicalDataErrors, setLogicalDataErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [backendError, setBackendError] = useState(false);
 
@@ -109,33 +111,33 @@ export default function FormClientes({
       errorMissingFields.nombre_apellidos =
         "Por favor, ingresa un nombre y apellido";
     } else if (!formData.razon_social && selectedOptionRadio === 2) {
-      errorMissingFields.razon_social = "Por favor, ingresa una razon social";
+      errorMissingFields.razon_social = "Por favor, ingresa una razón social";
     }
 
     if (!formData.numero_telefono || formData.numero_telefono === "34") {
       errorMissingFields.numero_telefono =
-        "Por favor, ingresa un numero de telefono";
+        "Por favor, ingresa un número de teléfono";
     }
 
     if (!formData.correo_electronico) {
       errorMissingFields.correo_electronico =
-        "Por favor, ingresa un correo electronico";
+        "Por favor, ingresa un correo electrónico";
     }
 
     if (!formData.direccion) {
-      errorMissingFields.direccion = "Por favor, ingresa una direccion";
+      errorMissingFields.direccion = "Por favor, ingresa una dirección";
     }
 
     if (!formData.codigo_postal) {
-      errorMissingFields.codigo_postal = "Por favor, ingresa un codigo postal";
+      errorMissingFields.codigo_postal = "Por favor, ingresa un código postal";
     }
 
     if (!formData.provincia) {
-      errorMissingFields.provincia = "Por favor, ingresa una provincia";
+      errorMissingFields.provincia = "Por favor, selecciona una provincia";
     }
 
     if (!formData.ciudad) {
-      errorMissingFields.ciudad = "Por favor, ingresa una ciudad";
+      errorMissingFields.ciudad = "Por favor, selecciona una ciudad";
     }
 
     setRequiredFieldsIncomplete(errorMissingFields);
@@ -151,27 +153,35 @@ export default function FormClientes({
       !formData.nif.match(REGEX_NIF_PERSONAS_FISICAS)
     ) {
       errorForm.nif =
-        "Por favor, ingresa un nif valido para una persona fisica";
+        "Por favor, ingresa un nif válido para una persona física";
     } else if (
       selectedOptionRadio === 2 &&
       !formData.nif.match(REGEX_NIF_PERSONAS_JURIDICAS)
     ) {
       errorForm.nif =
-        "Por favor, ingresa un nif valido para una persona jurídica";
+        "Por favor, ingresa un nif válido para una persona jurídica";
     }
 
     if (!formData.numero_telefono.match(REGEX_TELEFONO_CON_PREFIJO)) {
       errorForm.numero_telefono =
-        "Por favor, ingresa un numero de telefono válido";
+        "Por favor, ingresa un número de teléfono válido";
     }
 
     if (!formData.correo_electronico.match(REGEX_EMAIL)) {
-      errorForm.correo_electronico = "Por favor, ingresa un email válido";
+      errorForm.correo_electronico = "Por favor, ingresa un correo electrónico válido";
     }
 
     setFormErrors(errorForm);
 
     return Object.keys(errorForm).length !== 0;
+  };
+
+  const validateLogicalData = () => {
+    const logicalErrors = {};
+
+    setLogicalDataErrors(logicalErrors);
+
+    return Object.keys(logicalErrors).length !== 0;
   };
 
   const handleFormChange = (event) => {
@@ -249,16 +259,10 @@ export default function FormClientes({
     event.preventDefault();
 
     const requiredFieldsError = validateRequiredFields();
-    if (requiredFieldsError) {
-      setErrorMessage(
-        "No se puede añadir un registro con uno o más campos vacios"
-      );
-      return;
-    }
-
     const formDataError = validateFormData();
-    if (formDataError) {
-      setErrorMessage("");
+    const logicalDataError = validateLogicalData();
+
+    if (requiredFieldsError || formDataError || logicalDataError) {
       return;
     }
 
@@ -377,7 +381,7 @@ export default function FormClientes({
           ((operationType === "update" || operationType === "view") &&
             formData.razon_social !== null)) && (
           <div>
-            <Antd.Form.Item label="Razon social:">
+            <Antd.Form.Item label="Razón social">
               <Antd.Input
                 type="text"
                 name="razon_social"
@@ -396,7 +400,7 @@ export default function FormClientes({
           </div>
         )}
 
-        <Antd.Form.Item label="Numero telefono:">
+        <Antd.Form.Item label="Número teléfono">
           <Antd.Input
             type="text"
             name="numero_telefono"
@@ -420,7 +424,7 @@ export default function FormClientes({
           )}
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Correo electronico:">
+        <Antd.Form.Item label="Correo electrónico">
           <Antd.Input
             type="text"
             name="correo_electronico"
@@ -444,7 +448,7 @@ export default function FormClientes({
           )}
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Direccion:">
+        <Antd.Form.Item label="Dirección">
           <Antd.Input
             type="text"
             name="direccion"
@@ -461,7 +465,7 @@ export default function FormClientes({
           )}
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Codigo postal:">
+        <Antd.Form.Item label="Código postal">
           <Antd.Input
             type="text"
             name="codigo_postal"
@@ -496,7 +500,7 @@ export default function FormClientes({
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay provincia</span>}
+            notFoundContent={<span>No hay provincias disponibles</span>}
             showSearch={true}
             onSearch={
               operationType === "view" ? null : handleSelectProvinciaSearch
@@ -532,7 +536,7 @@ export default function FormClientes({
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay ciudades</span>}
+            notFoundContent={<span>No hay ciudades disponibles</span>}
             showSearch={true}
             onSearch={
               operationType === "view" ? null : handleSelectCiudadSearch

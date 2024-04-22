@@ -102,32 +102,6 @@ public class AsistenciaEmpleadoService {
         asistenciaEmpleadoExistente.setHora_salida(nuevoAsistenciaEmpleado.getHora_salida());
         asistenciaEmpleadoExistente.setHoras_trabajadas_dia(LocalTime.of(10, 0, 10)); // ESTO TENEMOS QUE CALCULARLO
 
-        /*
-         * LAS HORAS SE CALCULAN ASÍ, DEBEMOS PONERLO CON ESTO, PERO TIENE QUE SER ASÍ
-         * import java.time.LocalTime;
-         * import java.time.temporal.ChronoUnit;
-         * 
-         * public class Main {
-         * public static void main(String[] args) {
-         * // Crear instancias de LocalTime para las 8:00 y las 14:00
-         * LocalTime horaInicio = LocalTime.of(8, 15,45);
-         * LocalTime horaFin = LocalTime.of(10, 0, 10);
-         * 
-         * // Calcular la diferencia en minutos
-         * long minutosDeDiferencia = horaInicio.until(horaFin, ChronoUnit.MINUTES);
-         * long segundosDeDiferencia = horaInicio.until(horaFin, ChronoUnit.SECONDS);
-         * 
-         * 
-         * // Construir un nuevo LocalTime basado en los minutos de diferencia
-         * LocalTime diferenciaComoLocalTime = LocalTime.of((int) minutosDeDiferencia /
-         * 60, (int) minutosDeDiferencia % 60, (int) segundosDeDiferencia % 60);
-         * 
-         * // Mostrar la diferencia como LocalTime
-         * System.out.println("Diferencia como LocalTime: " + diferenciaComoLocalTime);
-         * }
-         * }
-         */
-
         AsistenciaEmpleadoModel asistenciaEmpleadoGuardado = asistenciaEmpleadoRepository
                 .save(asistenciaEmpleadoExistente);
 

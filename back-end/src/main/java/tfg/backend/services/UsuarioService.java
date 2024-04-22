@@ -32,6 +32,7 @@ public class UsuarioService {
 
         for (UsuarioModel usuario : listaUsuarios) {
             Map<String, Object> usuarioMap = usuario.toMap();
+
             usuarioMap.put("persona", usuario.getPersona() != null ? usuario.getPersona().toMap() : null);
 
             usuarioMap.put("tipo_usuario",
@@ -90,7 +91,6 @@ public class UsuarioService {
         nuevoPersona.setTipo_usuario(tipoUsuarioEncontrado);
         tipoUsuarioEncontrado.getUsuarios().add(nuevoPersona);
 
-        // Verificar si el nombre de usuario ya existe en la base de datos
         if (usuarioRepository.existsByNombre_usuario(nombre_usuario)) {
             throw new RuntimeException("El nombre usuario ya existe");
         }
@@ -108,6 +108,7 @@ public class UsuarioService {
 
         usuarioMap.put("persona",
                 usuarioEncontrado.getPersona() != null ? usuarioEncontrado.getPersona().toMap() : null);
+                
         usuarioMap.put("tipo_usuario",
                 usuarioEncontrado.getTipo_usuario() != null ? usuarioEncontrado.getTipo_usuario().toMap() : null);
 
@@ -178,7 +179,7 @@ public class UsuarioService {
 
     }
 
-    public void deleteUsuario(int idUsuario) { // ESTO NO FUNCIONA, NO LO BORRA
+    public void deleteUsuario(int idUsuario) {
         usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario con id " + idUsuario + " no encontrado"));
 

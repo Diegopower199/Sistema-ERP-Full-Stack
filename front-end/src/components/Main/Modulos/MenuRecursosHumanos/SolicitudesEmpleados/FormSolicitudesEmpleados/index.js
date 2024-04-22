@@ -15,7 +15,7 @@ import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
-import { getAllPersonas } from "@/services/PersonaService";
+import { getAllPersonas, getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -50,6 +50,7 @@ export default function FormSolicitudesEmpleados({
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
+  const [logicalDataErrors, setLogicalDataErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [backendError, setBackendError] = useState(false);
 
@@ -129,11 +130,11 @@ export default function FormSolicitudesEmpleados({
     }
   };
 
-  const fetchPersonasOptionsAndHandleErrors = async () => {
+  const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
     try {
-      const responseGetAllPersonas = await getAllPersonas();
+      const responseGetAllPersonasEmpleadosAndBecarios = await getAllPersonasEmpleadosAndBecarios();
 
-      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
+      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonasEmpleadosAndBecarios);
 
       if (errorHandlingInfo.noContent) {
         setPersonasOptions([]);
@@ -141,11 +142,11 @@ export default function FormSolicitudesEmpleados({
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
+        handleBackendAndDBConnectionError(responseGetAllPersonasEmpleadosAndBecarios.errorMessage);
         return false;
       }
 
-      const optionsPersonas = responseGetAllPersonas.data.map((persona) => {
+      const optionsPersonas = responseGetAllPersonasEmpleadosAndBecarios.data.map((persona) => {
         const { id_persona, nombre, apellidos, dni } = persona;
 
         return {
@@ -170,19 +171,19 @@ export default function FormSolicitudesEmpleados({
         noCallErrorsDetected =
           await fetchTiposSolicitudesOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
         noCallErrorsDetected = await fetchTiposEstadosOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
-        noCallErrorsDetected = await fetchPersonasOptionsAndHandleErrors();
+        noCallErrorsDetected = await fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
@@ -218,7 +219,8 @@ export default function FormSolicitudesEmpleados({
     const errorMissingFields = {};
 
     if (!formData.fecha_solicitud) {
-      errorMissingFields.fecha_solicitud = "Por favor, ingresa una fecha";
+      errorMissingFields.fecha_solicitud =
+        "Por favor, ingresa una fecha de solicitud";
     }
 
     if (!formData.id_persona) {
@@ -248,6 +250,14 @@ export default function FormSolicitudesEmpleados({
     setFormErrors(errorForm);
 
     return Object.keys(errorForm).length !== 0;
+  };
+
+  const validateLogicalData = () => {
+    const logicalErrors = {};
+
+    setLogicalDataErrors(logicalErrors);
+
+    return Object.keys(logicalErrors).length !== 0;
   };
 
   const handleFormChange = (event) => {
@@ -309,16 +319,10 @@ export default function FormSolicitudesEmpleados({
     event.preventDefault();
 
     const requiredFieldsError = validateRequiredFields();
-    if (requiredFieldsError) {
-      setErrorMessage(
-        "No se puede añadir un registro con uno o más campos vacios "
-      );
-      return;
-    }
-
     const formDataError = validateFormData();
-    if (formDataError) {
-      setErrorMessage("");
+    const logicalDataError = validateLogicalData();
+
+    if (requiredFieldsError || formDataError || logicalDataError) {
       return;
     }
 
@@ -395,7 +399,7 @@ export default function FormSolicitudesEmpleados({
           )}
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Observacion">
+        <Antd.Form.Item label="Observación">
           <Antd.Input
             type="text"
             name="observacion"
@@ -424,7 +428,7 @@ export default function FormSolicitudesEmpleados({
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay personas</span>}
+            notFoundContent={<span>No hay personas disponibles</span>}
             showSearch={true}
             onSearch={
               operationType === "view" ? null : handleSelectPersonaSearch
@@ -465,7 +469,9 @@ export default function FormSolicitudesEmpleados({
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay opciones</span>}
+            notFoundContent={
+              <span>No hay tipos de solicitudes disponibles</span>
+            }
           >
             {operationType !== "view" &&
               tiposSolicitudesOptions.map((tipoSolicitud) => (
@@ -504,7 +510,9 @@ export default function FormSolicitudesEmpleados({
                     ? styles.StyleSelect
                     : styles.StyleSelectDisabled
                 }
-                notFoundContent={<span>No hay opciones</span>}
+                notFoundContent={
+                  <span>No hay tipos de estados disponibles</span>
+                }
               >
                 {operationType !== "view" &&
                   tiposEstadosOptions.map((tipoEstado) => (

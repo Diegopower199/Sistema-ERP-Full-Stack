@@ -29,9 +29,7 @@ public class NominaEmpleadoService {
             Map<String, Object> nominaEmpleadoMap = nominaEmpleado.toMap();
 
             nominaEmpleadoMap.put("persona",
-                    nominaEmpleado.getPersona() != null
-                            ? nominaEmpleado.getPersona().toMap()
-                            : null);
+                    nominaEmpleado.getPersona() != null ? nominaEmpleado.getPersona().toMap() : null);
 
             resultado.add(nominaEmpleadoMap);
         }
@@ -72,9 +70,7 @@ public class NominaEmpleadoService {
         Map<String, Object> nominaEmpleadoMap = nominaEmpleadoEncontrado.toMap();
 
         nominaEmpleadoMap.put("persona",
-                nominaEmpleadoEncontrado.getPersona() != null
-                        ? nominaEmpleadoEncontrado.getPersona().toMap()
-                        : null);
+                nominaEmpleadoEncontrado.getPersona() != null ? nominaEmpleadoEncontrado.getPersona().toMap() : null);
 
         return nominaEmpleadoMap;
     }

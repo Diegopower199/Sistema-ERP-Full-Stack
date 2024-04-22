@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   DataGrid,
@@ -20,10 +19,6 @@ import MenuItem from "@mui/material/MenuItem";
 import * as Antd from "antd";
 import Link from "next/link";
 import {
-  deleteVacacionEmpleado,
-  getAllVacacionesEmpleados,
-} from "@/services/VacacionEmpleadoService";
-import {
   LOCALIZED_COLUMN_MENU_TEXTS,
   PAGE_SIZE_OPTIONS,
 } from "@/utils/constants";
@@ -33,7 +28,6 @@ import { getAllPagosFacturasClientes } from "@/services/PagoFacturaClienteServic
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
-import ErrorIcon from "@mui/icons-material/Error";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 
 let errorHandlingInfo = {
@@ -44,38 +38,18 @@ let errorHandlingInfo = {
 };
 
 export default function PagosFacturasClientes() {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser, permisosUser } = useAuth();
 
   const router = useRouter();
 
   const [showFormCreate, setShowFormCreate] = useState(false);
   const [showFormUpdate, setShowFormUpdate] = useState(false);
   const [showFormViewUnique, setShowFormViewUnique] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
   const [cancelOrExitClicked, setCancelOrExitClicked] = useState(false);
 
   const [tableLoading, setTableLoading] = useState(true);
 
-  const [idVacacionEmpleadoSelected, setIdVacacionEmpleadoSelected] =
-    useState(0);
-  const [
-    dniPersonaVacacionEmpleadoSelected,
-    setDniPersonaVacacionEmpleadoSelected,
-  ] = useState("");
-  const [
-    fechaInicioAndFinVacacionEmpleadoSelected,
-    setFechaInicioAndFinVacacionEmpleadoSelected,
-  ] = useState([]);
-
-  const [vacacionEmpleadoDelete, setVacacionEmpleadoDelete] = useState(false);
-  const [vacacionEmpleadoFormUpdated, setVacacionEmpleadoFormUpdated] =
+  const [pagoFacturaClienteFormUpdated, setPagoFacturaClienteFormUpdated] =
     useState(false);
   const [rowSelected, setRowSelected] = useState(null);
 
@@ -95,38 +69,50 @@ export default function PagosFacturasClientes() {
     {
       field: "id",
       headerName: "ID",
-      width: 85,
+      width: 120,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_pago_realizada",
       headerName: "Fecha pago realizada",
-      width: 180,
+      width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "importe_pagado",
       headerName: "Importe pagado",
-      width: 180,
+      width: 190,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "metodo_pago",
-      headerName: "Metodo pago",
-      width: 180,
+      headerName: "Método pago",
+      width: 190,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "id_factura_cliente",
       headerName: "ID factura cliente",
-      width: 180,
+      width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "actions",
       type: "actions",
-      headerName: "Actions",
-      width: 100,
+      headerName: "Acciones",
+      width: 140,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -141,12 +127,6 @@ export default function PagosFacturasClientes() {
             label="Edit"
             className="textPrimary"
             onClick={handleUpdateClick(id)}
-            color="inherit"
-          />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
             color="inherit"
           />,
         ];
@@ -187,7 +167,7 @@ export default function PagosFacturasClientes() {
         setTableLoading(false);
         return false;
       }
-      
+
       const pagosFacturasClientesMap =
         responseGetAllPagosFacturasClientes.data.map((pagoFacturaCliente) => {
           return {
@@ -218,109 +198,53 @@ export default function PagosFacturasClientes() {
   }, [authUser]);
 
   useEffect(() => {
-    if (
-      vacacionEmpleadoFormUpdated ||
-      vacacionEmpleadoDelete ||
-      cancelOrExitClicked
-    ) {
+    if (pagoFacturaClienteFormUpdated || cancelOrExitClicked) {
       fetchGetAllPagosFacturasClientesAndHandleErrors();
-      setVacacionEmpleadoFormUpdated(false);
-      setVacacionEmpleadoDelete(false);
+      setPagoFacturaClienteFormUpdated(false);
       setCancelOrExitClicked(false);
     }
-  }, [
-    vacacionEmpleadoFormUpdated,
-    vacacionEmpleadoDelete,
-    cancelOrExitClicked,
-  ]);
+  }, [pagoFacturaClienteFormUpdated, cancelOrExitClicked]);
 
-  function vacacionEmpleadoFormUpdatedTrigger() {
-    setVacacionEmpleadoFormUpdated(!vacacionEmpleadoFormUpdated);
+  function pagoFacturaClienteFormUpdatedTrigger() {
+    setPagoFacturaClienteFormUpdated(!pagoFacturaClienteFormUpdated);
   }
 
   function pagoFacturaClienteFormClickCancelOrExitTrigger() {
     setCancelOrExitClicked(!cancelOrExitClicked);
   }
 
-  function toggleCreateVacacionEmpleadoForm() {
+  function toggleCreatePagoFacturaClienteForm() {
     setShowFormCreate(!showFormCreate);
   }
 
-  function toggleUpdateVacacionEmpleadoForm() {
+  function toggleUpdatePagoFacturaClienteForm() {
     setShowFormUpdate(!showFormUpdate);
   }
 
-  function toggleViewUniqueVacacionEmpleadoForm() {
+  function toggleViewUniquePagoFacturaClienteForm() {
     setShowFormViewUnique(!showFormViewUnique);
   }
 
   const handleCreateClick = () => {
-    toggleCreateVacacionEmpleadoForm();
+    toggleCreatePagoFacturaClienteForm();
   };
 
   const handleUpdateClick = (id) => () => {
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleUpdateVacacionEmpleadoForm();
-  };
-
-  const handleDeleteClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
-
-    setIdVacacionEmpleadoSelected(id);
-    setDniPersonaVacacionEmpleadoSelected(filaSeleccionada.dni);
-    setFechaInicioAndFinVacacionEmpleadoSelected([
-      filaSeleccionada.fecha_inicio,
-      filaSeleccionada.fecha_fin,
-    ]);
-    setShowDelete(true);
+    toggleUpdatePagoFacturaClienteForm();
   };
 
   const handleViewUniqueClick = (id) => () => {
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
-    toggleViewUniqueVacacionEmpleadoForm();
-  };
-
-  const handleModalOk = async () => {
-    try {
-      const responseDeleteVacacionEmpleado = await deleteVacacionEmpleado(
-        idVacacionEmpleadoSelected
-      );
-
-      errorHandlingInfo = checkResponseForErrors(
-        responseDeleteVacacionEmpleado
-      );
-
-      if (errorHandlingInfo.backendError) {
-        handleBackendError(responseDeleteVacacionEmpleado.errorMessage);
-        return;
-      } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(
-          responseDeleteVacacionEmpleado.errorMessage
-        );
-        return;
-      }
-
-      setVacacionEmpleadoDelete(true);
-      resetStates();
-    } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
-    }
-  };
-
-  const handleModalClose = () => {
-    resetStates();
+    toggleViewUniquePagoFacturaClienteForm();
   };
 
   function resetStates() {
     setShowFormCreate(false);
     setShowFormUpdate(false);
     setShowFormViewUnique(false);
-    setShowDelete(false);
-    setIdVacacionEmpleadoSelected(0);
-    setDniPersonaVacacionEmpleadoSelected("");
-    setFechaInicioAndFinVacacionEmpleadoSelected([]);
   }
 
   const getJson = (apiRef) => {
@@ -440,36 +364,13 @@ export default function PagosFacturasClientes() {
     );
   }
 
-  const renderTableVacacionEmpleado = () => {
-    function deleteModal() {
-      return (
-        <Antd.Modal
-          title={`¿Desea eliminar las vacaciones asociadas a la persona con DNI ${dniPersonaVacacionEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
-          open={showDelete}
-          okText="Aceptar"
-          onOk={handleModalOk}
-          cancelText="Cancelar"
-          onCancel={handleModalClose}
-          centered
-        >
-          {errorMessage.length !== 0 && backendError === true && (
-            <div>
-              <p className={styles.BackendError}>
-                <ErrorIcon fontSize="medium" color="red" />
-                Error: {errorMessage}
-              </p>
-            </div>
-          )}
-        </Antd.Modal>
-      );
-    }
-
+  const renderTablePagoFacturaCliente = () => {
     return (
       <div>
         <Header />
         <h1>Pagos Facturas Clientes</h1>
         <h2>
-          <Link href={"/menu-facturacion"}>Menu Facturacion</Link>
+          <Link href={"/menu-facturacion"}>Menú Facturación</Link>
         </h2>
         <Box
           sx={{
@@ -480,6 +381,18 @@ export default function PagosFacturasClientes() {
             },
             "& .textPrimary": {
               color: "text.primary",
+            },
+            "& .custom-header": {
+              backgroundColor: "#e0e7fa",
+              color: "#333",
+              fontWeight: "bold",
+              fontFamily: "fangsong",
+              borderBottom: "2px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #ccc",
+              borderRight: "1px solid #ccc",
             },
           }}
         >
@@ -509,14 +422,13 @@ export default function PagosFacturasClientes() {
               toolbar: CustomToolbar,
             }}
           />
-          {showDelete && deleteModal()}
         </Box>
         <Footer />
       </div>
     );
   };
 
-  if (backendOrDDBBConnectionError === true) {
+  if (backendOrDDBBConnectionError) {
     return (
       <div>
         <ServerConnectionError message={errorMessage} />
@@ -526,9 +438,9 @@ export default function PagosFacturasClientes() {
     return (
       <div>
         <FormPagosFacturasClientes
-          toggleForm={toggleCreateVacacionEmpleadoForm}
+          toggleForm={toggleCreatePagoFacturaClienteForm}
           pagoFacturaClienteDataForm={""}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          formUpdateTrigger={pagoFacturaClienteFormUpdatedTrigger}
           cancelOrExitClickTrigger={
             pagoFacturaClienteFormClickCancelOrExitTrigger
           }
@@ -542,9 +454,9 @@ export default function PagosFacturasClientes() {
     return (
       <div>
         <FormPagosFacturasClientes
-          toggleForm={toggleUpdateVacacionEmpleadoForm}
+          toggleForm={toggleUpdatePagoFacturaClienteForm}
           pagoFacturaClienteDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          formUpdateTrigger={pagoFacturaClienteFormUpdatedTrigger}
           cancelOrExitClickTrigger={
             pagoFacturaClienteFormClickCancelOrExitTrigger
           }
@@ -558,9 +470,9 @@ export default function PagosFacturasClientes() {
     return (
       <div>
         <FormPagosFacturasClientes
-          toggleForm={toggleViewUniqueVacacionEmpleadoForm}
+          toggleForm={toggleViewUniquePagoFacturaClienteForm}
           pagoFacturaClienteDataForm={rowSelected}
-          formUpdateTrigger={vacacionEmpleadoFormUpdatedTrigger}
+          formUpdateTrigger={pagoFacturaClienteFormUpdatedTrigger}
           cancelOrExitClickTrigger={
             pagoFacturaClienteFormClickCancelOrExitTrigger
           }
@@ -571,6 +483,6 @@ export default function PagosFacturasClientes() {
       </div>
     );
   } else {
-    return renderTableVacacionEmpleado();
+    return renderTablePagoFacturaCliente();
   }
 }

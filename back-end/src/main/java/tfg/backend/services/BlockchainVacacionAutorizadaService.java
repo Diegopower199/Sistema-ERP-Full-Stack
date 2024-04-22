@@ -57,7 +57,7 @@ public class BlockchainVacacionAutorizadaService {
         } catch (ConnectException ce) {
             throw new ConexionServidoresException("El servidor esta caido", 500);
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("HAY UN ERROR");
+            
         }
 
         return resultado;
@@ -76,8 +76,6 @@ public class BlockchainVacacionAutorizadaService {
             // están enviando.
             transaccionVacacionAutorizada
                     .setHashTransaccionVacacion(transaccionVacacionAutorizada.calcularHashTransaccion());
-
-            System.out.println("\n\ntransaccionVacacionAutorizada: " + transaccionVacacionAutorizada + "\n\n");
 
             MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("ADD", transaccionVacacionAutorizada,
                     null);
@@ -170,8 +168,6 @@ public class BlockchainVacacionAutorizadaService {
 
             respuestaDelServidor = (RespuestaServidorCliente) objectInputStream.readObject();
 
-            System.out.println("\n\n\nrespuestaDelServidor: " + respuestaDelServidor);
-
             if (respuestaDelServidor.getListaVacacionesAutorizadasConInconsistencias().isEmpty() == false) {
                 for (TransaccionVacacion transaccionVacacionError : respuestaDelServidor
                         .getListaVacacionesAutorizadasConInconsistencias()) {
@@ -185,13 +181,12 @@ public class BlockchainVacacionAutorizadaService {
 
                 }
 
-                System.out.println("HAY DATOS");
             }
 
         } catch (ConnectException ce) {
             throw new ConexionServidoresException("El servidor esta caido", 500);
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("HAY UN ERROR");
+           
         }
 
         return resultado;

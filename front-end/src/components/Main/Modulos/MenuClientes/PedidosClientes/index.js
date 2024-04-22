@@ -28,7 +28,6 @@ import { getAllPedidosClientes } from "@/services/PedidoClienteService";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
-import ErrorIcon from "@mui/icons-material/Error";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 
 let errorHandlingInfo = {
@@ -39,14 +38,7 @@ let errorHandlingInfo = {
 };
 
 export default function PedidosClientes() {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser, permisosUser } = useAuth();
 
   const router = useRouter();
 
@@ -77,110 +69,146 @@ export default function PedidosClientes() {
     {
       field: "id",
       headerName: "ID",
-      width: 85,
+      width: 120,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "direccion_entrega",
-      headerName: "Direccion entrega",
-      width: 180,
+      headerName: "Dirección entrega",
+      width: 220,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_solicitud_pedido",
       headerName: "Fecha solicitud pedido",
-      width: 180,
+      width: 230,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_entrega_prevista",
       headerName: "Fecha entrega prevista",
-      width: 180,
+      width: 230,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_entrega_real",
       headerName: "Fecha entrega real",
-      width: 180,
+      width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hora_inicio_desplazamiento",
       headerName: "Hora inicio desplazamiento",
-      width: 220,
+      width: 250,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hora_fin_desplazamiento",
       headerName: "Hora fin desplazamiento",
-      width: 200,
+      width: 230,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tiempo_desplazamiento_total",
       headerName: "Tiempo desplazamiento total",
-      width: 210,
+      width: 250,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hora_inicio_servicio",
       headerName: "Hora inicio servicio",
-      width: 160,
+      width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hora_fin_servicio",
       headerName: "Hora fin servicio",
-      width: 160,
+      width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tiempo_servicio_total",
       headerName: "Tiempo servicio total",
-      width: 180,
+      width: 205,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "descripcion",
-      headerName: "Descripcion",
+      headerName: "Descripción",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "observacion",
-      headerName: "Observacion",
+      headerName: "Observación",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "clienteInfo",
-      headerName: "Cliente info",
+      headerName: "Datos del cliente",
       width: 280,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "personaInfo",
-      headerName: "Info persona",
+      headerName: "Datos de la persona",
       width: 280,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tipo_estado",
       headerName: "Tipo estado",
       width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tipo_estado_factura",
       headerName: "Tipo estado factura",
-      width: 200,
+      width: 210,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "actions",
       type: "actions",
-      headerName: "Actions",
-      width: 100,
+      headerName: "Acciones",
+      width: 140,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -232,7 +260,7 @@ export default function PedidosClientes() {
         setTableLoading(false);
         return false;
       }
-      
+
       const pedidosClientesMap = responseGetAllPedidosClientes.data.map(
         (pedidoCliente) => {
           const { nombre_apellidos, razon_social, nif } = pedidoCliente.cliente;
@@ -458,7 +486,7 @@ export default function PedidosClientes() {
         <Header />
         <h1>Pedidos Clientes</h1>
         <h2>
-          <Link href={"/menu-clientes"}>Menu Clientes</Link>
+          <Link href={"/menu-clientes"}>Menú Clientes</Link>
         </h2>
         <Box
           sx={{
@@ -469,6 +497,18 @@ export default function PedidosClientes() {
             },
             "& .textPrimary": {
               color: "text.primary",
+            },
+            "& .custom-header": {
+              backgroundColor: "#e0e7fa",
+              color: "#333",
+              fontWeight: "bold",
+              fontFamily: "fangsong",
+              borderBottom: "2px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #ccc",
+              borderRight: "1px solid #ccc",
             },
           }}
         >
@@ -504,7 +544,7 @@ export default function PedidosClientes() {
     );
   };
 
-  if (backendOrDDBBConnectionError === true) {
+  if (backendOrDDBBConnectionError) {
     return (
       <div>
         <ServerConnectionError message={errorMessage} />

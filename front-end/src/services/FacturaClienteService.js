@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
+import { backendServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
 
 export const getAllFacturasClientes = async () => {
   const url = API_URL_BACK_END.replace("#", "facturasClientes");
@@ -17,8 +18,7 @@ export const getAllFacturasClientes = async () => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -45,8 +45,7 @@ export const saveFacturaCliente = async (data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -70,8 +69,7 @@ export const generateFacturasClientes = async () => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -94,8 +92,7 @@ export const getFacturaClienteById = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -121,8 +118,7 @@ export const updateFacturaCliente = async (id, data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -145,8 +141,7 @@ export const deleteFacturaCliente = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }

@@ -43,11 +43,9 @@ export default function FormNominasEmpleados({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (operationType === "update" || operationType === "view") {
-          setFormData(() => ({
-            ...nominaEmpleadoDataForm,
-          }));
-        }
+        setFormData(() => ({
+          ...nominaEmpleadoDataForm,
+        }));
       } catch (error) {
         console.error("Ha ocurrido algo inesperado", error);
       }
@@ -80,7 +78,7 @@ export default function FormNominasEmpleados({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="tipo_nomina">
+        <Antd.Form.Item label="Tipo nómina">
           <Antd.Input
             type="text"
             name="tipo_nomina"
@@ -90,7 +88,7 @@ export default function FormNominasEmpleados({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="salario_base">
+        <Antd.Form.Item label="Salario base">
           <Antd.Input
             type="text"
             name="salario_base"
@@ -100,7 +98,7 @@ export default function FormNominasEmpleados({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="deducciones">
+        <Antd.Form.Item label="Deducciones">
           <Antd.Input
             type="text"
             name="deducciones"
@@ -110,7 +108,7 @@ export default function FormNominasEmpleados({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="bonificacion">
+        <Antd.Form.Item label="Bonificación">
           <Antd.Input
             type="text"
             name="bonificacion"
@@ -120,7 +118,7 @@ export default function FormNominasEmpleados({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="salario_bruto">
+        <Antd.Form.Item label="Salario bruto">
           <Antd.Input
             type="text"
             name="salario_bruto"
@@ -130,17 +128,17 @@ export default function FormNominasEmpleados({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="irpf">
+        <Antd.Form.Item label="IRPF">
           <Antd.Input
             type="text"
             name="irpf"
-            value={formData.irpf}
+            value={formData.irpf + " %"}
             readOnly={true}
             className={styles.StyleInputSelectDisabled}
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="seguridad_social">
+        <Antd.Form.Item label="Seguridad social">
           <Antd.Input
             type="text"
             name="seguridad_social"
@@ -150,7 +148,7 @@ export default function FormNominasEmpleados({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="anticipos">
+        <Antd.Form.Item label="Anticipos">
           <Antd.Input
             type="text"
             name="anticipos"
@@ -160,7 +158,7 @@ export default function FormNominasEmpleados({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="cuenta_bancaria">
+        <Antd.Form.Item label="Cuenta bancaria">
           <Antd.Input
             type="text"
             name="cuenta_bancaria"
@@ -170,7 +168,7 @@ export default function FormNominasEmpleados({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="personaInfo">
+        <Antd.Form.Item label="Datos de la persona">
           <Antd.Input
             type="text"
             name="personaInfo"

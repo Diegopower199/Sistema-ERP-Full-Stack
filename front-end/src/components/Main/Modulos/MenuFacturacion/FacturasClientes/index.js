@@ -30,7 +30,6 @@ import {
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
-import ErrorIcon from "@mui/icons-material/Error";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 
 let errorHandlingInfo = {
@@ -41,14 +40,7 @@ let errorHandlingInfo = {
 };
 
 export default function FacturasClientes() {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser, permisosUser } = useAuth();
 
   const router = useRouter();
 
@@ -95,129 +87,170 @@ export default function FacturasClientes() {
     {
       field: "id",
       headerName: "ID",
-      width: 85,
+      width: 120,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "descripcion_servicio",
       headerName: "Descripción servicio",
-      width: 180,
+      width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "direccion_entrega",
       headerName: "Dirección entrega",
-      width: 180,
+      width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hora_inicio_desplazamiento",
       headerName: "Hora inicio desplazamiento",
-      width: 220,
+      width: 250,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hora_fin_desplazamiento",
       headerName: "Hora fin desplazamiento",
-      width: 210,
+      width: 230,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tiempo_desplazamiento_total",
       headerName: "Tiempo desplazamiento total",
-      width: 210,
+      width: 250,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hora_inicio_servicio",
       headerName: "Hora inicio servicio",
-      width: 160,
+      width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hora_fin_servicio",
       headerName: "Hora fin servicio",
-      width: 160,
+      width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tiempo_servicio_total",
       headerName: "Tiempo servicio total",
-      width: 180,
+      width: 205,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "observacion",
       headerName: "Observación",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_entrega_real_pedido",
       headerName: "Fecha entrega real pedido",
-      width: 200,
+      width: 230,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_factura_emitida",
       headerName: "Fecha factura emitida",
-      width: 180,
+      width: 210,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tarifa_hora_desplazamiento",
       headerName: "Tarifa hora desplazamiento",
-      width: 220,
+      width: 230,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tarifa_hora_servicio",
       headerName: "Tarifa hora servicio",
-      width: 180,
+      width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "subtotal_factura_sin_iva",
       headerName: "Subtotal factura sin iva",
-      width: 180,
+      width: 220,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "iva",
       headerName: "IVA",
-      width: 100,
+      width: 130,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "total_factura",
       headerName: "Total factura",
-      width: 130,
-      editable: false,
-    },
-
-    {
-      field: "nif_cliente",
-      headerName: "Nif cliente",
-      width: 180,
+      width: 160,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
-      field: "pedido_cliente",
-      headerName: "Pedido cliente",
+      field: "clienteInfo",
+      headerName: "Datos del cliente",
+      width: 280,
+      headerClassName: "custom-header",
+      headerAlign: "center",
+      editable: false,
+    },
+    {
+      field: "id_pedido_cliente",
+      headerName: "ID pedido cliente",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tipo_estado",
       headerName: "Tipo estado",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "actions",
       type: "actions",
-      headerName: "Actions",
-      width: 100,
+      headerName: "Acciones",
+      width: 140,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -264,9 +297,13 @@ export default function FacturasClientes() {
         setTableLoading(false);
         return false;
       }
-      
+
       const facturasClientesMap = responseGetAllFacturasClientes.data.map(
         (facturaCliente) => {
+          const { nombre_apellidos, razon_social, nif } =
+            facturaCliente.cliente;
+          const nombreOrRazonSocial = nombre_apellidos || razon_social;
+
           return {
             id: facturaCliente.id_factura_cliente,
             descripcion_servicio: facturaCliente.descripcion_servicio,
@@ -290,7 +327,7 @@ export default function FacturasClientes() {
             total_factura: facturaCliente.total_factura,
             id_cliente: facturaCliente.cliente.id_cliente,
             nif_cliente: facturaCliente.cliente.nif,
-            pedido_cliente: "NO SE QUE PONER", // facturaCliente.pedido_cliente.pedido_cliente,
+            clienteInfo: `${nombreOrRazonSocial} - ${nif}`,
             id_pedido_cliente: facturaCliente.pedido_cliente.id_pedido_cliente,
             tipo_estado: facturaCliente.tipo_estado.tipo_estado,
             id_tipo_estado: facturaCliente.tipo_estado.id_tipo_estado,
@@ -388,6 +425,10 @@ export default function FacturasClientes() {
   const handleModalGenerateFacturasClientesOk = () => {
     resetStates();
     facturaClienteGenerateUpdatedTrigger();
+  };
+
+  const handleModalClose = () => {
+    resetStates();
   };
 
   function resetStates() {
@@ -523,6 +564,7 @@ export default function FacturasClientes() {
             open={showModalGenerate}
             okButtonProps={{ style: { display: "none" } }}
             cancelButtonProps={{ style: { display: "none" } }}
+            onCancel={handleModalClose}
             centered
           >
             <Antd.Form style={{ marginTop: "5%" }}>
@@ -547,6 +589,7 @@ export default function FacturasClientes() {
             open={showModalGenerate}
             okText="Aceptar"
             onOk={handleModalGenerateFacturasClientesOk}
+            onCancel={handleModalClose}
             cancelText="Cancelar"
             cancelButtonProps={{ style: { display: "none" } }}
             centered
@@ -569,7 +612,7 @@ export default function FacturasClientes() {
         <Header />
         <h1>Facturas Clientes</h1>
         <h2>
-          <Link href={"/menu-facturacion"}>Menu Facturacion</Link>
+          <Link href={"/menu-facturacion"}>Menú Facturación</Link>
         </h2>
         <Box
           sx={{
@@ -580,6 +623,18 @@ export default function FacturasClientes() {
             },
             "& .textPrimary": {
               color: "text.primary",
+            },
+            "& .custom-header": {
+              backgroundColor: "#e0e7fa",
+              color: "#333",
+              fontWeight: "bold",
+              fontFamily: "fangsong",
+              borderBottom: "2px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #ccc",
+              borderRight: "1px solid #ccc",
             },
           }}
         >
@@ -617,7 +672,7 @@ export default function FacturasClientes() {
     );
   };
 
-  if (backendOrDDBBConnectionError === true) {
+  if (backendOrDDBBConnectionError) {
     return (
       <div>
         <ServerConnectionError message={errorMessage} />

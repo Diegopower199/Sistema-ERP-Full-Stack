@@ -62,6 +62,7 @@ export default function FormPersonas({
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
+  const [logicalDataErrors, setLogicalDataErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [backendError, setBackendError] = useState(false);
 
@@ -108,7 +109,7 @@ export default function FormPersonas({
       try {
         noCallErrorsDetected = await fetchTiposPersonasOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
@@ -141,7 +142,7 @@ export default function FormPersonas({
 
     if (!formData.numero_empleado) {
       errorMissingFields.numero_empleado =
-        "Por favor, ingresa un numero empleado";
+        "Por favor, ingresa un número empleado";
     }
 
     if (!formData.nombre) {
@@ -162,21 +163,21 @@ export default function FormPersonas({
     }
 
     if (!formData.dni) {
-      errorMissingFields.dni = "Por favor, ingresa un DNI";
+      errorMissingFields.dni = "Por favor, ingresa un dni";
     }
 
     if (!formData.direccion) {
-      errorMissingFields.direccion = "Por favor, ingresa una direccion";
+      errorMissingFields.direccion = "Por favor, ingresa una dirección";
     }
 
     if (!formData.numero_telefono || formData.numero_telefono === "34") {
       errorMissingFields.numero_telefono =
-        "Por favor, ingresa un numero de telefono";
+        "Por favor, ingresa un número de teléfono";
     }
 
     if (!formData.correo_electronico) {
       errorMissingFields.correo_electronico =
-        "Por favor, ingresa un correo electronico";
+        "Por favor, ingresa un correo electrónico";
     }
 
     if (!formData.id_tipo_persona) {
@@ -193,16 +194,17 @@ export default function FormPersonas({
     const errorForm = {};
 
     if (!formData.dni.match(REGEX_DNI)) {
-      errorForm.dni = "Por favor, ingresa un DNI válido";
+      errorForm.dni = "Por favor, ingresa un dni válido";
     }
 
     if (!formData.numero_telefono.match(REGEX_TELEFONO_CON_PREFIJO)) {
       errorForm.numero_telefono =
-        "Por favor, ingresa un numero de telefono válido";
+        "Por favor, ingresa un número de teléfono válido";
     }
 
     if (!formData.correo_electronico.match(REGEX_EMAIL)) {
-      errorForm.correo_electronico = "Por favor, ingresa un email válido";
+      errorForm.correo_electronico =
+        "Por favor, ingresa un correo electrónico válido";
     }
 
     setFormErrors(errorForm);
@@ -210,8 +212,16 @@ export default function FormPersonas({
     return Object.keys(errorForm).length !== 0;
   };
 
+  const validateLogicalData = () => {
+    const logicalErrors = {};
+
+    setLogicalDataErrors(logicalErrors);
+
+    return Object.keys(logicalErrors).length !== 0;
+  };
+
   const handleFormChange = (event) => {
-    const { name, value, type, checked } = event.target;
+    const { name, value } = event.target;
 
     if (name === "numero_telefono") {
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
@@ -253,16 +263,10 @@ export default function FormPersonas({
     event.preventDefault();
 
     const requiredFieldsError = validateRequiredFields();
-    if (requiredFieldsError) {
-      setErrorMessage(
-        "No se puede añadir un registro con uno o más campos vacios "
-      );
-      return;
-    }
-
     const formDataError = validateFormData();
-    if (formDataError) {
-      setErrorMessage("");
+    const logicalDataError = validateLogicalData();
+
+    if (requiredFieldsError || formDataError || logicalDataError) {
       return;
     }
 
@@ -312,7 +316,7 @@ export default function FormPersonas({
     <div>
       <Header />
       <Antd.Form>
-        <Antd.Form.Item label="Numero empleado">
+        <Antd.Form.Item label="Número empleado">
           <Antd.Input
             type="number"
             name="numero_empleado"
@@ -360,7 +364,7 @@ export default function FormPersonas({
             </div>
           )}
         </Antd.Form.Item>
-        <Antd.Form.Item label="Genero">
+        <Antd.Form.Item label="Género">
           <Antd.Select
             name="genero"
             value={formData.genero ? formData.genero : "Selecciona un género"}
@@ -390,7 +394,7 @@ export default function FormPersonas({
           )}
         </Antd.Form.Item>
 
-        <Antd.Form.Item label=" Fecha nacimiento">
+        <Antd.Form.Item label="Fecha de nacimiento">
           <Antd.Input
             type="date"
             name="fecha_nacimiento"
@@ -425,7 +429,7 @@ export default function FormPersonas({
             </div>
           )}
         </Antd.Form.Item>
-        <Antd.Form.Item label="Direccion">
+        <Antd.Form.Item label="Dirección">
           <Antd.Input
             type="text"
             name="direccion"
@@ -441,7 +445,7 @@ export default function FormPersonas({
             </div>
           )}
         </Antd.Form.Item>
-        <Antd.Form.Item label="Numero telefono">
+        <Antd.Form.Item label="Número de teléfono">
           <Antd.Input
             type="text"
             name="numero_telefono"
@@ -464,7 +468,7 @@ export default function FormPersonas({
             </div>
           )}
         </Antd.Form.Item>
-        <Antd.Form.Item label="Correo electronico">
+        <Antd.Form.Item label="Correo electrónico">
           <Antd.Input
             type="text"
             name="correo_electronico"
@@ -503,7 +507,7 @@ export default function FormPersonas({
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay opciones</span>}
+            notFoundContent={<span>No hay tipos de personas disponibles</span>}
           >
             {operationType !== "view" &&
               tiposPersonasOptions.map((tipoPersona) => (

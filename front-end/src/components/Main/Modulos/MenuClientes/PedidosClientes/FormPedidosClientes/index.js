@@ -17,7 +17,7 @@ import {
   updatePedidoCliente,
 } from "@/services/PedidoClienteService";
 import { getAllClientes } from "@/services/ClienteService";
-import { getAllPersonas } from "@/services/PersonaService";
+import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -66,6 +66,7 @@ export default function FormPedidosClientes({
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
+  const [logicalDataErrors, setLogicalDataErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [backendError, setBackendError] = useState(false);
 
@@ -192,11 +193,14 @@ export default function FormPedidosClientes({
     }
   };
 
-  const fetchPersonasOptionsAndHandleErrors = async () => {
+  const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
     try {
-      const responseGetAllPersonas = await getAllPersonas();
+      const responseGetAllPersonasEmpleadosAndBecarios =
+        await getAllPersonasEmpleadosAndBecarios();
 
-      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllPersonasEmpleadosAndBecarios
+      );
 
       if (errorHandlingInfo.noContent) {
         setPersonasOptions([]);
@@ -204,18 +208,21 @@ export default function FormPedidosClientes({
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
+        handleBackendAndDBConnectionError(
+          responseGetAllPersonasEmpleadosAndBecarios.errorMessage
+        );
         return false;
       }
 
-      const optionsPersonas = responseGetAllPersonas.data.map((persona) => {
-        const { id_persona, nombre, apellidos, dni } = persona;
+      const optionsPersonas =
+        responseGetAllPersonasEmpleadosAndBecarios.data.map((persona) => {
+          const { id_persona, nombre, apellidos, dni } = persona;
 
-        return {
-          value: id_persona,
-          label: `${nombre + " " + apellidos} - ${dni}`,
-        };
-      });
+          return {
+            value: id_persona,
+            label: `${nombre + " " + apellidos} - ${dni}`,
+          };
+        });
 
       setPersonasOptions(optionsPersonas);
 
@@ -232,26 +239,27 @@ export default function FormPedidosClientes({
       try {
         noCallErrorsDetected = await fetchTiposEstadosOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
         noCallErrorsDetected =
           await fetchTiposEstadosFacturasOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
         noCallErrorsDetected = await fetchClientesOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
-        noCallErrorsDetected = await fetchPersonasOptionsAndHandleErrors();
+        noCallErrorsDetected =
+          await fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
@@ -308,7 +316,7 @@ export default function FormPedidosClientes({
 
     if (!formData.direccion_entrega) {
       errorMissingFields.direccion_entrega =
-        "Por favor, ingresa una direccion de entrega";
+        "Por favor, ingresa una dirección de entrega";
     }
 
     if (!formData.fecha_solicitud_pedido) {
@@ -349,22 +357,24 @@ export default function FormPedidosClientes({
     }
 
     if (!formData.id_cliente) {
-      errorMissingFields.id_cliente = "Por favor, ingresa el nif del cliente";
+      errorMissingFields.id_cliente = "Por favor, selecciona un cliente";
     }
 
     if (!formData.id_persona) {
       errorMissingFields.id_persona =
-        "Por favor, ingresa la persona que se encarga del pedido";
+        "Por favor, selecciona la persona que se encarga del pedido";
     }
 
-    if (!formData.id_tipo_estado) {
-      errorMissingFields.id_tipo_estado =
-        "Por favor, ingresa un tipo de estado";
-    }
+    if (operationType === "update") {
+      if (!formData.id_tipo_estado) {
+        errorMissingFields.id_tipo_estado =
+          "Por favor, selecciona un tipo de estado";
+      }
 
-    if (!formData.id_tipo_estado_factura) {
-      errorMissingFields.id_tipo_estado_factura =
-        "Por favor, ingresa un tipo de estado de factura";
+      if (!formData.id_tipo_estado_factura) {
+        errorMissingFields.id_tipo_estado_factura =
+          "Por favor, selecciona un tipo de estado de factura";
+      }
     }
 
     setRequiredFieldsIncomplete(errorMissingFields);
@@ -378,6 +388,43 @@ export default function FormPedidosClientes({
     setFormErrors(errorForm);
 
     return Object.keys(errorForm).length !== 0;
+  };
+
+  const validateLogicalData = () => {
+    const logicalErrors = {};
+
+    const horaInicioDesplazamiento = moment(
+      formData.hora_inicio_desplazamiento,
+      "HH:mm:ss"
+    );
+    const horaFinDesplazamiento = moment(
+      formData.hora_fin_desplazamiento,
+      "HH:mm:ss"
+    );
+    const horaInicioServicio = moment(
+      formData.hora_inicio_servicio,
+      "HH:mm:ss"
+    );
+    const horaFinServicio = moment(formData.hora_fin_servicio, "HH:mm:ss");
+
+    if (horaInicioServicio.isBefore(horaInicioDesplazamiento)) {
+      logicalErrors.hora_inicio_servicio =
+        "La hora de inicio del servicio no puede ser antes que la hora inicio del desplazamiento";
+    }
+
+    if (horaFinServicio.isBefore(horaInicioServicio)) {
+      logicalErrors.hora_fin_servicio =
+        "La hora fin del servicio no puede ser antes que la hora inicio del servicio";
+    }
+
+    if (horaFinDesplazamiento.isBefore(horaFinServicio)) {
+      logicalErrors.hora_fin_desplazamiento =
+        "La hora de fin de desplazamiento no puede ser antes que la hora fin del servicio";
+    }
+
+    setLogicalDataErrors(logicalErrors);
+
+    return Object.keys(logicalErrors).length !== 0;
   };
 
   const handleFormChange = (event) => {
@@ -462,16 +509,10 @@ export default function FormPedidosClientes({
     event.preventDefault();
 
     const requiredFieldsError = validateRequiredFields();
-    if (requiredFieldsError) {
-      setErrorMessage(
-        "No se puede añadir un registro con uno o más campos vacios "
-      );
-      return;
-    }
-
     const formDataError = validateFormData();
-    if (formDataError) {
-      setErrorMessage("");
+    const logicalDataError = validateLogicalData();
+
+    if (requiredFieldsError || formDataError || logicalDataError) {
       return;
     }
 
@@ -525,7 +566,7 @@ export default function FormPedidosClientes({
     <div>
       <Header />
       <Antd.Form>
-        <Antd.Form.Item label="Direccion entrega">
+        <Antd.Form.Item label="Dirección entrega">
           <Antd.Input
             type="text"
             name="direccion_entrega"
@@ -653,7 +694,8 @@ export default function FormPedidosClientes({
                 }
                 readOnly={operationType === "view" ? true : false}
                 status={
-                  requiredFieldsIncomplete.hora_fin_desplazamiento
+                  requiredFieldsIncomplete.hora_fin_desplazamiento ||
+                  logicalDataErrors.hora_fin_desplazamiento
                     ? "error"
                     : ""
                 }
@@ -670,9 +712,11 @@ export default function FormPedidosClientes({
                     : false
                 }
               />
-              {requiredFieldsIncomplete.hora_fin_desplazamiento && (
+              {(requiredFieldsIncomplete.hora_fin_desplazamiento ||
+                logicalDataErrors.hora_fin_desplazamiento) && (
                 <div className={styles.RequiredFieldsOrFormatError}>
-                  {requiredFieldsIncomplete.hora_fin_desplazamiento}
+                  {requiredFieldsIncomplete.hora_fin_desplazamiento ||
+                    logicalDataErrors.hora_fin_desplazamiento}
                 </div>
               )}
             </Antd.Form.Item>
@@ -716,7 +760,10 @@ export default function FormPedidosClientes({
                 }
                 readOnly={operationType === "view" ? true : false}
                 status={
-                  requiredFieldsIncomplete.hora_inicio_servicio ? "error" : ""
+                  requiredFieldsIncomplete.hora_inicio_servicio ||
+                  logicalDataErrors.hora_inicio_servicio
+                    ? "error"
+                    : ""
                 }
                 className={
                   operationType !== "view"
@@ -731,9 +778,11 @@ export default function FormPedidosClientes({
                     : false
                 }
               />
-              {requiredFieldsIncomplete.hora_inicio_servicio && (
+              {(requiredFieldsIncomplete.hora_inicio_servicio ||
+                logicalDataErrors.hora_inicio_servicio) && (
                 <div className={styles.RequiredFieldsOrFormatError}>
-                  {requiredFieldsIncomplete.hora_inicio_servicio}
+                  {requiredFieldsIncomplete.hora_inicio_servicio ||
+                    logicalDataErrors.hora_inicio_servicio}
                 </div>
               )}
             </Antd.Form.Item>
@@ -751,7 +800,10 @@ export default function FormPedidosClientes({
                 }
                 readOnly={operationType === "view" ? true : false}
                 status={
-                  requiredFieldsIncomplete.hora_fin_servicio ? "error" : ""
+                  requiredFieldsIncomplete.hora_fin_servicio ||
+                  logicalDataErrors.hora_fin_servicio
+                    ? "error"
+                    : ""
                 }
                 className={
                   operationType !== "view"
@@ -766,9 +818,11 @@ export default function FormPedidosClientes({
                     : false
                 }
               />
-              {requiredFieldsIncomplete.hora_fin_servicio && (
+              {(requiredFieldsIncomplete.hora_fin_servicio ||
+                logicalDataErrors.hora_fin_servicio) && (
                 <div className={styles.RequiredFieldsOrFormatError}>
-                  {requiredFieldsIncomplete.hora_fin_servicio}
+                  {requiredFieldsIncomplete.hora_fin_servicio ||
+                    logicalDataErrors.hora_fin_servicio}
                 </div>
               )}
             </Antd.Form.Item>
@@ -797,7 +851,7 @@ export default function FormPedidosClientes({
           </div>
         )}
 
-        <Antd.Form.Item label="Descripcion">
+        <Antd.Form.Item label="Descripción">
           <Antd.Input
             type="text"
             name="descripcion"
@@ -808,7 +862,7 @@ export default function FormPedidosClientes({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Observacion">
+        <Antd.Form.Item label="Observación">
           <Antd.Input
             type="text"
             name="observacion"
@@ -837,7 +891,7 @@ export default function FormPedidosClientes({
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay clientes</span>}
+            notFoundContent={<span>No hay clientes disponibles</span>}
             showSearch={true}
             onSearch={
               operationType === "view" ? null : handleSelectClienteSearch
@@ -878,7 +932,7 @@ export default function FormPedidosClientes({
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay personas</span>}
+            notFoundContent={<span>No hay personas disponibles</span>}
             showSearch={true}
             onSearch={
               operationType === "view" ? null : handleSelectPersonaSearch
@@ -921,7 +975,9 @@ export default function FormPedidosClientes({
                     ? styles.StyleSelect
                     : styles.StyleSelectDisabled
                 }
-                notFoundContent={<span>No hay opciones</span>}
+                notFoundContent={
+                  <span>No hay tipos de estados disponibles</span>
+                }
               >
                 {operationType !== "view" &&
                   tiposEstadosOptions.map((tipoEstado) => (
@@ -966,7 +1022,9 @@ export default function FormPedidosClientes({
                     ? styles.StyleSelect
                     : styles.StyleSelectDisabled
                 }
-                notFoundContent={<span>No hay opciones</span>}
+                notFoundContent={
+                  <span>No hay tipos de estados de factura disponibles</span>
+                }
               >
                 {operationType !== "view" &&
                   tiposEstadosFacturasOptions.map((tipoEstadoFactura) => (

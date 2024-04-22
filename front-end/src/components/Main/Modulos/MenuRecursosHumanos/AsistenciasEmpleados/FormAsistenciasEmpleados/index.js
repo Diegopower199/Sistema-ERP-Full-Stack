@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllPersonas } from "@/services/PersonaService";
+import { getAllPersonas, getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
 import {
@@ -46,6 +46,7 @@ export default function FormAsistenciasEmpleados({
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
+  const [logicalDataErrors, setLogicalDataErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [backendError, setBackendError] = useState(false);
 
@@ -59,11 +60,11 @@ export default function FormAsistenciasEmpleados({
     triggerErrorMessage(errorMessage);
   }
 
-  const fetchPersonasOptionsAndHandleErrors = async () => {
+  const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
     try {
-      const responseGetAllPersonas = await getAllPersonas();
+      const responseGetAllPersonasEmpleadosAndBecarios = await getAllPersonasEmpleadosAndBecarios();
 
-      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
+      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonasEmpleadosAndBecarios);
 
       if (errorHandlingInfo.noContent) {
         setPersonasOptions([]);
@@ -71,11 +72,11 @@ export default function FormAsistenciasEmpleados({
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
+        handleBackendAndDBConnectionError(responseGetAllPersonasEmpleadosAndBecarios.errorMessage);
         return false;
       }
 
-      const optionsPersonas = responseGetAllPersonas.data.map((persona) => {
+      const optionsPersonas = responseGetAllPersonasEmpleadosAndBecarios.data.map((persona) => {
         const { id_persona, nombre, apellidos, dni } = persona;
 
         return {
@@ -97,9 +98,9 @@ export default function FormAsistenciasEmpleados({
 
     const fetchData = async () => {
       try {
-        noCallErrorsDetected = await fetchPersonasOptionsAndHandleErrors();
+        noCallErrorsDetected = await fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
@@ -133,6 +134,27 @@ export default function FormAsistenciasEmpleados({
   const validateRequiredFields = () => {
     const errorMissingFields = {};
 
+    if (!formData.fecha_asistencia) {
+      errorMissingFields.fecha_asistencia =
+        "Por favor, selecciona una fecha de asistencia";
+    }
+
+    if (!formData.hora_entrada) {
+      errorMissingFields.hora_entrada =
+        "Por favor, selecciona una hora de entrada";
+    }
+
+    if (operationType === "update") {
+      if (!formData.hora_salida) {
+        errorMissingFields.hora_salida =
+          "Por favor, selecciona una hora de salida";
+      }
+    }
+
+    if (!formData.id_persona) {
+      errorMissingFields.id_persona = "Por favor, selecciona una persona";
+    }
+
     setRequiredFieldsIncomplete(errorMissingFields);
 
     return Object.keys(errorMissingFields).length !== 0;
@@ -146,8 +168,24 @@ export default function FormAsistenciasEmpleados({
     return Object.keys(errorForm).length !== 0;
   };
 
+  const validateLogicalData = () => {
+    const logicalErrors = {};
+
+    const horaEntrada = moment(formData.hora_entrada, "HH:mm:ss");
+    const horaSalida = moment(formData.hora_salida, "HH:mm:ss");
+
+    if (horaSalida.isBefore(horaEntrada)) {
+      logicalErrors.hora_salida =
+        "La hora de salida no puede ser antes que la hora de entrada";
+    }
+
+    setLogicalDataErrors(logicalErrors);
+
+    return Object.keys(logicalErrors).length !== 0;
+  };
+
   const handleFormChange = (event) => {
-    const { name, value, type, checked } = event.target;
+    const { name, value } = event.target;
 
     setFormData((prevDataState) => {
       return {
@@ -194,16 +232,10 @@ export default function FormAsistenciasEmpleados({
     event.preventDefault();
 
     const requiredFieldsError = validateRequiredFields();
-    if (requiredFieldsError) {
-      setErrorMessage(
-        "No se puede añadir un registro con uno o más campos vacios "
-      );
-      return;
-    }
-
     const formDataError = validateFormData();
-    if (formDataError) {
-      setErrorMessage("");
+    const logicalDataError = validateLogicalData();
+
+    if (requiredFieldsError || formDataError || logicalDataError) {
       return;
     }
 
@@ -280,7 +312,7 @@ export default function FormAsistenciasEmpleados({
           )}
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="hora entrada">
+        <Antd.Form.Item label="Hora entrada">
           <Antd.TimePicker
             name="hora_entrada"
             value={
@@ -319,7 +351,12 @@ export default function FormAsistenciasEmpleados({
               handleTimeChange(time, timeString, "hora_salida")
             }
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.hora_salida ? "error" : ""}
+            status={
+              requiredFieldsIncomplete.hora_salida ||
+              logicalDataErrors.hora_salida
+                ? "error"
+                : ""
+            }
             className={
               operationType !== "view"
                 ? styles.StyleTimePicker
@@ -327,16 +364,18 @@ export default function FormAsistenciasEmpleados({
             }
             format="HH:mm:ss"
           />
-          {requiredFieldsIncomplete.hora_salida && (
+          {(requiredFieldsIncomplete.hora_salida ||
+            logicalDataErrors.hora_salida) && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.hora_salida}
+              {requiredFieldsIncomplete.hora_salida ||
+                logicalDataErrors.hora_salida}
             </div>
           )}
         </Antd.Form.Item>
 
         {operationType === "view" && (
           <div>
-            <Antd.Form.Item label="Horas trabajadas dia">
+            <Antd.Form.Item label="Horas trabajadas">
               <Antd.TimePicker
                 name="horas_trabajadas_dia"
                 value={
@@ -352,7 +391,7 @@ export default function FormAsistenciasEmpleados({
           </div>
         )}
 
-        <Antd.Form.Item label="Observacion">
+        <Antd.Form.Item label="Observación">
           <Antd.Input
             type="text"
             name="observacion"
@@ -381,7 +420,7 @@ export default function FormAsistenciasEmpleados({
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay personas</span>}
+            notFoundContent={<span>No hay personas disponibles</span>}
             showSearch={true}
             onSearch={
               operationType === "view" ? null : handleSelectPersonaSearch

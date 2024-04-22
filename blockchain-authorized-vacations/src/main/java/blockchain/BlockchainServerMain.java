@@ -137,8 +137,6 @@ public class BlockchainServerMain {
     private static Block guardarTransaccionVacacion(TransaccionVacacion newTransaccionVacacion) {
         Block newBlock = null;
 
-        System.out.println("\nnewTransaccionVacacion: " + newTransaccionVacacion);
-
         boolean existeVacacionAutorizadaPorId = libroVacaciones.verificarVacacionAutorizadaExiste(libroVacaciones,
                 newTransaccionVacacion.getId_vacacion_empleado());
 
@@ -180,8 +178,7 @@ public class BlockchainServerMain {
 
                 if (mismoIdVacacionBlockchainAndBBDD && hashTransaccionVacacionDiferenteBlockchainAndBBDD) {
                     transaccionesVacacionesInconsistentes.add(infoTransaccionVacacionDeBBDD);
-                    System.out.println("ESTE ID: " + infoTransaccionVacacionDeBBDD.getId_vacacion_empleado()
-                            + " TIENE DIFERENTE INFO CON LA DEL BLOCKCHAIN");
+
                     break;
                 }
 

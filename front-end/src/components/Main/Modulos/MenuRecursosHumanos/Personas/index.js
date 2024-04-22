@@ -40,14 +40,7 @@ let errorHandlingInfo = {
 };
 
 export default function Personas() {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser, permisosUser } = useAuth();
 
   const router = useRouter();
 
@@ -82,74 +75,98 @@ export default function Personas() {
     {
       field: "id",
       headerName: "ID",
-      width: 85,
+      width: 120,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "numero_empleado",
-      headerName: "Numero empleado",
-      width: 180,
+      headerName: "Número empleado",
+      width: 200,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "nombre",
       headerName: "Nombre",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "apellidos",
       headerName: "Apellidos",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "genero",
-      headerName: "Genero",
-      width: 130,
+      headerName: "Género",
+      width: 150,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_nacimiento",
-      headerName: "Fecha nacimiento",
-      width: 180,
+      headerName: "Fecha de nacimiento",
+      width: 210,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "dni",
       headerName: "DNI",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "direccion",
-      headerName: "Direccion",
-      width: 180,
+      headerName: "Dirección",
+      width: 210,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "numero_telefono",
-      headerName: "Numero telefono",
-      width: 180,
+      headerName: "Número de teléfono",
+      width: 210,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "correo_electronico",
-      headerName: "Correo electronico",
-      width: 180,
+      headerName: "Correo electrónico",
+      width: 220,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tipo_persona",
       headerName: "Tipo persona",
-      width: 130,
+      width: 190,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "actions",
       type: "actions",
-      headerName: "Actions",
-      width: 100,
+      headerName: "Acciones",
+      width: 140,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -166,6 +183,16 @@ export default function Personas() {
             onClick={handleUpdateClick(id)}
             color="inherit"
           />,
+          ...(permisosUser && permisosUser.borrar_personas
+            ? [
+                <GridActionsCellItem
+                  icon={<DeleteIcon />}
+                  label="Delete"
+                  onClick={handleDeleteClick(id)}
+                  color="inherit"
+                />,
+              ]
+            : []),
         ];
       },
     },
@@ -199,7 +226,7 @@ export default function Personas() {
         setTableLoading(false);
         return false;
       }
-      
+
       const personasMap = responseGetAllPersonas.data.map((persona) => {
         return {
           id: persona.id_persona,
@@ -235,12 +262,13 @@ export default function Personas() {
   }, [authUser]);
 
   useEffect(() => {
-    if (personaFormUpdated || cancelOrExitClicked) {
+    if (personaFormUpdated || personaDelete || cancelOrExitClicked) {
       fetchGetAllPersonasAndHandleErrors();
       setPersonaFormUpdated(false);
+      setPersonaDelete(false);
       setCancelOrExitClicked(false);
     }
-  }, [personaFormUpdated, cancelOrExitClicked]);
+  }, [personaFormUpdated, personaDelete, cancelOrExitClicked]);
 
   function personaFormUpdatedTrigger() {
     setPersonaFormUpdated(!personaFormUpdated);
@@ -272,10 +300,43 @@ export default function Personas() {
     toggleUpdatePersonaForm();
   };
 
+  const handleDeleteClick = (id) => () => {
+    const filaSeleccionada = dataSource.find((row) => row.id === id);
+
+    setIdPersonaSelected(id);
+    setNamePersonaSelected(filaSeleccionada.nombre);
+    setShowDelete(true);
+  };
+
   const handleViewUniqueClick = (id) => () => {
     const filaSeleccionada = dataSource.find((row) => row.id === id);
     setRowSelected(filaSeleccionada);
     toggleViewUniquePersonaForm();
+  };
+
+  const handleModalOk = async () => {
+    try {
+      const responseDeletePersona = await deletePersona(idPersonaSelected);
+
+      errorHandlingInfo = checkResponseForErrors(responseDeletePersona);
+
+      if (errorHandlingInfo.backendError) {
+        handleBackendError(responseDeletePersona.errorMessage);
+        return;
+      } else if (errorHandlingInfo.backendOrDDBBConnectionError) {
+        handleBackendAndDBConnectionError(responseDeletePersona.errorMessage);
+        return;
+      }
+
+      setPersonaDelete(true);
+      resetStates();
+    } catch (error) {
+      console.error("Ha ocurrido algo inesperado", error);
+    }
+  };
+
+  const handleModalClose = () => {
+    resetStates();
   };
 
   function resetStates() {
@@ -405,12 +466,35 @@ export default function Personas() {
   }
 
   const renderTablePersona = () => {
+    function deleteModal() {
+      return (
+        <Antd.Modal
+          title={`¿Eliminar a la siguiente persona ${namePersonaSelected}?`}
+          open={showDelete}
+          okText="Aceptar"
+          onOk={handleModalOk}
+          cancelText="Cancelar"
+          onCancel={handleModalClose}
+          centered
+        >
+          {errorMessage.length !== 0 && backendError === true && (
+            <div>
+              <p className={styles.BackendError}>
+                <ErrorIcon fontSize="medium" color="red" />
+                Error: {errorMessage}
+              </p>
+            </div>
+          )}
+        </Antd.Modal>
+      );
+    }
+
     return (
       <div>
         <Header />
         <h1>Personas</h1>
         <h2>
-          <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
+          <Link href={"/menu-recursos-humanos"}>Menú Recursos humanos</Link>
         </h2>
         <Box
           sx={{
@@ -421,6 +505,18 @@ export default function Personas() {
             },
             "& .textPrimary": {
               color: "text.primary",
+            },
+            "& .custom-header": {
+              backgroundColor: "#e0e7fa",
+              color: "#333",
+              fontWeight: "bold",
+              fontFamily: "fangsong",
+              borderBottom: "2px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #ccc",
+              borderRight: "1px solid #ccc",
             },
           }}
         >
@@ -450,13 +546,14 @@ export default function Personas() {
               toolbar: CustomToolbar,
             }}
           />
+          {showDelete && deleteModal()}
         </Box>
         <Footer />
       </div>
     );
   };
 
-  if (backendOrDDBBConnectionError === true) {
+  if (backendOrDDBBConnectionError) {
     return (
       <div>
         <ServerConnectionError message={errorMessage} />

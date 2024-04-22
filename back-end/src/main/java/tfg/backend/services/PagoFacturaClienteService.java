@@ -29,8 +29,7 @@ public class PagoFacturaClienteService {
             Map<String, Object> pagoFacturaClienteMap = pagoFacturaCliente.toMap();
 
             pagoFacturaClienteMap.put("factura_cliente",
-                    pagoFacturaCliente.getFactura_cliente() != null
-                            ? pagoFacturaCliente.getFactura_cliente().toMap()
+                    pagoFacturaCliente.getFactura_cliente() != null ? pagoFacturaCliente.getFactura_cliente().toMap()
                             : null);
 
             resultado.add(pagoFacturaClienteMap);
@@ -88,15 +87,11 @@ public class PagoFacturaClienteService {
                         "Pago factura cliente con id " + idPagoFacturaCliente
                                 + " no encontrado"));
 
-        // Comprobacion de campos correctos -> Ejemplo:
         /*
          * if (cambiosUsuario.getNombre_usuario() == null) {
          * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
          * }
          */
-
-        // HACER AQUI LOS SETTER -> Ejemplo:
-        // asistenciaEmpleadoExistente.setFecha(cambiosAsistenciaEmpleado.getFecha());
 
         pagoFacturaClienteExistente.setFecha_pago_realizada(cambiosPagoFacturaCliente.getFecha_pago_realizada());
         pagoFacturaClienteExistente.setImporte_pagado(cambiosPagoFacturaCliente.getImporte_pagado());

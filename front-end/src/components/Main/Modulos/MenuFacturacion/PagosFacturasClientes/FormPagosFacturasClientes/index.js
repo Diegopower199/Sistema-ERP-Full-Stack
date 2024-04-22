@@ -50,6 +50,7 @@ export default function FormPagosFacturasClientes({
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
+  const [logicalDataErrors, setLogicalDataErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [backendError, setBackendError] = useState(false);
 
@@ -108,7 +109,7 @@ export default function FormPagosFacturasClientes({
     }
 
     if (!formData.metodo_pago) {
-      errorMissingFields.metodo_pago = "Por favor, ingresa el metodo de pago";
+      errorMissingFields.metodo_pago = "Por favor, ingresa el método de pago";
     }
 
     if (!formData.id_factura_cliente) {
@@ -127,6 +128,14 @@ export default function FormPagosFacturasClientes({
     setFormErrors(errorForm);
 
     return Object.keys(errorForm).length !== 0;
+  };
+
+  const validateLogicalData = () => {
+    const logicalErrors = {};
+
+    setLogicalDataErrors(logicalErrors);
+
+    return Object.keys(logicalErrors).length !== 0;
   };
 
   const handleFormChange = (event) => {
@@ -153,16 +162,10 @@ export default function FormPagosFacturasClientes({
     event.preventDefault();
 
     const requiredFieldsError = validateRequiredFields();
-    if (requiredFieldsError) {
-      setErrorMessage(
-        "No se puede añadir un registro con uno o más campos vacios "
-      );
-      return;
-    }
-
     const formDataError = validateFormData();
-    if (formDataError) {
-      setErrorMessage("");
+    const logicalDataError = validateLogicalData();
+
+    if (requiredFieldsError || formDataError || logicalDataError) {
       return;
     }
 
@@ -264,7 +267,7 @@ export default function FormPagosFacturasClientes({
             value={
               formData.metodo_pago
                 ? formData.metodo_pago
-                : "Selecciona un metodo de pago"
+                : "Selecciona un método de pago"
             }
             onChange={
               operationType === "view" ? null : handleSelectImportePagadoChange
@@ -276,7 +279,9 @@ export default function FormPagosFacturasClientes({
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay opciones de método de pagos</span>}
+            notFoundContent={
+              <span>No hay opciones de métodos de pagos disponibles</span>
+            }
           >
             {operationType !== "view" &&
               importePagadoOptions.map((importePagar) => (

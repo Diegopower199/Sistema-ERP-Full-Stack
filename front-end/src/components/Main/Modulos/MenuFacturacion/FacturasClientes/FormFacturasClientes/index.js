@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import ErrorIcon from "@mui/icons-material/Error";
 import {
   formatearFechaYYYYMMDD,
   validarFechaYYYYMMDD,
@@ -8,7 +7,6 @@ import {
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
-import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 import moment from "moment";
 
 let errorHandlingInfo = {
@@ -46,6 +44,7 @@ export default function FormFacturasClientes({
     total_factura: "",
     id_cliente: "",
     nif_cliente: "",
+    clienteInfo: "",
     pedido_cliente: "",
     id_pedido_cliente: "",
     tipo_estado: "",
@@ -64,8 +63,8 @@ export default function FormFacturasClientes({
         );
 
         if (
-          fechaEntregaRealPedidoValida === false ||
-          fechaFacturaEmitidaValida === false
+          fechaEntregaRealPedidoValida === null ||
+          fechaFacturaEmitidaValida === null
         ) {
           const fechaEntregaRealPedidoFormateada = formatearFechaYYYYMMDD(
             facturaClienteDataForm.fecha_entrega_real_pedido
@@ -97,7 +96,7 @@ export default function FormFacturasClientes({
     <div>
       <Header />
       <Antd.Form>
-        <Antd.Form.Item label="Descripcion del servicio">
+        <Antd.Form.Item label="Descripción del servicio">
           <Antd.Input
             type="text"
             name="descripcion_servicio"
@@ -107,7 +106,7 @@ export default function FormFacturasClientes({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Direccion entrega">
+        <Antd.Form.Item label="Dirección entrega">
           <Antd.Input
             type="text"
             name="direccion_entrega"
@@ -201,7 +200,7 @@ export default function FormFacturasClientes({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Observacion">
+        <Antd.Form.Item label="Observación">
           <Antd.Input
             type="text"
             name="observacion"
@@ -281,21 +280,21 @@ export default function FormFacturasClientes({
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="NIF cliente">
+        <Antd.Form.Item label="Datos del cliente">
           <Antd.Input
             type="text"
-            name="nif_cliente"
-            value={formData.nif_cliente}
+            name="clienteInfo"
+            value={formData.clienteInfo}
             readOnly={true}
             className={styles.StyleInputTimePickerDisabled}
           />
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Pedido cliente">
+        <Antd.Form.Item label="ID pedido cliente">
           <Antd.Input
             type="text"
-            name="pedido_cliente"
-            value={formData.pedido_cliente}
+            name="id_pedido_cliente"
+            value={formData.id_pedido_cliente}
             readOnly={true}
             className={styles.StyleInputTimePickerDisabled}
           />

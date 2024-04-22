@@ -42,12 +42,10 @@ public class AyudaEmpleadoService {
                     ayudaEmpleado.getPersona() != null ? ayudaEmpleado.getPersona().toMap() : null);
 
             ayudaEmpleadoMap.put("tipo_ayuda",
-                    ayudaEmpleado.getTipo_ayuda() != null ? ayudaEmpleado.getTipo_ayuda().toMap()
-                            : null);
+                    ayudaEmpleado.getTipo_ayuda() != null ? ayudaEmpleado.getTipo_ayuda().toMap() : null);
 
             ayudaEmpleadoMap.put("tipo_estado",
-                    ayudaEmpleado.getTipo_estado() != null ? ayudaEmpleado.getTipo_estado().toMap()
-                            : null);
+                    ayudaEmpleado.getTipo_estado() != null ? ayudaEmpleado.getTipo_estado().toMap() : null);
 
             resultado.add(ayudaEmpleadoMap);
         }
@@ -103,18 +101,14 @@ public class AyudaEmpleadoService {
         Map<String, Object> ayudaEmpleadoMap = ayudaEmpleadoEncontrado.toMap();
 
         ayudaEmpleadoMap.put("persona",
-                ayudaEmpleadoEncontrado.getPersona() != null
-                        ? ayudaEmpleadoEncontrado.getPersona().toMap()
-                        : null);
+                ayudaEmpleadoEncontrado.getPersona() != null ? ayudaEmpleadoEncontrado.getPersona().toMap() : null);
 
         ayudaEmpleadoMap.put("tipo_solicitud",
-                ayudaEmpleadoEncontrado.getTipo_ayuda() != null
-                        ? ayudaEmpleadoEncontrado.getTipo_ayuda().toMap()
+                ayudaEmpleadoEncontrado.getTipo_ayuda() != null ? ayudaEmpleadoEncontrado.getTipo_ayuda().toMap()
                         : null);
 
         ayudaEmpleadoMap.put("tipo_estado",
-                ayudaEmpleadoEncontrado.getTipo_estado() != null
-                        ? ayudaEmpleadoEncontrado.getTipo_estado().toMap()
+                ayudaEmpleadoEncontrado.getTipo_estado() != null ? ayudaEmpleadoEncontrado.getTipo_estado().toMap()
                         : null);
 
         return ayudaEmpleadoMap;

@@ -41,6 +41,22 @@ public class PersonaService {
         return resultado;
     }
 
+    public List<Map<String, Object>> getAllEmpleadosAndBecarios() {
+        List<PersonaModel> listaPersonas = personaRepository.findAllTipoPersonaEmpleadosAndBecariosOrderedById();
+        List<Map<String, Object>> resultado = new ArrayList<>();
+
+        for (PersonaModel persona : listaPersonas) {
+            Map<String, Object> personaMap = persona.toMap();
+
+            personaMap.put("tipo_persona",
+                    persona.getTipo_persona() != null ? persona.getTipo_persona().toMap() : null);
+
+            resultado.add(personaMap);
+        }
+
+        return resultado;
+    }
+
     public PersonaModel savePersona(PersonaModel nuevoPersona) {
         int numero_empleado = nuevoPersona.getNumero_empleado();
         String nombre = nuevoPersona.getNombre();

@@ -144,7 +144,6 @@ public class PedidoClienteService {
 
     public PedidoClienteModel updatePedidoCliente(PedidoClienteModel cambiosPedidoCliente, int idPedidoCliente) {
 
-        System.out.println("\n\n\nidPedidoCliente: " + idPedidoCliente + "\n\n\n");
         PedidoClienteModel pedidoClienteExistente = pedidoClienteRepository.findById(idPedidoCliente)
                 .orElseThrow(() -> new RuntimeException(
                         "Pedido cliente con id " + idPedidoCliente + " no encontrado"));

@@ -133,15 +133,14 @@ public class FacturaClienteService {
             newFacturaClienteFacturado.setObservacion(pedidoCliente.getObservacion());
             newFacturaClienteFacturado.setFecha_entrega_real_pedido(pedidoCliente.getFecha_entrega_real());
             newFacturaClienteFacturado.setFecha_factura_emitida(fechaActual);
-            newFacturaClienteFacturado.setTarifa_hora_desplazamiento(GlobalConstants.TARIFA_HORA_TRANSPORTE);
-            newFacturaClienteFacturado.setTarifa_hora_servicio(GlobalConstants.TARIFA_HORA_SERVICIO);
-
-            // TODO ESTO LO HACE MAL
+            newFacturaClienteFacturado.setTarifa_hora_desplazamiento((double) (GlobalConstants.TARIFA_HORA_TRANSPORTE));
+            newFacturaClienteFacturado.setTarifa_hora_servicio((double) (GlobalConstants.TARIFA_HORA_SERVICIO));
 
             double subtotalFactura = (tarifaTotalDesplazamiento + tarifaTotalServicio);
+
             newFacturaClienteFacturado.setSubtotal_factura_sin_iva(subtotalFactura);
-            newFacturaClienteFacturado.setIva(GlobalConstants.IVA);
-            double calculoTotalFactura = subtotalFactura + (subtotalFactura * (GlobalConstants.IVA / 100));
+            newFacturaClienteFacturado.setIva((double) (GlobalConstants.IVA));
+            double calculoTotalFactura = subtotalFactura + (subtotalFactura * ((double) (GlobalConstants.IVA) / 100));
 
             newFacturaClienteFacturado.setTotal_factura(calculoTotalFactura);
 

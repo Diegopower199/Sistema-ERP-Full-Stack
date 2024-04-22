@@ -1,27 +1,38 @@
 .DivCentrado {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.Message {
+.BackendError {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 
-  margin-top: 8vh;
-  margin-right: 2vh;
-  margin-left: 4vh;
+  width: 100%;
+  max-width: 900px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  width: 80vh;
-  height: 80vh;
-  color: blue;
-  font-size: 3rem;
+.BackendError h1 {
+  color: #e74c3c;
+  font-size: 34px;
+}
+
+.BackendError p {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #333;
 }
 
 .Button {
   margin-top: 5vh;
-  font-size: 1rem;
+  font-size: 30px;
   padding: 1rem;
   width: auto;
   height: auto;

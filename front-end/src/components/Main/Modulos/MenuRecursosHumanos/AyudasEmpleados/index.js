@@ -12,7 +12,6 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
   GridToolbarExportContainer,
-  GridCsvExportMenuItem,
   useGridApiContext,
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
@@ -44,14 +43,7 @@ let errorHandlingInfo = {
 };
 
 export default function AyudasEmpleados() {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser, permisosUser } = useAuth();
 
   const router = useRouter();
 
@@ -92,56 +84,74 @@ export default function AyudasEmpleados() {
     {
       field: "id",
       headerName: "ID",
-      width: 85,
+      width: 120,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_inicio",
       headerName: "Fecha inicio",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_fin",
       headerName: "Fecha fin",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "valor_asociado",
       headerName: "Valor asociado",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "observacion",
-      headerName: "Observacion",
+      headerName: "Observación",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "personaInfo",
-      headerName: "Info persona",
+      headerName: "Datos de la persona",
       width: 250,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tipo_ayuda",
       headerName: "Tipo ayuda",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tipo_estado",
       headerName: "Tipo estado",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "actions",
       type: "actions",
-      headerName: "Actions",
-      width: 100,
+      headerName: "Acciones",
+      width: 140,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -158,12 +168,16 @@ export default function AyudasEmpleados() {
             onClick={handleUpdateClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
+          ...(permisosUser && permisosUser.borrar_ayudas
+            ? [
+                <GridActionsCellItem
+                  icon={<DeleteIcon />}
+                  label="Delete"
+                  onClick={handleDeleteClick(id)}
+                  color="inherit"
+                />,
+              ]
+            : []),
         ];
       },
     },
@@ -199,7 +213,7 @@ export default function AyudasEmpleados() {
         setTableLoading(false);
         return false;
       }
-      
+
       const ayudasEmpleadosMap = responseGetAllAyudasEmpleados.data.map(
         (ayudaEmpleado) => {
           const { nombre, apellidos, dni } = ayudaEmpleado.persona;
@@ -485,7 +499,7 @@ export default function AyudasEmpleados() {
         <Header />
         <h1>Ayudas Empleados</h1>
         <h2>
-          <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
+          <Link href={"/menu-recursos-humanos"}>Menú Recursos humanos</Link>
         </h2>
         <Box
           sx={{
@@ -496,6 +510,18 @@ export default function AyudasEmpleados() {
             },
             "& .textPrimary": {
               color: "text.primary",
+            },
+            "& .custom-header": {
+              backgroundColor: "#e0e7fa",
+              color: "#333",
+              fontWeight: "bold",
+              fontFamily: "fangsong",
+              borderBottom: "2px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #ccc",
+              borderRight: "1px solid #ccc",
             },
           }}
         >
@@ -532,7 +558,7 @@ export default function AyudasEmpleados() {
     );
   };
 
-  if (backendOrDDBBConnectionError === true) {
+  if (backendOrDDBBConnectionError) {
     return (
       <div>
         <ServerConnectionError message={errorMessage} />

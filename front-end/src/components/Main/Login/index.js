@@ -20,14 +20,7 @@ let errorHandlingInfo = {
 };
 
 export default function Login() {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser, setAuthUser, setIsLoggedIn, setPermisosUser } = useAuth();
 
   const router = useRouter();
 
@@ -220,10 +213,6 @@ export default function Login() {
             )}
             <button type="submit">Login</button>
           </form>
-          <p className={styles.parrafo}>
-            Al registrarte, aceptas nuestras Condiciones de uso y Política de
-            privacidad.
-          </p>
           <p className={styles.parrafo}>
             <Link href={"/update-password"}>¿Has olvidado tu contraseña?</Link>
           </p>

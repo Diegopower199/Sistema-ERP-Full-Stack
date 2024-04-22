@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  getAllPersonas,
-  savePersona,
-  updatePersona,
-} from "@/services/PersonaService";
-import { getAllTiposPersonas } from "@/services/TipoPersonaService";
-import {
-  REGEX_DNI,
-  REGEX_EMAIL,
-  REGEX_TELEFONO_CON_PREFIJO,
-} from "@/utils/regexPatterns";
+import { getAllPersonas, getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
 import {
@@ -26,6 +16,7 @@ import {
 } from "@/services/AyudaEmpleadoService";
 import { getAllTiposAyudas } from "@/services/TipoAyudaService";
 import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import moment from "moment";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -62,6 +53,7 @@ export default function FormAyudasEmpleados({
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
   const [formErrors, setFormErrors] = useState({});
+  const [logicalDataErrors, setLogicalDataErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [backendError, setBackendError] = useState(false);
 
@@ -139,11 +131,11 @@ export default function FormAyudasEmpleados({
     }
   };
 
-  const fetchPersonasOptionsAndHandleErrors = async () => {
+  const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
     try {
-      const responseGetAllPersonas = await getAllPersonas();
+      const responseGetAllPersonasEmpleadosAndBecarios = await getAllPersonasEmpleadosAndBecarios();
 
-      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
+      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonasEmpleadosAndBecarios);
 
       if (errorHandlingInfo.noContent) {
         setPersonasOptions([]);
@@ -151,11 +143,11 @@ export default function FormAyudasEmpleados({
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(responseGetAllPersonas.errorMessage);
+        handleBackendAndDBConnectionError(responseGetAllPersonasEmpleadosAndBecarios.errorMessage);
         return false;
       }
 
-      const optionsPersonas = responseGetAllPersonas.data.map((persona) => {
+      const optionsPersonas = responseGetAllPersonasEmpleadosAndBecarios.data.map((persona) => {
         const { id_persona, nombre, apellidos, dni } = persona;
 
         return {
@@ -179,19 +171,19 @@ export default function FormAyudasEmpleados({
       try {
         noCallErrorsDetected = await fetchTiposEstadosOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
         noCallErrorsDetected = await fetchTiposAyudasOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
-        noCallErrorsDetected = await fetchPersonasOptionsAndHandleErrors();
+        noCallErrorsDetected = await fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors();
 
-        if (noCallErrorsDetected === false) {
+        if (!noCallErrorsDetected) {
           return;
         }
 
@@ -235,6 +227,27 @@ export default function FormAyudasEmpleados({
   const validateRequiredFields = () => {
     const errorMissingFields = {};
 
+    if (!formData.fecha_inicio) {
+      errorMissingFields.fecha_inicio =
+        "Por favor, selecciona una fecha de inicio";
+    }
+
+    if (!formData.fecha_fin) {
+      errorMissingFields.fecha_fin = "Por favor, selecciona una fecha de fin";
+    }
+
+    if (!formData.valor_asociado) {
+      errorMissingFields.valor_asociado = "Por favor, indica un valor";
+    }
+
+    if (!formData.id_persona) {
+      errorMissingFields.id_persona = "Por favor, selecciona una persona";
+    }
+
+    if (!formData.id_tipo_ayuda) {
+      errorMissingFields.id_tipo_ayuda = "Por favor, ingresa un tipo de ayuda";
+    }
+
     setRequiredFieldsIncomplete(errorMissingFields);
 
     return Object.keys(errorMissingFields).length !== 0;
@@ -246,6 +259,22 @@ export default function FormAyudasEmpleados({
     setFormErrors(errorForm);
 
     return Object.keys(errorForm).length !== 0;
+  };
+
+  const validateLogicalData = () => {
+    const logicalErrors = {};
+
+    const fechaInicio = moment(formData.fecha_inicio);
+    const fechaFin = moment(formData.fecha_fin);
+
+    if (fechaFin.isBefore(fechaInicio)) {
+      logicalErrors.fecha_fin =
+        "La fecha de fin no puede ser anterior a la fecha de inicio";
+    }
+
+    setLogicalDataErrors(logicalErrors);
+
+    return Object.keys(logicalErrors).length !== 0;
   };
 
   const handleFormChange = (event) => {
@@ -307,16 +336,10 @@ export default function FormAyudasEmpleados({
     event.preventDefault();
 
     const requiredFieldsError = validateRequiredFields();
-    if (requiredFieldsError) {
-      setErrorMessage(
-        "No se puede añadir un registro con uno o más campos vacios "
-      );
-      return;
-    }
-
     const formDataError = validateFormData();
-    if (formDataError) {
-      setErrorMessage("");
+    const logicalDataError = validateLogicalData();
+
+    if (requiredFieldsError || formDataError || logicalDataError) {
       return;
     }
 
@@ -394,12 +417,18 @@ export default function FormAyudasEmpleados({
             value={formData.fecha_fin}
             onChange={operationType === "view" ? null : handleFormChange}
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.fecha_fin ? "error" : ""}
+            status={
+              requiredFieldsIncomplete.fecha_fin || logicalDataErrors.fecha_fin
+                ? "error"
+                : ""
+            }
             className={styles.StyleInput}
           />
-          {requiredFieldsIncomplete.fecha_fin && (
+          {(requiredFieldsIncomplete.fecha_fin ||
+            logicalDataErrors.fecha_fin) && (
             <div className={styles.RequiredFieldsOrFormatError}>
-              {requiredFieldsIncomplete.fecha_fin}
+              {requiredFieldsIncomplete.fecha_fin ||
+                logicalDataErrors.fecha_fin}
             </div>
           )}
         </Antd.Form.Item>
@@ -421,7 +450,7 @@ export default function FormAyudasEmpleados({
           )}
         </Antd.Form.Item>
 
-        <Antd.Form.Item label="Observacion">
+        <Antd.Form.Item label="Observación">
           <Antd.Input
             type="text"
             name="observacion"
@@ -450,7 +479,7 @@ export default function FormAyudasEmpleados({
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay personas</span>}
+            notFoundContent={<span>No hay personas disponibles</span>}
             showSearch={true}
             onSearch={
               operationType === "view" ? null : handleSelectPersonaSearch
@@ -483,13 +512,13 @@ export default function FormAyudasEmpleados({
             }
             onChange={operationType === "view" ? null : handleTipoAyudaChange}
             readOnly={operationType === "view" ? true : false}
-            status={requiredFieldsIncomplete.tipo_ayuda ? "error" : ""}
+            status={requiredFieldsIncomplete.id_tipo_ayuda ? "error" : ""}
             className={
               operationType !== "view"
                 ? styles.StyleSelect
                 : styles.StyleSelectDisabled
             }
-            notFoundContent={<span>No hay opciones</span>}
+            notFoundContent={<span>No hay tipos de ayudas disponibles</span>}
           >
             {operationType !== "view" &&
               tiposAyudasOptions.map((tipoAyuda) => (
@@ -528,7 +557,9 @@ export default function FormAyudasEmpleados({
                     ? styles.StyleSelect
                     : styles.StyleSelectDisabled
                 }
-                notFoundContent={<span>No hay opciones</span>}
+                notFoundContent={
+                  <span>No hay tipos de estados disponibles</span>
+                }
               >
                 {operationType !== "view" &&
                   tiposEstadosOptions.map((tipoEstado) => (

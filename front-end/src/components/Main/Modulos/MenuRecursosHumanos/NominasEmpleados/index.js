@@ -26,7 +26,6 @@ import styles from "./styles.module.css";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
-import ErrorIcon from "@mui/icons-material/Error";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 import {
   generateNominasEmpleados,
@@ -41,15 +40,12 @@ let errorHandlingInfo = {
   noContent: false,
 };
 
+let funcionalidadDisponible = false;
+let mensajeFuncionalidad =
+  "Lo sentimos, parece que esta función no está disponible en este momento. Estamos trabajando para resolverlo tan pronto como sea posible. Agradecemos tu comprensión.";
+
 export default function NominasEmpleados() {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser, permisosUser } = useAuth();
 
   const router = useRouter();
 
@@ -96,92 +92,122 @@ export default function NominasEmpleados() {
     {
       field: "id",
       headerName: "ID",
-      width: 85,
+      width: 120,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "year",
       headerName: "Año",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "mes",
       headerName: "Mes",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tipo_nomina",
-      headerName: "Tipo nomina",
+      headerName: "Tipo nómina",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "salario_base",
       headerName: " Salario base",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "deducciones",
       headerName: "Deducciones",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "bonificacion",
-      headerName: "Bonificacion",
+      headerName: "Bonificación",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "salario_bruto",
       headerName: "Salario bruto",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "irpf",
       headerName: "IRPF",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "seguridad_social",
       headerName: "Seguridad social",
-      width: 180,
+      width: 190,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "anticipos",
       headerName: "Anticipos",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "salario_neto",
       headerName: "Salario neto",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "cuenta_bancaria",
       headerName: "Cuenta bancaria",
       width: 280,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "personaInfo",
-      headerName: "Info persona",
+      headerName: "Datos de la persona",
       width: 280,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "actions",
       type: "actions",
-      headerName: "Actions",
+      headerName: "Acciones",
       width: 100,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -228,7 +254,7 @@ export default function NominasEmpleados() {
         setTableLoading(false);
         return false;
       }
-      
+
       const nominasEmpleadosMap = responseGetAllNominasEmpleados.data.map(
         (nominaEmpleado) => {
           const { nombre, apellidos, dni } = nominaEmpleado.persona;
@@ -312,22 +338,26 @@ export default function NominasEmpleados() {
     setCargandoInformacionNominasEmpleados(true);
 
     try {
-      const responseGenerateNominasEmpleados = await generateNominasEmpleados(); // No esta hecha la funcion
+      if (funcionalidadDisponible) {
+        const responseGenerateNominasEmpleados =
+          await generateNominasEmpleados(); // No esta hecha la funcion
 
-      errorHandlingInfo = checkResponseForErrors(
-        responseGenerateNominasEmpleados
-      );
-
-      if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(
-          responseGenerateNominasEmpleados.errorMessage
+        errorHandlingInfo = checkResponseForErrors(
+          responseGenerateNominasEmpleados
         );
-        return;
+
+        if (errorHandlingInfo.backendOrDDBBConnectionError) {
+          handleBackendAndDBConnectionError(
+            responseGenerateNominasEmpleados.errorMessage
+          );
+          return;
+        }
+
+        setContadorNominasEmpleadosGeneradas(
+          responseGenerateNominasEmpleados.data
+        );
       }
 
-      setContadorNominasEmpleadosGeneradas(
-        responseGenerateNominasEmpleados.data
-      );
       setCargandoInformacionNominasEmpleados(false);
     } catch (error) {
       console.error("Ha ocurrido algo inesperado", error);
@@ -343,6 +373,10 @@ export default function NominasEmpleados() {
   const handleModalGenerateNominasEmpleadosOk = () => {
     resetStates();
     nominaEmpleadoGenerateUpdatedTrigger();
+  };
+
+  const handleModalClose = () => {
+    resetStates();
   };
 
   function resetStates() {
@@ -471,59 +505,75 @@ export default function NominasEmpleados() {
 
   const renderTableNominaEmpleado = () => {
     function generateNominasEmpleadosModal() {
-      if (!aceptarBotonParaVerResultadosNominasEmpleados) {
+      if (!funcionalidadDisponible) {
         return (
           <Antd.Modal
-            title={`Generando nominas...`}
+            title={``}
             open={showModalGenerate}
             okButtonProps={{ style: { display: "none" } }}
             cancelButtonProps={{ style: { display: "none" } }}
+            onCancel={handleModalClose}
             centered
-          >
-            <Antd.Form style={{ marginTop: "5%" }}>
-              {!cargandoInformacionNominasEmpleados && (
-                <div>
-                  <Antd.Button
-                    onClick={() =>
-                      setAceptarBotonParaVerResultadosNominasEmpleados(true)
-                    }
-                  >
-                    {"Ver los resultados"}
-                  </Antd.Button>
-                </div>
-              )}
-            </Antd.Form>
-          </Antd.Modal>
+          >{mensajeFuncionalidad}</Antd.Modal>
         );
-      } else if (aceptarBotonParaVerResultadosNominasEmpleados) {
-        return (
-          <Antd.Modal
-            title={`Resultados nominas empleados generadas`}
-            open={showModalGenerate}
-            okText="Aceptar"
-            onOk={handleModalGenerateNominasEmpleadosOk}
-            cancelText="Cancelar"
-            cancelButtonProps={{ style: { display: "none" } }}
-            centered
-          >
-            <div>
+      } else {
+        if (!aceptarBotonParaVerResultadosNominasEmpleados) {
+          return (
+            <Antd.Modal
+              title={`Generando nóminas...`}
+              open={showModalGenerate}
+              okButtonProps={{ style: { display: "none" } }}
+              cancelButtonProps={{ style: { display: "none" } }}
+              onCancel={handleModalClose}
+              centered
+            >
               <Antd.Form style={{ marginTop: "5%" }}>
-                <p>
-                  Nóminas totales generadas: {contadorNominasEmpleadosGeneradas}
-                </p>
+                {!cargandoInformacionNominasEmpleados && (
+                  <div>
+                    <Antd.Button
+                      onClick={() =>
+                        setAceptarBotonParaVerResultadosNominasEmpleados(true)
+                      }
+                    >
+                      {"Ver los resultados"}
+                    </Antd.Button>
+                  </div>
+                )}
               </Antd.Form>
-            </div>
-          </Antd.Modal>
-        );
+            </Antd.Modal>
+          );
+        } else if (aceptarBotonParaVerResultadosNominasEmpleados) {
+          return (
+            <Antd.Modal
+              title={`Resultados nóminas empleados generadas`}
+              open={showModalGenerate}
+              okText="Aceptar"
+              onOk={handleModalGenerateNominasEmpleadosOk}
+              cancelText="Cancelar"
+              cancelButtonProps={{ style: { display: "none" } }}
+              onCancel={handleModalClose}
+              centered
+            >
+              <div>
+                <Antd.Form style={{ marginTop: "5%" }}>
+                  <p>
+                    Nóminas totales generadas:{" "}
+                    {contadorNominasEmpleadosGeneradas}
+                  </p>
+                </Antd.Form>
+              </div>
+            </Antd.Modal>
+          );
+        }
       }
     }
 
     return (
       <div>
         <Header />
-        <h1>Nominas Empleados</h1>
+        <h1>Nóminas Empleados</h1>
         <h2>
-          <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
+          <Link href={"/menu-recursos-humanos"}>Menú Recursos humanos</Link>
         </h2>
         <Box
           sx={{
@@ -534,6 +584,18 @@ export default function NominasEmpleados() {
             },
             "& .textPrimary": {
               color: "text.primary",
+            },
+            "& .custom-header": {
+              backgroundColor: "#e0e7fa",
+              color: "#333",
+              fontWeight: "bold",
+              fontFamily: "fangsong",
+              borderBottom: "2px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #ccc",
+              borderRight: "1px solid #ccc",
             },
           }}
         >
@@ -571,7 +633,7 @@ export default function NominasEmpleados() {
     );
   };
 
-  if (backendOrDDBBConnectionError === true) {
+  if (backendOrDDBBConnectionError) {
     return (
       <div>
         <ServerConnectionError message={errorMessage} />

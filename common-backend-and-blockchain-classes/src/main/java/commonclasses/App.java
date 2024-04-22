@@ -2,6 +2,6 @@ package commonclasses;
 
 public class App {
     public static void main(String[] args) {
-        System.out.println("FUNCIONA!");
+        System.out.println("Compilado y ejecutado!!!!");
     }
 }

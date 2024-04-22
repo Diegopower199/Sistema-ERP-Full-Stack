@@ -40,19 +40,13 @@ public class BajaLaboralEmpleadoService {
             Map<String, Object> bajaLaboralEmpleadoMap = bajaLaboralEmpleado.toMap();
 
             bajaLaboralEmpleadoMap.put("persona",
-                    bajaLaboralEmpleado.getPersona() != null
-                            ? bajaLaboralEmpleado.getPersona().toMap()
-                            : null);
+                    bajaLaboralEmpleado.getPersona() != null ? bajaLaboralEmpleado.getPersona().toMap() : null);
 
             bajaLaboralEmpleadoMap.put("motivo_baja",
-                    bajaLaboralEmpleado.getMotivo_baja() != null
-                            ? bajaLaboralEmpleado.getMotivo_baja().toMap()
-                            : null);
+                    bajaLaboralEmpleado.getMotivo_baja() != null ? bajaLaboralEmpleado.getMotivo_baja().toMap() : null);
 
             bajaLaboralEmpleadoMap.put("tipo_estado",
-                    bajaLaboralEmpleado.getTipo_estado() != null
-                            ? bajaLaboralEmpleado.getTipo_estado().toMap()
-                            : null);
+                    bajaLaboralEmpleado.getTipo_estado() != null ? bajaLaboralEmpleado.getTipo_estado().toMap() : null);
 
             resultado.add(bajaLaboralEmpleadoMap);
         }
@@ -111,8 +105,7 @@ public class BajaLaboralEmpleadoService {
         Map<String, Object> solicitudMap = bajaLaboralEmpleadoEncontrado.toMap();
 
         solicitudMap.put("persona",
-                bajaLaboralEmpleadoEncontrado.getPersona() != null
-                        ? bajaLaboralEmpleadoEncontrado.getPersona().toMap()
+                bajaLaboralEmpleadoEncontrado.getPersona() != null ? bajaLaboralEmpleadoEncontrado.getPersona().toMap()
                         : null);
 
         solicitudMap.put("motivo_baja",

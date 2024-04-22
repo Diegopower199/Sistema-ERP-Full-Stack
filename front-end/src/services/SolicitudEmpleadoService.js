@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
 import { asignarNullSiCadenaVacia } from "@/utils/helpers";
+import { backendServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
 
 export const getAllSolicitudesEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "solicitudesEmpleados");
@@ -19,8 +20,7 @@ export const getAllSolicitudesEmpleados = async () => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -59,8 +59,7 @@ export const saveSolicitudEmpleado = async (data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -83,8 +82,7 @@ export const getSolicitudEmpleadoById = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -122,8 +120,7 @@ export const updateSolicitudEmpleado = async (id, data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -146,8 +143,7 @@ export const deleteSolicitudEmpleado = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }

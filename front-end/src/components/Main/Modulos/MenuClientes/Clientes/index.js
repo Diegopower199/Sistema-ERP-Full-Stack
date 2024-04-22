@@ -38,14 +38,7 @@ let errorHandlingInfo = {
 };
 
 export default function Clientes() {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser, permisosUser } = useAuth();
 
   const router = useRouter();
 
@@ -75,68 +68,90 @@ export default function Clientes() {
     {
       field: "id",
       headerName: "ID",
-      width: 85,
+      width: 120,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "nif",
       headerName: "NIF",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "nombre_apellidos",
       headerName: "Nombre y apellidos",
-      width: 180,
+      width: 230,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "razon_social",
-      headerName: "Razon social",
+      headerName: "Razón social",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "numero_telefono",
-      headerName: "Numero telefono",
-      width: 180,
+      headerName: "Número teléfono",
+      width: 210,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "correo_electronico",
-      headerName: "Correo electronico",
-      width: 180,
+      headerName: "Correo electrónico",
+      width: 220,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "direccion",
-      headerName: "Direccion",
-      width: 130,
+      headerName: "Dirección",
+      width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "codigo_postal",
-      headerName: "Codigo postal",
+      headerName: "Código postal",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "provincia",
       headerName: "Provincia",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "ciudad",
       headerName: "Ciudad",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "actions",
       type: "actions",
-      headerName: "Actions",
-      width: 100,
+      headerName: "Acciones",
+      width: 140,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -186,7 +201,7 @@ export default function Clientes() {
         setTableLoading(false);
         return false;
       }
-      
+
       const clientesMap = responseGetAllClientes.data.map((cliente) => {
         return {
           id: cliente.id_cliente,
@@ -392,7 +407,7 @@ export default function Clientes() {
         <Header />
         <h1>Clientes</h1>
         <h2>
-          <Link href={"/menu-clientes"}>Menu Clientes</Link>
+          <Link href={"/menu-clientes"}>Menú Clientes</Link>
         </h2>
         <Box
           sx={{
@@ -403,6 +418,18 @@ export default function Clientes() {
             },
             "& .textPrimary": {
               color: "text.primary",
+            },
+            "& .custom-header": {
+              backgroundColor: "#e0e7fa",
+              color: "#333",
+              fontWeight: "bold",
+              fontFamily: "fangsong",
+              borderBottom: "2px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #ccc",
+              borderRight: "1px solid #ccc",
             },
           }}
         >
@@ -438,7 +465,7 @@ export default function Clientes() {
     );
   };
 
-  if (backendOrDDBBConnectionError === true) {
+  if (backendOrDDBBConnectionError) {
     return (
       <div>
         <ServerConnectionError message={errorMessage} />

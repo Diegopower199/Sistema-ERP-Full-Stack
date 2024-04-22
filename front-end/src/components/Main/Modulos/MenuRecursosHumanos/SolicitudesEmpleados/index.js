@@ -43,14 +43,7 @@ let errorHandlingInfo = {
 };
 
 export default function SolicitudesEmpleados() {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser, permisosUser } = useAuth();
 
   const router = useRouter();
 
@@ -93,44 +86,58 @@ export default function SolicitudesEmpleados() {
     {
       field: "id",
       headerName: "ID",
-      width: 85,
+      width: 120,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_solicitud",
       headerName: "Fecha solicitud",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "observacion",
       headerName: "Observación",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "personaInfo",
-      headerName: "Info persona",
+      headerName: "Datos de la persona",
       width: 280,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tipo_solicitud",
       headerName: "Tipo solicitud",
-      width: 130,
+      width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tipo_estado",
       headerName: "Tipo estado",
-      width: 130,
+      width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "actions",
       type: "actions",
-      headerName: "Actions",
-      width: 100,
+      headerName: "Acciones",
+      width: 140,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -147,12 +154,16 @@ export default function SolicitudesEmpleados() {
             onClick={handleUpdateClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
+          ...(permisosUser && permisosUser.borrar_solicitudes
+            ? [
+                <GridActionsCellItem
+                  icon={<DeleteIcon />}
+                  label="Delete"
+                  onClick={handleDeleteClick(id)}
+                  color="inherit"
+                />,
+              ]
+            : []),
         ];
       },
     },
@@ -191,7 +202,6 @@ export default function SolicitudesEmpleados() {
         setTableLoading(false);
         return false;
       }
-
 
       const solicitudesEmpleadosMap =
         responseGetAllSolicitudesEmpleados.data.map((solicitudEmpleado) => {
@@ -479,7 +489,7 @@ export default function SolicitudesEmpleados() {
         <Header />
         <h1>Solicitudes Empleados</h1>
         <h2>
-          <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
+          <Link href={"/menu-recursos-humanos"}>Menú Recursos humanos</Link>
         </h2>
         <Box
           sx={{
@@ -491,6 +501,19 @@ export default function SolicitudesEmpleados() {
             "& .textPrimary": {
               color: "text.primary",
             },
+            "& .custom-header": {
+              backgroundColor: "#e0e7fa",
+              color: "#1a3e72",
+              fontWeight: "bold",
+              fontFamily: "fangsong",
+              borderBottom: "2px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-cell": {},
           }}
         >
           <Button
@@ -526,7 +549,7 @@ export default function SolicitudesEmpleados() {
     );
   };
 
-  if (backendOrDDBBConnectionError === true) {
+  if (backendOrDDBBConnectionError) {
     return (
       <div>
         <ServerConnectionError message={errorMessage} />

@@ -3,14 +3,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/context/UserContext";
 
 const PaginaInicio = () => {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser } = useAuth();
 
   const router = useRouter();
 

@@ -43,14 +43,7 @@ let errorHandlingInfo = {
 };
 
 export default function AsistenciasEmpleados() {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser, permisosUser } = useAuth();
 
   const router = useRouter();
 
@@ -94,50 +87,66 @@ export default function AsistenciasEmpleados() {
     {
       field: "id",
       headerName: "ID",
-      width: 85,
+      width: 120,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_asistencia",
       headerName: "Fecha asistencia",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hora_entrada",
       headerName: "Hora entrada",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hora_salida",
       headerName: "Hora salida",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "horas_trabajadas_dia",
-      headerName: "Horas trabajadas dia",
-      width: 180,
+      headerName: "Horas trabajadas",
+      width: 190,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "observacion",
-      headerName: "Observacion",
+      headerName: "Observación",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "personaInfo",
-      headerName: "Info persona",
+      headerName: "Datos de la persona",
       width: 280,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "actions",
       type: "actions",
-      headerName: "Actions",
-      width: 100,
+      headerName: "Acciones",
+      width: 140,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -154,12 +163,16 @@ export default function AsistenciasEmpleados() {
             onClick={handleUpdateClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
+          ...(permisosUser && permisosUser.borrar_asistencias
+            ? [
+                <GridActionsCellItem
+                  icon={<DeleteIcon />}
+                  label="Delete"
+                  onClick={handleDeleteClick(id)}
+                  color="inherit"
+                />,
+              ]
+            : []),
         ];
       },
     },
@@ -198,7 +211,7 @@ export default function AsistenciasEmpleados() {
         setTableLoading(false);
         return false;
       }
-      
+
       const asistenciasEmpleadosMap =
         responseGetAllAsistenciasEmpleados.data.map((asistenciaEmpleado) => {
           const { nombre, apellidos, dni } = asistenciaEmpleado.persona;
@@ -481,7 +494,7 @@ export default function AsistenciasEmpleados() {
         <Header />
         <h1>Asistencia Empleados</h1>
         <h2>
-          <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
+          <Link href={"/menu-recursos-humanos"}>Menú Recursos humanos</Link>
         </h2>
         <Box
           sx={{
@@ -492,6 +505,18 @@ export default function AsistenciasEmpleados() {
             },
             "& .textPrimary": {
               color: "text.primary",
+            },
+            "& .custom-header": {
+              backgroundColor: "#e0e7fa",
+              color: "#333",
+              fontWeight: "bold",
+              fontFamily: "fangsong",
+              borderBottom: "2px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #ccc",
+              borderRight: "1px solid #ccc",
             },
           }}
         >
@@ -528,7 +553,7 @@ export default function AsistenciasEmpleados() {
     );
   };
 
-  if (backendOrDDBBConnectionError === true) {
+  if (backendOrDDBBConnectionError) {
     return (
       <div>
         <ServerConnectionError message={errorMessage} />

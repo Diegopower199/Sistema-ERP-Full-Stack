@@ -1,5 +1,7 @@
 import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
+import { asignarNullSiCadenaVacia } from "@/utils/helpers";
+import { backendServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
 
 export const getAllBajasLaboralesEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
@@ -18,8 +20,7 @@ export const getAllBajasLaboralesEmpleados = async () => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -30,7 +31,20 @@ export const saveBajaLaboralEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
 
   try {
-    const formData = {};
+    const formData = {
+      fecha_inicio: data.fecha_inicio,
+      fecha_fin: data.fecha_fin,
+      observacion: asignarNullSiCadenaVacia(data.observacion),
+      persona: {
+        id_persona: parseInt(data.id_persona),
+      },
+      motivo_baja: {
+        id_motivo_baja: parseInt(data.id_motivo_baja),
+      },
+      tipo_estado: {
+        id_tipo_estado: parseInt(data.id_tipo_estado),
+      },
+    };
 
     const response = await axios.post(url + "save", formData);
     return {
@@ -45,8 +59,7 @@ export const saveBajaLaboralEmpleado = async (data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -69,8 +82,7 @@ export const getBajaLaboralEmpleadoById = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -81,7 +93,20 @@ export const updateBajaLaboralEmpleado = async (id, data) => {
   const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
 
   try {
-    const formData = {};
+    const formData = {
+      fecha_inicio: data.fecha_inicio,
+      fecha_fin: data.fecha_fin,
+      observacion: asignarNullSiCadenaVacia(data.observacion),
+      persona: {
+        id_persona: parseInt(data.id_persona),
+      },
+      motivo_baja: {
+        id_motivo_baja: parseInt(data.id_motivo_baja),
+      },
+      tipo_estado: {
+        id_tipo_estado: parseInt(data.id_tipo_estado),
+      },
+    };
 
     const response = await axios.put(url + "update/" + id, formData);
     return {
@@ -96,8 +121,7 @@ export const updateBajaLaboralEmpleado = async (id, data) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }
@@ -120,8 +144,7 @@ export const deleteBajaLaboralEmpleado = async (id) => {
       };
     } else {
       return {
-        errorMessage:
-          "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde",
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }

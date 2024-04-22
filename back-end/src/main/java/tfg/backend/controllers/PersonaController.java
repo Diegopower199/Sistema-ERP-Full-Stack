@@ -43,6 +43,18 @@ public class PersonaController {
         }
     }
 
+    // localhost:8080/personas/api/getAllEmpleadosAndBecarios
+    @GetMapping("/api/getAllEmpleadosAndBecarios")
+    public ResponseEntity<List<Map<String, Object>>> getAllEmpleadosAndBecarios() {
+        List<Map<String, Object>> allPersonas = personaService.getAllEmpleadosAndBecarios();
+
+        if (allPersonas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(allPersonas);
+        }
+    }
+
     // localhost:8080/personas/api/save
     @PostMapping("/api/save")
     public ResponseEntity<Map<String, Object>> save(@RequestBody PersonaModel personaRequest) {

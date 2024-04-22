@@ -37,7 +37,6 @@ public class TipoEstadoController {
         List<Map<String, Object>> allTiposEstados = tipoEstadoService.getAllTiposEstados();
 
         if (allTiposEstados.isEmpty()) {
-            System.out.println("NO HAY NADA");
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(allTiposEstados);

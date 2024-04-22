@@ -39,18 +39,14 @@ public class SolicitudEmpleadoService {
             Map<String, Object> solicitudEmpleadoMap = solicitudEmpleado.toMap();
 
             solicitudEmpleadoMap.put("persona",
-                    solicitudEmpleado.getPersona() != null ? solicitudEmpleado.getPersona().toMap()
-                            : null);
+                    solicitudEmpleado.getPersona() != null ? solicitudEmpleado.getPersona().toMap() : null);
 
             solicitudEmpleadoMap.put("tipo_solicitud",
-                    solicitudEmpleado.getTipo_solicitud() != null
-                            ? solicitudEmpleado.getTipo_solicitud().toMap()
+                    solicitudEmpleado.getTipo_solicitud() != null ? solicitudEmpleado.getTipo_solicitud().toMap()
                             : null);
 
             solicitudEmpleadoMap.put("tipo_estado",
-                    solicitudEmpleado.getTipo_estado() != null
-                            ? solicitudEmpleado.getTipo_estado().toMap()
-                            : null);
+                    solicitudEmpleado.getTipo_estado() != null ? solicitudEmpleado.getTipo_estado().toMap() : null);
 
             resultado.add(solicitudEmpleadoMap);
         }
@@ -96,7 +92,8 @@ public class SolicitudEmpleadoService {
         if (solicitudEmpleadoRepository.existsByPersonaAndFecha_solicitud(personaEncontrado,
                 nuevoSolicitudEmpleado.getFecha_solicitud())) {
             throw new RuntimeException(
-                    "La persona con id " + personaEncontrado.getId_persona()
+                    "La persona " + personaEncontrado.getNombre() + " " + personaEncontrado.getApellidos()
+                            + " con dni " + personaEncontrado.getDni()
                             + " ya tiene una solicitud en esta fecha");
         }
 
@@ -114,18 +111,14 @@ public class SolicitudEmpleadoService {
         Map<String, Object> solicitudMap = solicitudEncontrado.toMap();
 
         solicitudMap.put("persona",
-                solicitudEncontrado.getPersona() != null ? solicitudEncontrado.getPersona().toMap()
-                        : null);
+                solicitudEncontrado.getPersona() != null ? solicitudEncontrado.getPersona().toMap() : null);
 
         solicitudMap.put("tipo_solicitud",
-                solicitudEncontrado.getTipo_solicitud() != null
-                        ? solicitudEncontrado.getTipo_solicitud().toMap()
+                solicitudEncontrado.getTipo_solicitud() != null ? solicitudEncontrado.getTipo_solicitud().toMap()
                         : null);
 
         solicitudMap.put("tipo_estado",
-                solicitudEncontrado.getTipo_estado() != null
-                        ? solicitudEncontrado.getTipo_estado().toMap()
-                        : null);
+                solicitudEncontrado.getTipo_estado() != null ? solicitudEncontrado.getTipo_estado().toMap() : null);
 
         return solicitudMap;
     }
@@ -160,7 +153,8 @@ public class SolicitudEmpleadoService {
             if (solicitudEmpleadoRepository.existsByPersonaAndFecha_solicitud(personaEncontrado,
                     cambiosSolicitudEmpleado.getFecha_solicitud())) {
                 throw new RuntimeException(
-                        "La persona con id " + personaEncontrado.getId_persona()
+                        "La persona " + personaEncontrado.getNombre() + " " + personaEncontrado.getApellidos()
+                                + " con dni " + personaEncontrado.getDni()
                                 + " ya tiene una solicitud en esta fecha");
             }
             solicitudEmpleadoExistente.setFecha_solicitud(cambiosSolicitudEmpleado.getFecha_solicitud());

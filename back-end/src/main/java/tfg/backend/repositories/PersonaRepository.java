@@ -16,6 +16,9 @@ public interface PersonaRepository extends JpaRepository<PersonaModel, Integer> 
     @Query("SELECT c FROM PersonaModel c ORDER BY c.id_persona")
     List<PersonaModel> findAllOrderedById();
 
+    @Query("SELECT c FROM PersonaModel c  WHERE c.tipo_persona.id_tipo_persona = 1 OR c.tipo_persona.id_tipo_persona = 3 ORDER BY c.id_persona")
+    List<PersonaModel> findAllTipoPersonaEmpleadosAndBecariosOrderedById();
+
     @Query("SELECT c FROM PersonaModel c WHERE c.dni = :dni")
     Optional<PersonaModel> findByDni(@Param("dni") String dni);
 

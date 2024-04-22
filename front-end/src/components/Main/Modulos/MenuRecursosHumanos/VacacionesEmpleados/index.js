@@ -45,14 +45,7 @@ let errorHandlingInfo = {
 };
 
 export default function VacacionesEmpleados() {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
+  const { authUser, permisosUser } = useAuth();
 
   const router = useRouter();
 
@@ -101,7 +94,7 @@ export default function VacacionesEmpleados() {
     {
       field: "id",
       headerName: "ID",
-      width: 85,
+      width: 120,
       headerClassName: "custom-header",
       headerAlign: "center",
       editable: false,
@@ -124,39 +117,39 @@ export default function VacacionesEmpleados() {
     },
     {
       field: "dias_disponibles",
-      headerName: "Dias disponibles",
-      width: 180,
+      headerName: "Días disponibles",
+      width: 190,
       headerClassName: "custom-header",
       headerAlign: "center",
       editable: false,
     },
     {
       field: "dias_pendientes",
-      headerName: "Dias pendientes",
-      width: 180,
+      headerName: "Días pendientes",
+      width: 190,
       headerClassName: "custom-header",
       headerAlign: "center",
       editable: false,
     },
     {
       field: "dias_solicitados",
-      headerName: "Dias solicitados",
-      width: 180,
+      headerName: "Días solicitados",
+      width: 190,
       headerClassName: "custom-header",
       headerAlign: "center",
       editable: false,
     },
     {
       field: "dias_disfrutados",
-      headerName: "Dias disfrutados",
-      width: 130,
+      headerName: "Días disfrutados",
+      width: 190,
       headerClassName: "custom-header",
       headerAlign: "center",
       editable: false,
     },
     {
       field: "observacion",
-      headerName: "Observacion",
+      headerName: "Observación",
       width: 180,
       headerClassName: "custom-header",
       headerAlign: "center",
@@ -164,7 +157,7 @@ export default function VacacionesEmpleados() {
     },
     {
       field: "personaInfo",
-      headerName: "Info persona",
+      headerName: "Datos de la persona",
       width: 280,
       headerClassName: "custom-header",
       headerAlign: "center",
@@ -181,8 +174,8 @@ export default function VacacionesEmpleados() {
     {
       field: "actions",
       type: "actions",
-      headerName: "Actions",
-      width: 100,
+      headerName: "Acciones",
+      width: 140,
       headerClassName: "custom-header",
       headerAlign: "center",
       cellClassName: "actions",
@@ -201,12 +194,16 @@ export default function VacacionesEmpleados() {
             onClick={handleUpdateClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
+          ...(permisosUser && permisosUser.borrar_vacaciones
+            ? [
+                <GridActionsCellItem
+                  icon={<DeleteIcon />}
+                  label="Delete"
+                  onClick={handleDeleteClick(id)}
+                  color="inherit"
+                />,
+              ]
+            : []),
         ];
       },
     },
@@ -245,7 +242,6 @@ export default function VacacionesEmpleados() {
         setTableLoading(false);
         return false;
       }
-
 
       const vacacionesEmpleadosMap = responseGetAllVacacionesEmpleados.data.map(
         (vacacionEmpleado) => {
@@ -528,7 +524,7 @@ export default function VacacionesEmpleados() {
     function deleteModal() {
       return (
         <Antd.Modal
-          title={`¿Desea eliminar las vacaciones asociadas a la persona con DNI ${dniPersonaVacacionEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
+          title={`¿Desea eliminar las vacaciones asociadas a la persona con dni ${dniPersonaVacacionEmpleadoSelected} que estan programadas desde el ${fechaInicioAndFinVacacionEmpleadoSelected[0]} hasta el ${fechaInicioAndFinVacacionEmpleadoSelected[1]}?`}
           open={showDelete}
           okText="Aceptar"
           onOk={handleModalOk}
@@ -536,7 +532,7 @@ export default function VacacionesEmpleados() {
           onCancel={handleModalClose}
           centered
         >
-          {errorMessage.length !== 0 && backendError === true && (
+          {errorMessage.length !== 0 && backendError && (
             <div>
               <p className={styles.BackendError}>
                 <ErrorIcon fontSize="medium" color="red" />
@@ -553,7 +549,7 @@ export default function VacacionesEmpleados() {
         <Header />
         <h1>Vacaciones Empleados</h1>
         <h2>
-          <Link href={"/menu-recursos-humanos"}>Menu Recursos humanos</Link>
+          <Link href={"/menu-recursos-humanos"}>Menú Recursos humanos</Link>
         </h2>
         <Box
           sx={{
@@ -569,6 +565,7 @@ export default function VacacionesEmpleados() {
               backgroundColor: "#e0e7fa",
               color: "#333",
               fontWeight: "bold",
+              fontFamily: "fangsong",
               borderBottom: "2px solid #ccc",
               borderRight: "1px solid #ccc",
             },
@@ -591,7 +588,7 @@ export default function VacacionesEmpleados() {
               startIcon={<AddIcon />}
               onClick={handleCreateClick}
             >
-              Añadir vacacion empleado
+              Añadir vacación empleado
             </Button>
 
             <Button
@@ -632,7 +629,7 @@ export default function VacacionesEmpleados() {
     );
   };
 
-  if (backendOrDDBBConnectionError === true) {
+  if (backendOrDDBBConnectionError) {
     return (
       <div>
         <ServerConnectionError message={errorMessage} />

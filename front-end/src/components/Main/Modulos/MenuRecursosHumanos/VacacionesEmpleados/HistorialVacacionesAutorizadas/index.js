@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useAuth } from "@/context/UserContext";
 import Box from "@mui/material/Box";
 import {
   DataGrid,
@@ -23,8 +21,6 @@ import {
 } from "@/services/BlockchainVacacionAutorizadaService";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
-import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
-import ErrorIcon from "@mui/icons-material/Error";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 
 let errorHandlingInfo = {
@@ -38,20 +34,8 @@ export default function HistorialVacacionesAutorizadas({
   toggleView,
   cancelOrExitClickTrigger,
 }) {
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    permisosUser,
-    setPermisosUser,
-  } = useAuth();
-
-  const router = useRouter();
-
   const [tableLoading, setTableLoading] = useState(true);
 
-  const [backendError, setBackendError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [backendOrDDBBConnectionError, setBackendOrDDBBConnectionError] =
     useState(false);
@@ -67,87 +51,108 @@ export default function HistorialVacacionesAutorizadas({
     {
       field: "id",
       headerName: "ID",
-      width: 85,
+      width: 120,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_inicio",
       headerName: "Fecha inicio",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "fecha_fin",
       headerName: "Fecha fin",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "dias_disponibles",
-      headerName: "Dias disponibles",
-      width: 180,
+      headerName: "Días disponibles",
+      width: 190,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "dias_pendientes",
-      headerName: "Dias pendientes",
-      width: 180,
+      headerName: "Días pendientes",
+      width: 190,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "dias_solicitados",
-      headerName: "Dias solicitados",
-      width: 180,
+      headerName: "Días solicitados",
+      width: 190,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "dias_disfrutados",
-      headerName: "Dias disfrutados",
-      width: 130,
+      headerName: "Días disfrutados",
+      width: 190,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "observacion",
-      headerName: "Observacion",
+      headerName: "Observación",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "dni",
       headerName: "Dni persona",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "tipo_estado",
       headerName: "Tipo estado",
       width: 180,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hashTransaccionVacacion",
-      headerName: "Hash transaccion vacacion",
+      headerName: "Hash transacción vacación",
       width: 580,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "hashBlock",
       headerName: "Hash block",
       width: 580,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
     {
       field: "previousHashBlock",
       headerName: "Previous hash block",
       width: 580,
+      headerClassName: "custom-header",
+      headerAlign: "center",
       editable: false,
     },
   ];
-
-  function handleBackendError(errorMessage) {
-    setBackendError(true);
-    setErrorMessage(errorMessage);
-  }
 
   function handleBackendAndDBConnectionError(errorMessage) {
     setBackendOrDDBBConnectionError(true);
@@ -253,13 +258,30 @@ export default function HistorialVacacionesAutorizadas({
     };
 
   useEffect(() => {
-    if (!authUser) {
-      router.push("/login");
-    } else {
-      fetchCheckVacacionesAutorizadasAndHandleErrors();
-      fetchGetAllTransaccionesVacacionesAutorizadasAndHandleErrors();
-    }
-  }, [authUser]);
+    let noCallErrorsDetected = false;
+
+    const fetchData = async () => {
+      try {
+        noCallErrorsDetected =
+          await fetchCheckVacacionesAutorizadasAndHandleErrors();
+
+        if (!noCallErrorsDetected) {
+          return;
+        }
+
+        noCallErrorsDetected =
+          await fetchGetAllTransaccionesVacacionesAutorizadasAndHandleErrors();
+
+        if (!noCallErrorsDetected) {
+          return;
+        }
+      } catch (error) {
+        console.error("Ha ocurrido algo inesperado", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const getJson = (apiRef) => {
     // Select rows and columns
@@ -395,6 +417,18 @@ export default function HistorialVacacionesAutorizadas({
             "& .textPrimary": {
               color: "text.primary",
             },
+            "& .custom-header": {
+              backgroundColor: "#e0e7fa",
+              color: "#333",
+              fontWeight: "bold",
+              fontFamily: "fangsong",
+              borderBottom: "2px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #ccc",
+              borderRight: "1px solid #ccc",
+            },
           }}
         >
           <DataGrid
@@ -433,8 +467,7 @@ export default function HistorialVacacionesAutorizadas({
           Salir
         </Antd.Button>
 
-        {errorMessage.length !== 0 &&
-        (backendError || backendOrDDBBConnectionError)
+        {errorMessage.length !== 0 && backendOrDDBBConnectionError
           ? renderErrorMessage()
           : renderMainContent()}
         <Footer />

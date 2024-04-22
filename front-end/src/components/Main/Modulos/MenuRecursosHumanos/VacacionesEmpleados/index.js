@@ -569,11 +569,18 @@ export default function VacacionesEmpleados() {
               borderBottom: "2px solid #ccc",
               borderRight: "1px solid #ccc",
             },
-            "& .highlighted-row": {
+            "& .highlighted-rowErrorBlockchainRow": {
               backgroundColor: "#ffcccc",
               transition: "background-color 0.3s",
               "&:hover": {
                 backgroundColor: "#ffa8a8",
+              },
+            },
+            "& .highlighted-rowNoErrorBlockchainRow": {
+              backgroundColor: "#4CAF50",
+              transition: "background-color 0.3s",
+              "&:hover": {
+                backgroundColor: "#4CAF50",
               },
             },
             "& .MuiDataGrid-row": {
@@ -615,7 +622,19 @@ export default function VacacionesEmpleados() {
               setRowSelectionModel(newRowSelectionModel);
             }}
             getRowClassName={(params) => {
-              return params.row.error_blockchain ? "highlighted-row" : "";
+              if (
+                params.row.gestionado_con_blockchain &&
+                !params.row.error_blockchain
+              ) {
+                return "highlighted-rowNoErrorBlockchainRow";
+              } else if (
+                params.row.gestionado_con_blockchain &&
+                params.row.error_blockchain
+              ) {
+                return "highlighted-rowErrorBlockchainRow";
+              } else {
+                return "";
+              }
             }}
             rowSelectionModel={rowSelectionModel}
             slots={{

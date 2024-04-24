@@ -4,8 +4,10 @@ import { backendServerDownErrorMessageContent } from "@/utils/differentContentSe
 
 export const getAllNominasEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "nominasEmpleados");
+
   try {
     const response = await axios.get(url + "getAll");
+
     return {
       data: response.data,
       status: response.status,
@@ -54,6 +56,7 @@ export const saveNominaEmpleado = async (data) => {
 
 export const generateNominasEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "nominasEmpleados");
+
   try {
     const response = await axios.post(url + "generate");
 
@@ -78,8 +81,10 @@ export const generateNominasEmpleados = async () => {
 
 export const getNominaEmpleadoById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "nominasEmpleados");
+
   try {
     const response = await axios.get(url + "getById/" + id);
+
     return {
       data: response.data,
       status: response.status,
@@ -106,6 +111,7 @@ export const updateNominaEmpleado = async (id, data) => {
     const formData = {};
 
     const response = await axios.put(url + "update/" + id, formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -127,8 +133,10 @@ export const updateNominaEmpleado = async (id, data) => {
 
 export const deleteNominaEmpleado = async (id) => {
   const url = API_URL_BACK_END.replace("#", "nominasEmpleados");
+
   try {
     const response = await axios.delete(url + "delete/" + id);
+
     return {
       data: response.data,
       status: response.status,

@@ -8,6 +8,7 @@ export const getAllSolicitudesEmpleados = async () => {
 
   try {
     const response = await axios.get(url + "getAll");
+
     return {
       data: response.data,
       status: response.status,
@@ -68,8 +69,10 @@ export const saveSolicitudEmpleado = async (data) => {
 
 export const getSolicitudEmpleadoById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "solicitudesEmpleados");
+
   try {
     const response = await axios.get(url + "getById/" + id);
+
     return {
       data: response.data,
       status: response.status,
@@ -108,6 +111,7 @@ export const updateSolicitudEmpleado = async (id, data) => {
     };
 
     const response = await axios.put(url + "update/" + id, formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -129,8 +133,10 @@ export const updateSolicitudEmpleado = async (id, data) => {
 
 export const deleteSolicitudEmpleado = async (id) => {
   const url = API_URL_BACK_END.replace("#", "solicitudesEmpleados");
+
   try {
     const response = await axios.delete(url + "delete/" + id);
+
     return {
       data: response.data,
       status: response.status,

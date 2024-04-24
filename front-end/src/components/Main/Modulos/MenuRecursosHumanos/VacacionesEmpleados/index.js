@@ -334,13 +334,17 @@ export default function VacacionesEmpleados() {
   };
 
   const handleUpdateClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleUpdateVacacionEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
     setIdVacacionEmpleadoSelected(id);
@@ -353,7 +357,9 @@ export default function VacacionesEmpleados() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleViewUniqueVacacionEmpleadoForm();
   };

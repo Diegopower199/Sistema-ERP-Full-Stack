@@ -4,8 +4,10 @@ import { backendServerDownErrorMessageContent } from "@/utils/differentContentSe
 
 export const getAllUsuarios = async () => {
   const url = API_URL_BACK_END.replace("#", "usuarios");
+
   try {
     const response = await axios.get(url + "getAll");
+
     return {
       data: response.data,
       status: response.status,
@@ -63,6 +65,7 @@ export const saveUsuario = async (data) => {
 
 export const getUsuarioById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "usuarios");
+
   try {
     const response = await axios.get(url + "getById/" + id);
 
@@ -101,6 +104,7 @@ export const updateUsuario = async (id, data) => {
     };
 
     const response = await axios.put(url + "update/" + id, formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -122,6 +126,7 @@ export const updateUsuario = async (id, data) => {
 
 export const deleteUsuario = async (id) => {
   const url = API_URL_BACK_END.replace("#", "usuarios");
+
   try {
     const response = await axios.delete(url + "delete/" + id);
 
@@ -177,6 +182,7 @@ export const authenticateUser = async (nombre_usuario, password) => {
 
 export const updatePassword = async (data) => {
   const url = API_URL_BACK_END.replace("#", "usuarios");
+
   try {
     const formData = {
       correo_electronico: data.correo_electronico,
@@ -184,6 +190,7 @@ export const updatePassword = async (data) => {
     };
 
     const response = await axios.put(url + "updatePassword", formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -198,6 +205,7 @@ export const updatePassword = async (data) => {
 
 export const getUsuarioByNombreUsuario = async (nombre_usuario) => {
   const url = API_URL_BACK_END.replace("#", "usuarios");
+
   try {
     const response = await axios.get(
       url + "getByNombreUsuario/" + nombre_usuario

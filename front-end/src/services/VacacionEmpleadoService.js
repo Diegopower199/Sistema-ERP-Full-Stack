@@ -8,6 +8,7 @@ export const getAllVacacionesEmpleados = async () => {
 
   try {
     const response = await axios.get(url + "getAll");
+
     return {
       data: response.data,
       status: response.status,
@@ -66,8 +67,10 @@ export const saveVacacionEmpleado = async (data) => {
 
 export const getVacacionEmpleadoById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
+
   try {
     const response = await axios.get(url + "getById/" + id);
+
     return {
       data: response.data,
       status: response.status,
@@ -88,7 +91,6 @@ export const getVacacionEmpleadoById = async (id) => {
 };
 
 export const updateVacacionEmpleado = async (id, data) => {
-  // Los dias los calculo en el back, si los rechazo se devuelven los datos anteriores
   const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
 
   try {
@@ -105,6 +107,7 @@ export const updateVacacionEmpleado = async (id, data) => {
     };
 
     const response = await axios.put(url + "update/" + id, formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -126,8 +129,10 @@ export const updateVacacionEmpleado = async (id, data) => {
 
 export const deleteVacacionEmpleado = async (id) => {
   const url = API_URL_BACK_END.replace("#", "vacacionesEmpleados");
+
   try {
     const response = await axios.delete(url + "delete/" + id);
+
     return {
       data: response.data,
       status: response.status,

@@ -190,8 +190,9 @@ export default function BajasLaboralesEmpleados() {
   }
 
   const fetchGetAllBajasLaboralesEmpleados = async () => {
+    setTableLoading(true);
+
     try {
-      setTableLoading(true);
       const responseGetAllBajasLaboralesEmpleados =
         await getAllBajasLaboralesEmpleados();
 
@@ -292,13 +293,18 @@ export default function BajasLaboralesEmpleados() {
   };
 
   const handleUpdateClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
+
     setRowSelected(filaSeleccionada);
     toggleUpdateBajaLaboralEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
 
     const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
@@ -312,7 +318,9 @@ export default function BajasLaboralesEmpleados() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleViewUniqueBajaLaboralEmpleadoForm();
   };

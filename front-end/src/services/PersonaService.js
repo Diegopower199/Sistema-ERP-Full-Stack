@@ -4,8 +4,10 @@ import { backendServerDownErrorMessageContent } from "@/utils/differentContentSe
 
 export const getAllPersonas = async () => {
   const url = API_URL_BACK_END.replace("#", "personas");
+
   try {
     const response = await axios.get(url + "getAll");
+
     return {
       data: response.data,
       status: response.status,
@@ -27,8 +29,10 @@ export const getAllPersonas = async () => {
 
 export const getAllPersonasEmpleadosAndBecarios = async () => {
   const url = API_URL_BACK_END.replace("#", "personas");
+
   try {
     const response = await axios.get(url + "getAllEmpleadosAndBecarios");
+
     return {
       data: response.data,
       status: response.status,
@@ -90,8 +94,10 @@ export const savePersona = async (data) => {
 
 export const getPersonaById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "personas");
+
   try {
     const response = await axios.get(url + "getById/" + id);
+
     return {
       data: response.data,
       status: response.status,
@@ -131,6 +137,7 @@ export const updatePersona = async (id, data) => {
     };
 
     const response = await axios.put(url + "update/" + id, formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -152,8 +159,10 @@ export const updatePersona = async (id, data) => {
 
 export const deletePersona = async (id) => {
   const url = API_URL_BACK_END.replace("#", "personas");
+
   try {
     const response = await axios.delete(url + "delete/" + id);
+
     return {
       data: response.data,
       status: response.status,
@@ -175,6 +184,7 @@ export const deletePersona = async (id) => {
 
 export const existsCorreoElectronico = async (correo_electronico) => {
   const url = API_URL_BACK_END.replace("#", "personas");
+
   try {
     const response = await axios.post(
       url + "getExistsCorreoElectronico/" + correo_electronico

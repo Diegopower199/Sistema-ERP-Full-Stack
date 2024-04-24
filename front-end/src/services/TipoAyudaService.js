@@ -3,9 +3,9 @@ import { API_URL_BACK_END } from "@/utils/constants";
 import { backendServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
 
 export const getAllTiposAyudas = async () => {
-  try {
-    const url = API_URL_BACK_END.replace("#", "tiposAyudas");
+  const url = API_URL_BACK_END.replace("#", "tiposAyudas");
 
+  try {
     const response = await axios.get(url + "getAll");
 
     if (response.status === 204) {

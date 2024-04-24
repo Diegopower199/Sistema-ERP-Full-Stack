@@ -168,7 +168,8 @@ export default function FormClientes({
     }
 
     if (!formData.correo_electronico.match(REGEX_EMAIL)) {
-      errorForm.correo_electronico = "Por favor, ingresa un correo electrónico válido";
+      errorForm.correo_electronico =
+        "Por favor, ingresa un correo electrónico válido";
     }
 
     setFormErrors(errorForm);
@@ -185,7 +186,7 @@ export default function FormClientes({
   };
 
   const handleFormChange = (event) => {
-    const { name, value, type, checked } = event.target;
+    const { name, value } = event.target;
     if (name === "numero_telefono") {
       const nuevoValor = value.startsWith("34") ? value : "34" + value;
 
@@ -197,7 +198,7 @@ export default function FormClientes({
       setFormData((prevDataState) => {
         return {
           ...prevDataState,
-          [name]: type === "checkbox" ? checked : value,
+          [name]: value,
         };
       });
     }

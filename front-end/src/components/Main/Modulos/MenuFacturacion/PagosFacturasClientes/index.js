@@ -145,8 +145,9 @@ export default function PagosFacturasClientes() {
   }
 
   const fetchGetAllPagosFacturasClientesAndHandleErrors = async () => {
+    setTableLoading(true);
+
     try {
-      setTableLoading(true);
       const responseGetAllPagosFacturasClientes =
         await getAllPagosFacturasClientes();
 
@@ -230,13 +231,17 @@ export default function PagosFacturasClientes() {
   };
 
   const handleUpdateClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleUpdatePagoFacturaClienteForm();
   };
 
   const handleViewUniqueClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleViewUniquePagoFacturaClienteForm();
   };

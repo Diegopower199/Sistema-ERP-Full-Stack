@@ -4,6 +4,7 @@ import { backendServerDownErrorMessageContent } from "@/utils/differentContentSe
 
 export const getAllTiposSolicitudes = async () => {
   const url = API_URL_BACK_END.replace("#", "tiposSolicitudes");
+
   try {
     const response = await axios.get(url + "getAll");
 
@@ -33,7 +34,7 @@ export const getAllTiposSolicitudes = async () => {
       };
     } else {
       return {
-        errorMessage:backendServerDownErrorMessageContent,
+        errorMessage: backendServerDownErrorMessageContent,
         status: 500,
       };
     }

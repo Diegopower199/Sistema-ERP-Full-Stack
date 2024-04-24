@@ -1,5 +1,6 @@
 package tfg.backend.services;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -115,6 +116,7 @@ public class FacturaClienteService {
                 .findByTipoEstadoFacturaIdOrderByPedidoClienteId(tipoEstadoPendienteFacturar);
 
         LocalDate fechaActual = LocalDate.now();
+        DecimalFormat df = new DecimalFormat("#.##");
 
         for (PedidoClienteModel pedidoCliente : listaPedidosClientesParaFacturar) {
             FacturaClienteModel newFacturaClienteFacturado = new FacturaClienteModel();
@@ -137,10 +139,17 @@ public class FacturaClienteService {
             newFacturaClienteFacturado.setTarifa_hora_servicio((double) (GlobalConstants.TARIFA_HORA_SERVICIO));
 
             double subtotalFactura = (tarifaTotalDesplazamiento + tarifaTotalServicio);
+            String subtotalFacturaFormateado = df.format(subtotalFactura);
+            subtotalFacturaFormateado = subtotalFacturaFormateado.replace(',', '.');
+            subtotalFactura = Double.parseDouble(subtotalFacturaFormateado);
 
             newFacturaClienteFacturado.setSubtotal_factura_sin_iva(subtotalFactura);
             newFacturaClienteFacturado.setIva((double) (GlobalConstants.IVA));
             double calculoTotalFactura = subtotalFactura + (subtotalFactura * ((double) (GlobalConstants.IVA) / 100));
+            String totalFacturaFormateado = df.format(calculoTotalFactura);
+            totalFacturaFormateado = totalFacturaFormateado.replace(',', '.');
+
+            calculoTotalFactura = Double.parseDouble(totalFacturaFormateado);
 
             newFacturaClienteFacturado.setTotal_factura(calculoTotalFactura);
 

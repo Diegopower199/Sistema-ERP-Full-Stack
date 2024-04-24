@@ -4,6 +4,7 @@ import { backendServerDownErrorMessageContent } from "@/utils/differentContentSe
 
 export const getAllTiposUsuarios = async () => {
   const url = API_URL_BACK_END.replace("#", "tiposUsuarios");
+
   try {
     const response = await axios.get(url + "getAll");
 
@@ -42,6 +43,7 @@ export const getAllTiposUsuarios = async () => {
 
 export const getTipoUsuarioById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "tiposUsuarios");
+
   try {
     const response = await axios.get(url + "getById/" + id);
 

@@ -898,19 +898,121 @@ INSERT INTO `trabajotfgerp`.`clientes` (`ciudad`, `codigo_postal`, `correo_elect
 INSERT INTO `trabajotfgerp`.`clientes` (`ciudad`, `codigo_postal`, `correo_electronico`, `direccion`, `nif`, `nombre_apellidos`, `numero_telefono`, `provincia`, `razon_social`) VALUES ('Sevilla', '41006', 'soporte@infrawave-iberica.es', 'Avenida de la Palmera 567', 'T9876543U', null, '34681234570', 'Sevilla', 'InfraWave Microsystems Ibérica');
 
 
--- ========================================
+
+--- ========================================
 --  Pedidos clientes
 -- ========================================
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('hola', 'aaaa', '2024-01-01', '2024-01-10', '2023-12-27', '11:00:00', '11:30:00', '10:00:00', '10:10:00', 'prueba', '1:00:00', '0:30:00', '1', '1', '1', '1');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('hola', 'aaaa', '2024-01-01', '2024-01-10', '2023-12-27', '11:00:00', '11:30:00', '10:00:00', '10:10:00', 'prueba', '1:00:00', '0:30:00', '1', '1', '1', '1');
+-- Cliente 1
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Actualización de software', 'Calle Gran Vía 123', '2024-02-28', DATE_ADD('2024-02-28', INTERVAL 3 DAY), '2024-02-25', '12:00:00.000000', '11:00:00.000000', '09:00:00.000000', '09:30:00.000000', NULL, '01:30:00.000000', '01:30:00.000000', 1, 2, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Diagnóstico de fallo', 'Calle Gran Vía 123', NULL, NULL, '2024-01-08', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 2, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de disco duro', 'Calle Gran Vía 123', NULL, NULL, '2024-04-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 2, 3, 3);
+
+-- Cliente 2
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de portátil', 'Calle Gran Vía 123', '2024-01-22', DATE_ADD('2024-01-22', INTERVAL 3 DAY), '2024-01-21', '13:00:00.000000', '12:30:00.000000', '9:00:00.000000', '10:00:00.000000', NULL, '01:30:00.000000', '02:30:00.000000', 2, 3, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reinstalación de Windows', 'Calle Gran Vía 123', NULL, NULL, '2024-01-12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 3, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle Gran Vía 123', NULL, NULL, '2024-01-16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 3, 3, 3);
+
+-- Cliente 3
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de disco duro', 'Calle Alcalá 456', '2024-01-14', DATE_ADD('2024-01-14', INTERVAL 3 DAY), '2024-01-11', '14:00:00.000000', '13:15:00.000000', '11:30:00.000000', '12:30:00.000000', NULL, '01:45:00.000000', '00:45:00.000000', 3, 4, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Actualización de hardware', 'Calle Alcalá 456', NULL, NULL, '2024-02-14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, 4, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Diagnóstico de hardware', 'Calle Alcalá 456', NULL, NULL, '2024-01-18', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, 4, 3, 3);
+
+-- Cliente 4
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle Princesa 789', '2024-03-10', DATE_ADD('2024-03-10', INTERVAL 3 DAY), '2024-03-08', '15:10:00.000000', '14:30:00.000000', '13:00:00.000000', '13:30:00.000000', NULL, '01:10:00.000000', '01:00:00.000000', 4, 5, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de impresora', 'Calle Princesa 789', NULL, NULL, '2024-02-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, 5, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de red', 'Calle Princesa 789', NULL, NULL, '2024-01-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, 5, 3, 3);
+
+-- Cliente 8
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de portátil', 'Calle del Mar 404', '2024-02-05', DATE_ADD('2024-02-05', INTERVAL 3 DAY), '2024-02-02', '12:00:00.000000', '11:00:00.000000', '10:00:00.000000', '10:30:00.000000', NULL, '01:30:00.000000', '00:30:00.000000', 8, 6, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Actualización de software', 'Calle del Mar 404', NULL, NULL, '2024-02-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 8, 6, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Diagnóstico de fallo', 'Calle del Mar 404', NULL, NULL, '2024-02-08', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 8, 6, 3, 3);
+
+-- Cliente 9
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de ordenador', 'Calle de la Plata 505', '2024-01-25', DATE_ADD('2024-01-25', INTERVAL 3 DAY), '2024-01-05', '12:00:00.000000', '11:00:00.000000', '09:00:00.000000', '09:30:00.000000', NULL, '01:30:00.000000', '01:30:00.000000', 9, 6, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle de la Plata 505', NULL, NULL, '2024-01-28', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 9, 6, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de red', 'Calle de la Plata 505', NULL, NULL, '2024-02-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 9, 6, 3, 3);
+
+-- Cliente 10
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de impresora', 'Calle Mayor 606', '2024-03-05', DATE_ADD('2024-03-05', INTERVAL 5 DAY), '2024-03-01', '11:00:00.000000', '10:15:00.000000', '08:30:00.000000', '09:00:00.000000', NULL, '01:15:00.000000', '01:15:00.000000', 10, 7, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Diagnóstico de fallo', 'Calle Mayor 606', NULL, NULL, '2024-03-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10, 7, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle Mayor 606', NULL, NULL, '2024-02-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10, 7, 3, 3);
+
+
+-- Cliente 11
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de equipos', 'Calle Gran Vía 123', '2024-01-25', DATE_ADD('2024-01-25', INTERVAL 0 DAY), '2024-01-22', '11:30:00.000000', '10:55:00.000000', '09:00:00.000000', '10:00:00.000000', NULL, '01:35:00.000000', '00:55:00.000000', 11, 7, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle Gran Vía 123', NULL, NULL, '2024-02-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 11, 7, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Actualización de equipos', 'Calle Gran Vía 123', NULL, NULL, '2024-02-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 11, 7, 3, 3);
+
+-- Cliente 12
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de sistemas', 'Avenida de la Constitución 456', '2024-03-16', DATE_ADD('2024-03-16', INTERVAL 3 DAY), '2024-03-15', '11:25:00.000000', '11:00:00.000000', '10:00:00.000000', '10:10:00.000000', NULL, '00:35:00.000000', '00:50:00.000000', 12, 8, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Avenida de la Constitución 456', NULL, NULL, '2024-02-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 12, 8, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Actualización de sistemas', 'Avenida de la Constitución 456', NULL, NULL, '2024-03-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 12, 8, 3, 3);
+
+-- Cliente 13
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de ordenadores', 'Calle de la Paz 789', '2024-02-15', DATE_ADD('2024-02-15', INTERVAL 3 DAY), '2024-02-05', '12:45:00.000000', '12:15:00.000000', '10:30:00.000000', '11:15:00.000000', NULL, '01:15:00.000000', '01:00:00.000000', 13, 9, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle de la Paz 789', NULL, NULL, '2024-03-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 13, 9, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Actualización de software', 'Calle de la Paz 789', NULL, NULL, '2024-02-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 13, 9, 3, 3);
+
+-- Cliente 14
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de equipos', 'Calle Alfonso 101', '2024-03-05', DATE_ADD('2024-03-05', INTERVAL 3 DAY), '2024-03-01', '11:00:00.000000', '10:30:00.000000', '08:45:00.000000', '09:30:00.000000', NULL, '01:15:00.000000', '01:00:00.000000', 14, 10, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle Alfonso 101', NULL, NULL, '2024-03-28', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 14, 10, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Actualización de equipos', 'Calle Alfonso 101', NULL, NULL, '2024-04-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 14, 10, 3, 3);
+
+-- Cliente 15
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Mantenimiento de servidores', 'Calle Real 404', '2024-01-20', DATE_ADD('2024-01-20', INTERVAL 3 DAY), '2024-01-15', '14:15:00.000000', '13:30:00.000000', '09:00:00.000000', '09:30:00.000000', NULL, '01:15:00.000000', '04:00:00.000000', 15, 11, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Implementación de sistemas', 'Calle Real 404', NULL, NULL, '2024-03-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 15, 11, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de redes', 'Calle Real 404', NULL, NULL, '2024-04-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 15, 11, 3, 3);
+
+-- Cliente 16
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Actualización de software', 'Calle Uria 505', '2024-02-21', DATE_ADD('2024-02-21', INTERVAL 3 DAY), '2024-02-15', '17:00:00.000000', '16:00:00.000000', '15:00:00.000000', '15:40:00.000000', NULL, '01:40:00.000000', '00:20:00.000000', 16, 3, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de ordenadores', 'Calle Uria 505', NULL, NULL, '2024-03-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16, 3, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de periféricos', 'Calle Uria 505', NULL, NULL, '2024-04-04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16, 3, 3, 3);
+
+-- Cliente 17
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de servidores', 'Calle Serrano 606', '2024-01-18', DATE_ADD('2024-01-18', INTERVAL 3 DAY), '2024-01-15', '17:30:00.000000', '16:30:00.000000', '15:00:00.000000', '15:30:00.000000', NULL, '01:30:00.000000', '01:00:00.000000', 17, 4, 2, 2);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Mantenimiento de equipos', 'Calle Serrano 606', NULL, NULL, '2024-03-05', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 17, 4, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de redes', 'Calle Serrano 606', NULL, NULL, '2024-04-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 17, 4, 3, 3);
+
+
+
+
+
 
 -- LOS INSERT NO TIENEN SENTIDOS, ES PARA PROBAR
 
-INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('hola', 'aaaa', '2024-01-10', '2024-04-11', '11:00:00.000000', '11:30:00.000000', '10:00:00.000000', '10:10:00.000000', '21', 'prueba', '1000', '30', '70', '01:00:00.000000', '00:30:00.000000', 1210, '1', '1', '4');
-INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('hola', 'aaaa', '2024-01-10', '2024-04-11', '11:00:00.000000', '11:30:00.000000', '10:00:00.000000', '10:10:00.000000', '21', 'prueba', '1000', '30', '70', '01:00:00.000000', '00:30:00.000000', 1210, '1', '2', '4');
+-- INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('hola', 'aaaa', '2024-01-10', '2024-04-11', '11:00:00.000000', '11:30:00.000000', '10:00:00.000000', '10:10:00.000000', '21', 'prueba', '1000', '30', '70', '01:00:00.000000', '00:30:00.000000', 1210, '1', '1', '4');
+-- INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('hola', 'aaaa', '2024-01-10', '2024-04-11', '11:00:00.000000', '11:30:00.000000', '10:00:00.000000', '10:10:00.000000', '21', 'prueba', '1000', '30', '70', '01:00:00.000000', '00:30:00.000000', 1210, '1', '2', '4');
 
-INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES ('2024-01-20', '1210', 'Efectivo', '1');
-INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES ('2024-01-20', '1210', 'Efectivo', '2');
+-- INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES ('2024-01-20', '1210', 'Efectivo', '1');
+-- INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES ('2024-01-20', '1210', 'Efectivo', '2');
  
 -- INSERT INTO `trabajotfgerp`.`nominas_empleados` (`anticipos`, `bonificacion`, `cuenta_bancaria`, `deducciones`, `irpf`, `mes`, `salario_base`, `salario_bruto`, `salario_neto`, `seguridad_social`, `tipo_nomina`, `year`, `id_persona`) VALUES (100.00, 50.00, 'ES12345678901234567890', 30.00, 15.00, 4, 1500.00, 1600.00, 1555.00, '123456789012', 'Mensual', 2024, 1);
 -- INSERT INTO `trabajotfgerp`.`nominas_empleados` (`anticipos`, `bonificacion`, `cuenta_bancaria`, `deducciones`, `irpf`, `mes`, `salario_base`, `salario_bruto`, `salario_neto`, `seguridad_social`, `tipo_nomina`, `year`, `id_persona`) VALUES (120.00, 70.00, 'ES98765432109876543210', 40.00, 20.00, 4, 1600.00, 1700.00, 1650.00, '098765432109', 'Mensual', 2024, 2);
@@ -921,314 +1023,133 @@ INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `
 -- ========================================
 --  Facturas clientes
 -- ========================================
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Actualización de software', 'Calle Gran Vía 123', '2024-03-02', '2024-04-02', '12:00:00', '11:00:00', '09:00:00', '09:30:00', 21, NULL, 150.0, 30.0, 70.0, '01:30:00', '01:30:00', 181.5, 1, 1, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Reparación de portátil', 'Calle Gran Vía 123', '2024-01-25', '2024-01-25', '13:00:00', '12:30:00', '09:00:00', '10:00:00', 21, NULL, 220.0, 30.0, 70.0, '01:30:00', '02:30:00', 266.2, 2, 4, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Reparación de disco duro', 'Calle Alcalá 456', '2024-01-17', '2024-01-17', '14:00:00', '12:30:00', '11:30:00', '12:30:00', 21, NULL, 105.0, 30.0, 70.0, '01:45:00', '00:45:00', 127.05, 3, 7, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Instalación de software', 'Calle Princesa 789', '2024-03-13', '2024-03-13', '15:10:00', '14:30:00', '13:00:00', '13:30:00', 21, NULL, 105.0, 30.0, 70.0, '01:10:00', '01:00:00', 127.05, 4, 10, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Reparación de portátil', 'Calle del Mar 404', '2024-02-08', '2024-02-08', '12:00:00', '11:00:00', '10:00:00', '10:30:00', 21, NULL, 80.0, 30.0, 70.0, '01:30:00', '00:30:00', 96.8, 8, 13, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Reparación de ordenador', 'Calle de la Plata 505', '2024-01-28', '2024-01-28', '12:00:00', '11:00:00', '09:00:00', '09:30:00', 21, NULL, 150.0, 30.0, 70.0, '01:30:00', '01:30:00', 181.5, 9, 16, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Reparación de impresora', 'Calle Mayor 606', '2024-03-10', '2024-03-10', '11:00:00', '10:15:00', '08:30:00', '09:00:00', 21, NULL, 125.0, 30.0, 70.0, '01:15:00', '01:15:00', 151.25, 10, 19, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Reparación de equipos', 'Calle Gran Vía 123', '2024-01-25', '2024-01-25', '11:30:00', '10:55:00', '09:00:00', '10:00:00', 21, NULL, 111.67, 30.0, 70.0, '01:35:00', '00:55:00', 135.12, 11, 22, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Reparación de sistemas', 'Avenida de la Constitución 456', '2024-03-19', '2024-03-19', '11:25:00', '11:00:00', '10:00:00', '10:10:00', 21, NULL, 75.83, 30.0, 70.0, '00:35:00', '00:50:00', 91.75, 12, 25, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Reparación de ordenadores', 'Calle de la Paz 789', '2024-02-18', '2024-02-18', '12:45:00', '12:15:00', '10:30:00', '11:15:00', 21, NULL, 107.5, 30.0, 70.0, '01:15:00', '01:00:00', 130.07, 13, 28, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Reparación de equipos', 'Calle Alfonso 101', '2024-03-08', '2024-03-08', '11:00:00', '10:30:00', '08:45:00', '09:30:00', 21, NULL, 107.5, 30.0, 70.0, '01:15:00', '01:00:00', 130.07, 14, 31, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Mantenimiento de servidores', 'Calle Real 404', '2024-01-23', '2024-01-23', '14:15:00', '13:30:00', '09:00:00', '09:30:00', 21, NULL, 317.5, 30.0, 70.0, '01:15:00', '04:00:00', 384.18, 15, 34, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Actualización de software', 'Calle Uria 505', '2024-02-24', '2024-02-24', '17:00:00', '16:00:00', '15:00:00', '15:40:00', 21, NULL, 73.33, 30.0, 70.0, '01:40:00', '00:20:00', 88.73, 16, 37, 4);
+INSERT INTO `trabajotfgerp`.`facturas_clientes` (`descripcion_servicio`, `direccion_entrega`, `fecha_entrega_real_pedido`, `fecha_factura_emitida`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `iva`, `observacion`, `subtotal_factura_sin_iva`, `tarifa_hora_desplazamiento`, `tarifa_hora_servicio`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `total_factura`, `id_cliente`, `id_pedido_cliente`, `id_tipo_estado`) VALUES ('Configuración de servidores', 'Calle Serrano 606', '2024-01-21', '2024-01-21', '17:30:00', '16:30:00', '15:00:00', '15:30:00', 21, NULL, 115.0, 30.0, 70.0, '01:30:00', '01:00:00', 139.15, 17, 40, 4);
+
 
 
 
 -- ========================================
 --  Pagos facturas clientes
 -- ========================================
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-04-02', INTERVAL 1 DAY), 181.5, 'Efectivo', 1);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-01-25', INTERVAL 2 DAY), 266.2, 'Efectivo', 2);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-01-17', INTERVAL 1 DAY), 127.05, 'Efectivo', 3);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-03-13', INTERVAL 3 DAY), 127.05, 'Efectivo', 4);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-02-08', INTERVAL 2 DAY), 96.8, 'Efectivo', 5);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-01-28', INTERVAL 1 DAY), 181.5, 'Efectivo', 6);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-03-10', INTERVAL 2 DAY), 151.25, 'Efectivo', 7);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-01-25', INTERVAL 1 DAY), 135.12, 'Efectivo', 8);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-03-19', INTERVAL 3 DAY), 91.75, 'Efectivo', 9);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-02-18', INTERVAL 1 DAY), 130.07, 'Efectivo', 10);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-03-08', INTERVAL 0 DAY), 130.07, 'Efectivo', 11);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-01-23', INTERVAL 4 DAY), 384.18, 'Efectivo', 12);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-02-24', INTERVAL 0 DAY), 88.73, 'Efectivo', 13);
+INSERT INTO `trabajotfgerp`.`pagos_facturas_clientes` (`fecha_pago_realizada`, `importe_pagado`, `metodo_pago`, `id_factura_cliente`) VALUES (DATE_ADD('2024-01-21', INTERVAL 1 DAY), 139.15, 'Efectivo', 14);
 
 
-/*
--- ========================================
---  Pedidos clientes
--- ========================================
--- Cliente 1
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '1', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '1', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '1', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '1', '3');
 
--- Cliente 2
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '2', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '2', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '2', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '2', '3');
-
--- Cliente 3
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '3', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '3', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '3', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '3', '3');
-
--- Cliente 4
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '4', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '4', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '4', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '4', '3');
-
--- Cliente 5
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '5', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '5', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '5', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '5', '3');
-
--- Cliente 6
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '6', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '6', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '6', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '6', '3');
-
--- Cliente 7
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '7', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '7', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '7', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '7', '3');
-
--- Cliente 8
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '8', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '8', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '8', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '8', '3');
-
--- Cliente 9
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '9', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '9', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '9', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '9', '3');
-
--- Cliente 10
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '10', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '10', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '10', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '10', '3');
-
--- Cliente 11
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '11', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '11', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '11', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '11', '3');
-
--- Cliente 12
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '12', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '12', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '12', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '12', '3');
-
--- Cliente 13
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '13', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '13', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '13', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '13', '3');
-
--- Cliente 14
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '14', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '14', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '14', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '14', '3');
-
--- Cliente 15
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '15', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '15', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '15', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '15', '3');
-
--- Cliente 16
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '16', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '16', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '16', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '16', '3');
-
--- Cliente 17
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-01', DATE_ADD('2023-09-01', INTERVAL 2 DAY), '2023-08-25', '17', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '17', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-01', NULL, '2023-07-25', '17', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '17', '3');
-
--- Cliente 18
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-07-15', DATE_ADD('2023-07-15', INTERVAL 3 DAY), '2023-07-10', '18', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-25', DATE_ADD('2023-08-25', INTERVAL 2 DAY), '2023-08-20', '18', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-05', NULL, '2023-09-01', '18', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-10-10', NULL, '2023-10-05', '18', '3');
-
--- Cliente 19
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-06-20', DATE_ADD('2023-06-20', INTERVAL 1 DAY), '2023-06-15', '19', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-07-30', DATE_ADD('2023-07-30', INTERVAL 2 DAY), '2023-07-25', '19', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-10', NULL, '2023-08-05', '19', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-20', NULL, '2023-09-15', '19', '3');
-
--- Cliente 20
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-05-10', DATE_ADD('2023-05-10', INTERVAL 1 DAY), '2023-05-05', '20', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-06-20', DATE_ADD('2023-06-20', INTERVAL 2 DAY), '2023-06-15', '20', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-07-05', NULL, '2023-07-01', '20', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', NULL, '2023-08-10', '20', '3');
-
--- Cliente 21
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-04-20', DATE_ADD('2023-04-20', INTERVAL 2 DAY), '2023-04-15', '21', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-05-30', DATE_ADD('2023-05-30', INTERVAL 3 DAY), '2023-05-25', '21', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-06-10', NULL, '2023-06-05', '21', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-07-20', NULL, '2023-07-15', '21', '3');
-
--- Cliente 22
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-03-25', DATE_ADD('2023-03-25', INTERVAL 1 DAY), '2023-03-20', '22', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-04-30', DATE_ADD('2023-04-30', INTERVAL 2 DAY), '2023-04-25', '22', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-05-10', NULL, '2023-05-05', '22', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-06-20', NULL, '2023-06-15', '22', '3');
-
--- Cliente 23
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-02-10', DATE_ADD('2023-02-10', INTERVAL 1 DAY), '2023-02-05', '23', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-03-20', DATE_ADD('2023-03-20', INTERVAL 2 DAY), '2023-03-15', '23', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-04-05', NULL, '2023-04-01', '23', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-05-15', NULL, '2023-05-10', '23', '3');
-
--- Cliente 24
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-01-20', DATE_ADD('2023-01-20', INTERVAL 2 DAY), '2023-01-15', '24', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-02-28', DATE_ADD('2023-02-28', INTERVAL 3 DAY), '2023-02-25', '24', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-03-10', NULL, '2023-03-05', '24', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-04-20', NULL, '2023-04-15', '24', '3');
-
--- Cliente 25
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-10', DATE_ADD('2023-08-10', INTERVAL 2 DAY), '2023-08-05', '25', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-20', DATE_ADD('2023-09-20', INTERVAL 3 DAY), '2023-09-15', '25', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-10-05', NULL, '2023-10-01', '25', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-11-15', NULL, '2023-11-10', '25', '3');
-
+-- Pedidos clientes creados para generar facturas
 -- Cliente 26
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-12-01', DATE_ADD('2023-12-01', INTERVAL 1 DAY), '2023-11-25', '26', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-01-10', DATE_ADD('2023-01-10', INTERVAL 2 DAY), '2023-01-05', '26', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-02-20', NULL, '2023-02-15', '26', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-03-30', NULL, '2023-03-25', '26', '3');
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle Serrano 606', '2024-05-10', DATE_ADD('2024-05-10', INTERVAL 5 DAY), '2024-05-01', '14:30:00.000000', '13:30:00.000000', '11:00:00.000000', '11:30:00.000000', NULL, '01:30:00.000000', '02:00:00.000000', 26, 21, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Mantenimiento preventivo', 'Calle Serrano 606', NULL, NULL, '2024-06-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 26, 21, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de hardware', 'Calle Serrano 606', NULL, NULL, '2024-05-27', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 26, 21, 3, 3);
 
 -- Cliente 27
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-04-15', DATE_ADD('2023-04-15', INTERVAL 2 DAY), '2023-04-10', '27', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-05-25', DATE_ADD('2023-05-25', INTERVAL 3 DAY), '2023-05-20', '27', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-06-05', NULL, '2023-06-01', '27', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-07-15', NULL, '2023-07-10', '27', '3');
-
-
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Mantenimiento de sistemas', 'Avenida de la Palmera 707', '2024-05-18', DATE_ADD('2024-05-18', INTERVAL 3 DAY), '2024-05-12', '17:30:00.000000', '16:30:00.000000', '14:30:00.000000', '15:00:00.000000', NULL, '01:30:00.000000', '01:30:00.000000', 27, 22, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de red', 'Avenida de la Palmera 707', NULL, NULL, '2024-06-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 27, 22, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de servidor', 'Avenida de la Palmera 707', NULL, NULL, '2024-05-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 27, 22, 3, 3);
 
 -- Cliente 28
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-07-15', DATE_ADD('2023-07-15', INTERVAL 3 DAY), '2023-07-10', '28', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-25', DATE_ADD('2023-08-25', INTERVAL 2 DAY), '2023-08-20', '28', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-05', NULL, '2023-09-01', '28', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-10-10', NULL, '2023-10-05', '28', '3');
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Actualización de software', 'Calle Gran Via 456', '2024-06-13', DATE_ADD('2024-06-13', INTERVAL 3 DAY), '2024-06-10', '15:00:00.000000', '14:00:00.000000', '12:00:00.000000', '12:45:00.000000', NULL, '01:45:00.000000', '01:15:00.000000', 28, 23, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de hardware', 'Calle Gran Via 456', NULL, NULL, '2024-06-06', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28, 23, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de sistema operativo', 'Calle Gran Via 456', NULL, NULL, '2024-06-17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28, 23, 3, 3);
 
 -- Cliente 29
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-06-20', DATE_ADD('2023-06-20', INTERVAL 1 DAY), '2023-06-15', '29', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-07-30', DATE_ADD('2023-07-30', INTERVAL 2 DAY), '2023-07-25', '29', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-05', NULL, '2023-09-01', '29', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-10-10', NULL, '2023-10-05', '29', '3');
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de red', 'Avenida de la Constitucion 567', '2024-05-17', DATE_ADD('2024-05-17', INTERVAL 3 DAY), '2024-05-14', '12:30:00.000000', '11:30:00.000000', '09:30:00.000000', '10:00:00.000000', NULL, '01:30:00.000000', '01:30:00.000000', 29, 24, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de servidor', 'Avenida de la Constitucion 567', NULL, NULL, '2024-06-10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 29, 24, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de firewall', 'Avenida de la Constitucion 567', NULL, NULL, '2024-06-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 29, 24, 3, 3);
 
 -- Cliente 30
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-08-15', DATE_ADD('2023-08-15', INTERVAL 3 DAY), '2023-08-10', '30', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-25', DATE_ADD('2023-09-25', INTERVAL 2 DAY), '2023-09-20', '30', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-10-05', NULL, '2023-10-01', '30', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-11-10', NULL, '2023-11-05', '30', '3');
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Optimización de base de datos', 'Calle de la Paz 678', '2024-06-22', DATE_ADD('2024-06-22', INTERVAL 3 DAY), '2024-06-20', '13:30:00.000000', '12:45:00.000000', '10:30:00.000000', '11:00:00.000000', NULL, '01:15:00.000000', '01:45:00.000000', 30, 25, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`,`fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Migración de datos', 'Calle de la Paz 678', NULL, NULL, '2024-05-08', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30, 25, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de servidores', 'Calle de la Paz 678', NULL, NULL, '2024-06-20', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30, 25, 3, 3);
 
 -- Cliente 31
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-09-15', DATE_ADD('2023-09-15', INTERVAL 1 DAY), '2023-09-10', '31', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-10-25', DATE_ADD('2023-10-25', INTERVAL 1 DAY), '2023-10-20', '31', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-11-05', NULL, '2023-11-01', '31', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-12-10', NULL, '2023-12-05', '31', '3');
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de red', 'Calle Alfonso 789', '2024-05-28', DATE_ADD('2024-05-28', INTERVAL 3 DAY), '2024-05-25', '11:00:00.000000', '10:20:00.000000', '08:00:00.000000', '08:30:00.000000', NULL, '01:10:00.000000', '01:50:00.000000', 31, 4, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle Alfonso 789', NULL, NULL, '2024-06-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 31, 4, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de firewall', 'Calle Alfonso 789', NULL, NULL, '2024-05-24', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 31, 4, 3, 3);
 
 -- Cliente 32
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-10-20', DATE_ADD('2023-10-20', INTERVAL 2 DAY), '2023-10-15', '32', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-11-30', DATE_ADD('2023-11-30', INTERVAL 3 DAY), '2023-11-25', '32', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-12-10', NULL, '2023-12-05', '32', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-01-20', NULL, '2024-01-15', '32', '3');
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Actualización de software', 'Calle Larios 890', '2024-05-30', DATE_ADD('2024-05-30', INTERVAL 3 DAY), '2024-05-26', '15:30:00.000000', '14:30:00.000000', '12:30:00.000000', '13:00:00.000000', NULL, '01:30:00.000000', '01:30:00.000000', 32, 6, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Mantenimiento preventivo', 'Calle Larios 890', NULL, NULL, '2024-05-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 32, 6, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de hardware', 'Calle Larios 890', NULL, NULL, '2024-05-27', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 32, 6, 3, 3);
 
 -- Cliente 33
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-11-15', DATE_ADD('2023-11-15', INTERVAL 1 DAY), '2023-11-10', '33', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-12-25', DATE_ADD('2023-12-25', INTERVAL 1 DAY), '2023-12-20', '33', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-01-05', NULL, '2024-01-01', '33', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-02-10', NULL, '2024-02-05', '33', '3');
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de firewall', 'Passeig de Gracia 123', '2024-06-18', DATE_ADD('2024-06-18', INTERVAL 3 DAY), '2024-06-13', '14:30:00.000000', '13:30:00.000000', '10:15:00.000000', '11:36:00.000000', NULL, '02:21:00.000000', '01:54:00.000000', 33, 7, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Passeig de Gracia 123', NULL, NULL, '2024-05-04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 33, 7, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Mantenimiento preventivo', 'Passeig de Gracia 123', NULL, NULL, '2024-05-10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 33, 7, 3, 3);
 
--- Cliente 34
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2023-12-20', DATE_ADD('2023-12-20', INTERVAL 2 DAY), '2023-12-15', '34', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-01-30', DATE_ADD('2024-01-30', INTERVAL 1 DAY), '2024-01-25', '34', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-02-10', NULL, '2024-02-05', '34', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-03-15', NULL, '2024-03-10', '34', '3');
+-- Cliente 16
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle Atocha 606', '2024-05-19', DATE_ADD('2024-05-19', INTERVAL 3 DAY), '2024-05-16', '14:30:00.000000', '13:30:00.000000', '11:30:00.000000', '12:00:00.000000', NULL, '01:30:00.000000', '01:30:00.000000', 16, 7, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Mantenimiento preventivo', 'Calle Atocha 606', NULL, NULL, '2024-06-09', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16, 7, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de red', 'Calle Atocha 606', NULL, NULL, '2024-05-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16, 7, 3, 3);
 
--- Cliente 35
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-01-05', DATE_ADD('2024-01-05', INTERVAL 1 DAY), '2024-01-01', '35', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-02-15', DATE_ADD('2024-02-15', INTERVAL 2 DAY), '2024-02-10', '35', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-03-01', NULL, '2024-02-25', '35', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-04-10', NULL, '2024-04-05', '35', '3');
+-- Cliente 10
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Optimización de base de datos', 'Calle Goya 707', '2024-05-27', DATE_ADD('2024-05-27', INTERVAL 3 DAY), '2024-05-25', '12:00:00.000000', '11:00:00.000000', '09:40:00.000000', '10:10:00.000000', NULL, '01:30:00.000000', '00:50:00.000000', 10, 7, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle Goya 707', NULL, NULL, '2024-06-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10, 7, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de firewall', 'Calle Goya 707', NULL, NULL, '2024-06-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10, 7, 3, 3);
 
--- Cliente 36
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-02-15', DATE_ADD('2024-02-15', INTERVAL 1 DAY), '2024-02-10', '36', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-03-25', DATE_ADD('2024-03-25', INTERVAL 1 DAY), '2024-03-20', '36', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-04-05', NULL, '2024-04-01', '36', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-05-10', NULL, '2024-05-05', '36', '3');
+-- Cliente 11
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle Gran Vía 101', '2024-05-16', DATE_ADD('2024-05-16', INTERVAL 3 DAY), '2024-05-12', '11:05:00.000000', '10:30:00.000000', '07:30:00.000000', '08:00:00.000000', NULL, '01:05:00.000000', '02:30:00.000000', 11, 8, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de red', 'Calle Gran Vía 101', NULL, NULL, '2024-06-10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 11, 8, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de servidores', 'Calle Gran Vía 101', NULL, NULL, '2024-06-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 11, 8, 3, 3);
 
--- Cliente 37
--- Aceptadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-03-20', DATE_ADD('2024-03-20', INTERVAL 3 DAY), '2024-03-15', '37', '2');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-04-30', DATE_ADD('2024-04-30', INTERVAL 2 DAY), '2024-04-25', '37', '2');
--- Denegadas
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-05-10', NULL, '2024-05-05', '37', '3');
-INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `id_cliente`, `id_tipo_estado`) VALUES ('2024-06-15', NULL, '2024-06-10', '37', '3');
-*/
+-- Cliente 12
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Mantenimiento preventivo', 'Calle Alameda 202', '2024-06-22', DATE_ADD('2024-06-22', INTERVAL 3 DAY), '2024-06-20', '10:00:00.000000', '09:30:00.000000', '08:00:00.000000', '08:50:00.000000', NULL, '01:20:00.000000', '00:40:00.000000', 12, 8, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Calle Alameda 202', NULL, NULL, '2024-05-18', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 12, 8, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de red', 'Calle Alameda 202', NULL, NULL, '2024-05-24', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 12, 8, 3, 3);
+
+-- Cliente 13
+-- Pedidos aceptados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Reparación de hardware', 'Avenida Diagonal 303', '2024-05-25', DATE_ADD('2024-05-25', INTERVAL 3 DAY), '2024-05-20', '12:30:00.000000', '11:30:00.000000', '10:30:00.000000', '11:00:00.000000', NULL, '01:30:00.000000', '00:30:00.000000', 13, 9, 2, 1);
+-- Pedidos rechazados
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Instalación de software', 'Avenida Diagonal 303', NULL, NULL, '2024-05-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 13, 9, 3, 3);
+INSERT INTO `trabajotfgerp`.`pedidos_clientes` (`descripcion`, `direccion_entrega`, `fecha_entrega_prevista`, `fecha_entrega_real`, `fecha_solicitud_pedido`, `hora_fin_desplazamiento`, `hora_fin_servicio`, `hora_inicio_desplazamiento`, `hora_inicio_servicio`, `observacion`, `tiempo_desplazamiento_total`, `tiempo_servicio_total`, `id_cliente`, `id_persona_encargado`, `id_tipo_estado`, `id_tipo_estado_factura`) VALUES ('Configuración de red', 'Avenida Diagonal 303', NULL, NULL, '2024-05-10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 13, 9, 3, 3);
 

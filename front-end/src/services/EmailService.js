@@ -12,6 +12,7 @@ export const sendEmailNodeMailer = async (data) => {
     };
 
     const response = await axios.post(url + "sendEmail", formData);
+
     return {
       data: response.data,
       status: response.status,

@@ -8,6 +8,7 @@ export const getAllBajasLaboralesEmpleados = async () => {
 
   try {
     const response = await axios.get(url + "getAll");
+
     return {
       data: response.data,
       status: response.status,
@@ -47,6 +48,7 @@ export const saveBajaLaboralEmpleado = async (data) => {
     };
 
     const response = await axios.post(url + "save", formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -68,8 +70,10 @@ export const saveBajaLaboralEmpleado = async (data) => {
 
 export const getBajaLaboralEmpleadoById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
+
   try {
     const response = await axios.get(url + "getById/" + id);
+
     return {
       data: response.data,
       status: response.status,
@@ -109,6 +113,7 @@ export const updateBajaLaboralEmpleado = async (id, data) => {
     };
 
     const response = await axios.put(url + "update/" + id, formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -130,8 +135,10 @@ export const updateBajaLaboralEmpleado = async (id, data) => {
 
 export const deleteBajaLaboralEmpleado = async (id) => {
   const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");
+
   try {
     const response = await axios.delete(url + "delete/" + id);
+
     return {
       data: response.data,
       status: response.status,

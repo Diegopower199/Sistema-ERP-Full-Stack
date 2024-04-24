@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { sendEmailNodeMailer } from "@/services/EmailService";
 import { updatePassword } from "@/services/UsuarioService";
 import { existsCorreoElectronico } from "@/services/PersonaService";
@@ -62,7 +61,7 @@ export default function UpdatePassword() {
 
       if (!formData.correo_electronico) {
         errorMissingFields.correo_electronico =
-          "Por favor, ingresa un correo electronico";
+          "Por favor, ingresa un correo electrónico";
       }
 
       setRequiredFieldsIncomplete(errorMissingFields);
@@ -95,7 +94,7 @@ export default function UpdatePassword() {
 
       if (responseExistsEmail.data.resultado === false) {
         handleBackendError(
-          "Error, el correo electronico introducido no existe"
+          "Error, el correo electrónico introducido no existe"
         );
         return;
       }
@@ -134,7 +133,7 @@ export default function UpdatePassword() {
 
     if (formData.codigo_verificacion.length !== 6) {
       setErrorMessage(
-        "Error, el código de verificación debe tener exactamente 6 dígitos"
+        "Error, el código de verificación debe tener 6 dígitos"
       );
       return;
     } else {
@@ -164,7 +163,7 @@ export default function UpdatePassword() {
 
       if (!formData.confirm_new_password) {
         errorMissingFields.confirm_new_password =
-          "Por favor, ingresa la confirmacion de la nueva contraseña";
+          "Por favor, ingresa la confirmación de la nueva contraseña";
       }
 
       setRequiredFieldsIncomplete(errorMissingFields);
@@ -245,8 +244,8 @@ export default function UpdatePassword() {
         <Antd.Form>
           {correctEmail === false && correctVerificationCode === false && (
             <div>
-              <h1>Recuperacion de cuenta</h1>
-              <Antd.Form.Item label="Correo electronico">
+              <h1>Recuperación de cuenta</h1>
+              <Antd.Form.Item label="Correo electrónico">
                 <Antd.Input
                   type="text"
                   name="correo_electronico"
@@ -276,10 +275,10 @@ export default function UpdatePassword() {
 
           {correctEmail === true && correctVerificationCode === false && (
             <div>
-              <h1>Introduce el codigo</h1>
+              <h1>Introduce el código</h1>
               <p>
-                Introduce el codigo de verificacion de 6 digitos del correo
-                electronico
+                Introduce el código de verificación de 6 digitos del correo
+                electrónico
               </p>
               <p>
                 {`Has realizado ${userAttempts} intentos. te quedan ${

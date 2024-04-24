@@ -295,13 +295,17 @@ export default function Personas() {
   };
 
   const handleUpdateClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleUpdatePersonaForm();
   };
 
   const handleDeleteClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
 
     setIdPersonaSelected(id);
     setNamePersonaSelected(filaSeleccionada.nombre);
@@ -309,7 +313,9 @@ export default function Personas() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleViewUniquePersonaForm();
   };

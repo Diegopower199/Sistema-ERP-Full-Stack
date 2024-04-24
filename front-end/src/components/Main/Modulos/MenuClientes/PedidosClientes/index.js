@@ -241,8 +241,9 @@ export default function PedidosClientes() {
   }
 
   const fetchGetAllPedidosClientesAndHandleErrors = async () => {
+    setTableLoading(true);
+
     try {
-      setTableLoading(true);
       const responseGetAllPedidosClientes = await getAllPedidosClientes();
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllPedidosClientes);
@@ -296,6 +297,7 @@ export default function PedidosClientes() {
           };
         }
       );
+
       setDataSource(pedidosClientesMap);
       setTableLoading(false);
 
@@ -346,13 +348,17 @@ export default function PedidosClientes() {
   };
 
   const handleUpdateClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleUpdatePedidoClienteForm();
   };
 
   const handleViewUniqueClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleViewUniquePedidoClienteForm();
   };

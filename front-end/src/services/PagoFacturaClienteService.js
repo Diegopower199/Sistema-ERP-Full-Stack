@@ -4,8 +4,10 @@ import { backendServerDownErrorMessageContent } from "@/utils/differentContentSe
 
 export const getAllPagosFacturasClientes = async () => {
   const url = API_URL_BACK_END.replace("#", "pagosFacturasClientes");
+
   try {
     const response = await axios.get(url + "getAll");
+
     return {
       data: response.data,
       status: response.status,
@@ -31,7 +33,7 @@ export const savePagoFacturaCliente = async (data) => {
   try {
     const formData = {
       fecha_pago_realizada: data.fecha_pago_realizada,
-      importe_pagado: parseInt(data.importe_pagado),
+      importe_pagado: parseFloat(data.importe_pagado),
       metodo_pago: data.metodo_pago,
       factura_cliente: {
         id_factura_cliente: data.id_factura_cliente,
@@ -61,8 +63,10 @@ export const savePagoFacturaCliente = async (data) => {
 
 export const getPagoFacturaClienteById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "pagosFacturasClientes");
+
   try {
     const response = await axios.get(url + "getById/" + id);
+
     return {
       data: response.data,
       status: response.status,
@@ -88,7 +92,7 @@ export const updatePagoFacturaCliente = async (id, data) => {
   try {
     const formData = {
       fecha_pago_realizada: data.fecha_pago_realizada,
-      importe_pagado: parseInt(data.importe_pagado),
+      importe_pagado: parseFloat(data.importe_pagado),
       metodo_pago: data.metodo_pago,
       factura_cliente: {
         id_factura_cliente: data.id_factura_cliente,
@@ -96,6 +100,7 @@ export const updatePagoFacturaCliente = async (id, data) => {
     };
 
     const response = await axios.put(url + "update/" + id, formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -117,8 +122,10 @@ export const updatePagoFacturaCliente = async (id, data) => {
 
 export const deletePagoFacturaCliente = async (id) => {
   const url = API_URL_BACK_END.replace("#", "pagosFacturasClientes");
+
   try {
     const response = await axios.delete(url + "delete/" + id);
+
     return {
       data: response.data,
       status: response.status,

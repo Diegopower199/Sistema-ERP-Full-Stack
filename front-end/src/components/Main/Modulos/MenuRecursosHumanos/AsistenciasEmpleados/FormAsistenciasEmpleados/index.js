@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllPersonas, getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
+import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
 import {
@@ -62,9 +62,12 @@ export default function FormAsistenciasEmpleados({
 
   const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
     try {
-      const responseGetAllPersonasEmpleadosAndBecarios = await getAllPersonasEmpleadosAndBecarios();
+      const responseGetAllPersonasEmpleadosAndBecarios =
+        await getAllPersonasEmpleadosAndBecarios();
 
-      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonasEmpleadosAndBecarios);
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllPersonasEmpleadosAndBecarios
+      );
 
       if (errorHandlingInfo.noContent) {
         setPersonasOptions([]);
@@ -72,18 +75,21 @@ export default function FormAsistenciasEmpleados({
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(responseGetAllPersonasEmpleadosAndBecarios.errorMessage);
+        handleBackendAndDBConnectionError(
+          responseGetAllPersonasEmpleadosAndBecarios.errorMessage
+        );
         return false;
       }
 
-      const optionsPersonas = responseGetAllPersonasEmpleadosAndBecarios.data.map((persona) => {
-        const { id_persona, nombre, apellidos, dni } = persona;
+      const optionsPersonas =
+        responseGetAllPersonasEmpleadosAndBecarios.data.map((persona) => {
+          const { id_persona, nombre, apellidos, dni } = persona;
 
-        return {
-          value: id_persona,
-          label: `${nombre + " " + apellidos} - ${dni}`,
-        };
-      });
+          return {
+            value: id_persona,
+            label: `${nombre + " " + apellidos} - ${dni}`,
+          };
+        });
 
       setPersonasOptions(optionsPersonas);
 
@@ -98,7 +104,8 @@ export default function FormAsistenciasEmpleados({
 
     const fetchData = async () => {
       try {
-        noCallErrorsDetected = await fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors();
+        noCallErrorsDetected =
+          await fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors();
 
         if (!noCallErrorsDetected) {
           return;

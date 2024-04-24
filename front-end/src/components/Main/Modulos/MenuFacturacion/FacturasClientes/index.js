@@ -276,8 +276,9 @@ export default function FacturasClientes() {
   }
 
   const fetchGetAllFacturasClientesAndHandleErrors = async () => {
+    setTableLoading(true);
+
     try {
-      setTableLoading(true);
       const responseGetAllFacturasClientes = await getAllFacturasClientes();
 
       errorHandlingInfo = checkResponseForErrors(
@@ -417,7 +418,9 @@ export default function FacturasClientes() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleViewUniqueFacturaClienteForm();
   };

@@ -184,8 +184,9 @@ export default function Clientes() {
   }
 
   const fetchGetAllClientesAndHandleErrors = async () => {
+    setTableLoading(true);
+
     try {
-      setTableLoading(true);
       const responseGetAllClientes = await getAllClientes();
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllClientes);
@@ -267,13 +268,19 @@ export default function Clientes() {
   };
 
   const handleUpdateClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
+
     setRowSelected(filaSeleccionada);
     toggleUpdateClienteForm();
   };
 
   const handleViewUniqueClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
+
     setRowSelected(filaSeleccionada);
     toggleViewUniqueClienteForm();
   };
@@ -467,13 +474,13 @@ export default function Clientes() {
 
   if (backendOrDDBBConnectionError) {
     return (
-      <div>
+      <>
         <ServerConnectionError message={errorMessage} />
-      </div>
+      </>
     );
   } else if (showFormCreate) {
     return (
-      <div>
+      <>
         <FormClientes
           toggleForm={toggleCreateClienteForm}
           clienteDataForm={""}
@@ -483,11 +490,11 @@ export default function Clientes() {
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormClientes>
-      </div>
+      </>
     );
   } else if (showFormUpdate) {
     return (
-      <div>
+      <>
         <FormClientes
           toggleForm={toggleUpdateClienteForm}
           clienteDataForm={rowSelected}
@@ -497,11 +504,11 @@ export default function Clientes() {
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormClientes>
-      </div>
+      </>
     );
   } else if (showFormViewUnique) {
     return (
-      <div>
+      <>
         <FormClientes
           toggleForm={toggleViewUniqueClienteForm}
           clienteDataForm={rowSelected}
@@ -511,7 +518,7 @@ export default function Clientes() {
           triggerBackendOrDDBBConnectionError={setBackendOrDDBBConnectionError}
           triggerErrorMessage={setErrorMessage}
         ></FormClientes>
-      </div>
+      </>
     );
   } else {
     return renderTableClientes();

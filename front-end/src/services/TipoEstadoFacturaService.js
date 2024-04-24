@@ -3,9 +3,9 @@ import { API_URL_BACK_END } from "@/utils/constants";
 import { backendServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
 
 export const getAllTiposEstadosFacturas = async () => {
-  try {
-    const url = API_URL_BACK_END.replace("#", "tiposEstadosFacturas");
+  const url = API_URL_BACK_END.replace("#", "tiposEstadosFacturas");
 
+  try {
     const response = await axios.get(url + "getAll");
 
     if (response.status === 204) {

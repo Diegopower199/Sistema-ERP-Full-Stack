@@ -5,8 +5,10 @@ import { backendServerDownErrorMessageContent } from "@/utils/differentContentSe
 
 export const getAllClientes = async () => {
   const url = API_URL_BACK_END.replace("#", "clientes");
+
   try {
     const response = await axios.get(url + "getAll");
+
     return {
       data: response.data,
       status: response.status,
@@ -43,6 +45,7 @@ export const saveCliente = async (data) => {
     };
 
     const response = await axios.post(url + "save", formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -64,8 +67,10 @@ export const saveCliente = async (data) => {
 
 export const getClienteById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "clientes");
+
   try {
     const response = await axios.get(url + "getById/" + id);
+
     return {
       data: response.data,
       status: response.status,
@@ -102,6 +107,7 @@ export const updateCliente = async (id, data) => {
     };
 
     const response = await axios.put(url + "update/" + id, formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -123,8 +129,10 @@ export const updateCliente = async (id, data) => {
 
 export const deleteCliente = async (id) => {
   const url = API_URL_BACK_END.replace("#", "clientes");
+
   try {
     const response = await axios.delete(url + "delete/" + id);
+
     return {
       data: response.data,
       status: response.status,

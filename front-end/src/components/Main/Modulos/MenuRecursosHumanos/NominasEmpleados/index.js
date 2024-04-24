@@ -365,7 +365,7 @@ export default function NominasEmpleados() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {return row.id === id});
     setRowSelected(filaSeleccionada);
     toggleViewUniqueNominaEmpleadoForm();
   };

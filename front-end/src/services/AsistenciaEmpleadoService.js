@@ -5,8 +5,10 @@ import { backendServerDownErrorMessageContent } from "@/utils/differentContentSe
 
 export const getAllAsistenciaEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
+
   try {
     const response = await axios.get(url + "getAll");
+
     return {
       data: response.data,
       status: response.status,
@@ -27,7 +29,6 @@ export const getAllAsistenciaEmpleados = async () => {
 };
 
 export const saveAsistenciaEmpleado = async (data) => {
-  // Fin de la jornada laboral (NO ESTE BIEN, NO SÉ IDENTIFICARLO)
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
 
   try {
@@ -43,6 +44,7 @@ export const saveAsistenciaEmpleado = async (data) => {
     };
 
     const response = await axios.post(url + "save", formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -62,14 +64,15 @@ export const saveAsistenciaEmpleado = async (data) => {
   }
 };
 
+// Inicio de la jornada laboral, No esta hecho
 export const startOfWorkdayAsistenciaEmpleado = async (data) => {
-  // Inicio de la jornada laboral
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
 
   try {
     const formData = {};
 
     const response = await axios.post(url + "startOfWorkday", formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -89,14 +92,15 @@ export const startOfWorkdayAsistenciaEmpleado = async (data) => {
   }
 };
 
+// Fin de la jornada laboral, No esta hecho
 export const endOfWorkdayAsistenciaEmpleado = async (data) => {
-  // Fin de la jornada laboral (NO ESTE BIEN, NO SÉ IDENTIFICARLO)
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
 
   try {
     const formData = {};
 
     const response = await axios.post(url + "endOfWorkday", formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -118,8 +122,10 @@ export const endOfWorkdayAsistenciaEmpleado = async (data) => {
 
 export const getAsistenciaEmpleadoById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
+
   try {
     const response = await axios.get(url + "getById/" + id);
+
     return {
       data: response.data,
       status: response.status,
@@ -155,6 +161,7 @@ export const updateAsistenciaEmpleado = async (id, data) => {
     };
 
     const response = await axios.put(url + "update/" + id, formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -176,8 +183,10 @@ export const updateAsistenciaEmpleado = async (id, data) => {
 
 export const deleteAsistenciaEmpleado = async (id) => {
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
+
   try {
     const response = await axios.delete(url + "delete/" + id);
+
     return {
       data: response.data,
       status: response.status,

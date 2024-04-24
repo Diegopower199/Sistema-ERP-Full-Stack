@@ -280,13 +280,17 @@ export default function SolicitudesEmpleados() {
   };
 
   const handleUpdateClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleUpdateSolicitudEmpleadoForm();
   };
 
   const handleDeleteClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
 
     const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
@@ -297,7 +301,9 @@ export default function SolicitudesEmpleados() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => row.id === id);
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
     setRowSelected(filaSeleccionada);
     toggleViewUniqueSolicitudEmpleadoForm();
   };

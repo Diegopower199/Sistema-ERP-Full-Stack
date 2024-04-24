@@ -4,8 +4,10 @@ import { backendServerDownErrorMessageContent } from "@/utils/differentContentSe
 
 export const getAllFacturasClientes = async () => {
   const url = API_URL_BACK_END.replace("#", "facturasClientes");
+
   try {
     const response = await axios.get(url + "getAll");
+
     return {
       data: response.data,
       status: response.status,
@@ -54,6 +56,7 @@ export const saveFacturaCliente = async (data) => {
 
 export const generateFacturasClientes = async () => {
   const url = API_URL_BACK_END.replace("#", "facturasClientes");
+
   try {
     const response = await axios.post(url + "generate");
 
@@ -78,8 +81,10 @@ export const generateFacturasClientes = async () => {
 
 export const getFacturaClienteById = async (id) => {
   const url = API_URL_BACK_END.replace("#", "facturasClientes");
+
   try {
     const response = await axios.get(url + "getById/" + id);
+
     return {
       data: response.data,
       status: response.status,
@@ -106,6 +111,7 @@ export const updateFacturaCliente = async (id, data) => {
     const formData = {};
 
     const response = await axios.put(url + "update/" + id, formData);
+
     return {
       data: response.data,
       status: response.status,
@@ -127,8 +133,10 @@ export const updateFacturaCliente = async (id, data) => {
 
 export const deleteFacturaCliente = async (id) => {
   const url = API_URL_BACK_END.replace("#", "facturasClientes");
+
   try {
     const response = await axios.delete(url + "delete/" + id);
+
     return {
       data: response.data,
       status: response.status,

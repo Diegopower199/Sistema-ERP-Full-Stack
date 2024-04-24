@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllPersonas, getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
+import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
 import {

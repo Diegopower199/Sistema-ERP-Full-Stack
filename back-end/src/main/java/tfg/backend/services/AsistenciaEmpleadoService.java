@@ -61,6 +61,7 @@ public class AsistenciaEmpleadoService {
         return asistenciaEmpleadoGuardado;
     }
 
+    // No esta hecho
     public AsistenciaEmpleadoModel startOfWorkdayAsistenciaEmpleado(
             AsistenciaEmpleadoModel nuevoAsistenciaEmpleado) {
 
@@ -89,8 +90,7 @@ public class AsistenciaEmpleadoService {
         return asistenciaEmpleadoGuardado;
     }
 
-    // TODO TENGO QUE PENSAR COMO HACER EL FIN DE LA JORNADA LABORAL, COMO
-    // IDENTIFICAR QUE ES EL DIA. Cuando haga el front se sabrá la logica
+    // No esta hecho
     public AsistenciaEmpleadoModel endOfWorkdayAsistenciaEmpleado(
             AsistenciaEmpleadoModel nuevoAsistenciaEmpleado, int idAsistenciaEmpleado) {
 

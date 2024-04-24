@@ -351,6 +351,7 @@ export default function PedidosClientes() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     setRowSelected(filaSeleccionada);
     toggleUpdatePedidoClienteForm();
   };
@@ -359,6 +360,7 @@ export default function PedidosClientes() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     setRowSelected(filaSeleccionada);
     toggleViewUniquePedidoClienteForm();
   };

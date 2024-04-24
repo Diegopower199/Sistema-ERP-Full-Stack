@@ -83,6 +83,7 @@ export default function FormClientes({
               clienteDataForm.provincia.toLowerCase()
             );
           });
+
           setSelectedProvince(infoProvincia);
 
           setFormData(() => ({
@@ -219,6 +220,7 @@ export default function FormClientes({
     const infoProvincia = PROVINCIAS_CON_CIUDADES.find((provincia) => {
       return provincia.provincia.toLowerCase() === value.toLowerCase();
     });
+
     setSelectedProvince(infoProvincia);
     setFormData((prevDataState) => {
       return {

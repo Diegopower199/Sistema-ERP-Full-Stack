@@ -15,7 +15,7 @@ import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
-import { getAllPersonas, getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
+import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
 import moment from "moment";
 
 let errorHandlingInfo = {
@@ -107,9 +107,12 @@ export default function FormVacacionesEmpleados({
 
   const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
     try {
-      const responseGetAllPersonasEmpleadosAndBecarios = await getAllPersonasEmpleadosAndBecarios();
+      const responseGetAllPersonasEmpleadosAndBecarios =
+        await getAllPersonasEmpleadosAndBecarios();
 
-      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonasEmpleadosAndBecarios);
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllPersonasEmpleadosAndBecarios
+      );
 
       if (errorHandlingInfo.noContent) {
         setPersonasOptions([]);
@@ -117,18 +120,21 @@ export default function FormVacacionesEmpleados({
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(responseGetAllPersonasEmpleadosAndBecarios.errorMessage);
+        handleBackendAndDBConnectionError(
+          responseGetAllPersonasEmpleadosAndBecarios.errorMessage
+        );
         return false;
       }
 
-      const optionsPersonas = responseGetAllPersonasEmpleadosAndBecarios.data.map((persona) => {
-        const { id_persona, nombre, apellidos, dni } = persona;
+      const optionsPersonas =
+        responseGetAllPersonasEmpleadosAndBecarios.data.map((persona) => {
+          const { id_persona, nombre, apellidos, dni } = persona;
 
-        return {
-          value: id_persona,
-          label: `${nombre + " " + apellidos} - ${dni}`,
-        };
-      });
+          return {
+            value: id_persona,
+            label: `${nombre + " " + apellidos} - ${dni}`,
+          };
+        });
 
       setPersonasOptions(optionsPersonas);
 
@@ -149,7 +155,8 @@ export default function FormVacacionesEmpleados({
           return;
         }
 
-        noCallErrorsDetected = await fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors();
+        noCallErrorsDetected =
+          await fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors();
 
         if (!noCallErrorsDetected) {
           return;

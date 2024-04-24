@@ -220,8 +220,9 @@ export default function VacacionesEmpleados() {
   }
 
   const fetchGetAllVacacionesEmpleadosAndHandleErrors = async () => {
+    setTableLoading(true);
+
     try {
-      setTableLoading(true);
       const responseGetAllVacacionesEmpleados =
         await getAllVacacionesEmpleados();
 
@@ -337,6 +338,7 @@ export default function VacacionesEmpleados() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     setRowSelected(filaSeleccionada);
     toggleUpdateVacacionEmpleadoForm();
   };
@@ -345,6 +347,7 @@ export default function VacacionesEmpleados() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     const personaPorPartes = filaSeleccionada.personaInfo.split("-");
 
     setIdVacacionEmpleadoSelected(id);
@@ -360,6 +363,7 @@ export default function VacacionesEmpleados() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     setRowSelected(filaSeleccionada);
     toggleViewUniqueVacacionEmpleadoForm();
   };

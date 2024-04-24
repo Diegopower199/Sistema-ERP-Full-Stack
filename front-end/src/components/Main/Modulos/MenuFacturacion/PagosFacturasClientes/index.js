@@ -234,6 +234,7 @@ export default function PagosFacturasClientes() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     setRowSelected(filaSeleccionada);
     toggleUpdatePagoFacturaClienteForm();
   };
@@ -242,6 +243,7 @@ export default function PagosFacturasClientes() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     setRowSelected(filaSeleccionada);
     toggleViewUniquePagoFacturaClienteForm();
   };

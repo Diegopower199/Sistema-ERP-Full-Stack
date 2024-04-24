@@ -180,8 +180,9 @@ export default function SolicitudesEmpleados() {
   }
 
   const fetchGetAllSolicitudesEmpleadosAndHandleErrors = async () => {
+    setTableLoading(true);
+
     try {
-      setTableLoading(true);
       const responseGetAllSolicitudesEmpleados =
         await getAllSolicitudesEmpleados();
 
@@ -283,6 +284,7 @@ export default function SolicitudesEmpleados() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     setRowSelected(filaSeleccionada);
     toggleUpdateSolicitudEmpleadoForm();
   };
@@ -304,6 +306,7 @@ export default function SolicitudesEmpleados() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     setRowSelected(filaSeleccionada);
     toggleViewUniqueSolicitudEmpleadoForm();
   };

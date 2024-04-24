@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import ErrorIcon from "@mui/icons-material/Error";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
-import { checkResponseForErrors } from "@/utils/responseErrorChecker";
 
 let errorHandlingInfo = {
   errorMessage: "",

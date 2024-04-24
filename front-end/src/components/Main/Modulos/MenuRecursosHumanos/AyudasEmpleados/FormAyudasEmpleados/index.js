@@ -133,9 +133,12 @@ export default function FormAyudasEmpleados({
 
   const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
     try {
-      const responseGetAllPersonasEmpleadosAndBecarios = await getAllPersonasEmpleadosAndBecarios();
+      const responseGetAllPersonasEmpleadosAndBecarios =
+        await getAllPersonasEmpleadosAndBecarios();
 
-      errorHandlingInfo = checkResponseForErrors(responseGetAllPersonasEmpleadosAndBecarios);
+      errorHandlingInfo = checkResponseForErrors(
+        responseGetAllPersonasEmpleadosAndBecarios
+      );
 
       if (errorHandlingInfo.noContent) {
         setPersonasOptions([]);
@@ -143,18 +146,21 @@ export default function FormAyudasEmpleados({
       }
 
       if (errorHandlingInfo.backendOrDDBBConnectionError) {
-        handleBackendAndDBConnectionError(responseGetAllPersonasEmpleadosAndBecarios.errorMessage);
+        handleBackendAndDBConnectionError(
+          responseGetAllPersonasEmpleadosAndBecarios.errorMessage
+        );
         return false;
       }
 
-      const optionsPersonas = responseGetAllPersonasEmpleadosAndBecarios.data.map((persona) => {
-        const { id_persona, nombre, apellidos, dni } = persona;
+      const optionsPersonas =
+        responseGetAllPersonasEmpleadosAndBecarios.data.map((persona) => {
+          const { id_persona, nombre, apellidos, dni } = persona;
 
-        return {
-          value: id_persona,
-          label: `${nombre + " " + apellidos} - ${dni}`,
-        };
-      });
+          return {
+            value: id_persona,
+            label: `${nombre + " " + apellidos} - ${dni}`,
+          };
+        });
 
       setPersonasOptions(optionsPersonas);
 
@@ -181,7 +187,8 @@ export default function FormAyudasEmpleados({
           return;
         }
 
-        noCallErrorsDetected = await fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors();
+        noCallErrorsDetected =
+          await fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors();
 
         if (!noCallErrorsDetected) {
           return;

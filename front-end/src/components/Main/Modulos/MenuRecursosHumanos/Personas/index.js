@@ -209,8 +209,9 @@ export default function Personas() {
   }
 
   const fetchGetAllPersonasAndHandleErrors = async () => {
+    setTableLoading(true);
+
     try {
-      setTableLoading(true);
       const responseGetAllPersonas = await getAllPersonas();
 
       errorHandlingInfo = checkResponseForErrors(responseGetAllPersonas);
@@ -298,6 +299,7 @@ export default function Personas() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     setRowSelected(filaSeleccionada);
     toggleUpdatePersonaForm();
   };
@@ -316,6 +318,7 @@ export default function Personas() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     setRowSelected(filaSeleccionada);
     toggleViewUniquePersonaForm();
   };

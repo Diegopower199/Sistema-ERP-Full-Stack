@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
 import {
+  fechaCumpleFormatoYYYYMMDD,
   formatearFechaYYYYMMDD,
-  validarFechaYYYYMMDD,
 } from "@/utils/functionsFecha";
 import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
@@ -264,32 +264,46 @@ export default function FormPedidosClientes({
         }
 
         if (operationType === "update" || operationType === "view") {
-          const fechaSolicitudValida = validarFechaYYYYMMDD(
-            pedidoClienteDataForm.fecha_solicitud_pedido
-          );
-          const fechaEntregaPrevistaValida = validarFechaYYYYMMDD(
-            pedidoClienteDataForm.fecha_entrega_prevista
-          );
-          const fechaEntregaRealValida = validarFechaYYYYMMDD(
-            pedidoClienteDataForm.fecha_entrega_real
-          );
+          const fechaSolivitudPedido =
+            pedidoClienteDataForm.fecha_solicitud_pedido;
+          const fechaEntregaPrevista =
+            pedidoClienteDataForm.fecha_entrega_prevista;
+          const fechaEntregaReal = pedidoClienteDataForm.fecha_entrega_real;
+
+          const fechaSolicitudValida =
+            fechaCumpleFormatoYYYYMMDD(fechaSolivitudPedido);
+          const fechaEntregaPrevistaValida =
+            fechaCumpleFormatoYYYYMMDD(fechaEntregaPrevista);
+          const fechaEntregaRealValida =
+            fechaCumpleFormatoYYYYMMDD(fechaEntregaReal);
 
           if (
-            fechaSolicitudValida === null ||
-            fechaEntregaPrevistaValida === null ||
-            fechaEntregaRealValida === null
+            !fechaSolicitudValida ||
+            !fechaEntregaPrevistaValida ||
+            !fechaEntregaRealValida
           ) {
-            const fechaSolicitudFormateada = formatearFechaYYYYMMDD(
-              pedidoClienteDataForm.fecha_solicitud_pedido
-            );
+            let fechaSolicitudFormateada = fechaSolivitudPedido;
+            if (!fechaSolicitudValida) {
+              fechaSolicitudFormateada = formatearFechaYYYYMMDD(
+                pedidoClienteDataForm.fecha_solicitud_pedido
+              );
+            }
 
-            const fechaEntregaPrevistaFormateada = formatearFechaYYYYMMDD(
-              pedidoClienteDataForm.fecha_entrega_prevista
-            );
+            let fechaEntregaPrevistaFormateada = "";
+            if (!fechaEntregaPrevistaValida) {
+              fechaEntregaPrevistaFormateada =
+                fechaEntregaPrevista !== null
+                  ? formatearFechaYYYYMMDD(fechaEntregaPrevista)
+                  : "";
+            }
 
-            const fechaEntregaRealFormateada = formatearFechaYYYYMMDD(
-              pedidoClienteDataForm.fecha_entrega_real
-            );
+            let fechaEntregaRealFormateada = "";
+            if (!fechaEntregaRealValida) {
+              fechaEntregaRealFormateada =
+                fechaEntregaReal !== null
+                  ? formatearFechaYYYYMMDD(fechaEntregaReal)
+                  : "";
+            }
 
             setFormData(() => ({
               ...pedidoClienteDataForm,

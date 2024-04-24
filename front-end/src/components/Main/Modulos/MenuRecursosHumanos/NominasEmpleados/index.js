@@ -233,8 +233,9 @@ export default function NominasEmpleados() {
   }
 
   const fetchGetAllNominasEmpleadosAndHandleErrors = async () => {
+    setTableLoading(true);
+
     try {
-      setTableLoading(true);
       const responseGetAllNominasEmpleados = await getAllNominasEmpleados();
 
       errorHandlingInfo = checkResponseForErrors(
@@ -365,7 +366,10 @@ export default function NominasEmpleados() {
   };
 
   const handleViewUniqueClick = (id) => () => {
-    const filaSeleccionada = dataSource.find((row) => {return row.id === id});
+    const filaSeleccionada = dataSource.find((row) => {
+      return row.id === id;
+    });
+
     setRowSelected(filaSeleccionada);
     toggleViewUniqueNominaEmpleadoForm();
   };
@@ -514,7 +518,9 @@ export default function NominasEmpleados() {
             cancelButtonProps={{ style: { display: "none" } }}
             onCancel={handleModalClose}
             centered
-          >{mensajeFuncionalidad}</Antd.Modal>
+          >
+            {mensajeFuncionalidad}
+          </Antd.Modal>
         );
       } else {
         if (!aceptarBotonParaVerResultadosNominasEmpleados) {

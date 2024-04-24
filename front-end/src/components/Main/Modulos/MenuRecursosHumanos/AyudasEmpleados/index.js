@@ -293,7 +293,7 @@ export default function AyudasEmpleados() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
-    
+
     setRowSelected(filaSeleccionada);
     toggleUpdateAyudaEmpleadoForm();
   };

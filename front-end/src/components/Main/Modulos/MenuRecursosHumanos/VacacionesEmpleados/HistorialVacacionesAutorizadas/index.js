@@ -160,8 +160,9 @@ export default function HistorialVacacionesAutorizadas({
   }
 
   const fetchCheckVacacionesAutorizadasAndHandleErrors = async () => {
+    setTableLoading(true);
+
     try {
-      setTableLoading(true);
       const responseCheckVacacionesAutorizadas =
         await checkVacacionesAutorizadas();
 
@@ -185,8 +186,9 @@ export default function HistorialVacacionesAutorizadas({
 
   const fetchGetAllTransaccionesVacacionesAutorizadasAndHandleErrors =
     async () => {
+      setTableLoading(true);
+
       try {
-        setTableLoading(true);
         const responseGetAllTransaccionesVacacionesAutorizadas =
           await getAllTransaccionesVacacionesAutorizadas();
 

@@ -321,6 +321,7 @@ export default function BajasLaboralesEmpleados() {
     const filaSeleccionada = dataSource.find((row) => {
       return row.id === id;
     });
+
     setRowSelected(filaSeleccionada);
     toggleViewUniqueBajaLaboralEmpleadoForm();
   };

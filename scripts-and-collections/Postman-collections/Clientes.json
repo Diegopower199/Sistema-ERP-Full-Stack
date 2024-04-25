@@ -8,13 +8,33 @@
 	},
 	"item": [
 		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/clientes/api/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"api",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "save",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nif\": \"12345678A\",\r\n    \"nombre_apellidos\": \"Elena Rodriguez\",\r\n    \"razon_social\": null,\r\n    \"numero_telefono\": \"2222222\",\r\n    \"correo_electronico\": \"elena.rodriguez@example.com\",\r\n    \"direccion\": \"Calle Falsa 123\",\r\n    \"codigo_postal\": \"28001\",\r\n    \"provincia\": \"MADRID\",\r\n    \"ciudad\": \"MADRID\"\r\n}\r\n",
+					"raw": "{\r\n    \"nif\": \"12345679A\",\r\n    \"nombre_apellidos\": \"Pedro Lopez\",\r\n    \"razon_social\": null,\r\n    \"numero_telefono\": \"34678901232\",\r\n    \"correo_electronico\": \"pedrolopez@gmail.com\",\r\n    \"direccion\": \"calle mayor\",\r\n    \"codigo_postal\": \"28050\",\r\n    \"ciudad\": \"Madrid\",\r\n    \"provincia\": \"Madrid\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -31,26 +51,6 @@
 						"clientes",
 						"api",
 						"save"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getAll",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/clientes/api/getAll",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"clientes",
-						"api",
-						"getAll"
 					]
 				}
 			},
@@ -84,7 +84,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nif\": \"NINGUN NIF PERO CON UPDATE\",\r\n    \"nombre_apellidos\": \"Diego Gonzalez\",\r\n    \"razon_social\": \"AAA\",\r\n    \"numero_telefono\": \"1111111\",\r\n    \"correo_electronico\": \"NINGUN COREO\" ,\r\n    \"direccion\": \"SIN DIRECCION\",\r\n    \"codigo_postal\": \"28043\",\r\n    \"ciudad\": \"MADRID\",\r\n    \"provincia\": \"MADRID\"\r\n}",
+					"raw": "{\r\n    \"nif\": \"12345679A\",\r\n    \"nombre_apellidos\": \"Pedro Lopez Garcia\",\r\n    \"razon_social\": null,\r\n    \"numero_telefono\": \"34678901232\",\r\n    \"correo_electronico\": \"pedrolopez@gmail.com\",\r\n    \"direccion\": \"calle mayor\",\r\n    \"codigo_postal\": \"28050\",\r\n    \"ciudad\": \"Madrid\",\r\n    \"provincia\": \"Madrid\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

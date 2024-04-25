@@ -62,7 +62,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/tiposEstados/api/getById/21",
+					"raw": "localhost:8080/tiposEstados/api/getById/1",
 					"host": [
 						"localhost"
 					],
@@ -71,7 +71,7 @@
 						"tiposEstados",
 						"api",
 						"getById",
-						"21"
+						"1"
 					]
 				}
 			},
@@ -92,7 +92,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/tiposEstados/api/update/2",
+					"raw": "localhost:8080/tiposEstados/api/update/1",
 					"host": [
 						"localhost"
 					],
@@ -101,7 +101,7 @@
 						"tiposEstados",
 						"api",
 						"update",
-						"2"
+						"1"
 					]
 				}
 			},

@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"fecha_solicitud\": \"2023-12-15\",\r\n    \"observacion\": \"NADA\",\r\n    \"persona\": {\r\n        \"dni\": \"05953694Y\"\r\n    },\r\n    \"tipo_solicitud\": {\r\n        \"id_tipo_solicitud\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }\r\n}",
+					"raw": "{\r\n    \"fecha_solicitud\": \"2024-07-10\",\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"id_persona\": 2\r\n    },\r\n    \"tipo_solicitud\": {\r\n        \"id_tipo_solicitud\": 3\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -84,7 +84,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"fecha_solicitud\": \"2023-12-15\",\r\n    \"observacion\": \"NADA\",\r\n    \"persona\": {\r\n        \"dni\": \"05953694Y\"\r\n    },\r\n    \"tipo_solicitud\": {\r\n        \"id_tipo_solicitud\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }\r\n}",
+					"raw": "{\r\n    \"fecha_solicitud\": \"2024-07-10\",\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"id_persona\": 2\r\n    },\r\n    \"tipo_solicitud\": {\r\n        \"id_tipo_solicitud\": 3\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 2\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -92,7 +92,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/solicitudesEmpleados/api/update/5",
+					"raw": "localhost:8080/solicitudesEmpleados/api/update/1",
 					"host": [
 						"localhost"
 					],
@@ -101,7 +101,7 @@
 						"solicitudesEmpleados",
 						"api",
 						"update",
-						"5"
+						"1"
 					]
 				}
 			},
@@ -113,7 +113,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/solicitudesEmpleados/api/delete/5",
+					"raw": "localhost:8080/solicitudesEmpleados/api/delete/1",
 					"host": [
 						"localhost"
 					],
@@ -122,7 +122,7 @@
 						"solicitudesEmpleados",
 						"api",
 						"delete",
-						"5"
+						"1"
 					]
 				}
 			},

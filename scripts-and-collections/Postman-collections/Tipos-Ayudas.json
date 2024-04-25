@@ -62,7 +62,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/tiposAyudas/api/getById/13",
+					"raw": "localhost:8080/tiposAyudas/api/getById/1",
 					"host": [
 						"localhost"
 					],
@@ -71,7 +71,7 @@
 						"tiposAyudas",
 						"api",
 						"getById",
-						"13"
+						"1"
 					]
 				}
 			},
@@ -92,7 +92,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/tiposAyudas/api/update/18",
+					"raw": "localhost:8080/tiposAyudas/api/update/1",
 					"host": [
 						"localhost"
 					],
@@ -101,7 +101,7 @@
 						"tiposAyudas",
 						"api",
 						"update",
-						"18"
+						"1"
 					]
 				}
 			},
@@ -113,7 +113,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/tiposAyudas/api/delete/5",
+					"raw": "localhost:8080/tiposAyudas/api/delete/1",
 					"host": [
 						"localhost"
 					],
@@ -122,7 +122,7 @@
 						"tiposAyudas",
 						"api",
 						"delete",
-						"5"
+						"1"
 					]
 				}
 			},

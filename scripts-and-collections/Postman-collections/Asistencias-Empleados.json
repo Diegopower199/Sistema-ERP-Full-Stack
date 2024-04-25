@@ -8,35 +8,6 @@
 	},
 	"item": [
 		{
-			"name": "startOfWorkday",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"fecha_asistencia\": \"2023-12-13\",\r\n    \"hora_entrada\": \"17:33:30\",\r\n    \"hora_salida\": null,\r\n    \"horas_trabajadas_dia\": null,\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"id_persona\": 1\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/asistenciasEmpleados/api/startOfWorkday",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"asistenciasEmpleados",
-						"api",
-						"startOfWorkday"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "getAll",
 			"request": {
 				"method": "GET",
@@ -51,6 +22,35 @@
 						"asistenciasEmpleados",
 						"api",
 						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_asistencia\": \"2024-06-05\",\r\n    \"hora_entrada\": \"08:06:00\",\r\n    \"hora_salida\": \"17:05:00\",\r\n    \"horas_trabajadas_dia\": \"\",\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"id_persona\": 2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/asistenciasEmpleados/api/save",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"asistenciasEmpleados",
+						"api",
+						"save"
 					]
 				}
 			},
@@ -84,7 +84,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"fecha_asistencia\": \"2023-12-12\",\r\n    \"hora_entrada\": \"10:33:31\",\r\n    \"hora_salida\": \"16:33:30\",\r\n    \"horas_trabajadas_dia\": null,\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"id_persona\": 1\r\n    }\r\n}",
+					"raw": "{\r\n    \"fecha_asistencia\": \"2024-06-05\",\r\n    \"hora_entrada\": \"08:06:00\",\r\n    \"hora_salida\": \"17:05:00\",\r\n    \"horas_trabajadas_dia\": null,\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"id_persona\": 2\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -113,7 +113,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/asistenciasEmpleados/api/delete/5",
+					"raw": "localhost:8080/asistenciasEmpleados/api/delete/1",
 					"host": [
 						"localhost"
 					],
@@ -122,7 +122,36 @@
 						"asistenciasEmpleados",
 						"api",
 						"delete",
-						"5"
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "startOfWorkday",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/asistenciasEmpleados/api/startOfWorkday",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"asistenciasEmpleados",
+						"api",
+						"startOfWorkday"
 					]
 				}
 			},
@@ -143,7 +172,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/asistenciasEmpleados/api/endOfWorkday/2",
+					"raw": "localhost:8080/asistenciasEmpleados/api/endOfWorkday/1",
 					"host": [
 						"localhost"
 					],
@@ -152,7 +181,7 @@
 						"asistenciasEmpleados",
 						"api",
 						"endOfWorkday",
-						"2"
+						"1"
 					]
 				}
 			},

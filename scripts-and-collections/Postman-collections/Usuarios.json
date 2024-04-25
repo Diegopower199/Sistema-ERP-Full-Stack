@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nombre_usuario\": \"ppf\",\r\n    \"password\": \"123\",\r\n    \"persona\": {\r\n        \"id_persona\": 1\r\n    },\r\n    \"tipo_usuario\": {\r\n        \"id_tipo_usuario\": 1\r\n    }\r\n}",
+					"raw": "{\r\n    \"nombre_usuario\": \"maria.garcia84\",\r\n    \"password\": \"Segura#2024\",\r\n    \"persona\": {\r\n        \"id_persona\": 1\r\n    },\r\n    \"tipo_usuario\": {\r\n        \"id_tipo_usuario\": 1\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -84,7 +84,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nombre_usuario\": \"ppf\",\r\n    \"password\": \"234\",\r\n    \"persona\": {\r\n        \"id_persona\": 1\r\n    },\r\n    \"tipo_usuario\": {\r\n        \"id_tipo_usuario\": 1\r\n    }\r\n}",
+					"raw": "{\r\n    \"nombre_usuario\": \"maria.garcia845\",\r\n    \"password\": \"Segura#2024\",\r\n    \"persona\": {\r\n        \"id_persona\": 1\r\n    },\r\n    \"tipo_usuario\": {\r\n        \"id_tipo_usuario\": 1\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -135,7 +135,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nombre_usuario\": \"a\",\r\n    \"password\": \"a\"\r\n}",
+					"raw": "{\r\n    \"nombre_usuario\": \"maria.garcia84\",\r\n    \"password\": \"Segura#2024\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -164,7 +164,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"correo_electronico\": \"diegogs2323@gmail.com\",\r\n    \"new_password\": \"aa\"\r\n}",
+					"raw": "{\r\n    \"correo_electronico\": \"mariagarcia12@gmail.com\",\r\n    \"new_password\": \"Segura#2024Change\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

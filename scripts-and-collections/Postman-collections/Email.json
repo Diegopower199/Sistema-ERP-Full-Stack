@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"to\": \"diegogs2323@gmail.com\",\r\n    \"verificationCode\": \"123456\"\r\n}",
+					"raw": "{\r\n    \"to\": \"mariagarcia12@gmail.com\",\r\n    \"verificationCode\": \"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

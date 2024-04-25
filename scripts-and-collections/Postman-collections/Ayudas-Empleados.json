@@ -8,13 +8,33 @@
 	},
 	"item": [
 		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/ayudasEmpleados/api/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ayudasEmpleados",
+						"api",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "save",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"fecha_inicio\": \"2023-12-12\",\r\n    \"fecha_fin\": \"2023-12-13\", \r\n    \"valor_asociado\": 1000,\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"dni\": \"05953694Y\"\r\n    },\r\n    \"tipo_ayuda\": {\r\n        \"id_tipo_ayuda\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }   \r\n}",
+					"raw": "{\r\n    \"fecha_inicio\": \"2024-04-25\",\r\n    \"fecha_fin\": \"2024-05-28\",\r\n    \"valor_asociado\": 200,\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"id_persona\": 2\r\n    },\r\n    \"tipo_ayuda\": {\r\n        \"id_tipo_ayuda\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -31,26 +51,6 @@
 						"ayudasEmpleados",
 						"api",
 						"save"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getAll",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/ayudasEmpleados/api/getAll",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"ayudasEmpleados",
-						"api",
-						"getAll"
 					]
 				}
 			},
@@ -84,7 +84,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"fecha_inicio\": \"2023-12-12\",\r\n    \"fecha_fin\": \"2023-12-14\", \r\n    \"valor_asociado\": 1000,\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"dni\": \"05953694Y\"\r\n    },\r\n    \"tipo_ayuda\": {\r\n        \"id_tipo_ayuda\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 1\r\n    }   \r\n}",
+					"raw": "{\r\n    \"fecha_inicio\": \"2024-04-25\",\r\n    \"fecha_fin\": \"2024-05-28\",\r\n    \"valor_asociado\": 200,\r\n    \"observacion\": null,\r\n    \"persona\": {\r\n        \"id_persona\": 2\r\n    },\r\n    \"tipo_ayuda\": {\r\n        \"id_tipo_ayuda\": 1\r\n    },\r\n    \"tipo_estado\": {\r\n        \"id_tipo_estado\": 2\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -113,7 +113,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/ayudasEmpleados/api/delete/5",
+					"raw": "localhost:8080/ayudasEmpleados/api/delete/1",
 					"host": [
 						"localhost"
 					],
@@ -122,7 +122,7 @@
 						"ayudasEmpleados",
 						"api",
 						"delete",
-						"5"
+						"1"
 					]
 				}
 			},

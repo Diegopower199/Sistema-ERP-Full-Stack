@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import commonclasses.TransaccionVacacion;
 import tfg.backend.ExcepcionControlada.ConexionServidoresException;
 import tfg.backend.ExcepcionControlada.TransaccionVacacionRechazadaException;
+import tfg.backend.models.VacacionEmpleadoModel;
 import tfg.backend.services.BlockchainVacacionAutorizadaService;
 import tfg.backend.utils.GlobalConstants;
 
@@ -99,6 +100,31 @@ public class BlockchainVacacionAutorizadaController {
             } else {
                 return ResponseEntity.ok(allVacacionesEmpleados);
             }
+
+        } catch (ConexionServidoresException e) {
+            List<Map<String, Object>> resultado = new ArrayList<>();
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            resultado.add(response);
+            return ResponseEntity.status(e.getStatus()).body(resultado);
+        } catch (Exception e) {
+            List<Map<String, Object>> resultado = new ArrayList<>();
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            resultado.add(response);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(resultado);
+        }
+    }
+
+    // localhost:8080/blockchainVacacionesAutorizadas/api/saveListVacacionesAutorizadas
+    @PostMapping("/api/saveListVacacionesAutorizadas")
+    public ResponseEntity<List<Map<String, Object>>> saveList(
+            @RequestBody List<VacacionEmpleadoModel> listaVacacionesEmpleadosRequest) {
+        try {
+            List<Map<String, Object>> nuevasVacacionesAutorizadas = blockchainVacacionAutorizadaService
+                    .guardarListaTransaccionesVacaciones(listaVacacionesEmpleadosRequest);
+
+            return ResponseEntity.ok(nuevasVacacionesAutorizadas);
 
         } catch (ConexionServidoresException e) {
             List<Map<String, Object>> resultado = new ArrayList<>();

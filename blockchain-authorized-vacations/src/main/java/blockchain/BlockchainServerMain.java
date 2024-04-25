@@ -59,8 +59,10 @@ public class BlockchainServerMain {
                     MensajeClienteServidor mensajeDelCliente = (MensajeClienteServidor) objectInputStream.readObject();
 
                     String tipoOperacionRecibida = mensajeDelCliente.getTipoOperacion().toUpperCase();
+
                     TransaccionVacacion transaccionVacacionRecibido = mensajeDelCliente
                             .getTransaccionVacacionAutorizada();
+
                     List<TransaccionVacacion> listaTransaccionesVacacionesAutorizadasRecibido = mensajeDelCliente
                             .getListaTransaccionesVacacionesAutorizadas();
 
@@ -70,7 +72,8 @@ public class BlockchainServerMain {
                         case "GET ALL":
 
                             respuestaAlCliente = new RespuestaServidorCliente(
-                                    libroVacaciones.getLibroTransaccionesVacacionesAutorizadas(), 200);
+                                    libroVacaciones.getLibroTransaccionesVacacionesAutorizadas(),
+                                    "Enviando libro de vacaciones", 200);
                             objectOutputStream.writeObject(respuestaAlCliente);
 
                             break;
@@ -100,6 +103,17 @@ public class BlockchainServerMain {
                             objectOutputStream.writeObject(respuestaAlCliente);
 
                             break;
+                        case "ADD LIST":
+
+                            List<Block> listaBloquesDeVacacionesAlmacenados = guardarListaTransaccionesVacaciones(
+                                    listaTransaccionesVacacionesAutorizadasRecibido);
+
+                            respuestaAlCliente = new RespuestaServidorCliente(
+                                    listaBloquesDeVacacionesAlmacenados,
+                                    "Vacaciones añadidas correctamente", 200);
+                            objectOutputStream.writeObject(respuestaAlCliente);
+
+                            break;
                         default:
                             respuestaAlCliente = new RespuestaServidorCliente(
                                     "Operacion no valida", 200, null, null);
@@ -108,10 +122,12 @@ public class BlockchainServerMain {
                             break;
                     }
                 } catch (IOException | ClassNotFoundException e) {
+                    System.err.println("Archivo no encontrado. Se creara uno nuevo");
                     e.printStackTrace();
                 }
             }
         } catch (IOException e) {
+            System.err.println("Archivo no encontrado. Se creara uno nuevo");
             e.printStackTrace();
         }
 
@@ -154,8 +170,20 @@ public class BlockchainServerMain {
         return newBlock;
     }
 
+    private static List<Block> guardarListaTransaccionesVacaciones(
+            List<TransaccionVacacion> listaTransaccionesVacaciones) {
+        List<Block> listaBloquesDeVacacionesAlmacenados = new ArrayList<>();
+
+        for (TransaccionVacacion transaccionVacacion : listaTransaccionesVacaciones) {
+            Block newBlockAdd = guardarTransaccionVacacion(transaccionVacacion);
+            listaBloquesDeVacacionesAlmacenados.add(newBlockAdd);
+        }
+        return listaBloquesDeVacacionesAlmacenados;
+    }
+
     private static List<TransaccionVacacion> obtenerVacacionesConInconsistencias(
             List<TransaccionVacacion> listaTransaccionesVacaciones) {
+
         List<Block> bloquesVacacionesAutorizadas = libroVacaciones.getLibroTransaccionesVacacionesAutorizadas();
 
         // Variable para almacenar las inconsistencias encontradas

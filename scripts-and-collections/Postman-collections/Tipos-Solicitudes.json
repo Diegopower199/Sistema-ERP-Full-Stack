@@ -113,7 +113,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/tiposSolicitudes/api/delete/3",
+					"raw": "localhost:8080/tiposSolicitudes/api/delete/1",
 					"host": [
 						"localhost"
 					],
@@ -122,7 +122,7 @@
 						"tiposSolicitudes",
 						"api",
 						"delete",
-						"3"
+						"1"
 					]
 				}
 			},

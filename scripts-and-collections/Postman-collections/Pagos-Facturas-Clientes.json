@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\r\n}",
+					"raw": "{\r\n    \"fecha_pago_realizada\": \"2024-04-26\",\r\n    \"importe_pagado\": 122,\r\n    \"metodo_pago\": \"Efectivo\",\r\n    \"factura_cliente\": {\r\n        \"id_factura_cliente\": \"1\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -62,7 +62,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/pagosFacturasClientes/api/getById/21",
+					"raw": "localhost:8080/pagosFacturasClientes/api/getById/1",
 					"host": [
 						"localhost"
 					],
@@ -71,7 +71,7 @@
 						"pagosFacturasClientes",
 						"api",
 						"getById",
-						"21"
+						"1"
 					]
 				}
 			},
@@ -84,7 +84,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\r\n}",
+					"raw": "{\r\n    \"fecha_pago_realizada\": \"2024-04-26\",\r\n    \"importe_pagado\": 122.1,\r\n    \"metodo_pago\": \"Efectivo\",\r\n    \"factura_cliente\": {\r\n        \"id_factura_cliente\": 1\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -92,7 +92,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/pagosFacturasClientes/api/update/2",
+					"raw": "localhost:8080/pagosFacturasClientes/api/update/1",
 					"host": [
 						"localhost"
 					],
@@ -101,7 +101,7 @@
 						"pagosFacturasClientes",
 						"api",
 						"update",
-						"2"
+						"1"
 					]
 				}
 			},

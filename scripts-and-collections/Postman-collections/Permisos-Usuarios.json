@@ -92,7 +92,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/permisosUsuarios/api/update/2",
+					"raw": "localhost:8080/permisosUsuarios/api/update/1",
 					"host": [
 						"localhost"
 					],
@@ -101,7 +101,7 @@
 						"permisosUsuarios",
 						"api",
 						"update",
-						"2"
+						"1"
 					]
 				}
 			},

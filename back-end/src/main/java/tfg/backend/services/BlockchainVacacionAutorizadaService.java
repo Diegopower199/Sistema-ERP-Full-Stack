@@ -5,6 +5,7 @@ import java.net.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,7 +20,11 @@ import commonclasses.TransaccionVacacion;
 import tfg.backend.ExcepcionControlada.ConexionServidoresException;
 import tfg.backend.ExcepcionControlada.TransaccionVacacionRechazadaException;
 import tfg.backend.models.BlockchainInfo;
+import tfg.backend.models.PersonaModel;
+import tfg.backend.models.TipoEstadoModel;
 import tfg.backend.models.VacacionEmpleadoModel;
+import tfg.backend.repositories.PersonaRepository;
+import tfg.backend.repositories.TipoEstadoRepository;
 import tfg.backend.repositories.VacacionEmpleadoRepository;
 import tfg.backend.utils.GlobalConstants;
 
@@ -31,6 +36,12 @@ public class BlockchainVacacionAutorizadaService {
 
     @Autowired
     private VacacionEmpleadoRepository vacacionEmpleadoRepository;
+
+    @Autowired
+    private PersonaRepository personaRepository;
+
+    @Autowired
+    private TipoEstadoRepository tipoEstadoRepository;
 
     public List<Map<String, Object>> getAllTransaccionesVacacionesAutorizadas() throws ConexionServidoresException {
         List<Block> libroTransaccionesVacacionesAutorizadas = new ArrayList<>();
@@ -57,7 +68,7 @@ public class BlockchainVacacionAutorizadaService {
         } catch (ConnectException ce) {
             throw new ConexionServidoresException("El servidor esta caido", 500);
         } catch (IOException | ClassNotFoundException e) {
-            
+
         }
 
         return resultado;
@@ -186,7 +197,98 @@ public class BlockchainVacacionAutorizadaService {
         } catch (ConnectException ce) {
             throw new ConexionServidoresException("El servidor esta caido", 500);
         } catch (IOException | ClassNotFoundException e) {
-           
+        }
+
+        return resultado;
+    }
+
+    public List<Map<String, Object>> guardarListaTransaccionesVacaciones(
+            List<VacacionEmpleadoModel> listaVacacionesEmpleados)
+            throws ConexionServidoresException {
+        List<TransaccionVacacion> listaTransaccionesVacacionesAutorizadas = new ArrayList<>();
+        List<Map<String, Object>> resultado = new ArrayList<>();
+
+        RespuestaServidorCliente respuestaDelServidor = null;
+
+        try (Socket socket = new Socket(GlobalConstants.HOST_BLOCKCHAIN_SERVER, GlobalConstants.PORT_BLOCKCHAIN_SERVER);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())) {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            for (VacacionEmpleadoModel vacacionEmpleado : listaVacacionesEmpleados) {
+
+
+                int id_persona = vacacionEmpleado.getPersona().getId_persona();
+                PersonaModel personaEncontrado = personaRepository.findById(id_persona)
+                        .orElseThrow(() -> new RuntimeException("Persona con id " + id_persona + " no encontrado"));
+
+                int id_tipo_estado = vacacionEmpleado.getTipo_estado().getId_tipo_estado();
+
+                TipoEstadoModel tipoEstadoEncontrado = tipoEstadoRepository.findById(id_tipo_estado)
+                        .orElseThrow(
+                                () -> new RuntimeException("Tipo estado con id " + id_tipo_estado + " no encontrado"));
+
+                LocalDate fecha_inicio = vacacionEmpleado.getFecha_inicio();
+                LocalDate fecha_fin = vacacionEmpleado.getFecha_fin();
+
+                int id_vacacion_empleado = vacacionEmpleado.getId_vacacion_empleado();
+                String fechaInicioString = fecha_inicio.format(formatter);
+                String fechaFinString = fecha_fin.format(formatter);
+                int dias_disponibles = vacacionEmpleado.getDias_disponibles();
+                int dias_pendientes = vacacionEmpleado.getDias_pendientes();
+                int dias_solicitados = vacacionEmpleado.getDias_solicitados();
+                int dias_disfrutados = vacacionEmpleado.getDias_disfrutados();
+                String observacion = vacacionEmpleado.getObservacion();
+                String dni = personaEncontrado.getDni();
+                String tipo_estado = tipoEstadoEncontrado.getTipo_estado();
+
+                TransaccionVacacion transaccionVacacion = new TransaccionVacacion(id_vacacion_empleado,
+                        fechaInicioString,
+                        fechaFinString, dias_disponibles, dias_pendientes, dias_solicitados, dias_disfrutados,
+                        observacion,
+                        dni, tipo_estado);
+
+                transaccionVacacion.setHashTransaccionVacacion(transaccionVacacion.calcularHashTransaccion());
+
+                listaTransaccionesVacacionesAutorizadas.add(transaccionVacacion);
+
+            }
+
+            MensajeClienteServidor mensajeAlServidor = new MensajeClienteServidor("ADD LIST", null,
+                    listaTransaccionesVacacionesAutorizadas);
+
+            objectOutputStream.writeObject(mensajeAlServidor);
+
+            respuestaDelServidor = (RespuestaServidorCliente) objectInputStream.readObject();
+
+            for (Block blockTransaccionesVacacionesAutorizadas : respuestaDelServidor
+                    .getLibroTransaccionesVacacionesAutorizadas()) {
+
+                int idVacacionEmpleado = blockTransaccionesVacacionesAutorizadas.getDataTransaccionVacacion()
+                        .getId_vacacion_empleado();
+                String hashBlock = blockTransaccionesVacacionesAutorizadas.getHashBlock();
+                String previousHashBlock = blockTransaccionesVacacionesAutorizadas.getPreviousHashBlock();
+                String hashTransaccionVacacion = blockTransaccionesVacacionesAutorizadas.getDataTransaccionVacacion()
+                        .getHashTransaccionVacacion();
+                String timestampTransaccionVacacion = String
+                        .valueOf(blockTransaccionesVacacionesAutorizadas.getDataTransaccionVacacion().getTimestamp());
+
+                BlockchainInfo blockchainInfo = new BlockchainInfo(hashTransaccionVacacion, hashBlock,
+                        previousHashBlock,
+                        timestampTransaccionVacacion,
+                        false);
+
+                vacacionEmpleadoService.actualizarVacacionesAutorizadasBlockchain(blockchainInfo, idVacacionEmpleado);
+            }
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("resultado", respuestaDelServidor.getMensaje());
+            resultado.add(response);
+
+        } catch (ConnectException ce) {
+            throw new ConexionServidoresException("El servidor esta caido", 500);
+        } catch (IOException | ClassNotFoundException e) {
         }
 
         return resultado;

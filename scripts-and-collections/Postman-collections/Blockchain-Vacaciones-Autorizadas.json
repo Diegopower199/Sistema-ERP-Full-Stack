@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \r\n    \"id_vacacion_empleado\": 111111,\r\n    \"fecha_inicio\": \"2023-12-15\",\r\n    \"fecha_fin\": \"2023-12-25\",\r\n    \"dias_disponibles\": 0,\r\n    \"dias_pendientes\": 0,\r\n    \"dias_solicitados\": 0,\r\n    \"dias_disfrutados\": 0,\r\n    \"observacion\": null,\r\n    \"dni\": \"05953694Y\",\r\n    \"tipo_estado\": \"Aprobado\"\r\n}",
+					"raw": "{\r\n    \"id_vacacion_empleado\": 1,\r\n    \"fecha_inicio\": \"2023-05-01\",\r\n    \"fecha_fin\": \"2023-05-05\",\r\n    \"dias_disponibles\": 25,\r\n    \"dias_pendientes\": 0,\r\n    \"dias_solicitados\": 5,\r\n    \"dias_disfrutados\": 5,\r\n    \"observacion\": \"Vacaciones aceptadas para mayo.\",\r\n    \"dni\": \"12345678A\",\r\n    \"tipo_estado\": \"Aprobado\"\r\n}\r\n/*{\r\n\t\"id_vacacion_empleado\": 2,\r\n\t\"fecha_inicio\": \"2023-06-01\",\r\n\t\"fecha_fin\": \"2023-06-05\",\r\n\t\"dias_disponibles\": 20,\r\n\t\"dias_pendientes\": 0,\r\n\t\"dias_solicitados\": 5,\r\n\t\"dias_disfrutados\": 10,\r\n\t\"observacion\": \"Vacaciones aceptadas para junio.\",\r\n\t\"dni\": \"12345678A\",\r\n\t\"tipo_estado\": \"Aprobado\"\r\n}*/\r\n/*{\r\n\t\"id_vacacion_empleado\": 3,\r\n\t\"fecha_inicio\": \"2023-07-01\",\r\n\t\"fecha_fin\": \"2023-07-05\",\r\n\t\"dias_disponibles\": 20,\r\n\t\"dias_pendientes\": 0,\r\n\t\"dias_solicitados\": 5,\r\n\t\"dias_disfrutados\": 10,\r\n\t\"observacion\": \"Solicitud de vacaciones denegada.\",\r\n\t\"dni\": \"12345678A\",\r\n\t\"tipo_estado\": \"Rechazado\"\r\n}*/",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -51,6 +51,55 @@
 						"blockchainVacacionesAutorizadas",
 						"api",
 						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "checkVacacionesAutorizadas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/blockchainVacacionesAutorizadas/api/checkVacacionesAutorizadas",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blockchainVacacionesAutorizadas",
+						"api",
+						"checkVacacionesAutorizadas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveListVacacionesAutorizadas",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id_vacacion_empleado\": 35,\r\n        \"fecha_inicio\": \"2024-05-01\",\r\n        \"fecha_fin\": \"2024-05-05\",\r\n        \"dias_disponibles\": 25,\r\n        \"dias_pendientes\": 0,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 5,\r\n        \"observacion\": \"Vacaciones aceptadas para mayo.\",\r\n        \"persona\": {\r\n            \"id_persona\": 12\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 36,\r\n        \"fecha_inicio\": \"2024-08-15\",\r\n        \"fecha_fin\": \"2024-08-19\",\r\n        \"dias_disponibles\": 20,\r\n        \"dias_pendientes\": 5,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 5,\r\n        \"observacion\": \"Vacaciones aceptadas para agosto.\",\r\n        \"persona\": {\r\n            \"id_persona\": 12\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 39,\r\n        \"fecha_inicio\": \"2023-05-01\",\r\n        \"fecha_fin\": \"2023-05-05\",\r\n        \"dias_disponibles\": 25,\r\n        \"dias_pendientes\": 0,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 5,\r\n        \"observacion\": \"Vacaciones aceptadas para mayo.\",\r\n        \"persona\": {\r\n            \"id_persona\": 13\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 40,\r\n        \"fecha_inicio\": \"2023-08-02\",\r\n        \"fecha_fin\": \"2023-08-06\",\r\n        \"dias_disponibles\": 20,\r\n        \"dias_pendientes\": 5,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 5,\r\n        \"observacion\": \"Vacaciones aceptadas para agosto.\",\r\n        \"persona\": {\r\n            \"id_persona\": 13\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 43,\r\n        \"fecha_inicio\": \"2023-05-01\",\r\n        \"fecha_fin\": \"2023-05-05\",\r\n        \"dias_disponibles\": 25,\r\n        \"dias_pendientes\": 0,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 5,\r\n        \"observacion\": \"Vacaciones aceptadas para mayo.\",\r\n        \"persona\": {\r\n            \"id_persona\": 14\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 44,\r\n        \"fecha_inicio\": \"2023-06-16\",\r\n        \"fecha_fin\": \"2023-06-20\",\r\n        \"dias_disponibles\": 20,\r\n        \"dias_pendientes\": 5,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 10,\r\n        \"observacion\": \"Vacaciones aceptadas para junio.\",\r\n        \"persona\": {\r\n            \"id_persona\": 14\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 47,\r\n        \"fecha_inicio\": \"2023-05-01\",\r\n        \"fecha_fin\": \"2023-05-05\",\r\n        \"dias_disponibles\": 25,\r\n        \"dias_pendientes\": 0,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 5,\r\n        \"observacion\": \"Vacaciones aceptadas para mayo.\",\r\n        \"persona\": {\r\n            \"id_persona\": 20\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 48,\r\n        \"fecha_inicio\": \"2023-09-23\",\r\n        \"fecha_fin\": \"2023-09-28\",\r\n        \"dias_disponibles\": 20,\r\n        \"dias_pendientes\": 5,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 5,\r\n        \"observacion\": \"Vacaciones aceptadas para septiembre.\",\r\n        \"persona\": {\r\n            \"id_persona\": 20\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 51,\r\n        \"fecha_inicio\": \"2023-05-01\",\r\n        \"fecha_fin\": \"2023-05-05\",\r\n        \"dias_disponibles\": 25,\r\n        \"dias_pendientes\": 0,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 5,\r\n        \"observacion\": \"Vacaciones aceptadas para mayo.\",\r\n        \"persona\": {\r\n            \"id_persona\": 22\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 52,\r\n        \"fecha_inicio\": \"2023-05-17\",\r\n        \"fecha_fin\": \"2023-05-19\",\r\n        \"dias_disponibles\": 22,\r\n        \"dias_pendientes\": 3,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 8,\r\n        \"observacion\": \"Vacaciones aceptadas para junio.\",\r\n        \"persona\": {\r\n            \"id_persona\": 22\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 55,\r\n        \"fecha_inicio\": \"2023-05-05\",\r\n        \"fecha_fin\": \"2023-05-09\",\r\n        \"dias_disponibles\": 25,\r\n        \"dias_pendientes\": 0,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 5,\r\n        \"observacion\": \"Vacaciones aceptadas para mayo.\",\r\n        \"persona\": {\r\n            \"id_persona\": 23\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 56,\r\n        \"fecha_inicio\": \"2023-07-18\",\r\n        \"fecha_fin\": \"2023-07-13\",\r\n        \"dias_disponibles\": 20,\r\n        \"dias_pendientes\": 5,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 10,\r\n        \"observacion\": \"Vacaciones aceptadas para junio.\",\r\n        \"persona\": {\r\n            \"id_persona\": 23\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 59,\r\n        \"fecha_inicio\": \"2023-05-06\",\r\n        \"fecha_fin\": \"2023-05-09\",\r\n        \"dias_disponibles\": 25,\r\n        \"dias_pendientes\": 0,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 5,\r\n        \"observacion\": \"Vacaciones aceptadas para mayo.\",\r\n        \"persona\": {\r\n            \"id_persona\": 24\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 60,\r\n        \"fecha_inicio\": \"2023-06-12\",\r\n        \"fecha_fin\": \"2023-06-16\",\r\n        \"dias_disponibles\": 20,\r\n        \"dias_pendientes\": 5,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 10,\r\n        \"observacion\": \"Vacaciones aceptadas para junio.\",\r\n        \"persona\": {\r\n            \"id_persona\": 24\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 63,\r\n        \"fecha_inicio\": \"2023-05-09\",\r\n        \"fecha_fin\": \"2023-05-14\",\r\n        \"dias_disponibles\": 25,\r\n        \"dias_pendientes\": 0,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 5,\r\n        \"observacion\": \"Vacaciones aceptadas para mayo.\",\r\n        \"persona\": {\r\n            \"id_persona\": 25\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    },\r\n    {\r\n        \"id_vacacion_empleado\": 64,\r\n        \"fecha_inicio\": \"2023-06-15\",\r\n        \"fecha_fin\": \"2023-06-19\",\r\n        \"dias_disponibles\": 20,\r\n        \"dias_pendientes\": 5,\r\n        \"dias_solicitados\": 5,\r\n        \"dias_disfrutados\": 10,\r\n        \"observacion\": \"Vacaciones aceptadas para junio.\",\r\n        \"persona\": {\r\n            \"id_persona\": 25\r\n        },\r\n        \"tipo_estado\": {\r\n            \"id_tipo_estado\": 2\r\n        }\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/blockchainVacacionesAutorizadas/api/saveListVacacionesAutorizadas",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blockchainVacacionesAutorizadas",
+						"api",
+						"saveListVacacionesAutorizadas"
 					]
 				}
 			},

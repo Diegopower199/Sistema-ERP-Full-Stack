@@ -8,6 +8,26 @@
 	},
 	"item": [
 		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/facturasClientes/api/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"facturasClientes",
+						"api",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "save",
 			"request": {
 				"method": "POST",
@@ -31,26 +51,6 @@
 						"facturasClientes",
 						"api",
 						"save"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getAll",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/facturasClientes/api/getAll",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"facturasClientes",
-						"api",
-						"getAll"
 					]
 				}
 			},
@@ -123,6 +123,26 @@
 						"api",
 						"delete",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/facturasClientes/api/generate",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"facturasClientes",
+						"api",
+						"generate"
 					]
 				}
 			},

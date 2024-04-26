@@ -88,7 +88,7 @@ export default function FormSolicitudesEmpleados({
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -126,7 +126,7 @@ export default function FormSolicitudesEmpleados({
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -165,7 +165,7 @@ export default function FormSolicitudesEmpleados({
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -215,7 +215,7 @@ export default function FormSolicitudesEmpleados({
           }
         }
       } catch (error) {
-        console.error("Ha ocurrido algo inesperado", error);
+        // console.error("Ha ocurrido algo inesperado", error);
       }
     };
 
@@ -381,7 +381,7 @@ export default function FormSolicitudesEmpleados({
         formUpdateTrigger();
       }
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

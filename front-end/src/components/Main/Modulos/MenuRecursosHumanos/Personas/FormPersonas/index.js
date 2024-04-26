@@ -98,7 +98,7 @@ export default function FormPersonas({
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -130,7 +130,7 @@ export default function FormPersonas({
           }
         }
       } catch (error) {
-        console.error("Ha ocurrido algo inesperado", error);
+        // console.error("Ha ocurrido algo inesperado", error);
       }
     };
 
@@ -308,7 +308,7 @@ export default function FormPersonas({
         formUpdateTrigger();
       }
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

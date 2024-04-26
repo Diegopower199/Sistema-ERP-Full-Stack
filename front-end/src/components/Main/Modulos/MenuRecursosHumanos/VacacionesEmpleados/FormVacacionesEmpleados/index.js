@@ -101,7 +101,7 @@ export default function FormVacacionesEmpleados({
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -140,7 +140,7 @@ export default function FormVacacionesEmpleados({
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -192,7 +192,7 @@ export default function FormVacacionesEmpleados({
           }
         }
       } catch (error) {
-        console.error("Ha ocurrido algo inesperado", error);
+        // console.error("Ha ocurrido algo inesperado", error);
       }
     };
 
@@ -377,7 +377,7 @@ export default function FormVacacionesEmpleados({
         formUpdateTrigger();
       }
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

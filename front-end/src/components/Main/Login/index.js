@@ -170,7 +170,7 @@ export default function Login() {
       setPermisosUser(responseTipoUsuarioDelNombreUsuario.data.permiso_usuario);
       setLoginButtonClicked(false);
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

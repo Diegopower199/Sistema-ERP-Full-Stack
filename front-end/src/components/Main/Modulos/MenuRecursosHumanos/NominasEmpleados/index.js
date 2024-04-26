@@ -285,7 +285,7 @@ export default function NominasEmpleados() {
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -361,7 +361,7 @@ export default function NominasEmpleados() {
 
       setCargandoInformacionNominasEmpleados(false);
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

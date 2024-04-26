@@ -95,7 +95,7 @@ export default function FormAsistenciasEmpleados({
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -131,7 +131,7 @@ export default function FormAsistenciasEmpleados({
           }
         }
       } catch (error) {
-        console.error("Ha ocurrido algo inesperado", error);
+        // console.error("Ha ocurrido algo inesperado", error);
       }
     };
 
@@ -294,7 +294,7 @@ export default function FormAsistenciasEmpleados({
         formUpdateTrigger();
       }
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

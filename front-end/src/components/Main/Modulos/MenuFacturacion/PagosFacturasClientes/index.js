@@ -186,7 +186,7 @@ export default function PagosFacturasClientes() {
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

@@ -240,7 +240,7 @@ export default function AyudasEmpleados() {
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -344,7 +344,7 @@ export default function AyudasEmpleados() {
       setAyudaEmpleadoDelete(true);
       resetStates();
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

@@ -114,7 +114,7 @@ export default function FormPedidosClientes({
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -155,7 +155,7 @@ export default function FormPedidosClientes({
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -189,7 +189,7 @@ export default function FormPedidosClientes({
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -228,7 +228,7 @@ export default function FormPedidosClientes({
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -318,7 +318,7 @@ export default function FormPedidosClientes({
           }
         }
       } catch (error) {
-        console.error("Ha ocurrido algo inesperado", error);
+        // console.error("Ha ocurrido algo inesperado", error);
       }
     };
 
@@ -572,7 +572,7 @@ export default function FormPedidosClientes({
         formUpdateTrigger();
       }
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

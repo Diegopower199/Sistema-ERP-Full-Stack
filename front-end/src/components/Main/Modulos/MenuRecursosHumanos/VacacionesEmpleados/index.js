@@ -277,7 +277,7 @@ export default function VacacionesEmpleados() {
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -395,7 +395,7 @@ export default function VacacionesEmpleados() {
       setVacacionEmpleadoDelete(true);
       resetStates();
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

@@ -45,7 +45,7 @@ export default function FormNominasEmpleados({
           ...nominaEmpleadoDataForm,
         }));
       } catch (error) {
-        console.error("Ha ocurrido algo inesperado", error);
+        // console.error("Ha ocurrido algo inesperado", error);
       }
     };
 

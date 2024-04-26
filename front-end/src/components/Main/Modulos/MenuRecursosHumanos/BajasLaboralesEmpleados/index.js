@@ -239,7 +239,7 @@ export default function BajasLaboralesEmpleados() {
 
       return true;
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 
@@ -349,7 +349,7 @@ export default function BajasLaboralesEmpleados() {
       setBajaLaboralEmpleadoDelete(true);
       resetStates();
     } catch (error) {
-      console.error("Ha ocurrido algo inesperado", error);
+      // console.error("Ha ocurrido algo inesperado", error);
     }
   };
 

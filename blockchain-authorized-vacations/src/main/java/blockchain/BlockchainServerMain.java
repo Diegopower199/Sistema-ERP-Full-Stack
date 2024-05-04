@@ -116,7 +116,7 @@ public class BlockchainServerMain {
                             break;
                         default:
                             respuestaAlCliente = new RespuestaServidorCliente(
-                                    "Operacion no valida", 200, null, null);
+                                    "Operacion no valida", 404, null, null);
                             objectOutputStream.writeObject(respuestaAlCliente);
 
                             break;

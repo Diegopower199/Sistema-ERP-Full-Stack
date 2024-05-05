@@ -59,10 +59,10 @@ public class BlockchainVacacionAutorizadaService {
             respuestaDelServidor = (RespuestaServidorCliente) objectInputStream.readObject();
 
             libroTransaccionesVacacionesAutorizadas = respuestaDelServidor.getLibroTransaccionesVacacionesAutorizadas();
-            for (Block transaccionesVacacionesAutorizadas : libroTransaccionesVacacionesAutorizadas) {
-                Map<String, Object> transaccionesVacacionesAutorizadasMap = transaccionesVacacionesAutorizadas.toMap();
+            for (Block bloquesTransaccionesVacacionesAutorizadas : libroTransaccionesVacacionesAutorizadas) {
+                Map<String, Object> bloquesTransaccionesVacacionesAutorizadasMap = bloquesTransaccionesVacacionesAutorizadas.toMap();
 
-                resultado.add(transaccionesVacacionesAutorizadasMap);
+                resultado.add(bloquesTransaccionesVacacionesAutorizadasMap);
             }
 
         } catch (ConnectException ce) {

@@ -66,11 +66,8 @@ public class BlockchainVacacionAutorizadaController {
             TransaccionVacacion newVacacionAutorizada = blockchainVacacionAutorizadaService
                     .saveTransaccionVacacionAutorizada(vacacionEmpleadoRequest);
 
-            if (newVacacionAutorizada == null) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).build();
-            } else {
-                return ResponseEntity.ok(newVacacionAutorizada.toMap());
-            }
+            return ResponseEntity.ok(newVacacionAutorizada.toMap());
+
         } catch (ConexionServidoresException e) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -92,8 +89,6 @@ public class BlockchainVacacionAutorizadaController {
         try {
             List<Map<String, Object>> allVacacionesEmpleados = blockchainVacacionAutorizadaService
                     .checkVacacionesAutorizadas();
-
-            // return ResponseEntity.noContent().build();
 
             if (allVacacionesEmpleados.isEmpty()) {
                 return ResponseEntity.noContent().build();

@@ -81,7 +81,6 @@ public class AsistenciaEmpleadoController {
     @PostMapping("/api/endOfWorkday/{id}")
     public ResponseEntity<Map<String, Object>> endOfWorkday(
             @RequestBody AsistenciaEmpleadoModel asistenciaEmpleadoRequest, @PathVariable("id") int id) {
-        // mirarme esta funcion y completarla, hacerla en el service
         try {
             AsistenciaEmpleadoModel updateAsistenciaEmpleado = asistenciaEmpleadoService
                     .endOfWorkdayAsistenciaEmpleado(asistenciaEmpleadoRequest, id);

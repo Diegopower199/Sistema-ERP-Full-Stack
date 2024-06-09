@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import styles from "./styles.module.css";
+import { useAuth } from "@/context/UserContext";
+import { getTipoUsuarioById } from "@/services/TipoUsuarioService";
 import {
   authenticateUser,
   getUsuarioByNombreUsuario,
 } from "@/services/UsuarioService";
-import { useAuth } from "@/context/UserContext";
-import { getTipoUsuarioById } from "@/services/TipoUsuarioService";
-import ErrorIcon from "@mui/icons-material/Error";
-import * as Antd from "antd";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import ErrorIcon from "@mui/icons-material/Error";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -25,8 +24,8 @@ export default function Login() {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    nombre_usuario: "a",
-    password: "a",
+    nombre_usuario: "",
+    password: "",
   });
 
   const [requiredFieldsIncomplete, setRequiredFieldsIncomplete] = useState({});
@@ -169,9 +168,7 @@ export default function Login() {
 
       setPermisosUser(responseTipoUsuarioDelNombreUsuario.data.permiso_usuario);
       setLoginButtonClicked(false);
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   return (

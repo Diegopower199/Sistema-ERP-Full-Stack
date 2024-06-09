@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
 import { sendEmailNodeMailer } from "@/services/EmailService";
-import { updatePassword } from "@/services/UsuarioService";
 import { existsCorreoElectronico } from "@/services/PersonaService";
-import styles from "./styles.module.css";
-import * as Antd from "antd";
+import { updatePassword } from "@/services/UsuarioService";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import * as Antd from "antd";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -113,9 +113,7 @@ export default function UpdatePassword() {
 
       resetErrorState();
       setCorrectEmail(true);
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const verifyCode = () => {
@@ -132,9 +130,7 @@ export default function UpdatePassword() {
     }
 
     if (formData.codigo_verificacion.length !== 6) {
-      setErrorMessage(
-        "Error, el código de verificación debe tener 6 dígitos"
-      );
+      setErrorMessage("Error, el código de verificación debe tener 6 dígitos");
       return;
     } else {
       setErrorMessage("");
@@ -193,9 +189,7 @@ export default function UpdatePassword() {
         setErrorMessage("La contraseñas no coinciden");
         setBackendError(true);
       }
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   function redirectToLogin() {

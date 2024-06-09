@@ -13,7 +13,6 @@ public class RespuestaServidorCliente implements Serializable {
     private Block blockActual;
     private List<TransaccionVacacion> listaVacacionesAutorizadasConInconsistencias;
 
-    // Constructor para el caso "GET ALL"
     public RespuestaServidorCliente(List<Block> libroTransaccionesVacacionesAutorizadas, String mensaje, int codigo) {
         this.libroTransaccionesVacacionesAutorizadas = libroTransaccionesVacacionesAutorizadas;
         this.mensaje = mensaje;

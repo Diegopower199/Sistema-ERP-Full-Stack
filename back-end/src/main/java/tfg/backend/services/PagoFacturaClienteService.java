@@ -40,13 +40,6 @@ public class PagoFacturaClienteService {
 
     public PagoFacturaClienteModel savePagoFacturaCliente(PagoFacturaClienteModel nuevoPagoFacturaCliente) {
 
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
-
         int id_factura_cliente = nuevoPagoFacturaCliente.getFactura_cliente().getId_factura_cliente();
 
         FacturaClienteModel facturaClienteEncontrado = facturaClienteRepository.findById(id_factura_cliente)
@@ -86,12 +79,6 @@ public class PagoFacturaClienteService {
                 .findById(idPagoFacturaCliente).orElseThrow(() -> new RuntimeException(
                         "Pago factura cliente con id " + idPagoFacturaCliente
                                 + " no encontrado"));
-
-        /*
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
 
         pagoFacturaClienteExistente.setFecha_pago_realizada(cambiosPagoFacturaCliente.getFecha_pago_realizada());
         pagoFacturaClienteExistente.setImporte_pagado(cambiosPagoFacturaCliente.getImporte_pagado());

@@ -1,6 +1,6 @@
-import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
 import { blockchainServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
+import axios from "axios";
 
 export const getAllTransaccionesVacacionesAutorizadas = async () => {
   const url = API_URL_BACK_END.replace("#", "blockchainVacacionesAutorizadas");

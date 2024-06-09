@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
-import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import Header from "@/components/UtilsComponents/Header";
 import * as Antd from "antd";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -44,9 +44,7 @@ export default function FormNominasEmpleados({
         setFormData(() => ({
           ...nominaEmpleadoDataForm,
         }));
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
     fetchData();

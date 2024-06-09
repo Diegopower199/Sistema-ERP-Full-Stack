@@ -92,11 +92,11 @@ public class Block implements Serializable {
     @Override
     public String toString() {
         return "Block{" +
-                    "index=" + index +
-                    ", timestamp=" + timestamp +
-                    ", dataTransaccionVacacion=" + dataTransaccionVacacion +
-                    ", previousHashBlock=\"" + previousHashBlock + '\"' +
-                    ", hashBlock=\"" + hashBlock + '\"' +
+                "index=" + index +
+                ", timestamp=" + timestamp +
+                ", dataTransaccionVacacion=" + dataTransaccionVacacion +
+                ", previousHashBlock=\"" + previousHashBlock + '\"' +
+                ", hashBlock=\"" + hashBlock + '\"' +
                 '}';
     }
 

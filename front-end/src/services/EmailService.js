@@ -1,6 +1,6 @@
-import axios from "axios";
 import { API_URL_EMAIL } from "@/utils/constants";
 import { emailServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
+import axios from "axios";
 
 export const sendEmailNodeMailer = async (data) => {
   const url = API_URL_EMAIL;

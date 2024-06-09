@@ -60,7 +60,8 @@ public class BlockchainVacacionAutorizadaService {
 
             libroTransaccionesVacacionesAutorizadas = respuestaDelServidor.getLibroTransaccionesVacacionesAutorizadas();
             for (Block bloquesTransaccionesVacacionesAutorizadas : libroTransaccionesVacacionesAutorizadas) {
-                Map<String, Object> bloquesTransaccionesVacacionesAutorizadasMap = bloquesTransaccionesVacacionesAutorizadas.toMap();
+                Map<String, Object> bloquesTransaccionesVacacionesAutorizadasMap = bloquesTransaccionesVacacionesAutorizadas
+                        .toMap();
 
                 resultado.add(bloquesTransaccionesVacacionesAutorizadasMap);
             }
@@ -217,7 +218,6 @@ public class BlockchainVacacionAutorizadaService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             for (VacacionEmpleadoModel vacacionEmpleado : listaVacacionesEmpleados) {
-
 
                 int id_persona = vacacionEmpleado.getPersona().getId_persona();
                 PersonaModel personaEncontrado = personaRepository.findById(id_persona)

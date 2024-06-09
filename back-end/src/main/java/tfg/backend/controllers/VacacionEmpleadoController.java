@@ -103,7 +103,8 @@ public class VacacionEmpleadoController {
     // localhost:8080/vacacionesEmpleados/api/getAllVacacionesAutorizadasConInconsistencias
     @GetMapping("/api/getAllVacacionesAutorizadasConInconsistencias")
     public ResponseEntity<List<Map<String, Object>>> getAllVacacionesAutorizadasConInconsistencias() {
-        List<Map<String, Object>> allVacacionesAutorizadasConInconsistencias = vacacionEmpleadoService.getAllVacacionesAutorizadasConInconsistenciasBlockchain();
+        List<Map<String, Object>> allVacacionesAutorizadasConInconsistencias = vacacionEmpleadoService
+                .getAllVacacionesAutorizadasConInconsistenciasBlockchain();
 
         if (allVacacionesAutorizadasConInconsistencias.isEmpty()) {
             return ResponseEntity.noContent().build();

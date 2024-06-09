@@ -65,13 +65,6 @@ public class AsistenciaEmpleadoService {
     public AsistenciaEmpleadoModel startOfWorkdayAsistenciaEmpleado(
             AsistenciaEmpleadoModel nuevoAsistenciaEmpleado) {
 
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
-
         int id_persona = nuevoAsistenciaEmpleado.getPersona().getId_persona();
 
         PersonaModel personaEncontrado = personaRepository.findById(id_persona)
@@ -100,7 +93,7 @@ public class AsistenciaEmpleadoService {
                         "Asistencia empleado con id " + idAsistenciaEmpleado + " no encontrado"));
 
         asistenciaEmpleadoExistente.setHora_salida(nuevoAsistenciaEmpleado.getHora_salida());
-        asistenciaEmpleadoExistente.setHoras_trabajadas_dia(LocalTime.of(10, 0, 10)); // ESTO TENEMOS QUE CALCULARLO
+        asistenciaEmpleadoExistente.setHoras_trabajadas_dia(LocalTime.of(10, 0, 10)); // Se debe calcular
 
         AsistenciaEmpleadoModel asistenciaEmpleadoGuardado = asistenciaEmpleadoRepository
                 .save(asistenciaEmpleadoExistente);

@@ -51,7 +51,7 @@ public class FacturaClienteModel implements Serializable {
 
     @Column(name = "tiempo_servicio_total", nullable = false)
     private LocalTime tiempo_servicio_total;
-    
+
     @Column(name = "observacion", nullable = true)
     private String observacion;
 

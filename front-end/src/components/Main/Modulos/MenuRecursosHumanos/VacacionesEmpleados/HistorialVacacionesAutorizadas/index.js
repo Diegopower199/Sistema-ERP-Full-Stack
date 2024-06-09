@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import {
-  DataGrid,
-  GridToolbarContainer,
-  GridToolbarExportContainer,
-  useGridApiContext,
-  gridFilteredSortedRowIdsSelector,
-  gridVisibleColumnFieldsSelector,
-} from "@mui/x-data-grid";
-import MenuItem from "@mui/material/MenuItem";
-import * as Antd from "antd";
-import {
-  LOCALIZED_COLUMN_MENU_TEXTS,
-  PAGE_SIZE_OPTIONS,
-} from "@/utils/constants";
-import styles from "./styles.module.css";
+import Footer from "@/components/UtilsComponents/Footer";
+import Header from "@/components/UtilsComponents/Header";
 import {
   checkVacacionesAutorizadas,
   getAllTransaccionesVacacionesAutorizadas,
 } from "@/services/BlockchainVacacionAutorizadaService";
-import Header from "@/components/UtilsComponents/Header";
-import Footer from "@/components/UtilsComponents/Footer";
+import {
+  LOCALIZED_COLUMN_MENU_TEXTS,
+  PAGE_SIZE_OPTIONS,
+} from "@/utils/constants";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import Box from "@mui/material/Box";
+import MenuItem from "@mui/material/MenuItem";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExportContainer,
+  gridFilteredSortedRowIdsSelector,
+  gridVisibleColumnFieldsSelector,
+  useGridApiContext,
+} from "@mui/x-data-grid";
+import * as Antd from "antd";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -179,9 +179,7 @@ export default function HistorialVacacionesAutorizadas({
       }
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const fetchGetAllTransaccionesVacacionesAutorizadasAndHandleErrors =
@@ -254,9 +252,7 @@ export default function HistorialVacacionesAutorizadas({
         setTableLoading(false);
 
         return true;
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
   useEffect(() => {
@@ -277,9 +273,7 @@ export default function HistorialVacacionesAutorizadas({
         if (!noCallErrorsDetected) {
           return;
         }
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
     fetchData();

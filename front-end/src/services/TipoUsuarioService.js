@@ -1,6 +1,6 @@
-import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
 import { backendServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
+import axios from "axios";
 
 export const getAllTiposUsuarios = async () => {
   const url = API_URL_BACK_END.replace("#", "tiposUsuarios");

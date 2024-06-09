@@ -56,13 +56,6 @@ public class BajaLaboralEmpleadoService {
 
     public BajaLaboralEmpleadoModel saveBajaLaboralEmpleado(BajaLaboralEmpleadoModel nuevoBajaLaboralEmpleado) {
 
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
-
         int id_persona = nuevoBajaLaboralEmpleado.getPersona().getId_persona();
 
         PersonaModel personaEncontrado = personaRepository.findById(id_persona)
@@ -129,13 +122,6 @@ public class BajaLaboralEmpleadoService {
                 .orElseThrow(() -> new RuntimeException(
                         "Baja laboral empleado con id " + idBajaLaboralEmpleado
                                 + " no encontrado"));
-
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
 
         bajaLaboralEmpleadoExistente.setFecha_inicio(cambiosBajaLaboralEmpleado.getFecha_inicio());
         bajaLaboralEmpleadoExistente.setFecha_fin(cambiosBajaLaboralEmpleado.getFecha_fin());

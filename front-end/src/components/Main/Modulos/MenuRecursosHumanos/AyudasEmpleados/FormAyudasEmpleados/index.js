@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
-import styles from "./styles.module.css";
-import ErrorIcon from "@mui/icons-material/Error";
-import {
-  formatearFechaYYYYMMDD,
-  validarFechaYYYYMMDD,
-} from "@/utils/functionsFecha";
-import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
-import * as Antd from "antd";
-import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import Header from "@/components/UtilsComponents/Header";
 import {
   saveAyudaEmpleado,
   updateAyudaEmpleado,
 } from "@/services/AyudaEmpleadoService";
+import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
 import { getAllTiposAyudas } from "@/services/TipoAyudaService";
 import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import {
+  formatearFechaYYYYMMDD,
+  validarFechaYYYYMMDD,
+} from "@/utils/functionsFecha";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import ErrorIcon from "@mui/icons-material/Error";
+import * as Antd from "antd";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -100,9 +100,7 @@ export default function FormAyudasEmpleados({
       }
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const fetchTiposAyudasOptionsAndHandleErrors = async () => {
@@ -126,9 +124,7 @@ export default function FormAyudasEmpleados({
       setTiposAyudasOptions(responseGetAllTiposAyudas.data);
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
@@ -165,9 +161,7 @@ export default function FormAyudasEmpleados({
       setPersonasOptions(optionsPersonas);
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -223,9 +217,7 @@ export default function FormAyudasEmpleados({
             }));
           }
         }
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -325,9 +317,7 @@ export default function FormAyudasEmpleados({
     });
   };
 
-  const handleSelectPersonaSearch = (value) => {
-    // console.log("Search persona:", value);
-  };
+  const handleSelectPersonaSearch = (value) => {};
 
   const filterIncrementalSearch = (input, option) => {
     const optionLabel = option?.children.toLowerCase();
@@ -391,9 +381,7 @@ export default function FormAyudasEmpleados({
         toggleForm();
         formUpdateTrigger();
       }
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   return (

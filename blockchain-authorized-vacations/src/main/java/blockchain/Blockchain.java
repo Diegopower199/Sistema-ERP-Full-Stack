@@ -51,7 +51,7 @@ public class Blockchain implements Serializable {
 
     public boolean verificarVacacionAutorizadaExiste(Blockchain blockchain, int idVacacion) {
         for (Block block : blockchain.getLibroTransaccionesVacacionesAutorizadas()) {
-            
+
             if (block.getDataTransaccionVacacion().getId_vacacion_empleado() == idVacacion) {
                 return true;
             }

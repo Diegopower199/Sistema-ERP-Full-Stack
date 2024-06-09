@@ -48,8 +48,6 @@ public class TipoUsuarioService {
             throw new RuntimeException("El tipo usuario ya existe");
         }
 
-        // COMPROBAR DE PERMISO USUARIO
-
         int id_permiso_usuario = nuevoTipoUsuario.getPermiso_usuario().getId_permiso_usuario();
 
         PermisoUsuarioModel permisoUsuarioEncontrado = permisoUsuarioRepository.findById(id_permiso_usuario)
@@ -86,8 +84,6 @@ public class TipoUsuarioService {
         if (cambiosTipoUsuario.getTipo_usuario() == null) {
             throw new RuntimeException("El campo 'tipo_usuario' no puede ser null");
         }
-
-        // COMPROBAR DE PERMISO USUARIO
 
         if (!tipoUsuarioExistente.getTipo_usuario().equals(cambiosTipoUsuario.getTipo_usuario())) {
             if (tipoUsuarioRepository.existsByTipo_usuario(cambiosTipoUsuario.getTipo_usuario())) {

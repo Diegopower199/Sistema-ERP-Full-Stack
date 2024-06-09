@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
 import { useAuth } from "@/context/UserContext";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const PaginaInicio = () => {
   const { authUser } = useAuth();

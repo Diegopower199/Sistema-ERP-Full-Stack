@@ -56,13 +56,6 @@ public class SolicitudEmpleadoService {
 
     public SolicitudEmpleadoModel saveSolicitudEmpleado(SolicitudEmpleadoModel nuevoSolicitudEmpleado) {
 
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
-
         int id_persona = nuevoSolicitudEmpleado.getPersona().getId_persona();
 
         PersonaModel personaEncontrado = personaRepository.findById(id_persona)
@@ -129,13 +122,6 @@ public class SolicitudEmpleadoService {
         SolicitudEmpleadoModel solicitudEmpleadoExistente = solicitudEmpleadoRepository.findById(idSolicitud)
                 .orElseThrow(() -> new RuntimeException(
                         "Solicitud empleado con id " + idSolicitud + " no encontrado"));
-
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
 
         solicitudEmpleadoExistente.setObservacion(cambiosSolicitudEmpleado.getObservacion());
 

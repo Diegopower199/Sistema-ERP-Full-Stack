@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
-import ErrorIcon from "@mui/icons-material/Error";
-import {
-  formatearFechaYYYYMMDD,
-  validarFechaYYYYMMDD,
-} from "@/utils/functionsFecha";
-import { getAllTiposSolicitudes } from "@/services/TipoSolicitudService";
-import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import Footer from "@/components/UtilsComponents/Footer";
+import Header from "@/components/UtilsComponents/Header";
+import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
 import {
   saveSolicitudEmpleado,
   updateSolicitudEmpleado,
 } from "@/services/SolicitudEmpleadoService";
-import Header from "@/components/UtilsComponents/Header";
-import Footer from "@/components/UtilsComponents/Footer";
-import * as Antd from "antd";
+import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import { getAllTiposSolicitudes } from "@/services/TipoSolicitudService";
+import {
+  formatearFechaYYYYMMDD,
+  validarFechaYYYYMMDD,
+} from "@/utils/functionsFecha";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
-import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
+import ErrorIcon from "@mui/icons-material/Error";
+import * as Antd from "antd";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -87,9 +87,7 @@ export default function FormSolicitudesEmpleados({
       setTiposSolicitudesOptions(responseGetAllTiposSolicitudes.data);
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const fetchTiposEstadosOptionsAndHandleErrors = async () => {
@@ -125,9 +123,7 @@ export default function FormSolicitudesEmpleados({
       }
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
@@ -164,9 +160,7 @@ export default function FormSolicitudesEmpleados({
       setPersonasOptions(optionsPersonas);
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -214,9 +208,7 @@ export default function FormSolicitudesEmpleados({
             }));
           }
         }
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -308,9 +300,7 @@ export default function FormSolicitudesEmpleados({
     });
   };
 
-  const handleSelectPersonaSearch = (value) => {
-    // console.log("Search persona:", value);
-  };
+  const handleSelectPersonaSearch = (value) => {};
 
   const filterIncrementalSearch = (input, option) => {
     const optionLabel = option?.children.toLowerCase();
@@ -380,9 +370,7 @@ export default function FormSolicitudesEmpleados({
         toggleForm();
         formUpdateTrigger();
       }
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   return (

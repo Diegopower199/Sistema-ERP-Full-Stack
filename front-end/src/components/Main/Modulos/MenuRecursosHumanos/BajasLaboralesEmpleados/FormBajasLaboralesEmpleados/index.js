@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
-import styles from "./styles.module.css";
-import ErrorIcon from "@mui/icons-material/Error";
-import {
-  formatearFechaYYYYMMDD,
-  validarFechaYYYYMMDD,
-} from "@/utils/functionsFecha";
-import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
-import * as Antd from "antd";
-import { checkResponseForErrors } from "@/utils/responseErrorChecker";
-import { getAllTiposEstados } from "@/services/TipoEstadoService";
-import { getAllMotivosBajas } from "@/services/MotivoBajaService";
+import Header from "@/components/UtilsComponents/Header";
 import {
   saveBajaLaboralEmpleado,
   updateBajaLaboralEmpleado,
 } from "@/services/BajaLaboralEmpleadoService";
+import { getAllMotivosBajas } from "@/services/MotivoBajaService";
+import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
+import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import {
+  formatearFechaYYYYMMDD,
+  validarFechaYYYYMMDD,
+} from "@/utils/functionsFecha";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import ErrorIcon from "@mui/icons-material/Error";
+import * as Antd from "antd";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -99,9 +99,7 @@ export default function FormBajasLaboralesEmpleados({
       }
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const fetchMotivosBajasOptionsAndHandleErrors = async () => {
@@ -125,9 +123,7 @@ export default function FormBajasLaboralesEmpleados({
       setMotivosBajasOptions(responseGetAllMotivosBajas.data);
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
@@ -164,9 +160,7 @@ export default function FormBajasLaboralesEmpleados({
       setPersonasOptions(optionsPersonas);
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -222,9 +216,7 @@ export default function FormBajasLaboralesEmpleados({
             }));
           }
         }
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -321,9 +313,7 @@ export default function FormBajasLaboralesEmpleados({
     });
   };
 
-  const handleSelectPersonaSearch = (value) => {
-    // console.log("Search persona:", value);
-  };
+  const handleSelectPersonaSearch = (value) => {};
 
   const filterIncrementalSearch = (input, option) => {
     const optionLabel = option?.children.toLowerCase();
@@ -391,9 +381,7 @@ export default function FormBajasLaboralesEmpleados({
         toggleForm();
         formUpdateTrigger();
       }
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   return (

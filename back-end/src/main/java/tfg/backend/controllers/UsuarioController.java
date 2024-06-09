@@ -118,7 +118,6 @@ public class UsuarioController {
         try {
             String correoElectronico = passwordUpdateRequest.get("correo_electronico");
             String newPassword = passwordUpdateRequest.get("new_password");
-            // Lógica para cambiar la contraseña aquí utilizando los valores proporcionados
             boolean changePasswordResponse = usuarioService.updatePassword(correoElectronico, newPassword);
 
             if (changePasswordResponse) {

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
-import ErrorIcon from "@mui/icons-material/Error";
-import {
-  formatearFechaYYYYMMDD,
-  validarFechaYYYYMMDD,
-} from "@/utils/functionsFecha";
-import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
-import * as Antd from "antd";
-import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import Header from "@/components/UtilsComponents/Header";
 import {
   savePagoFacturaCliente,
   updatePagoFacturaCliente,
 } from "@/services/PagoFacturaClienteService";
+import {
+  formatearFechaYYYYMMDD,
+  validarFechaYYYYMMDD,
+} from "@/utils/functionsFecha";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import ErrorIcon from "@mui/icons-material/Error";
+import * as Antd from "antd";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -87,9 +87,7 @@ export default function FormPagosFacturasClientes({
             }));
           }
         }
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -216,9 +214,7 @@ export default function FormPagosFacturasClientes({
         toggleForm();
         formUpdateTrigger();
       }
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   return (

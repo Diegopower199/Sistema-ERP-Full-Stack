@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
-import ErrorIcon from "@mui/icons-material/Error";
+import Footer from "@/components/UtilsComponents/Footer";
+import Header from "@/components/UtilsComponents/Header";
 import { saveCliente, updateCliente } from "@/services/ClienteService";
 import { PROVINCIAS_CON_CIUDADES } from "@/utils/provinciasConCiudades";
 import {
@@ -9,10 +8,11 @@ import {
   REGEX_NIF_PERSONAS_JURIDICAS,
   REGEX_TELEFONO_CON_PREFIJO,
 } from "@/utils/regexPatterns";
-import Header from "@/components/UtilsComponents/Header";
-import Footer from "@/components/UtilsComponents/Footer";
-import * as Antd from "antd";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import ErrorIcon from "@mui/icons-material/Error";
+import * as Antd from "antd";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -90,9 +90,7 @@ export default function FormClientes({
             ...clienteDataForm,
           }));
         }
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -240,13 +238,9 @@ export default function FormClientes({
     });
   };
 
-  const handleSelectProvinciaSearch = (value) => {
-    // console.log("Search provincia:", value);
-  };
+  const handleSelectProvinciaSearch = (value) => {};
 
-  const handleSelectCiudadSearch = (value) => {
-    // console.log("Search ciudad:", value);
-  };
+  const handleSelectCiudadSearch = (value) => {};
 
   const filterIncrementalSearch = (input, option) => {
     const optionLabel = option?.children.toLowerCase();
@@ -306,9 +300,7 @@ export default function FormClientes({
         toggleForm();
         formUpdateTrigger();
       }
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   return (

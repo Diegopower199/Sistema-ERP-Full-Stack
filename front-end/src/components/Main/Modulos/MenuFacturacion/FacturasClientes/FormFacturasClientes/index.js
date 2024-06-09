@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
+import Footer from "@/components/UtilsComponents/Footer";
+import Header from "@/components/UtilsComponents/Header";
 import {
   formatearFechaYYYYMMDD,
   validarFechaYYYYMMDD,
 } from "@/utils/functionsFecha";
-import Header from "@/components/UtilsComponents/Header";
-import Footer from "@/components/UtilsComponents/Footer";
 import * as Antd from "antd";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -84,9 +84,7 @@ export default function FormFacturasClientes({
             ...facturaClienteDataForm,
           }));
         }
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
     fetchData();

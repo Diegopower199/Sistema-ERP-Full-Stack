@@ -66,13 +66,6 @@ public class PedidoClienteService {
 
     public PedidoClienteModel savePedidoCliente(PedidoClienteModel nuevoPedidoCliente) {
 
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
-
         int id_cliente = nuevoPedidoCliente.getCliente().getId_cliente();
 
         ClienteModel clienteEncontrado = clienteRepository.findById(id_cliente)
@@ -148,13 +141,6 @@ public class PedidoClienteService {
                 .orElseThrow(() -> new RuntimeException(
                         "Pedido cliente con id " + idPedidoCliente + " no encontrado"));
 
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
-
         LocalTime horaInicioDesplazamiento = cambiosPedidoCliente.getHora_inicio_desplazamiento();
         LocalTime horaFinDesplazamiento = cambiosPedidoCliente.getHora_fin_desplazamiento();
         LocalTime horaInicioServicio = cambiosPedidoCliente.getHora_inicio_servicio();
@@ -174,7 +160,6 @@ public class PedidoClienteService {
             pedidoClienteExistente.setHora_inicio_servicio(cambiosPedidoCliente.getHora_inicio_servicio());
             pedidoClienteExistente.setHora_fin_servicio(cambiosPedidoCliente.getHora_fin_servicio());
 
-            // Calculamos el total de tiempo de desplazamiento y de servicio
             long minutosEntreInicioDesplazamientoYServicio = horaInicioDesplazamiento.until(horaInicioServicio,
                     ChronoUnit.MINUTES);
             long minutosEntreInicioYFinDeServicio = horaInicioServicio.until(horaFinServicio, ChronoUnit.MINUTES);

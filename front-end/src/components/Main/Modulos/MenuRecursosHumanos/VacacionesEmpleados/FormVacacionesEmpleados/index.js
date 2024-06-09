@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
+import Footer from "@/components/UtilsComponents/Footer";
+import Header from "@/components/UtilsComponents/Header";
+import { saveTransaccionVacacionAutorizada } from "@/services/BlockchainVacacionAutorizadaService";
+import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
 import { getAllTiposEstados } from "@/services/TipoEstadoService";
 import {
   saveVacacionEmpleado,
   updateVacacionEmpleado,
 } from "@/services/VacacionEmpleadoService";
-import { saveTransaccionVacacionAutorizada } from "@/services/BlockchainVacacionAutorizadaService";
-import styles from "./styles.module.css";
-import ErrorIcon from "@mui/icons-material/Error";
 import {
   formatearFechaYYYYMMDD,
   validarFechaYYYYMMDD,
 } from "@/utils/functionsFecha";
-import Header from "@/components/UtilsComponents/Header";
-import Footer from "@/components/UtilsComponents/Footer";
-import * as Antd from "antd";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
-import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
+import ErrorIcon from "@mui/icons-material/Error";
+import * as Antd from "antd";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -100,9 +100,7 @@ export default function FormVacacionesEmpleados({
       }
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
@@ -139,9 +137,7 @@ export default function FormVacacionesEmpleados({
       setPersonasOptions(optionsPersonas);
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -191,9 +187,7 @@ export default function FormVacacionesEmpleados({
             }));
           }
         }
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -280,9 +274,7 @@ export default function FormVacacionesEmpleados({
     });
   };
 
-  const handleSelectPersonaSearch = (value) => {
-    // console.log("Search persona:", value);
-  };
+  const handleSelectPersonaSearch = (value) => {};
 
   const filterIncrementalSearch = (input, option) => {
     const optionLabel = option?.children.toLowerCase();
@@ -365,20 +357,13 @@ export default function FormVacacionesEmpleados({
           errorHandlingInfo = checkResponseForErrors(
             responseCreateBlockchainVacacionAutorizada
           );
-
-          /*if (errorHandlingInfo.backendOrDDBBConnectionError) {
-            handleBackendAndDBConnectionError(responseCreateBlockchainVacacionAutorizada.errorMessage);
-            return;
-          }*/
         }
 
         setErrorMessage("");
         toggleForm();
         formUpdateTrigger();
       }
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   return (

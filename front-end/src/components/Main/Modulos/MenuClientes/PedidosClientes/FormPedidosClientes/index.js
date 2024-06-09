@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
-import ErrorIcon from "@mui/icons-material/Error";
-import {
-  fechaCumpleFormatoYYYYMMDD,
-  formatearFechaYYYYMMDD,
-} from "@/utils/functionsFecha";
-import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
-import * as Antd from "antd";
-import { checkResponseForErrors } from "@/utils/responseErrorChecker";
-import moment from "moment";
-import { getAllTiposEstadosFacturas } from "@/services/TipoEstadoFacturaService";
-import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import Header from "@/components/UtilsComponents/Header";
+import { getAllClientes } from "@/services/ClienteService";
 import {
   savePedidoCliente,
   updatePedidoCliente,
 } from "@/services/PedidoClienteService";
-import { getAllClientes } from "@/services/ClienteService";
 import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
+import { getAllTiposEstadosFacturas } from "@/services/TipoEstadoFacturaService";
+import { getAllTiposEstados } from "@/services/TipoEstadoService";
+import {
+  fechaCumpleFormatoYYYYMMDD,
+  formatearFechaYYYYMMDD,
+} from "@/utils/functionsFecha";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import ErrorIcon from "@mui/icons-material/Error";
+import * as Antd from "antd";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -113,9 +113,7 @@ export default function FormPedidosClientes({
       }
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const fetchTiposEstadosFacturasOptionsAndHandleErrors = async () => {
@@ -154,9 +152,7 @@ export default function FormPedidosClientes({
       }
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const fetchClientesOptionsAndHandleErrors = async () => {
@@ -188,9 +184,7 @@ export default function FormPedidosClientes({
       setClientesOptions(optionsClientes);
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const fetchPersonasEmpleadosAndBecariosOptionsAndHandleErrors = async () => {
@@ -227,9 +221,7 @@ export default function FormPedidosClientes({
       setPersonasOptions(optionsPersonas);
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -317,9 +309,7 @@ export default function FormPedidosClientes({
             }));
           }
         }
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -501,13 +491,9 @@ export default function FormPedidosClientes({
     });
   };
 
-  const handleSelectClienteSearch = (value) => {
-    // console.log("Search cliente:", value);
-  };
+  const handleSelectClienteSearch = (value) => {};
 
-  const handleSelectPersonaSearch = (value) => {
-    // console.log("Search persona:", value);
-  };
+  const handleSelectPersonaSearch = (value) => {};
 
   const filterIncrementalSearch = (input, option) => {
     const optionLabel = option?.children.toLowerCase();
@@ -571,9 +557,7 @@ export default function FormPedidosClientes({
         toggleForm();
         formUpdateTrigger();
       }
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   return (

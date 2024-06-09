@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { useAuth } from "@/context/UserContext";
-import styles from "./styles.module.css";
-import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
+import Header from "@/components/UtilsComponents/Header";
+import { useAuth } from "@/context/UserContext";
 import * as Antd from "antd";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function MenuRecursosHumanos() {
   const { authUser, permisosUser } = useAuth();

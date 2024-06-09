@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
-import styles from "./styles.module.css";
-import ErrorIcon from "@mui/icons-material/Error";
-import {
-  formatearFechaYYYYMMDD,
-  validarFechaYYYYMMDD,
-} from "@/utils/functionsFecha";
-import Header from "@/components/UtilsComponents/Header";
 import Footer from "@/components/UtilsComponents/Footer";
-import * as Antd from "antd";
-import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import Header from "@/components/UtilsComponents/Header";
 import {
   saveAsistenciaEmpleado,
   updateAsistenciaEmpleado,
 } from "@/services/AsistenciaEmpleadoService";
+import { getAllPersonasEmpleadosAndBecarios } from "@/services/PersonaService";
+import {
+  formatearFechaYYYYMMDD,
+  validarFechaYYYYMMDD,
+} from "@/utils/functionsFecha";
+import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import ErrorIcon from "@mui/icons-material/Error";
+import * as Antd from "antd";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -94,9 +94,7 @@ export default function FormAsistenciasEmpleados({
       setPersonasOptions(optionsPersonas);
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -130,9 +128,7 @@ export default function FormAsistenciasEmpleados({
             }));
           }
         }
-      } catch (error) {
-        // console.error("Ha ocurrido algo inesperado", error);
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -221,9 +217,7 @@ export default function FormAsistenciasEmpleados({
     });
   };
 
-  const handleSelectPersonaSearch = (value) => {
-    // console.log("Search persona:", value);
-  };
+  const handleSelectPersonaSearch = (value) => {};
 
   const filterIncrementalSearch = (input, option) => {
     const optionLabel = option?.children.toLowerCase();
@@ -293,9 +287,7 @@ export default function FormAsistenciasEmpleados({
         toggleForm();
         formUpdateTrigger();
       }
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   return (

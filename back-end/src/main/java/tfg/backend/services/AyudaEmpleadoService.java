@@ -55,13 +55,6 @@ public class AyudaEmpleadoService {
 
     public AyudaEmpleadoModel saveAyudaEmpleado(AyudaEmpleadoModel nuevoAyudaEmpleado) {
 
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
-
         int id_persona = nuevoAyudaEmpleado.getPersona().getId_persona();
 
         PersonaModel personaEncontrado = personaRepository.findById(id_persona)
@@ -119,13 +112,6 @@ public class AyudaEmpleadoService {
         AyudaEmpleadoModel ayudaEmpleadoExistente = ayudaEmpleadoRepository.findById(idAyudaEmpleado)
                 .orElseThrow(() -> new RuntimeException(
                         "Ayuda empleado con id " + idAyudaEmpleado + " no encontrado"));
-
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
 
         ayudaEmpleadoExistente.setFecha_inicio(cambiosAyudaEmpleado.getFecha_inicio());
         ayudaEmpleadoExistente.setFecha_fin(cambiosAyudaEmpleado.getFecha_fin());

@@ -61,13 +61,6 @@ public class FacturaClienteService {
 
     public FacturaClienteModel saveFacturaCliente(FacturaClienteModel nuevoFacturaCliente) {
 
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
-
         int id_cliente = nuevoFacturaCliente.getCliente().getId_cliente();
 
         ClienteModel clienteEncontrado = clienteRepository.findById(id_cliente)
@@ -202,16 +195,6 @@ public class FacturaClienteService {
                 .orElseThrow(() -> new RuntimeException(
                         "Factura cliente con id " + idFacturaCliente + " no encontrado"));
 
-        // Comprobacion de campos correctos -> Ejemplo:
-        /*
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
-
-        // HACER AQUI LOS SETTER -> Ejemplo:
-        // asistenciaEmpleadoExistente.setFecha(cambiosAsistenciaEmpleado.getFecha());
-
         int id_cliente = cambiosFacturaCliente.getCliente().getId_cliente();
 
         ClienteModel clienteEncontrado = clienteRepository.findById(id_cliente)
@@ -247,12 +230,9 @@ public class FacturaClienteService {
 
     }
 
-    // Función para calcular la tarifa total
     public static double calcularTarifa(LocalTime tiempoTotal, double tarifaPorHora) {
-        // Convertir el tiempo total a minutos
         long minutosTotal = tiempoTotal.getHour() * 60 + tiempoTotal.getMinute();
 
-        // Calcular la tarifa total
         double tarifaTotal = (minutosTotal / 60.0) * tarifaPorHora;
         return tarifaTotal;
     }

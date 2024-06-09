@@ -54,7 +54,7 @@ public class VacacionEmpleadoModel implements Serializable {
     @Column(name = "previous_hash_block", nullable = true, columnDefinition = "VARCHAR(256) DEFAULT NULL")
     private String previous_hash_block;
 
-    @Column(name = "timestamp_transaccion_vacacion", nullable = true) // Despues tengo que hacer un parse a long
+    @Column(name = "timestamp_transaccion_vacacion", nullable = true)
     private String timestamp_transaccion_vacacion;
 
     @Column(name = "error_blockchain", nullable = false, columnDefinition = "boolean default false")

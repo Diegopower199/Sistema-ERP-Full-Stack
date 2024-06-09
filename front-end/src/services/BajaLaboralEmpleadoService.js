@@ -1,7 +1,7 @@
-import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
-import { asignarNullSiCadenaVacia } from "@/utils/helpers";
 import { backendServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
+import { asignarNullSiCadenaVacia } from "@/utils/helpers";
+import axios from "axios";
 
 export const getAllBajasLaboralesEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "bajasLaboralesEmpleados");

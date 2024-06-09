@@ -1,36 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import Footer from "@/components/UtilsComponents/Footer";
+import Header from "@/components/UtilsComponents/Header";
+import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
 import { useAuth } from "@/context/UserContext";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import {
-  DataGrid,
-  GridToolbarContainer,
-  GridActionsCellItem,
-  GridToolbarExportContainer,
-  useGridApiContext,
-  gridFilteredSortedRowIdsSelector,
-  gridVisibleColumnFieldsSelector,
-} from "@mui/x-data-grid";
-import MenuItem from "@mui/material/MenuItem";
-import * as Antd from "antd";
-import Link from "next/link";
-import {
-  LOCALIZED_COLUMN_MENU_TEXTS,
-  PAGE_SIZE_OPTIONS,
-} from "@/utils/constants";
-import FormFacturasClientes from "./FormFacturasClientes";
-import styles from "./styles.module.css";
 import {
   generateFacturasClientes,
   getAllFacturasClientes,
 } from "@/services/FacturaClienteService";
-import Header from "@/components/UtilsComponents/Header";
-import Footer from "@/components/UtilsComponents/Footer";
-import ServerConnectionError from "@/components/UtilsComponents/ServerConnectionError";
+import {
+  LOCALIZED_COLUMN_MENU_TEXTS,
+  PAGE_SIZE_OPTIONS,
+} from "@/utils/constants";
 import { checkResponseForErrors } from "@/utils/responseErrorChecker";
+import AddIcon from "@mui/icons-material/Add";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridToolbarContainer,
+  GridToolbarExportContainer,
+  gridFilteredSortedRowIdsSelector,
+  gridVisibleColumnFieldsSelector,
+  useGridApiContext,
+} from "@mui/x-data-grid";
+import * as Antd from "antd";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import FormFacturasClientes from "./FormFacturasClientes";
 
 let errorHandlingInfo = {
   errorMessage: "",
@@ -340,9 +339,7 @@ export default function FacturasClientes() {
       setTableLoading(false);
 
       return true;
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -412,9 +409,7 @@ export default function FacturasClientes() {
         responseGenerateFacturasClientes.data
       );
       setCargandoInformacionFacturasClientes(false);
-    } catch (error) {
-      // console.error("Ha ocurrido algo inesperado", error);
-    }
+    } catch (error) {}
   };
 
   const handleViewUniqueClick = (id) => () => {

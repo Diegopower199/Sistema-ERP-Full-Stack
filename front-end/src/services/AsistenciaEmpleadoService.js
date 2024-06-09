@@ -1,7 +1,7 @@
-import axios from "axios";
 import { API_URL_BACK_END } from "@/utils/constants";
-import { asignarNullSiCadenaVacia } from "@/utils/helpers";
 import { backendServerDownErrorMessageContent } from "@/utils/differentContentServerErrorMessage";
+import { asignarNullSiCadenaVacia } from "@/utils/helpers";
+import axios from "axios";
 
 export const getAllAsistenciaEmpleados = async () => {
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
@@ -64,7 +64,7 @@ export const saveAsistenciaEmpleado = async (data) => {
   }
 };
 
-// Inicio de la jornada laboral, No esta hecho
+// No esta hecho
 export const startOfWorkdayAsistenciaEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
 
@@ -92,7 +92,7 @@ export const startOfWorkdayAsistenciaEmpleado = async (data) => {
   }
 };
 
-// Fin de la jornada laboral, No esta hecho
+// No esta hecho
 export const endOfWorkdayAsistenciaEmpleado = async (data) => {
   const url = API_URL_BACK_END.replace("#", "asistenciasEmpleados");
 

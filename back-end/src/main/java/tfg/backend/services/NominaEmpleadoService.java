@@ -39,13 +39,6 @@ public class NominaEmpleadoService {
 
     public NominaEmpleadoModel saveNominaEmpleado(NominaEmpleadoModel nuevoNominaEmpleado) {
 
-        /*
-         * Comprobacion de campos correctos -> Ejemplo:
-         * if (cambiosUsuario.getNombre_usuario() == null) {
-         * throw new RuntimeException("El campo 'nombre_usuario' no puede ser null");
-         * }
-         */
-
         int id_persona = nuevoNominaEmpleado.getPersona().getId_persona();
 
         PersonaModel personaEncontrado = personaRepository.findById(id_persona)

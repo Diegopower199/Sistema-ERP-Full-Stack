@@ -108,7 +108,7 @@ public class UsuarioService {
 
         usuarioMap.put("persona",
                 usuarioEncontrado.getPersona() != null ? usuarioEncontrado.getPersona().toMap() : null);
-                
+
         usuarioMap.put("tipo_usuario",
                 usuarioEncontrado.getTipo_usuario() != null ? usuarioEncontrado.getTipo_usuario().toMap() : null);
 
